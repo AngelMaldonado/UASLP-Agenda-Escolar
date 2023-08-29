@@ -1,13 +1,4 @@
-<h1><center>Agenda Escolar</center></h1>
-<center style="display: flex; justify-content: space-between;">
-<img src="doc/img/ingenieria.png" height=100 alt="logo-ingeniería">
-  <ul style="list-style-type: none;">
-    <li><i><h3>Universidad Autónoma de San Luis Potosí</h3></i></li>
-    <li><i><h3>Facultad de Ingeniería</h3></i></li>
-  </ul>
-  <img src="doc/img/uaslp.png" height=100 alt="logo-uaslp">
-</center>
-<hr>
+# Agenda Escolar (UASLP)
 
 ![php-logo](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![laravel-logo](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
@@ -92,13 +83,9 @@ accediendo desde el enlace
 seleccionando la opción *.Zip* de la versión más reciente 
 *Thread Safe*:
 
-<center>
-  <img src='doc/img/php-download.png' width=500 alt='Descarga PHP'/>
-</center>
+<img src='doc/img/php-download.png' width=500 alt='Descarga PHP'/>
 
-<center>
-  <img src='doc/img/php-download-zip.png' width=500 alt='Descarga PHP ZIP'/>
-</center>
+<img src='doc/img/php-download-zip.png' width=500 alt='Descarga PHP ZIP'/>
 
 Una vez descargado y descompreso el archivo `.zip`, se 
 debe colocar el directorio en una ruta de fácil acceso,
@@ -107,25 +94,15 @@ como `D:\Dev\Tools\php`, y finalmnente para que
 terminal, se debe agregar la ruta del directorio `php` a la
 variable de entorno `PATH`:
 
-<center>
-  <img src='doc/img/search-env-vars.png' width=300 alt='Search Envvars'/>
-</center>
+<img src='doc/img/search-env-vars.png' width=300 alt='Search Envvars'/>
 
 <div style='display:flex;'>
 
-<center>
-  <img src='doc/img/access-env-vars.png' width=300 alt='Access Envvars'/>
-</center>
+<img src='doc/img/access-env-vars.png' width=300 alt='Access Envvars'/>
 
-<center>
-  <img src='doc/img/edit-path-var.png' width=300 alt='Edit PATH'/>
-</center>
+<img src='doc/img/edit-path-var.png' width=300 alt='Edit PATH'/>
 
-<center>
-  <img src='doc/img/php-path-var.png' width=300 alt='PHP PATH Var'/>
-</center>
-
-</div>
+<img src='doc/img/php-path-var.png' width=300 alt='PHP PATH Var'/>
 
 Para probar que la instalación de *PHP* fue exitosa, se puede
 ejecutar el comando `php -v` en la terminal, y se debe mostrar
