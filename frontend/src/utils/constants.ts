@@ -1,0 +1,1 @@
+// Add here constants for the app
