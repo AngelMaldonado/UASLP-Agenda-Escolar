@@ -4,7 +4,6 @@
  * y modificación al sistema rem para especificar tamaños en texto y otros elementos.
  *
  * TODO: Definir constantes de colores y fuentes
- * TODO: Establecer relación de rem de 1/10 (1 rem = 10px)
  */
 :root {
   /**
@@ -31,11 +30,17 @@
   -webkit-text-size-adjust: 100%;
 }
 
-/** Modificación de box model **/
+/** Modificación de box model y escalado de 1rem = 10px **/
 html {
   box-sizing: border-box;
+  font-size: 62.5%;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+/** Margen y escalado de 1rem = 10px **/
+body {
+  font-size: 1.6rem;
 }
