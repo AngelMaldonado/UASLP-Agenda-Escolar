@@ -47,7 +47,7 @@ const DISPLAY: TypographyConfig = {
 const TITULO_NIVEL_2: TypographyConfig = {
   fontFamily: "OpenSans",
   fontSize: "35px",
-  fontWeight: "bold",
+  fontWeight: "bold"
 };
 
 // Constante para TituloNivel3
