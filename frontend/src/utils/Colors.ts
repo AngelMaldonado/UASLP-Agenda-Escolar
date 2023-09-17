@@ -1,3 +1,7 @@
+/**
+ * TODO: Mover los tokens dentro del :root del index.css @Alfredo Gonzalez
+ */
+
 // Define un tipo llamado Color para representar colores
 class Color
  {

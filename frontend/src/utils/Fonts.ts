@@ -1,3 +1,7 @@
+/**
+ * TODO: Mover tokens dentro de :root en index.css
+ */
+
 /*
 const Display = "Display";
 const Tipografia_Display = "OpenSans";
