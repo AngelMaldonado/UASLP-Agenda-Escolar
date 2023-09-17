@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+}
+
+.barra-correo-directorio{
+    height: 60px; /* Altura de la barra superior */
+    background-color: azure; /* Color de la barra superior */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.barra-correo-directorio span {
+    margin-right: 20px; /* Agrega un margen entre los elementos */
+}
+
+
+
+.barra-UASLP {
+    height: 140px;
+    background-color:#007bff;
+    /*text-align: right;*/
+    display: flex;
+    justify-content: flex-end;
+}
+
+.barra-correo-directorio span {
+    margin-right: 20px; /* Agrega un margen entre los elementos */
+}
+
+.barra-mini {
+    height: 7px;
+    background-color:aqua;
+    text-align: right;
+}
+
+.barra-botones {
+    background-color: brown;
+    text-align: right;
+}
+
+
+
+.boton {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: brown;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-right: 10px; /* Espacio entre los botones */
+    position: relative;
+}
+
+.boton::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 4px; /* Altura de la barra debajo del texto */
+    background-color: white; /* Color de la barra */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.4s;
+}
+
+.boton:hover::after {
+    width: 100%;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Styles.css">
+    <title>Administracion Agenda</title>
+
+    <style>
+       /* Estilos para centrar el texto dentro del div */
+        #divUASLP {
+            text-align: center; /* Centra horizontalmente el texto dentro del div */
+            line-height: 100vh; /* Centra verticalmente el texto en la ventana del navegador */
+        }
+
+        .barra-correo-directorio{
+             height: 60px; /* Altura de la barra superior */
+             background-color: azure; /* Color de la barra superior */
+             display: flex;
+             justify-content: flex-end;
+        }
+
+        .barra-correo-directorio span {
+            margin-right: 20px; /* Agrega un margen entre los elementos */
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            display:inline;
+            justify-content:center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        
+        header {
+            margin-bottom: 90px; /* Ajusta el espacio según tus preferencias */
+        }
+
+        .formulario {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 45px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .formulario input[type="text"],
+        .formulario input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .formulario .linea-separadora {
+            border-bottom: 5px solid #ccc;
+            margin: 40px 1px;
+        }
+
+        .formulario .boton {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .formulario .boton-recuperar {
+            background-color: #f0ad4e;
+        }
+    </style>
+</head>
+
+
+<body>
+    <header>
+        <div  class="barra-UASLP">
+
+            <span>Texto dentro</span>
+                <span>del div usando</span>
+        </div>
+        <div class="barra-mini"></div>
+    </header>
+
+
+
+        <div class="formulario">
+          <h2>Iniciar Sesión</h2>
+             <form action="procesar_iniciar_sesion.php" method="POST">
+                <input type="text" name="usuario" placeholder="Nombre de usuario" required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required>
+                <div class="linea-separadora"></div>
+                <button type="submit" class="boton">Iniciar Sesión</button>
+                <button type="button" class="boton boton-recuperar">Recuperar Contraseña</button>
+            </form>
+        </div>
+</body>
+</html>
