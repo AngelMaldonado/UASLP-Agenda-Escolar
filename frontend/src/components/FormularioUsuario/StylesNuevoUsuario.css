@@ -1,0 +1,115 @@
+
+
+.body-centrado {
+    margin: 0;
+    padding: 0;
+    
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+header {
+    margin-bottom: 90px; /* Ajusta el espacio según tus preferencias */
+}
+
+.formulario {
+    width: 300%; /* Ajusta el ancho del formulario */
+    max-width: 450px; /* Establece un ancho máximo */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center ;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+}
+
+.formulario input[type="text"],
+.formulario input[type="password"],
+.formulario select {
+    width: 100%;
+    padding: 5px; /* Ajusta el tamaño vertical */
+    margin: 4px 0; /* Ajusta el margen vertical */
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.barra-correo-directorio span {
+    margin-right: 20px; /* Agrega un margen entre los elementos */
+}
+
+.barra-mini {
+    height: 7px;
+    background-color: rgb(66, 138, 215);
+    text-align: right;
+}
+
+
+.barra-UASLP {
+    background-color:rgb(10, 64, 117);
+    /*background-image: url('/src/components/FormularioAdministrador/img/LogoUaslp.png');  Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta de tu imagen */
+    height: 160px;
+    background-size: auto 50%; /* Ajusta el tamaño de la imagen */
+    background-repeat: no-repeat, no-repeat;
+    background-position:left center, left center; /* Coloca la imagen a la izquierda y centra verticalmente */
+    background-origin: content-box, content-box;
+    background-clip: content-box, content-box;
+    display: flex;
+    justify-content:left;
+    align-items: center;
+}
+
+.imagen1 {
+    width: 250px; /* Ajusta el ancho de la primera imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin-right: 55px; /* Espacio entre la primera y la segunda imagen */
+}
+
+.imagen2 {
+    width: 250px; /* Ajusta el ancho de la segunda imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+.titulo {
+    color: #fff; /* Color del texto */
+    
+    text-align: center; /* Centra el texto horizontalmente */
+    font-family: sans-serif;
+}
+
+.linea-separadora {
+    border-bottom: 5px solid #ccc;
+    margin: 20px 0;
+}
+
+.formulario .boton-agregar {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formulario .boton-cancelar {
+    background-color:red;
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.encabezado {
+    background-color:rgb(10, 64, 117); /* Fondo azul */
+    color: #fff; /* Color del texto */
+    padding: 5px; /* Espacio interno */
+    text-align: center; /* Centra el texto horizontalmente */
+}

@@ -10,55 +10,60 @@
    * Constantes de colores
    */
     --prim: rgb(0, 74, 152);
-    --prim_80: rgb(30, 107, 188);
-    --prim_50: rgb(66, 138, 215);
-    --prim_20: rgb(140, 191, 245);
+    --prim-80: rgb(30, 107, 188);
+    --prim-50: rgb(66, 138, 215);
+    --prim-20: rgb(140, 191, 245);
 
     --sec: rgb(0, 178, 227);
-    --sec_80: rgb(86,219,255);
-    --sec_50: rgb(164, 235, 255);
-    --sec_20: rgb(212, 246, 255);
+    --sec-80: rgb(86,219,255);
+    --sec-50: rgb(164, 235, 255);
+    --sec-20: rgb(212, 246, 255);
 
     --terc: rgb(194, 21, 50);
-    --terc_80: rgb(234, 61, 90);
-    --terc_50: rgb(255, 103, 128);
-    --terc_20: rgb(255, 142, 161);
+    --terc-80: rgb(234, 61, 90);
+    --terc-50: rgb(255, 103, 128);
+    --terc-20: rgb(255, 142, 161);
 
     --alerta: rgb(250, 255, 0);
-    --alerta_80: rgb(251, 255, 59);
-    --alerta_50: rgb(252, 255, 109);
-    --alerta_20: rgb(253, 255, 154);
+    --alerta-80: rgb(251, 255, 59);
+    --alerta-50: rgb(252, 255, 109);
+    --alerta-20: rgb(253, 255, 154);
 
     --error: rgb(255, 0, 0);
-    --error_80: rgb(255, 72, 72);
-    --alerta_50: rgb(255, 119, 119);
-    --alerta_20: rgb(255, 165, 165);
+    --error-80: rgb(255, 72, 72);
+    --error-50: rgb(255, 119, 119);
+    --error-20: rgb(255, 165, 165);
 
     --exito: rgb(0, 255, 56);
-    --exito_80: rgb(60, 255, 103);
-    --exito_50: rgb(109, 255, 141);
-    --alerta_20: rgb(160, 255, 181);
+    --exito-80: rgb(60, 255, 103);
+    --exito-50: rgb(109, 255, 141);
+    --exito-20: rgb(160, 255, 181);
 
     --negro: rgb(0, 0, 0);
-    --negro_80: rgb(54, 54, 54);
-    --negro_50: rgb(87, 87, 87);
-    --negro_20: rgb(114, 114, 114);
+    --negro-80: rgb(54, 54, 54);
+    --negro-50: rgb(87, 87, 87);
+    --negro-20: rgb(114, 114, 114);
 
      /**
    * Constantes de fuentes
    */
-    --DISPLAY: 35px normal normal 'OpenSans', sans-serif;
-    --Titulo_Nivel_2: 35px bold normal 'OpenSans', sans-serif ; 
-    --Titulo_Nivel_3: 16px normal normal 'Arial', sans-serif;
-    --Text_LG: 25px light normal 'OpenSans', sans-serif;
-    --Texto_MD: 22px light normal 'OpenSans',sans-serif;
-    --Texto_MD_1:22px 600 normal 'OpenSans', sans-serif;  
-    --Texto_SM: 20px normal normal 'OpenSans', sans-serif;
-    --TEXTO_SM_1: 20px normal normal'OpenSans',sans-serif;
-    --TEXTO_XS: 18px normal normal 'OpenSans',sans-serif;
-    --TEXTO_XS_1: 18px light normal 'OpenSans',sans-serif;
- 
+      --fuente: OpenSans, sans-serif;
+      --fuente1: Arial, sans-serif;
+
+    --DISPLAY: normal 3.5rem var(--fuente);
+    --Titulo_Nivel_2: normal 3.5rem var(--fuente);
+    --Titulo_Nivel_3: normal 3.5rem var(--fuente1);
+    --Text-LG: normal 2.5rem var(--fuente1);
+    --Text-MD: normal 2.2rem var(--fuente);
+    --Text-MD-1: normal 2.2rem var(--fuente);
+    --Text-SM: normal 2.0rem var(--fuente);
+    --Text-SM-1: normal 2.0rem var(--fuente);
+    --Text-XS: normal 1.8rem var(--fuente);
+    --Text-XS-1: normal 1.8rem var(--fuente);
+
+
   /**
+
    * Valores por defecto
    */
   color-scheme: light dark;
@@ -86,4 +91,12 @@ html {
 /** Margen y escalado de 1rem = 10px **/
 body {
   font-size: 1.6rem;
+}
+
+
+
+
+/**APLICA ESTILOS PARA TIPOGRAFIA*/
+h1{
+  font:var(--DISPLAY);
 }

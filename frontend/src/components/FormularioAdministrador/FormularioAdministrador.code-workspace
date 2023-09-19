@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Index"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "FormularioAdministrador"
+	}
+}

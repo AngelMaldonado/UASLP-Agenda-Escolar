@@ -22,7 +22,7 @@ header {
 
 .barra-UASLP {
     height: 140px;
-    background-color:#007bff;
+    background-color:rgb(10, 64, 117);;
     /*text-align: right;*/
     display: flex;
     justify-content: flex-end;
@@ -34,7 +34,7 @@ header {
 
 .barra-mini {
     height: 7px;
-    background-color:aqua;
+    background-color:rgb(66, 138, 215);
     text-align: right;
 }
 
@@ -42,8 +42,6 @@ header {
     background-color: brown;
     text-align: right;
 }
-
-
 
 .boton {
     display: inline-block;
