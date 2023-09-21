@@ -3,67 +3,68 @@
  * Constantes de colores, fuentes, estilos de elementos comunes (<a>, <p>, <h1>, etc),
  * y modificación al sistema rem para especificar tamaños en texto y otros elementos.
  *
- * TODO: Definir constantes de colores y fuentes
  */
 :root {
+  /** Constantes de colores **/
+  --prim: rgb(0, 74, 152);
+  --prim-80: rgb(30, 107, 188);
+  --prim-50: rgb(66, 138, 215);
+  --prim-20: rgb(140, 191, 245);
+
+  --sec: rgb(0, 178, 227);
+  --sec-80: rgb(86, 219, 255);
+  --sec-50: rgb(164, 235, 255);
+  --sec-20: rgb(212, 246, 255);
+
+  --terc: rgb(194, 21, 50);
+  --terc-80: rgb(234, 61, 90);
+  --terc-50: rgb(255, 103, 128);
+  --terc-20: rgb(255, 142, 161);
+
+  --alerta: rgb(250, 255, 0);
+  --alerta-80: rgb(251, 255, 59);
+  --alerta-50: rgb(252, 255, 109);
+  --alerta-20: rgb(253, 255, 154);
+
+  --error: rgb(255, 0, 0);
+  --error-80: rgb(255, 72, 72);
+  --error-50: rgb(255, 119, 119);
+  --error-20: rgb(255, 165, 165);
+
+  --exito: rgb(0, 255, 56);
+  --exito-80: rgb(60, 255, 103);
+  --exito-50: rgb(109, 255, 141);
+  --exito-20: rgb(160, 255, 181);
+
+  --blanco: rgb(255, 255, 255);
+  --blanco-80: rgb(243, 243, 243);
+
+  --negro: rgb(0, 0, 0);
+  --negro-80: rgb(54, 54, 54);
+  --negro-50: rgb(87, 87, 87);
+  --negro-20: rgb(114, 114, 114);
+  --color-modal: rgba(49, 49, 49, 0.8);
+
+  --sombra: rgba(0, 0, 0, 0.25);
+
+  /** Constantes de fuentes **/
+  --fuente: OpenSans, sans-serif;
+
+  --DISPLAY: normal 3.5rem var(--fuente);
+  --Titulo_Nivel_2: normal 3.5rem var(--fuente);
+  --Titulo_Nivel_3: 500 2.4rem var(--fuente);
+  --Text-LG: normal 2.5rem var(--fuente1);
+  --Text-MD-Semibold: 500 1.9rem var(--fuente);
+  --Text-MD-1: normal 2.2rem var(--fuente);
+  --Text-SM: normal 2.0rem var(--fuente);
+  --Text-SM-1: normal 2.0rem var(--fuente);
+  --Text-XS: normal 1.8rem var(--fuente);
+  --Text-XS-1: normal 1.8rem var(--fuente);
+
+  /** Constantes de espaciado y tamaños **/
+  --body-padding: 2.4rem 10rem;
+
   /**
-   * Constantes de colores
-   */
-    --prim: rgb(0, 74, 152);
-    --prim-80: rgb(30, 107, 188);
-    --prim-50: rgb(66, 138, 215);
-    --prim-20: rgb(140, 191, 245);
-
-    --sec: rgb(0, 178, 227);
-    --sec-80: rgb(86,219,255);
-    --sec-50: rgb(164, 235, 255);
-    --sec-20: rgb(212, 246, 255);
-
-    --terc: rgb(194, 21, 50);
-    --terc-80: rgb(234, 61, 90);
-    --terc-50: rgb(255, 103, 128);
-    --terc-20: rgb(255, 142, 161);
-
-    --alerta: rgb(250, 255, 0);
-    --alerta-80: rgb(251, 255, 59);
-    --alerta-50: rgb(252, 255, 109);
-    --alerta-20: rgb(253, 255, 154);
-
-    --error: rgb(255, 0, 0);
-    --error-80: rgb(255, 72, 72);
-    --error-50: rgb(255, 119, 119);
-    --error-20: rgb(255, 165, 165);
-
-    --exito: rgb(0, 255, 56);
-    --exito-80: rgb(60, 255, 103);
-    --exito-50: rgb(109, 255, 141);
-    --exito-20: rgb(160, 255, 181);
-
-    --negro: rgb(0, 0, 0);
-    --negro-80: rgb(54, 54, 54);
-    --negro-50: rgb(87, 87, 87);
-    --negro-20: rgb(114, 114, 114);
-
-     /**
-   * Constantes de fuentes
-   */
-      --fuente: OpenSans, sans-serif;
-      --fuente1: Arial, sans-serif;
-
-    --DISPLAY: normal 3.5rem var(--fuente);
-    --Titulo_Nivel_2: normal 3.5rem var(--fuente);
-    --Titulo_Nivel_3: normal 3.5rem var(--fuente1);
-    --Text-LG: normal 2.5rem var(--fuente1);
-    --Text-MD: normal 2.2rem var(--fuente);
-    --Text-MD-1: normal 2.2rem var(--fuente);
-    --Text-SM: normal 2.0rem var(--fuente);
-    --Text-SM-1: normal 2.0rem var(--fuente);
-    --Text-XS: normal 1.8rem var(--fuente);
-    --Text-XS-1: normal 1.8rem var(--fuente);
-
-
-  /**
-
    * Valores por defecto
    */
   color-scheme: light dark;
@@ -93,10 +94,15 @@ body {
   font-size: 1.6rem;
 }
 
+/** Fuentes **/
+h1 {
+  font: var(--DISPLAY);
+}
 
+h3 {
+  font: var(--Titulo_Nivel_3);
+}
 
-
-/**APLICA ESTILOS PARA TIPOGRAFIA*/
-h1{
-  font:var(--DISPLAY);
+p {
+  font: var(--Text-MD-Semibold);
 }

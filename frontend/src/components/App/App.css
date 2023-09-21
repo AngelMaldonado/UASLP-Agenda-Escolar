@@ -1,1 +1,9 @@
+.BarraFiltro {
+  height: 6rem;
+  background-color: var(--terc);
+}
 
+.BarraAdmin {
+  height: 6rem;
+  background-color: var(--blanco-80);
+}

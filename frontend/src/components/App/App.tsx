@@ -1,10 +1,15 @@
 import './App.css'
+import Navbar from "../Navbar";
+import Usuarios from "../Usuarios/Usuarios.tsx";
 
 function App() {
 
   return (
     <>
-    <h1></h1>
+      <Navbar/>
+      <div className="BarraFiltro"></div>
+      <div className="BarraAdmin"></div>
+      <Usuarios />
     </>
   )
 }

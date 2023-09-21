@@ -1,0 +1,33 @@
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.Modal, .Overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.Overlay {
+  background: var(--color-modal);
+}
+
+.ContenidoModal {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 5px 7px;
+}
+*/

@@ -21,11 +21,11 @@ $sql = "SELECT * FROM usuarios WHERE nombre_usuario = '$username' AND contraseñ
 $result = $conn->query($sql);
 
 if ($result->num_rows == 1) {
-    // Usuario autenticado con éxito, redirige a la página de inicio
+    // IUsuario autenticado con éxito, redirige a la página de inicio
     header("Location: inicio.php");
 } else {
     // Autenticación fallida, muestra un mensaje de error
-    echo "Usuario o contraseña incorrectos.";
+    echo "IUsuario o contraseña incorrectos.";
 }
 
 // Cierra la conexión a la base de datos

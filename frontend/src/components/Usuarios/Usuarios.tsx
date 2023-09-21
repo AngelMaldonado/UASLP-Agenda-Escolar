@@ -1,44 +1,62 @@
-import React, { useState } from 'react';
+import {useEffect, useState} from 'react';
 import './Usuarios.css'
-import Card from './Cards.tsx';
+import CardUsuario from "../CardUsuario";
+import Modal from "../Modal";
+import FormularioUsuario from "../FormularioUsuario/FormularioUsuario.tsx";
+import IUsuario from "../../models/IUsuario.ts";
+import UsuarioService from "../../services/UsuarioService.ts";
+
+interface IUsuariosState {
+  cargando: boolean,
+  usuarios: IUsuario[],
+  errorMsg: string,
+  mostrarModal: boolean
+}
 
 function Usuarios() {
+  const [state, setState] = useState<IUsuariosState>({
+    cargando: false,
+    usuarios: [],
+    errorMsg: "",
+    mostrarModal: false
+  })
 
-    const [numCards, setNumCards] = useState(0);
+  useEffect(() => {
+    setState({...state, cargando: true})
+    UsuarioService.obtenUsuarios()
+      .then(res => setState({
+        ...state, cargando: false, usuarios: res.data
+      }))
+      .catch(err => setState({
+        ...state, cargando: false, errorMsg: err.message
+      }))
+  }, []);
 
-    const handleClick = () => {
-        setNumCards(numCards + 1);
-    };
+  const muestraModal = () => {
+    setState({...state, mostrarModal: !state.mostrarModal})
+  }
 
-    const cards = [];
+  const {cargando, usuarios, errorMsg, mostrarModal} = state
 
-    for (let i = 0; i < numCards; i++) {
-        cards.push(<Card key={i} />);
-    }    
-
-
-    return ( 
-    <>
-    <h1>Hola mundo desde Usuarios</h1>
-
-    <section className='container'>
-        <button className='new-card'
-                onClick={handleClick}>
-            <div id='circle'>
-                <i className='bx bx-plus-circle tam'></i>
-            </div>
-            <br /><br />
-            <h2>Nuevo usuario</h2>
+  return (
+    <div>
+      <Modal componente={<FormularioUsuario/>} mostrar={mostrarModal} onClose={() => muestraModal()}/>
+      <section className="ContenedorUsuarios">
+        {errorMsg && (<p>{errorMsg}</p>)}
+        {cargando && (<h1>Cargando...</h1>)}
+        <button className="NewCard" onClick={muestraModal}>
+          <div id="circle">
+            <i className='bx bx-plus-circle tam'></i>
+          </div>
+          <br/><br/>
+          <h3>Nuevo usuario</h3>
         </button>
-        {cards.map((card,k) => (
-          <div key={k}><Card numCards={"#"+(k+1)} username="Username" email="em@il" /></div>
-        ))};
-      
-
-        
-    </section>
-    </> 
-    );
+        {usuarios.length > 0 && usuarios.map((usuario) => (
+          <CardUsuario {...usuario} />
+        ))}
+      </section>
+    </div>
+  );
 }
 
 export default Usuarios;
