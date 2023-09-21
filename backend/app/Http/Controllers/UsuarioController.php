@@ -1,6 +1,6 @@
 <?php
 
-// Codigo para el AdminUserController
+// Codigo para el UsuarioController
 //  Este código define los métodos para listar usuarios (index), crear un nuevo usuario (create y store), editar un usuario existente (edit y update), y eliminar un usuario (destroy).
 
 
@@ -9,12 +9,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 
-class AdminUserController extends Controller
+class UsuarioController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
         $usuarios = Usuario::all();
-        return view('admin.usuarios.index', compact('usuarios'));
+        return response()->json($usuarios);
     }
 
     public function create()
@@ -22,18 +22,17 @@ class AdminUserController extends Controller
         return view('admin.usuarios.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         // Validación de datos aquí
         // Crear un nuevo usuario
         $usuario = new Usuario();
-        $usuario->nombre = $request->input('nombre');
-        $usuario->puesto = $request->input('puesto');
+        $usuario->nombre = $request->input('nombres') . $request->input('apellidos');
+        $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
+        $usuario->permisos = json_encode($request->input('permisos')); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
-
-        return redirect()->route('admin.usuarios.index');
+        return response()->json($request);
     }
 
     public function edit($id)
