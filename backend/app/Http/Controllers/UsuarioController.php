@@ -19,7 +19,8 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        return view('admin.usuarios.create');
+        // Puedes retornar un JSON vacío o un mensaje indicando que la creación se realiza en otro lugar si lo prefieres.
+        return response()->json([], 200);
     }
 
     public function store(Request $request): \Illuminate\Http\JsonResponse
@@ -27,39 +28,61 @@ class UsuarioController extends Controller
         // Validación de datos aquí
         // Crear un nuevo usuario
         $usuario = new Usuario();
-        $usuario->nombre = $request->input('nombres') . $request->input('apellidos');
-        $usuario->tipo = $request->input('tipo');
+        $usuario->nombre = $request->input('nombre');
+        $usuario->puesto = $request->input('puesto');
         $usuario->email = $request->input('email');
-        $usuario->permisos = json_encode($request->input('permisos')); // Asegúrate de que los datos se manejen adecuadamente como JSON.
+        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
-        return response()->json($request);
+
+        return response()->json($usuario, 201);
     }
 
     public function edit($id)
     {
         $usuario = Usuario::findOrFail($id);
-        return view('admin.usuarios.edit', compact('usuario'));
+        return response()->json($usuario);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        // Validación de datos aquí
+        $rules = [
+            'nombre' => 'required|string|max:50',
+            'puesto' => 'required|string|max:30',
+            'email' => 'required|string|email|unique:usuario,email,' . $id,
+            'permisos' => 'required|json', // Asegúrate de que los datos se manejen adecuadamente como JSON.
+        ];
+
+        $messages = [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
+            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
+            'unique' => 'El campo :attribute ya está en uso.',
+            'json' => 'El campo :attribute debe ser un JSON válido.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
         // Actualizar el usuario
         $usuario = Usuario::findOrFail($id);
         $usuario->nombre = $request->input('nombre');
         $usuario->puesto = $request->input('puesto');
         $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // revisar el manejo de JSON.
+        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
 
-        return redirect()->route('admin.usuarios.index');
+        return response()->json($usuario, 200);
     }
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\JsonResponse
     {
         $usuario = Usuario::findOrFail($id);
         $usuario->delete();
 
-        return redirect()->route('admin.usuarios.index');
+        return response()->json(['message' => 'Usuario eliminado'], 200);
     }
 }
