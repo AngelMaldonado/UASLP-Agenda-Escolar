@@ -23,7 +23,7 @@
     background-color: var(--prim);
 
     > * {
-      color: white;
+      color: var(--blanco);
     }
   }
 
@@ -31,7 +31,7 @@
     background-color: var(--prim-50);
 
     > * {
-      color: white;
+      color: var(--blanco);
     }
   }
 }

@@ -4,7 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: var(--blanco);
 }
 
 header {
@@ -14,11 +14,11 @@ header {
 .formulario {
     width: 300%; /* Ajusta el ancho del formulario */
     max-width: 450px; /* Establece un ancho máximo */
-    background-color: #fff;
+    background-color: var(--blanco);
     padding: 30px;
     border-radius: 10px;
     text-align: center ;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px var(--negro);
 }
 
 .formulario input[type="text"],
@@ -27,7 +27,7 @@ header {
     width: 100%;
     padding: 5px; /* Ajusta el tamaño vertical */
     margin: 4px 0; /* Ajusta el margen vertical */
-    border: 1px solid #ccc;
+    border: 1px solid var(--blanco-80);
     border-radius: 3px;
 }
 
@@ -37,13 +37,13 @@ header {
 
 .barra-mini {
     height: 7px;
-    background-color: rgb(66, 138, 215);
+    background-color: var(--prim-50);
     text-align: right;
 }
 
 
 .barra-UASLP {
-    background-color:rgb(10, 64, 117);
+    background-color: var(--prim);
     /*background-image: url('/src/components/FormularioAdministrador/img/LogoUaslp.png');  Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta de tu imagen */
     height: 160px;
     background-size: auto 50%; /* Ajusta el tamaño de la imagen */
@@ -68,16 +68,14 @@ header {
 }
 
 .titulo {
-    color: #fff; /* Color del texto */
+    color: var(--blanco); /* Color del texto */
     
     text-align: center; /* Centra el texto horizontalmente */
     font-family: sans-serif;
 }
 
-
-
 .linea-separadora {
-    border-bottom: 5px solid #ccc;
+    border-bottom: 5px solid var(--blanco);
     margin: 20px 0;
 }
 
@@ -86,20 +84,26 @@ header {
     padding: 10px 20px;
     margin: 10px;
     text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
+    color: var(--blanco);
+    background-color: var(--prim);
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .formulario .boton-recuperar {
-    background-color: #f0ad4e;
+    background-color: var(--negro-20);
+    color: var(--negro);
+}
+
+.formulario .boton-agregar{
+    background-color: var(--prim-80);
+    color: var(--prim);
 }
 
 .encabezado {
-    background-color:rgb(10, 64, 117); /* Fondo azul */
-    color: #fff; /* Color del texto */
+    background-color:var(--prim); /* Fondo azul */
+    color: var(--blanco); /* Color del texto */
     padding: 5px; /* Espacio interno */
     text-align: center; /* Centra el texto horizontalmente */
 }
