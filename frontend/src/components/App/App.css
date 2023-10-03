@@ -7,3 +7,12 @@
   height: 6rem;
   background-color: var(--blanco-80);
 }
+
+.CardsFiltro {
+  width: 100%;
+  padding: 2rem 10rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}

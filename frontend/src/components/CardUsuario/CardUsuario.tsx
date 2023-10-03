@@ -9,15 +9,15 @@ function CardUsuario(usuario: IUsuario) {
   return (
     <div key={usuario.id} className='card'>
       <div id="card-crud">
-        <p id="pcard">#{usuario.id}</p>
-        <div className="btns">
+        <header>
+          <p>#{usuario.id}</p>
           <button id="b1"><i className='bx bx-pencil pencil'></i></button>
           <button id="b2" onClick={() => cambiarEstadM1(!estadoM1)}><i className='bx bx-trash trash'></i></button>
-        </div>
+        </header>
       </div>
       <section className="card-details">
         <img src="https://picsum.photos/200/300?random=1" alt="" className='redonda'/>
-        <h2 id='username'>{usuario.nombre}</h2>
+        <p className="UserName">{usuario.nombre}</p>
         <h4 id='email'>{usuario.email}</h4>
         <div id="card-data">
           <p>{Math.floor(Math.random() * 10)} permisos</p>

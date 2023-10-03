@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "@fullcalendar/daygrid": "^6.1.9",
-    "@fullcalendar/interaction": "^6.1.9",
-    "@fullcalendar/timegrid": "^6.1.9",
-    "@syncfusion/ej2-react-calendars": "^23.1.38",
-    "@types/react-calendar": "^4.1.0"
-  }
-}

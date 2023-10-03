@@ -1,37 +1,31 @@
 .Boton {
-
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  color: var(--prim);
+  background-color: transparent;
+  transition: all 0.3s;
 }
 
-.Boton-icono {
-  max-width: 3.7rem;
-  max-height: 3.7rem;
-  display: flex;
-  padding: 0.8rem;
-  background-color: transparent;
-  border: none;
+.Circular {
   border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s;
+}
+
+.Boton:hover {
+  background-color: var(--prim);
 
   > * {
-    width: 100%;
-    height: 100%;
-    color: inherit;
+    color: var(--blanco);
   }
+}
 
-  &:hover {
-    background-color: var(--prim);
+.Boton__Seleccionado {
+  background-color: var(--prim-50);
 
-    > * {
-      color: var(--blanco);
-    }
-  }
-
-  &:active {
-    background-color: var(--prim-50);
-
-    > * {
-      color: var(--blanco);
-    }
+  > * {
+    color: var(--blanco);
   }
 }

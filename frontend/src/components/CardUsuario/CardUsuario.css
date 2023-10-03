@@ -4,17 +4,21 @@
 }
 
 .card{
-    width: 200px;
-    height: 360px;
+    width: 20rem;
+    height: 36rem;
     border: 1px solid #1111;
-    border-radius: 20px;
+    border-radius: 1rem;
     box-shadow: 2px 3px 5px 2px #1111;
-    padding: 10px;
+    padding: 1.2rem 2.4rem 1.8rem 1.8rem;
     text-align: center;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: space-between;
     /* align-items: center; */
+  > header {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .card:hover{
@@ -80,7 +84,7 @@
 #b2:hover > .trash{
     background-color: var(--terc-20);
     color: var(--terc-80);
-} 
+}
 
 #card-data{
     background-color: var(--sec);
@@ -97,11 +101,15 @@
 }
 
 button{
-   all: unset; 
+   all: unset;
+}
+
+.UserName {
+  text: var(--Text-LG-Light);
 }
 
 #bcC {
- 
+
   color: var(--error);
 }
 
