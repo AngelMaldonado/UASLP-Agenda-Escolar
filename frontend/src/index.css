@@ -119,6 +119,10 @@ button {
   font: var(--Text-SM-Semibold);
 }
 
-input {
+label {
+  font: var(--Text-SM-Regular);
+}
+
+input, select {
   font: var(--Text-SM-Regular);
 }

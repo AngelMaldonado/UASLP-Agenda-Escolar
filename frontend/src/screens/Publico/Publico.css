@@ -1,0 +1,9 @@
+.header-uaslp {
+  height: 13rem;
+  background-color: var(--prim);
+}
+
+.header-agenda {
+  height: 4rem;
+  background-color: var(--terc);
+}

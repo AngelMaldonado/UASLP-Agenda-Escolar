@@ -1,0 +1,22 @@
+.NavbarAdmin {
+  height: 6.4rem;
+  padding: 0 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--blanco-80);
+  color: var(--prim);
+
+  > .Opciones {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+
+    > .ControladorMes {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+  }
+}
+

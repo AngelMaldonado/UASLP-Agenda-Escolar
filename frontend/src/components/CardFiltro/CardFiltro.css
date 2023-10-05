@@ -1,0 +1,36 @@
+.CardFiltro {
+  width: 20rem;
+  height: fit-content;
+  padding: 1rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--blanco);
+  box-shadow: var(--sombra-normal);
+  border-radius: 1.2rem;
+  transition: all 0.3s;
+
+  > header {
+    height: fit-content;
+    margin: 0 auto;
+    display: flex;
+    gap: 1.3rem;
+  }
+
+  > .CardFiltro__Img {
+    min-height: 18.2rem;
+    border-radius: 1.2rem;
+    background-image: url("https://picsum.photos/200");
+    filter: brightness(70%);
+    transition: inherit;
+  }
+}
+
+.CardFiltro:hover {
+  background-color: var(--blanco-80);
+
+  > .CardFiltro__Img {
+    filter: brightness(100%);
+  }
+}

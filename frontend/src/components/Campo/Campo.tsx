@@ -22,7 +22,7 @@ function Campo(props: CampoProps) {
   switch (props.tipoCampo) {
     case TipoCampo.Text:
       return (
-        <div className={props.boton ? "Campo Campo-boton" : "Campo"}>
+        <div className={'Campo' + (props.boton ? ' Campo-boton' : ' ')}>
           {props.etiqueta ? <label htmlFor={props.id}>{props.etiqueta}</label> : null}
           <input id={props.id} name={props.id} type="text" placeholder={props.placeholder}/>
           {props.boton ? props.boton : null}
@@ -30,7 +30,7 @@ function Campo(props: CampoProps) {
       )
     case TipoCampo.File:
       return (
-        <div className={props.boton ? "Campo Campo-boton" : "Campo"}>
+        <div className={'Campo' + (props.boton ? ' Campo-boton' : ' ')}>
           {props.etiqueta ? <label htmlFor={props.id}>{props.etiqueta}</label> : null}
           <input id={props.id} name={props.id} type="file" accept={props.archivos}/>
           {props.boton ? props.boton : null}

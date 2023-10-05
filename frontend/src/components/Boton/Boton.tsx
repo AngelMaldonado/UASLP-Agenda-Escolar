@@ -1,7 +1,7 @@
 import './Boton.css'
 import React, {Component} from 'react'
 
-enum TipoBoton {
+enum Tema {
   Primario = "Primario",
   Blanco = "Blanco",
   Error = "Error",
@@ -10,7 +10,7 @@ enum TipoBoton {
 
 interface BotonProps {
   seleccionado?: boolean,
-  tipo?: TipoBoton,
+  tipo?: Tema,
   etiqueta?: string,
   icono?: React.ReactElement,
   onClick: React.MouseEventHandler
@@ -29,7 +29,9 @@ class Boton extends Component<BotonProps> {
       )
     } else if (this.props.etiqueta) {
       return (
-        null
+        <button onClick={this.props.onClick} className='Boton'>
+          <p>{this.props.etiqueta}</p>
+        </button>
       )
     } else if (this.props.icono) {
       return (

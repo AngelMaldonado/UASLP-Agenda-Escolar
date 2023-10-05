@@ -5,6 +5,7 @@
   position: relative;
 
   > label {
+    text-align: left;
     width: 100%;
   }
 
