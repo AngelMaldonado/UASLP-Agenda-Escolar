@@ -1,107 +1,142 @@
-* {
-    margin: 0;
-    padding: 0;
+.card-usuario {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20rem;
+  height: 36rem;
+  padding: 1.8rem;
+  border-radius: 1rem;
+  box-shadow: var(--sombra-normal);
+  text-align: center;
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > .opciones {
+      display: flex;
+    }
+  }
+
+  > section {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
-.card{
-    width: 20rem;
-    height: 36rem;
-    border: 1px solid #1111;
-    border-radius: 1rem;
-    box-shadow: 2px 3px 5px 2px #1111;
-    padding: 1.2rem 2.4rem 1.8rem 1.8rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* align-items: center; */
+.card {
+  width: 20rem;
+  height: 36rem;
+  border: 1px solid #1111;
+  border-radius: 1rem;
+  box-shadow: 2px 3px 5px 2px #1111;
+  padding: 1.2rem 2.4rem 1.8rem 1.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
+
   > header {
     display: flex;
     justify-content: space-between;
   }
+
+
 }
 
-.card:hover{
-    background-color: rgb(243, 243,243);
+#email {
+  font: var(--Text-XS-Light);
+  width: 100%;
+  overflow: clip;
+}
+
+.card:hover {
+  background-color: rgb(243, 243, 243);
 }
 
 .redonda {
-    width: 100px;
-    height: 100px;
-    border-radius: 150%;
+  width: 100px;
+  height: 100px;
+  border-radius: 150%;
 }
 
 #card-crud {
-    display: block;
+  display: block;
 }
 
 .btns {
-    float: right;
+  float: right;
 }
 
 #pcard {
-    float: left;
+  float: left;
 }
 
-.pencil{
-    color: var(--prim);
-    background-color: white;
+.pencil {
+  color: var(--prim);
+  background-color: white;
 
-}
-
-
-.trash{
-    color: var(--error-50);
-    background-color: white;
-    left: 0;
 }
 
 
-#b1, #b2{
-    text-decoration: none;
-    background-color: white;
-    border-color: white;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 150%;
-    line-height: 0%;
-    cursor: pointer;
+.trash {
+  color: var(--error-50);
+  background-color: white;
+  left: 0;
 }
 
-#b1:hover{
-    background-color: var(--prim);
+
+#b1, #b2 {
+  text-decoration: none;
+  background-color: white;
+  border-color: white;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 150%;
+  line-height: 0%;
+  cursor: pointer;
+}
+
+#b1:hover {
+  background-color: var(--prim);
 }
 
 #b1:hover > .pencil {
-    background-color: var(--prim);
-    color: white;
+  background-color: var(--prim);
+  color: white;
 }
 
 #b2:hover {
-    background-color: var(--terc-20);
+  background-color: var(--terc-20);
 }
 
-#b2:hover > .trash{
-    background-color: var(--terc-20);
-    color: var(--terc-80);
+#b2:hover > .trash {
+  background-color: var(--terc-20);
+  color: var(--terc-80);
 }
 
-#card-data{
-    background-color: var(--sec);
-    color: white;
-    border-radius:  25px;
-    width: 100%;
+#card-data {
+  background-color: var(--sec);
+  color: white;
+  border-radius: 25px;
+  width: 100%;
+
+  > p {
+    font-size: 1.5rem;
+  }
 }
 
 .card-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+
 }
 
-button{
-   all: unset;
+button {
+  all: unset;
 }
 
 .UserName {
@@ -113,15 +148,15 @@ button{
   color: var(--error);
 }
 
-#bcC:hover{
-    background-color: var(--terc-20);
+#bcC:hover {
+  background-color: var(--terc-20);
 }
 
-#beC{
-    color: var(--prim);
+#beC {
+  color: var(--prim);
 }
 
 #beC:hover {
-    color: white;
-    background-color: var(--prim);
+  color: white;
+  background-color: var(--prim);
 }

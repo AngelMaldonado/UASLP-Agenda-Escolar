@@ -2,19 +2,22 @@ import {useState} from 'react';
 import "./CardUsuario.css";
 import ModalE from '../ModalEliminacion/ModalE.tsx'
 import IUsuario from "../../models/IUsuario";
+import Boton from "../Boton";
+import {FaRegEdit, FaRegTrashAlt} from "react-icons/fa";
 
 function CardUsuario(usuario: IUsuario) {
   const [estadoM1, cambiarEstadM1] = useState(false);
 
   return (
-    <div key={usuario.id} className='card'>
-      <div id="card-crud">
-        <header>
-          <p>#{usuario.id}</p>
-          <button id="b1"><i className='bx bx-pencil pencil'></i></button>
-          <button id="b2" onClick={() => cambiarEstadM1(!estadoM1)}><i className='bx bx-trash trash'></i></button>
-        </header>
-      </div>
+    <div key={usuario.id} className='card-usuario'>
+      <header>
+        <p>#{usuario.id}</p>
+        <div className='opciones'>
+          <Boton icono={<FaRegEdit/>} onClick={() => {
+          }}/>
+          <Boton icono={<FaRegTrashAlt/>} onClick={() => cambiarEstadM1(!estadoM1)}/>
+        </div>
+      </header>
       <section className="card-details">
         <img src="https://picsum.photos/200/300?random=1" alt="" className='redonda'/>
         <p className="UserName">{usuario.nombre}</p>
