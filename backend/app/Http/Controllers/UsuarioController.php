@@ -6,8 +6,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Casts\Json;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Http;
 
 class UsuarioController extends Controller
 {
@@ -23,18 +26,18 @@ class UsuarioController extends Controller
         return response()->json([], 200);
     }
 
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): RedirectResponse
     {
         // Validación de datos aquí
         // Crear un nuevo usuario
         $usuario = new Usuario();
-        $usuario->nombre = $request->input('nombre');
-        $usuario->puesto = $request->input('puesto');
+        $usuario->nombre = $request->input('nombres') . $request->input('apellidos');
+        $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
+        $usuario->permisos = Json::encode($request->input('permisos')); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
 
-        return response()->json($usuario, 201);
+        return redirect('/administrador');
     }
 
     public function edit($id)
