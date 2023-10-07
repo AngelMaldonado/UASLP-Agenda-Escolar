@@ -1,5 +1,7 @@
 import './Administrador.css'
 import NavbarAdmin from "../../components/NavbarAdmin";
+import Calendar from '../../components/Klendario/Calendario';
+
 
 function Administrador() {
   return (
@@ -8,6 +10,7 @@ function Administrador() {
       <header className='header-agenda'>
       </header>
       <NavbarAdmin/>
+      <Calendar/>
     </>
   );
 }

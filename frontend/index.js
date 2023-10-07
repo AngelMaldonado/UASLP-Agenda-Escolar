@@ -1,3 +1,8 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+
 const express = require('express')
 const cors = require('cors')
 const mysql = require('mysql')
@@ -6,6 +11,17 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({ limit: '10mb' }))
+
+
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
 
 
 const credentials = {
