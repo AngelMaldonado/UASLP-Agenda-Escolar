@@ -1,0 +1,25 @@
+.redondeaa{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 502%;
+    overflow: hidden;
+    background-color: var(--negro);
+}
+.circulo{
+    position: absolute;
+    left: 33px;
+    top: 30px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+}

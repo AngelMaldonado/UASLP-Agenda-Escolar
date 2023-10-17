@@ -1,0 +1,99 @@
+.BarraFiltro {
+    height: 6rem;
+    width: 100%;
+     background-color: var(--terc);
+   }
+   
+   .BarraAdmin {
+     height: 6rem;
+     background-color: var(--blanco-80);
+   }
+   
+ 
+   .solo{
+     all: unset;
+   }
+ 
+   .cajita button{
+     font-weight: bold;
+     font-size: 20px;
+     color: white;
+     /* padding:; */
+     height: 4rem;
+   }
+ 
+   .cajita button:active {
+     background-color: var(--sec-20);
+     color: var(--negro);
+ 
+   }
+ 
+   #d1v {
+     color: black;
+     background-color: aquamarine;
+   }
+ 
+ 
+   .search {
+     background-color: white;
+   }
+ 
+   .black-text {
+     color: black;
+     max-width: 200px;
+     height: 25px;;
+   }
+   
+   .bnticon {
+     background-color: white;
+     border: none;
+   }
+ 
+   .sbtn {
+     width:23px;
+     height:23px;
+     border-radius: 50%;
+     background-color:white;
+ 
+     border: none;
+     outline: none;
+     cursor: pointer;
+   }
+ 
+   .sbtn:hover {
+     background-color: var(--prim-80);
+   }
+ 
+
+   
+<<<<<<< HEAD
+input{
+  font:  var( --Text-SM);
+  background-color: white;
+}
+
+select {
+  position: relative;
+  background-color: white;
+  color: var(--negro);
+  font:  var( --Text-SM);
+  max-width: max-content;
+ right: 0;
+
+}
+
+/* #nombres, #apellido {
+    color: aquamarine;
+} */
+
+
+.seleccionables {
+  display: flex;
+  overflow: hidden;
+
+}
+
+.seleccionables > * {
+  width: 50%;
+  overflow: hidden;
+}
