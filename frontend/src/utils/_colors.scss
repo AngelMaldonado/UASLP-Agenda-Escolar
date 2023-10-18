@@ -1,0 +1,37 @@
+$primary: rgb(0, 74, 152);
+$primary-80: rgb(30, 107, 188);
+$primary-50: rgb(66, 138, 215);
+$primary-20: rgb(140, 191, 245);
+$secondary: rgb(0, 178, 227);
+$secondary-80: rgb(86, 219, 255);
+$secondary-50: rgb(164, 235, 255);
+$secondary-20: rgb(212, 246, 255);
+$tertiary: rgb(194, 21, 50);
+$tertiary-80: rgb(234, 61, 90);
+$tertiary-50: rgb(255, 103, 128);
+$tertiary-20: rgb(255, 142, 161);
+$warning: rgb(250, 255, 0);
+$warning-80: rgb(251, 255, 59);
+$warning-50: rgb(252, 255, 109);
+$warning-20: rgb(253, 255, 154);
+$danger: rgb(255, 0, 0);
+$danger-80: rgb(255, 72, 72);
+$danger-50: rgb(255, 119, 119);
+$danger-20: rgb(255, 165, 165);
+$success: rgb(0, 255, 56);
+$success-80: rgb(60, 255, 103);
+$success-50: rgb(109, 255, 141);
+$success-20: rgb(160, 255, 181);
+$blanco: rgb(255, 255, 255);
+$blanco-80: rgb(243, 243, 243);
+$negro: rgb(0, 0, 0);
+$negro-50: rgb(87, 87, 87);
+$negro-20: rgb(114, 114, 114);
+$color-modal: rgba(49, 49, 49, 0.8);
+$color-sombra: rgba($negro, 0.15);
+$color-sombra-campo: rgba($secondary, 0.25);
+
+.bg-blanco-80 {
+  background-color: $blanco-80;
+}
+

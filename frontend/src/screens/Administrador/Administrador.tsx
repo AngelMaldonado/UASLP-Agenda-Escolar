@@ -1,16 +1,14 @@
-import './Administrador.css'
+import './_administrador.scss'
 import NavbarAdmin from "../../components/NavbarAdmin";
-import Calendar from '../../components/Klendario/Calendario';
-
+import Usuarios from "../../components/Usuarios/Usuarios.tsx";
 
 function Administrador() {
   return (
     <>
       <header className='header-uaslp'></header>
-      <header className='header-agenda'>
-      </header>
+      <header className='header-agenda'></header>
       <NavbarAdmin/>
-      <Calendar/>
+      <Usuarios/>
     </>
   );
 }

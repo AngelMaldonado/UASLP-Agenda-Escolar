@@ -7,26 +7,12 @@ import Administrador from "../../screens/Administrador";
 import '../Klendario/styles.css'; // Importa los estilos del calendario
 
 function App() {
-  //const [selectedDate, setSelectedDate] = useState(new Date());
-
-  /*
-  const handleDateChange = (date: Date) => {
-    console.log('Fecha seleccionada:', date);
-    // Aquí puedes realizar acciones adicionales con la fecha seleccionada
-    setSelectedDate(date);
-  };
-
-   */
-
-
   return (
     <>
-
       <Routes>
         <Route path="/" element={<Publico/>}/>
         <Route path="/administracion" element={<Administrador/>}/>
       </Routes>
-
     </>
   )
 }

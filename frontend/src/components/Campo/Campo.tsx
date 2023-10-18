@@ -1,15 +1,16 @@
-import './Campo.css'
+import "./_campo.scss"
 import Boton from "../Boton/";
-import React from "react";
+import React, {ReactElement} from "react";
+import Select from "react-select";
 
-enum TipoCampo {
-  Text,
-  RichText,
-  ComboBox,
-  File
+export enum TipoCampo {
+  Texto = "text",
+  Fecha = "date",
+  Desplegable = "select",
+  Archivo = "file"
 }
 
-interface CampoProps {
+export interface CampoProps {
   id: string,
   tipoCampo: TipoCampo,
   etiqueta?: string,
@@ -18,27 +19,55 @@ interface CampoProps {
   archivos?: string
 }
 
-function Campo(props: CampoProps) {
-  switch (props.tipoCampo) {
-    case TipoCampo.Text:
-      return (
-        <div className={'Campo' + (props.boton ? ' Campo-boton' : ' ')}>
-          {props.etiqueta ? <label htmlFor={props.id}>{props.etiqueta}</label> : null}
-          <input id={props.id} name={props.id} type="text" placeholder={props.placeholder}/>
-          {props.boton ? props.boton : null}
-        </div>
-      )
-    case TipoCampo.File:
-      return (
-        <div className={'Campo' + (props.boton ? ' Campo-boton' : ' ')}>
-          {props.etiqueta ? <label htmlFor={props.id}>{props.etiqueta}</label> : null}
-          <input id={props.id} name={props.id} type="file" accept={props.archivos}/>
-          {props.boton ? props.boton : null}
-        </div>
-      )
-    default:
-      return null
+class Campo extends React.Component<CampoProps> {
+  static defaultProps = {tipoCampo: TipoCampo.Texto}
+  options = [
+    {value: 'chocolate', label: 'Chocolate'},
+    {value: 'strawberry', label: 'Strawberry'},
+    {value: 'vanilla', label: 'Vanilla'}
+  ]
+
+  render() {
+    switch (this.props.tipoCampo) {
+      case TipoCampo.Texto:
+        return this.inputElement()
+      case TipoCampo.Desplegable:
+        return this.selectElement()
+    }
+  }
+
+  private inputElement(): ReactElement {
+    return (
+      <div className="w-100">
+        <label className="form-label" htmlFor={this.props.id} hidden={this.props.etiqueta == null}>
+          {this.props.etiqueta}
+        </label>
+        <input className="form-control"
+               title={this.props.id}
+               id={this.props.id} name={this.props.id}
+               type={this.props.tipoCampo}
+               placeholder={this.props.placeholder}
+        />
+        {this.props.boton}
+      </div>
+    )
+  }
+
+  private selectElement(): ReactElement {
+    return (
+      <div className="w-100">
+        <label className="form-label" htmlFor={this.props.id} hidden={this.props.etiqueta == null}>
+          {this.props.etiqueta}
+        </label>
+        <Select options={this.options}
+                unstyled={true}
+                className={"form-control"}
+                classNamePrefix={"select"}
+                onFocus={(e) => console.log(e.currentTarget)}
+        />
+      </div>
+    )
   }
 }
 
-export {Campo, TipoCampo}
+export default Campo

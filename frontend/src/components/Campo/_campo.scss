@@ -1,0 +1,23 @@
+@use "../../utils" as u;
+
+.form-control {
+  border: 1px solid u.$negro-50;
+
+  &:focus {
+    border-color: u.$primary-50;
+    box-shadow: u.$input-focus-box-shadow;
+  }
+
+  > .select__control {
+    min-height: initial;
+  }
+}
+
+.select-menu {
+  border-radius: var(--bs-border-radius);
+  background-color: u.$blanco;
+}
+
+.form-control, input[type="text"] {
+  width: 100%;
+}

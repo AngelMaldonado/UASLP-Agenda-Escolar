@@ -1,0 +1,57 @@
+@use "../../utils" as u;
+
+.btn {
+  padding: u.$btn-padding-y u.$btn-padding-x;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: larger;
+  border: none;
+  border-radius: u.$btn-border-radius;
+
+  &.btn-primary {
+    color: u.$blanco;
+    background-color: u.$primary;
+
+    &:hover {
+      background-color: u.$primary-50;
+    }
+
+    &:active {
+      background-color: u.$primary-80;
+    }
+  }
+
+  &.btn-primary-inverse {
+    color: u.$primary;
+
+    &:hover {
+      color: u.$blanco;
+      background-color: u.$primary;
+    }
+
+    &:active {
+      color: u.$blanco;
+      background-color: u.$primary-50;
+    }
+  }
+
+  &.btn-danger {
+    &:hover {
+      background-color: u.$tertiary-20;
+    }
+  }
+
+  &.btn-danger-inverse {
+    color: u.$danger;
+
+    &:hover {
+      background-color: u.$tertiary-20;
+    }
+
+    &:active {
+      color: u.$danger-20;
+      background-color: u.$tertiary-80;
+    }
+  }
+}

@@ -1,0 +1,53 @@
+@use "../../utils" as u;
+
+.card-usuario, .card.card-nuevo-usuario {
+  width: 17rem;
+  height: 28rem;
+  box-shadow: u.$card-box-shadow;
+  border-width: u.$card-border-width;
+  border-radius: u.$card-border-radius;
+
+  > .card-body {
+    display: flex;
+    flex-direction: column;
+
+    .card-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    > .badges {
+      > .badge {
+        color: u.$blanco;
+        background-color: u.$secondary;
+      }
+    }
+  }
+}
+
+.card.card-nuevo-usuario {
+  color: u.$primary;
+  background-color: u.$secondary-50;
+  cursor: pointer;
+
+  > .card-body {
+    justify-content: center;
+    gap: 2rem;
+
+    > .new-icon {
+      width: 5rem;
+      height: 5rem;
+      margin: 0 auto;
+      padding: 0.8rem;
+      border-radius: 50%;
+      background-color: u.$primary;
+
+      > * {
+        width: 100%;
+        height: 100%;
+        color: u.$blanco;
+      }
+    }
+  }
+}

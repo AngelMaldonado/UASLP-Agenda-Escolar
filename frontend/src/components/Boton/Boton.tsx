@@ -1,45 +1,56 @@
-import './Boton.css'
-import React, {Component} from 'react'
+import "./_boton.scss"
+import React, {Component} from "react"
+import {TemaComponente} from "../../utils/Utils.ts"
 
-enum Tema {
-  Primario = "Primario",
-  Blanco = "Blanco",
-  Error = "Error",
-  Exito = "Exito"
+export enum TipoBoton {
+  Link = "link",
+  Normal = "button",
+  Submit = "submit",
 }
 
-interface BotonProps {
+export interface BotonProps {
   seleccionado?: boolean,
-  tipo?: Tema,
+  tema?: TemaComponente,
   etiqueta?: string,
   icono?: React.ReactElement,
+  tipoBoton?: TipoBoton,
   onClick: React.MouseEventHandler
 }
 
 class Boton extends Component<BotonProps> {
+  static defaultProps = {
+    seleccionado: false,
+    tema: TemaComponente.Primario,
+    etiqueta: "",
+    tipoBoton: TipoBoton.Normal,
+    onClick: () => {
+    },
+  }
+
   render() {
-    if (this.props.etiqueta && this.props.icono) {
-      return (
-        <button onClick={this.props.onClick}
-                className={'Boton' + (this.props.seleccionado ? ' Boton__Seleccionado' : '')}
-        >
-          <p>{this.props.etiqueta}</p>
-          {this.props.icono}
-        </button>
-      )
-    } else if (this.props.etiqueta) {
-      return (
-        <button onClick={this.props.onClick} className='Boton'>
-          <p>{this.props.etiqueta}</p>
-        </button>
-      )
-    } else if (this.props.icono) {
-      return (
-        <button onClick={this.props.onClick} className='Boton Circular'>
-          {this.props.icono}
-        </button>
-      )
-    } else return null
+    switch (this.props.tipoBoton) {
+      case TipoBoton.Normal:
+        return (
+          <button className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
+            {this.props.etiqueta}
+            {this.props.icono}
+          </button>
+        )
+      case TipoBoton.Link:
+        return (
+          <a className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
+            {this.props.etiqueta}
+            {this.props.icono}
+          </a>
+        )
+      case TipoBoton.Submit:
+        return (
+          <button className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
+            {this.props.etiqueta}
+            {this.props.icono}
+          </button>
+        )
+    }
   }
 }
 

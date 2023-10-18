@@ -1,18 +1,9 @@
-import './NavbarAdmin.css'
+import './_navbaradmin.scss'
 import Boton from "../Boton";
-import {
-  FaAngleLeft,
-  FaAngleRight,
-  FaRegCalendarAlt,
-  FaRegFileImage,
-  FaRegPlusSquare, FaRegSun,
-  FaRegUser,
-  FaStream
-} from 'react-icons/fa'
+import {TemaComponente} from "../../utils/Utils.ts";
 import {ReactComponentElement, useState} from "react";
-import {Campo} from "../Campo/Campo.tsx";
-import {Tab, TabPanel, Tabs} from "react-tabs";
-import Usuarios from "../Usuarios/Usuarios.tsx";
+import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream} from 'react-icons/fa'
+import Campo from "../Campo";
 
 function NavbarAdmin() {
   const [tabIndex, setTabIndex] = useState(0)
@@ -21,43 +12,35 @@ function NavbarAdmin() {
   }
 
   const opciones: ReactComponentElement<typeof Boton>[] = [
-    <Boton etiqueta='Tabla de Eventos' icono={<FaRegCalendarAlt/>} onClick={() => cambiaOpcion(0)}/>,
-    <Boton etiqueta='Usuarios' icono={<FaRegUser/>} onClick={() => cambiaOpcion(1)}/>,
-    <Boton etiqueta='Filtros' icono={<FaStream/>} onClick={() => cambiaOpcion(2)}/>,
-    <Boton etiqueta='Símbolos' icono={<FaRegFileImage/>} onClick={() => cambiaOpcion(3)}/>,
-    <Boton etiqueta='Crear Evento' icono={<FaRegPlusSquare/>} onClick={() => alert('Formulario Nuevo Evento')}/>
+    <Boton tema={TemaComponente.PrimarioInverso} etiqueta="Tabla de Eventos" icono={<FaRegCalendarAlt/>}
+           onClick={() => cambiaOpcion(0)}/>,
+    <Boton tema={TemaComponente.PrimarioInverso} etiqueta="Usuarios" icono={<FaRegUser/>}
+           onClick={() => cambiaOpcion(1)}/>,
+    <Boton tema={TemaComponente.PrimarioInverso} etiqueta="Filtros" icono={<FaStream/>}
+           onClick={() => cambiaOpcion(2)}/>,
+    <Boton tema={TemaComponente.PrimarioInverso} etiqueta="Símbolos" icono={<FaRegFileImage/>}
+           onClick={() => cambiaOpcion(3)}/>,
+    <Boton tema={TemaComponente.PrimarioInverso} etiqueta="Crear Evento" icono={<FaRegPlusSquare/>}
+           onClick={() => alert('Formulario Nuevo Evento')}/>
   ];
 
   return (
-    <Tabs selectedIndex={tabIndex}>
-      <header className='NavbarAdmin'>
-        <ul className='Opciones'>
-          <li className='ControladorMes'>
-            <Boton icono={<FaAngleLeft/>} onClick={() => {
-            }}/>
-            <p>Enero</p>
-            <Boton icono={<FaAngleRight/>} onClick={() => {
-            }}/>
-          </li>
-          <li className='ControladorMes'>
-            <Tab>
-              <Boton etiqueta='Hoy' icono={<FaRegSun/>} onClick={() => {
-              }}/>
-            </Tab>
-          </li>
+    <nav className="navbar navbar-expand-lg bg-blanco-80">
+      <div className="container">
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <Campo id="busqueda" placeholder="Placeholder...."/>
+        </div>
+        <ul className="navbar-nav gap-2 me-auto mb-2 mb-lg-0">
+          {opciones.map((opcion, index) => (<li key={index}>{opcion}</li>))}
         </ul>
-        <ul className='Opciones'>
-          {opciones.map((opcion, index) => (
-            <li key={index}>{opcion}</li>
-          ))}
-        </ul>
-      </header>
-      <TabPanel>Tabla de eventos...</TabPanel>
-      <TabPanel><Usuarios/></TabPanel>
-      <TabPanel>Cards de filtros...</TabPanel>
-      <TabPanel>Cards de simbolos...</TabPanel>
-      <TabPanel>Cards de simbolos...</TabPanel>
-    </Tabs>
+      </div>
+    </nav>
   );
 }
 
