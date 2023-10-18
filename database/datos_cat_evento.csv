@@ -1,0 +1,291 @@
+id,nombre,descripcion,simbologia,
+1,Inscripción y pago de programas de posgrado, Período de inscripción y pago de colegiatura de los programas de posgrado,./public/simbologia/1.webp,
+2, Período vacacional de la UASLP, Período vacacional de la UASLP,./public/simbologia/2.webp,
+3,Reunión de inicio de semestre con Profesores de la facultad,Reunión de inicio del semestre con Profesores de la Facultad.,./public/simbologia/3.webp,
+4,Aplicación del examen general de conocimientos como opción de titulación,Aplicación del examen general de conocimientos como opción de titulación,./public/simbologia/4.webp,
+5,1er reunión de información alumnos de nuevo ingreso,1er reunión de información: Autoridades de la Facultad de Ingeniería con Padres de familia y Alumnos de primer ingreso.,./public/simbologia/5.webp,
+6,Inicio de clases del semetre,Inicio de clases del semestre,./public/simbologia/6.webp,
+7,Periodo de bajas de materias del Departamento Físico Matemáticas, Período de bajas de materias del Departamento Fisico Matematico,./public/simbologia/7.webp,
+8,Reunión del Consejo de Posgrado de la Facultad de Ingeniería,Reunión del Consejo de Posgrado de la Facultad de Ingeniería,./public/simbologia/8.webp,
+9, Período de altas y bajas de materias del DUI, Período de altas y bajas de materias del Departamento Universitario de Inglés,./public/simbologia/9.webp,
+10,Sesión ordinaria del H. Consejo Técnico Consultivo.,Sesión ordinaria del H. Consejo Técnico Consultivo.,./public/simbologia/10.webp,
+11,Inicio de cursos del DUI,Inicio de cursos del Departamento Universitario de Inglés,./public/simbologia/11.webp,
+12,Día inhábil,Día inhábil,./public/simbologia/12.webp,
+13,Inicio de cursos de posgrado,Inicio de cursos de posgrado,./public/simbologia/13.webp,
+14," Período de verificación de kárdex
+"," Período de verificación de kárdex, por los alumnos de todas las carreras, a través del portal de la Facultad de ingeniería, https://estudiantes.ing.uaslp.mx/, 
+en caso de requerir correcciones, enviar correo a secretaria.escolar@ing.uaslp.mx",./public/simbologia/14.webp,
+15,Reunión con estudiantes de posgrado de nuevo ingreso,Reunión con estudiantes de posgrado de nuevo ingreso.,./public/simbologia/15.webp,
+16, Período para pago de bajas del DFM,"Período para pago de bajas del Departamento de Físico Matemáticas. 
+El pago posterior a esta fecha causará pago extemporáneo.",./public/simbologia/16.webp,
+17,"1er. examen parcial de Química A, Cálculo C y Cálculo E","1er. examen parcial de:
+Química A de 7:00 a 8:30 horas.
+Cálculo C y Cálculo E de 8:30 a 10:00 horas.",./public/simbologia/17.webp,
+18,1er. examen parcial de Introducción a la química," 1er. examen parcial de:
+Introducción a la química de 7:00 a 8:30 horas",./public/simbologia/18.webp,
+19, Inicio de servicio SAC, Inicio de servicio SAC,./public/simbologia/19.webp,
+20,1er. examen parcial en materias de formación humanística (5 horas/semana),1er. examen parcial en materias de formación humanística y de la carrera de 5 horas/semana,./public/simbologia/20.webp,
+21,"1er. examen parcial de Geometría y trigonometría
+","1er. examen parcial de:
+Geometría y trigonometría
+Se aplicará en el horario asignado a la materia",./public/simbologia/21.webp,
+22,Fecha límite para solicitar la corrección de kárdex.,"Fecha límite para solicitar la corrección de kárdex a través del portal de la Facultad de Ingeniería, https://estudiantes.ing.uaslp.mx/",./public/simbologia/22.webp,
+23,"1er. examen parcial de Álgebra A, Álgebra B y Cálculo B 
+
+","1er. examen parcial de:
+Álgebra A y Álgebra B de 7:00 a 8:30 horas.
+Cálculo B de 8:30 a 10:00 horas.",./public/simbologia/23.webp,
+24,1er. examen parcial de Álgebra básica,"1er. examen parcial de:
+Álgebra básica de 7:00 a 8:30 horas.",./public/simbologia/24.webp,
+25,1er. examen parcial en materias de formación humanística y de la carrera 4 horas.,1er. examen parcial en materias de formación humanística y de la carrera de 4 horas/semana,./public/simbologia/25.webp,
+26,"Ceremonia de entrega de cartas de pasante
+","Ceremonia de entrega de cartas de pasante.
+Centro Cultural Universitario Bicentenario de la Universidad Autónoma de San Luis Potosí.",./public/simbologia/26.webp,
+27,Reunión del Consejo de Posgrado de la Facultad de Ingeniería,Reunión del Consejo de Posgrado de la Facultad de Ingeniería,./public/simbologia/27.webp,
+28,"1er. examen parcial de Física A, Física B, Física C y Física D
+","1er. examen parcial de:
+Física A y Física B
+Física C y Física D
+Se aplicará en el horario asignado a la materia",./public/simbologia/28.webp,
+29,"1er. examen parcial de Introducción a la física
+","1er. examen parcial de:
+Introducción a la física
+Se aplicará en el horario asignado a la materia.",./public/simbologia/29.webp,
+30,Pago e inscripción para examen a regularización y acreditación de materias ,"Período para pago e inscripción para presentar examen a regularización y acreditación de materias de formación humanística y de la carrera por medio de caja virtual. (https://www.finanzas.uaslp.mx/CajaVirtual)
+No se pueden solicitar dos exámenes a la misma hora y día.",./public/simbologia/30.webp,
+31, Periodo para pago extemporáneo de cursos de posgrado, Período para pago extemporáneo de cursos de posgrado,./public/simbologia/31.webp,
+32, Periodo de evaluación del kárdex por parte de los alumnos de posgrado.,Período de evaluación del kárdex por parte de los alumnos de posgrado.,./public/simbologia/32.webp,
+33,Fecha límite para tramitar baja temporal ,Fecha límite para tramitar baja temporal en bajas@ing.uaslp.mx.,./public/simbologia/33.webp,
+34,Fecha límite para tramitar bajas de materias ,Fecha límite para tramitar bajas de materias de formación humanística y de carrera en bajas.materias@ing.uaslp.mx.,./public/simbologia/34.webp,
+35, 1er. examen parcial en materias de formación humanística y de la carrera 3 y 2 horas, 1er. examen parcial en materias de formación humanística y de la carrera de 3 y 2 horas/semana,./public/simbologia/35.webp,
+36,1er. examen parcial escrito del DUI,1er. examen parcial escrito del Departamento Universitario de Inglés,./public/simbologia/36.webp,
+37,1er. examen parcial oral del DUI,1er. examen parcial oral del Departamento Universitario de Inglés,./public/simbologia/37.webp,
+38,1er. examen parcial de Cálculo A y Cálculo D ,"1er. examen parcial de:
+Cálculo A de 7:00 a 8:30 horas.
+Cálculo D de 8:30 a 10:00 horas.",./public/simbologia/38.webp,
+39, 1er. examen parcial de Precálculo ," 1er. examen parcial de:
+Precálculo de 7:00 a 8:30 horas.",./public/simbologia/39.webp,
+40,"Período de pago de bajas de materias de la carrera.
+","Periodo de pago de bajas de materias de formación humanística y de la carrera
+El pago posterior a esta fecha causará pago extemporáneo",./public/simbologia/40.webp,
+41,2do. examen parcial en materias de formación humanística (5 horas/semana).,2do. examen parcial en materias de formación humanística y de la carrera de 5 horas/semana.,./public/simbologia/41.webp,
+42, Período de inscripción y pago para presentar exámenes a regularización del DFM. , Período de inscripción y pago para presentar exámenes a regularización del Departamento de Físico Matemáticas. ,./public/simbologia/42.webp,
+43,"2do. examen parcial de Química A, Cálculo C y Cálculo E","2do. examen parcial de:
+Química A
+Cálculo C y Cálculo E
+Se aplicará en el horario asignado a la materia.",./public/simbologia/43.webp,
+44,"2do. examen parcial de Introducción a la química
+","2do. examen parcial de:
+Introducción a la química
+Se aplicará en el horario asignado a la materia",./public/simbologia/44.webp,
+45,Día de la Universidad Autónoma de San Luis Potosí,Día de la Universidad Autónoma de San Luis Potosí,./public/simbologia/45.webp,
+46,  Período de evaluación del kárdex por parte de los alumnos de posgrado.,  Período de evaluación del kárdex por parte de los alumnos de posgrado.,./public/simbologia/46.webp,
+47,Fecha límite para entrega en DFM recibos de pago de exámenes a regularización.,Fecha límite para entrega en DFM recibos de pago de exámenes a regularización.,./public/simbologia/47.webp,
+48, Período de acreditación de materias. ," Período de acreditación de materias de formación humanística y de la carrera.
+Es requisito presentarse con la credencial vigente de la UASLP.",./public/simbologia/48.webp,
+49, Período de aplicación de exámenes a regularización.," Período de aplicación de exámenes a regularización
+Es requisito presentarse con la credencial vigente de la UASLP.",./public/simbologia/49.webp,
+50,Pago de examen de regularización del DUI,Pago de examen de regularización del Departamento Universitario de Inglés,./public/simbologia/50.webp,
+51," 2do. examen parcial de Geometría y trigonometría
+"," 2do. examen parcial de:
+Geometría y trigonometría
+Se aplicará en el horario asignado a la materia",./public/simbologia/51.webp,
+52,"2do. examen parcial de Álgebra A, Álgebra B y Cálculo B. ","2do. examen parcial de:
+Álgebra A y Álgebra B De 7:00 a 8:30 horas.
+Cálculo B de 8:30 a 10:00 horas.",./public/simbologia/52.webp,
+53,2do. examen parcial de Álgebra básica.,"2do. examen parcial de:
+Álgebra básica de 7:00 a 8:30 horas.",./public/simbologia/53.webp,
+54, Período de tutoría académica obligatoria. , Período de tutoría académica obligatoria. Es requisito para inscripción.,./public/simbologia/54.webp,
+55, Reunión del Consejo de Posgrado de la Facultad de Ingeniería, Reunión del Consejo de Posgrado de la Facultad de Ingeniería,./public/simbologia/55.webp,
+56,2do. examen parcial en materias de 4 horas/semana.,2do. examen parcial en materias de formación humanística y de la carrera de 4 horas/semana.,./public/simbologia/56.webp,
+57,"2do. examen parcial de Física A, Física B, Física C y Física D.","2do. examen parcial de:
+Física A y Física B De 7:00 a 8:30 horas.
+Física C y Física D De 8:30 a 10:00 horas.",./public/simbologia/57.webp,
+58,2do. examen parcial de Introducción a la física.,"2do. examen parcial de:
+Introducción a la física De 7:00 a 8:30 horas.",./public/simbologia/58.webp,
+59,Semana de Ingeniería,Semana de Ingeniería,./public/simbologia/59.webp,
+60,Aplicación de examen TOEFL ITP,Aplicación de examen TOEFL ITP,./public/simbologia/60.webp,
+61,3er. examen parcial en materias de formación humanística (5 horas/semana).,3er. examen parcial en materias de formación humanística y de la carrera de 5 horas/semana.,./public/simbologia/61.webp,
+62,2do. examen parcial de Cálculo A y Cálculo D ,"2do. examen parcial de:
+Cálculo A De 7:00 a 8:30 horas.
+Cálculo D De 8:30 a 10:00 horas.",./public/simbologia/62.webp,
+63,2do. examen parcial de Precálculo ,"2do. examen parcial de:
+Precálculo De 7:00 a 8:30 horas.",./public/simbologia/63.webp,
+64,2do. examen parcial escrito del DUI,2do. examen parcial escrito del Departamento Universitario de Inglés,./public/simbologia/64.webp,
+65, 2do. examen parcial ora del DUI, 2do. examen parcial ora del Departamento Universitario de Inglés,./public/simbologia/65.webp,
+66,"3er. examen parcial de Química A, Cálculo C y Cálculo E ","3er. examen parcial de:
+Química A De 7:00 a 8:30 horas.
+Cálculo C y Cálculo E De 8:30 a 10:00 horas.",./public/simbologia/66.webp,
+67,3er. examen parcial de Introducción a la química ,"3er. examen parcial de:
+Introducción a la química De 7:00 a 8:30 horas.",./public/simbologia/67.webp,
+68,2do. examen parcial en materias de 3 y 2 horas/semana.,2do. examen parcial en materias de formación humanística y de la carrera de 3 y 2 horas/semana.,./public/simbologia/68.webp,
+69,"3er. examen parcial de Geometría y trigonometría
+","3er. examen parcial de:
+Geometría y trigonometría
+Se aplicará en el horario asignado a la materia",./public/simbologia/69.webp,
+70," 3er. examen parcial de Álgebra A, Álgebra B y Cálculo B."," 3er. examen parcial de:
+Álgebra A y Álgebra B De 7:00 a 8:30 horas.
+Cálculo B De 8:30 a 10:00 horas.",./public/simbologia/70.webp,
+71,3er. examen parcial de Álgebra básica ,"3er. examen parcial de:
+Álgebra básica De 7:00 a 8:30 horas.",./public/simbologia/71.webp,
+72, Período de evaluación de la actividad docente por parte de los alumnos a los profesores., Período de evaluación de la actividad docente por parte de los alumnos a los profesores.,./public/simbologia/72.webp,
+73,3er. examen parcial en materias de 4 horas/semana.,3er. examen parcial en materias de formación humanística y de la carrera de 4 horas/semana.,./public/simbologia/73.webp,
+74," 3er. examen parcial de Física A, Física B , Física C y Física D "," 3er. examen parcial de:
+Física A y Física B De 7:00 a 8:30 horas.
+Física C y Física D De 8:30 a 10:00 horas.",./public/simbologia/74.webp,
+75,3er. examen parcial de Introducción a la física,"3er. examen parcial de:
+Introducción a la física De 7:00 a 8:30 horas.",./public/simbologia/75.webp,
+76, Período de evaluación docente del DUI, Período de evaluación docente del Departamento Universitario de Inglés,./public/simbologia/76.webp,
+77,4to. examen parcial en materias de 5 horas/semana.,4to. examen parcial en materias de formación humanística y de la carrera de 5 horas/semana.,./public/simbologia/77.webp,
+78,3er. examen parcial de Cálculo A y Cálculo D.,"3er. examen parcial de:
+Cálculo A De 7:00 a 8:30 horas.
+Cálculo D De 8:30 a 10:00 horas.",./public/simbologia/78.webp,
+79,3er. examen parcial de Precálculo.,"3er. examen parcial de:
+Precálculo De 7:00 a 8:30 horas.",./public/simbologia/79.webp,
+80,Reunión de información sobre trámites de Pasantía.,"Reunión de información con posibles pasantes, sobre trámites de Pasantía.
+Auditorio de la Facultad de Ingeniería 17:00 horas, y por Teams",./public/simbologia/80.webp,
+81,Fecha límite para completar el cambio de carrera a otra Facultad,Fecha límite para completar el cambio de carrera a otra Facultad,./public/simbologia/81.webp,
+82,3er. examen parcial escrito del DUI,3er. examen parcial escrito del Departamento Universitario de Inglés,./public/simbologia/82.webp,
+83,3er. examen parcial oral del DUI,3er. examen parcial oral del Departamento Universitario de Inglés,./public/simbologia/83.webp,
+84," 4to. examen parcial de Química A, Cálculo C y Cálculo E"," 4to. examen parcial de:
+Química A
+Cálculo C y Cálculo E
+Se aplicará en el horario asignado a la materia",./public/simbologia/84.webp,
+85,"4to. examen parcial de Introducción a la química
+","4to. examen parcial de:
+Introducción a la química
+Se aplicará en el horario asignado a la materia",./public/simbologia/85webp,
+86,Período de exámenes ordinarios.,Período de exámenes ordinarios de materias de la carrera.,./public/simbologia/86.webp,
+87,"4to. examen parcial de Álgebra A, Álgebra B y Cálculo B.
+","4to. examen parcial de:
+Álgebra A y Álgebra B
+Cálculo B
+Se aplicará en el horario asignado a la materia",./public/simbologia/87.webp,
+88," 4to. examen parcial de Geometría y trigonometría
+"," 4to. examen parcial de:
+Geometría y trigonometría
+Se aplicará en el horario asignado a la materia",./public/simbologia/88.webp,
+89, Fin de cursos, Fin de cursos.,./public/simbologia/89.webp,
+90,Exámenes extraordinarios,Exámenes extraordinarios de materias de la carrera.,./public/simbologia/90.webp,
+91,"4to. examen parcial de Física A, Física B, Física C y Física D
+","4to. examen parcial de:
+Física A y Física B
+Física C y Física D
+Se aplicará en el horario asignado a la materia",./public/simbologia/91.webp,
+92,"4to. examen parcial de Introducción a la física
+","4to. examen parcial de:
+Introducción a la física
+Se aplicará en el horario asignado a la materia",./public/simbologia/92.webp,
+93," 4to. examen parcial de Cálculo A y Cálculo D
+"," 4to. examen parcial de:
+Cálculo A
+Cálculo D
+Se aplicará en el horario asignado a la materia",./public/simbologia/93.webp,
+94,"4to. examen parcial de Precálculo
+","4to. examen parcial de:
+Precálculo
+Se aplicará en el horario asignado a la materia",./public/simbologia/94.webp,
+95," Examen extraordinario de Química A, Cálculo C y Cálculo E
+"," Examen extraordinario de:
+Química A
+Cálculo C y Cálculo E
+Se aplicará en el horario asignado a la materia",./public/simbologia/95.webp,
+96," Examen extraordinario de Introducción a la química
+"," Examen extraordinario de:
+Introducción a la química
+Se aplicará en el horario asignado a la materia",./public/simbologia/96.webp,
+97,Pago de exámenes a título de suficiencia del DUI,Pago de exámenes a título de suficiencia del Departamento Universitario de Inglés,./public/simbologia/97.webp,
+98,Finaliza el período para completar cambio de carrera interno,Finaliza el período para completar cambio de carrera interno,./public/simbologia/98.webp,
+99,Fecha límite para la captura de calificaciones finales ordinarias.,Fecha límite para la captura de calificaciones finales ordinarias de materias de formación humanística y de la carrera por parte de los Profesores.,./public/simbologia/99.webp,
+100," Examen extraordinario de Álgebra A, Álgebra B y Cálculo B
+"," Examen extraordinario de:
+Álgebra A y Álgebra B
+Cálculo B
+Se aplicará en el horario asignado a la materia",./public/simbologia/100.webp,
+101," Examen extraordinario de Geometría y trigonometría
+"," Examen extraordinario de:
+Geometría y trigonometría
+Se aplicará en el horario asignado a la materia",./public/simbologia/101.webp,
+102,"Examen extraordinario de Física A, Física B, Física C y Física D
+","Examen extraordinario de:
+Física A y Física B
+Física C y Física D
+Se aplicará en el horario asignado a la materia",./public/simbologia/102.webp,
+103," Examen extraordinario de Introducción a la física
+"," Examen extraordinario de:
+Introducción a la física
+Se aplicará en el horario asignado a la materia",./public/simbologia/103.webp,
+104, Período de pago e Inscripción para presentar exámenes a título de suficiencia y materia única.," Período de pago e Inscripción para presentar exámenes a título de suficiencia y materia única, de formación humanística y de la carrera. 
+No se pueden solicitar dos exámenes a la misma hora y día.",./public/simbologia/104.webp,
+105, Período de pago e inscripción para presentar exámenes a título de suficiencia del DFM. , Período de pago e inscripción para presentar exámenes a título de suficiencia del Departamento de Físico Matemáticas. ,./public/simbologia/105.webp,
+106," Examen extraordinario de Cálculo A y Cálculo D
+"," Examen extraordinario de:
+Cálculo A
+Cálculo D
+Se aplicará en el horario asignado a la materia",./public/simbologia/106.webp,
+107," Examen extraordinario de Precálculo
+"," Examen extraordinario de:
+Precálculo
+Se aplicará en el horario asignado a la materia",./public/simbologia/107.webp,
+108,Aplicación de exámenes a título de suficiencia del DUI,Aplicación de exámenes a título de suficiencia del Departamento Universitario de Inglés,./public/simbologia/108.webp,
+109,Fecha límite para que el Profesor capture calificaciones de examen extraordinario.,Fecha límite para que el Profesor capture calificaciones de examen extraordinario de materias de formación humanística y de la carrera.,./public/simbologia/109.webp,
+110,Publicación de los resultados de cambios de carrera internos,Publicación de los resultados de cambios de carrera internos,./public/simbologia/110.webp,
+111, Período vacacional de alumnos de Posgrado, Período vacacional de alumnos de Posgrado,./public/simbologia/111.webp,
+112,  Período vacacional de la UASLP,  Período vacacional de la UASLP,./public/simbologia/112.webp,
+113, Período de evaluación de los alumnos de posgrado y profesores de posgrado, Período de evaluación por parte de los alumnos de posgrado a los cursos y profesores de posgrado,./public/simbologia/113.webp,
+114, Aniversario de la Facultad de Ingeniería,Aniversario de la Facultad de Ingeniería,./public/simbologia/114.webp,
+115,Fin de cursos de posgrado,Fin de cursos de posgrado,./public/simbologia/115.webp,
+116, Fecha límite para entrega en DFM de recibos de pago de exámenes a título de suficiencia. , Fecha límite para entrega en DFM de recibos de pago de exámenes a título de suficiencia del Departamento de Físico Matemáticas. ,./public/simbologia/116.webp,
+117, Período de aplicación de exámenes a título de suficiencia , Período de aplicación de exámenes a título de suficiencia de materias de formación humanística y de la carrera,./public/simbologia/117.webp,
+118, Período de aplicación de exámenes a título de suficiencia del DFM., Período de aplicación de exámenes a título de suficiencia del Departamento de Físico Matemáticas.,./public/simbologia/118.webp,
+119, Aniversario de la Autonomía de la UASLP, Aniversario de la Autonomía de la UASLP,./public/simbologia/119.webp,
+120, Reporte de calificaciones en el sistema del CIEP, Reporte de calificaciones en el sistema del CIEP (Posgrado).,./public/simbologia/120.webp,
+121, Pago e inscripción a examen de acreditación del DUI, Pago e inscripción a examen de acreditación del Departamento Universitario de Inglés,./public/simbologia/121.webp,
+122,"Período de Inscripción de materias del DFM, DUI, de formación humanística y carrera.","Período de Inscripción en materias del DFM, DUI, de formación humanística y carrera.",./public/simbologia/122.webp,
+123, Examen de acreditación del DUI, Examen de acreditación del Departamento Universitario de Inglés,./public/simbologia/123.webp,
+124,Fecha límite para firmar el libro de actas con calificaciones de cursos de posgrado.,Fecha límite para firmar el libro de actas con calificaciones de cursos de posgrado.,./public/simbologia/124.webp,
+125,Entrega de actas firmadas de calificaciones al CIEP.,Entrega de actas firmadas de calificaciones al CIEP (Posgrado).,./public/simbologia/125.webp,
+126,"Inicio de clases, semestre  del DFM.",Inicio de clases del Departamento de Físico Matemáticas.,./public/simbologia/126.webp,
+127,Inicio de cursos del DUI,Inicio de cursos del Departamento Universitario de Inglés.,./public/simbologia/127.webp,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
