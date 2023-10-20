@@ -1,7 +1,8 @@
 import './Publico.css'
 import NavbarAdmin from "../../components/NavbarAdmin";
 import {useNavigate} from "react-router-dom";
-import Calendar from '../../components/Klendario/Calendario';
+import Calendar from 'react-calendar';
+import Calendario from '../../components/Klendario/Calendario';
 
 function Publico() {
   const navigate = useNavigate()
@@ -12,8 +13,17 @@ function Publico() {
         <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button>
       </header>
       <NavbarAdmin/>
+      <div className='flex'>
+         <Calendario/>
+         <div className='smallCalendar'>
+         <Calendar 
+          
+          locale = 'es'
+         />
+         </div>
 
-      <Calendar/>
+      </div>
+
     </>
   );
 }

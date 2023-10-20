@@ -7,3 +7,31 @@
   height: 4rem;
   background-color: var(--terc);
 }
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  height: 90vh;
+}
+
+.smallCalendar{
+  background: var(--prim);
+  width: 25%;
+  height: 900px;
+  color: #fff;
+}
+
+.react-calendar{
+  width:60% !important;
+
+  font-size: 15px;
+  color: #000;
+  margin: 20px auto;
+}
+.react-calendar button{
+  font-size:12px !important;
+}
+
+.react-calendar__navigation__label__labelText .react-calendar__navigation__label__labelText--from{
+font-size:15px;
+}

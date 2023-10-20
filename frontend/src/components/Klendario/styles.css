@@ -1,6 +1,6 @@
 /* styles.css */
 .calendar-container {
-    width: 48%; /* El 80% del ancho del contenedor padre */
+    width: 65%; /* El 80% del ancho del contenedor padre */
     height: 10vh; /* El 60% de la altura de la ventana gráfica (viewport height) */
     margin-left: 5%;; /* Centra el calendario en el contenedor */
   }
