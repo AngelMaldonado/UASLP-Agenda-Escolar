@@ -1,21 +1,23 @@
 class Usuario {
-
   private _id: number
   private _nombre: string
+  private _apellidos: string
   private _tipo: string
   private _email: string
-  private _permisos: string
+  private _permisos: string[]
 
-  constructor(id: number, nombre: string, tipo: string, email: string, permisos: string) {
-    this._id = id
-    this._nombre = nombre
-    this._tipo = tipo
-    this._email = email
-    this._permisos = permisos
+  constructor()
+  constructor(id: number, nombre: string, apellidos: string, tipo: string, email: string, permisos: string[])
+  constructor(id?: number, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
+    this._id = id ?? -1
+    this._nombre = nombre ?? ""
+    this._apellidos = apellidos ?? ""
+    this._tipo = tipo ?? ""
+    this._email = email ?? ""
+    this._permisos = permisos ?? []
   }
 
-
-  get permisos(): string {
+  get permisos(): string[] {
     return this._permisos;
   }
 
@@ -31,8 +33,32 @@ class Usuario {
     return this._nombre;
   }
 
+  get apellidos(): string {
+    return this._apellidos;
+  }
+
   get id(): number {
     return this._id;
+  }
+
+  set permisos(value: string[]) {
+    this._permisos = value;
+  }
+
+  set email(value: string) {
+    this._email = value;
+  }
+
+  set tipo(value: string) {
+    this._tipo = value;
+  }
+
+  set apellidos(value: string) {
+    this._apellidos = value;
+  }
+
+  set nombre(value: string) {
+    this._nombre = value;
   }
 }
 

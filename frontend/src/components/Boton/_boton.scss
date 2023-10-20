@@ -36,6 +36,19 @@
     }
   }
 
+  &.btn-secondary {
+    background-color: transparent;
+
+    &:hover {
+      color: u.$negro;
+      background-color: u.$blanco;
+    }
+
+    &:active {
+      background-color: u.$blanco-80;
+    }
+  }
+
   &.btn-danger {
     &:hover {
       background-color: u.$tertiary-20;
@@ -52,6 +65,19 @@
     &:active {
       color: u.$danger-20;
       background-color: u.$tertiary-80;
+    }
+  }
+
+  &.btn-success-inverse {
+    color: u.$success;
+
+    &:hover {
+      background-color: u.$success-20;
+    }
+
+    &:active {
+      color: u.$success-20;
+      background-color: u.$success-80;
     }
   }
 }

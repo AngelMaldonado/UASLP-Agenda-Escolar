@@ -1,72 +1,111 @@
 import "./_campo.scss"
 import Boton from "../Boton/";
 import React, {ReactElement} from "react";
-import Select from "react-select";
+import Select, {ActionMeta, SingleValue} from "react-select";
+import {UseFormRegister} from "react-hook-form";
 
 export enum TipoCampo {
   Texto = "text",
+  Email = "email",
   Fecha = "date",
   Desplegable = "select",
   Archivo = "file"
 }
 
-export interface CampoProps {
+type CampoProps = {
   id: string,
   tipoCampo: TipoCampo,
-  etiqueta?: string,
-  placeholder?: string,
   boton?: React.ReactElement<Boton>,
-  archivos?: string
+  multi?: boolean,
+  onChange?: ((value: string) => void),
+  etiqueta?: string,
+  opciones?: { value: string, label: string }[]
+  requerido?: boolean,
+  placeholder?: string,
+  register?: UseFormRegister<any>
 }
 
-class Campo extends React.Component<CampoProps> {
-  static defaultProps = {tipoCampo: TipoCampo.Texto}
-  options = [
-    {value: 'chocolate', label: 'Chocolate'},
-    {value: 'strawberry', label: 'Strawberry'},
-    {value: 'vanilla', label: 'Vanilla'}
-  ]
-
-  render() {
-    switch (this.props.tipoCampo) {
-      case TipoCampo.Texto:
-        return this.inputElement()
-      case TipoCampo.Desplegable:
-        return this.selectElement()
-    }
+function Campo(props: CampoProps) {
+  switch (props.tipoCampo) {
+    case TipoCampo.Texto:
+      return inputElement()
+    case TipoCampo.Email:
+      return inputElement()
+    case TipoCampo.Desplegable:
+      return selectElement()
   }
 
-  private inputElement(): ReactElement {
+  function inputElement(): ReactElement {
     return (
       <div className="w-100">
-        <label className="form-label" htmlFor={this.props.id} hidden={this.props.etiqueta == null}>
-          {this.props.etiqueta}
+        <label className="form-label" htmlFor={props.id} hidden={props.etiqueta == null}>
+          {props.etiqueta}
         </label>
         <input className="form-control"
-               title={this.props.id}
-               id={this.props.id} name={this.props.id}
-               type={this.props.tipoCampo}
-               placeholder={this.props.placeholder}
+               title={props.id}
+               id={props.id}
+               type={props.tipoCampo}
+               placeholder={props.placeholder}
+               {...props.register != null ? {...props.register("example")} : null}
+               onChange={event => {
+                 if (props.onChange != null) {
+                   props.onChange(event.target.value)
+                 }
+               }}
         />
-        {this.props.boton}
+        {props.boton}
       </div>
     )
   }
 
-  private selectElement(): ReactElement {
+  function selectElement(): ReactElement {
     return (
       <div className="w-100">
-        <label className="form-label" htmlFor={this.props.id} hidden={this.props.etiqueta == null}>
-          {this.props.etiqueta}
+        <label className="form-label" htmlFor={props.id} hidden={props.etiqueta == null}>
+          {props.etiqueta}
         </label>
-        <Select options={this.options}
+        <Select options={props.opciones}
+                required={props.requerido}
+                closeMenuOnSelect={!props.multi}
+                isMulti={props.multi}
                 unstyled={true}
                 className={"form-control"}
                 classNamePrefix={"select"}
-                onFocus={(e) => console.log(e.currentTarget)}
+                placeholder={props.placeholder}
+                onChange={handleChange}
         />
       </div>
     )
+  }
+
+  function handleChange(option: SingleValue<any>, actionMeta: ActionMeta<any>) {
+    if (props.onChange != null) {
+      if (props.multi) {
+        onSelectChangeMulti(actionMeta)
+      } else {
+        onSelectChangeSingle(option as SingleValue<{ value: string, label: string }>)
+      }
+    }
+  }
+
+  function onSelectChangeSingle(option: SingleValue<{ value: string, label: string }>) {
+    props.onChange!(option!.value)
+  }
+
+  function onSelectChangeMulti(actionMeta: ActionMeta<{ value: string, label: string }>) {
+    switch (actionMeta.action) {
+      case "select-option":
+        props.onChange!(actionMeta.option!.value)
+        break
+      case "remove-value":
+        props.onChange!(actionMeta.removedValue.value)
+        break
+      case "clear":
+        actionMeta.removedValues.forEach(option => {
+          props.onChange!(option.value)
+        })
+        break
+    }
   }
 }
 

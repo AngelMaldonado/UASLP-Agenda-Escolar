@@ -29,9 +29,12 @@ $negro-50: rgb(87, 87, 87);
 $negro-20: rgb(114, 114, 114);
 $color-modal: rgba(49, 49, 49, 0.8);
 $color-sombra: rgba($negro, 0.15);
-$color-sombra-campo: rgba($secondary, 0.25);
+$color-sombra-campo: $secondary;
 
 .bg-blanco-80 {
   background-color: $blanco-80;
 }
 
+.bg-tertiary {
+  background-color: $tertiary;
+}

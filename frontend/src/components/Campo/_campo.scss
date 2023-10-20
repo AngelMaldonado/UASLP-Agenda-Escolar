@@ -4,18 +4,50 @@
   border: 1px solid u.$negro-50;
 
   &:focus {
-    border-color: u.$primary-50;
+    border-color: u.$secondary;
     box-shadow: u.$input-focus-box-shadow;
   }
 
   > .select__control {
     min-height: initial;
-  }
-}
 
-.select-menu {
-  border-radius: var(--bs-border-radius);
-  background-color: u.$blanco;
+    > .select__value-container {
+      gap: 0.5rem;
+
+      > .select__multi-value {
+        gap: 0.5rem;
+        padding: 0.15rem 0.5rem;
+        color: u.$blanco;
+        border-radius: u.$btn-border-radius;
+        background-color: u.$primary;
+
+        &:hover {
+          background-color: u.$primary-50;
+        }
+      }
+    }
+  }
+
+  > .select__menu {
+    left: 0;
+    margin-top: 0.5rem;
+    border-radius: var(--bs-border-radius);
+    border: 1px solid u.$secondary;
+    background-color: u.$blanco;
+    box-shadow: u.$input-focus-box-shadow;
+    overflow: hidden;
+
+    > .select__menu-list {
+      > .select__option {
+        padding: 0.75rem 1rem;
+
+        &:hover {
+          color: u.$blanco;
+          background-color: u.$primary;
+        }
+      }
+    }
+  }
 }
 
 .form-control, input[type="text"] {

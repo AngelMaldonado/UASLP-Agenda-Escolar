@@ -26,17 +26,11 @@ function NavbarAdmin() {
 
   return (
     <nav className="navbar navbar-expand-lg bg-blanco-80">
-      <div className="container">
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+      <div className="container gap-4 justify-content-between">
+        <div className="flex-grow-1">
           <Campo id="busqueda" placeholder="Placeholder...."/>
         </div>
-        <ul className="navbar-nav gap-2 me-auto mb-2 mb-lg-0">
+        <ul className="navbar-nav gap-2">
           {opciones.map((opcion, index) => (<li key={index}>{opcion}</li>))}
         </ul>
       </div>

@@ -1,45 +1,64 @@
-import "./FormularioUsuario.css"
-import Configuraciones from "../../utils/Configuraciones"
+import "./_formulariousuario.scss"
 import Campo from "../Campo"
-import {TipoCampo} from "../Campo/Campo.tsx";
+import {TipoCampo} from "../Campo/Campo.tsx"
+import Permisos from "../../models/Permisos.ts"
+import {UsuariosContext} from "../Usuarios/Usuarios.tsx"
 
 function FormularioUsuario() {
   return (
-    <form action={Configuraciones.apiURL + "usuarios"} method="POST" className="form-nuevo-usuario">
-      <div>
-        <Campo id="nombres" tipoCampo={TipoCampo.Texto} etiqueta="Nombre(s)" placeholder="Nombre"/>
-        <Campo id="apellidos" tipoCampo={TipoCampo.Texto} etiqueta="Apellidos" placeholder="Apellidos"/>
-        <Campo id="apellidos" tipoCampo={TipoCampo.Desplegable} etiqueta="Tipo de usuario" placeholder="Apellidos"/>
-
-        {/*<div className="Campos">
-          <div className="Campo">
-            <label htmlFor="tipo">Tipo de usuario</label>
-            <select id="tipo" name="tipo" required>
-              <option value="">Seleccione el Tipo de Usuario</option>
-              <option value="Secundario">Secundario</option>
-              <option value="Becario">Becario</option>
-            </select>
-          </div>
-
-          <div className="Campo">
-            <label htmlFor="permisos">Permisos</label>
-            <select id="permisos" name="permisos" required>
-              <option value="">Seleccione los Permisos</option>
-              <option value="Creacion de eventos">Creación de eventos</option>
-              <option value="Modificacion de eventos">Modificación de eventos</option>
-              <option value="Eliminacion de eventos">Eliminación de eventos</option>
-              <option value="Modificacion de usuarios">Modificación de usuarios</option>
-              <option value="Modificacion de agenda">Modificación de agenda</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="Campo">
-          <label htmlFor="email">Correo</label>
-          <input type="email" id="email" name="email" placeholder="Correo" required/>
-        </div>*/}
-      </div>
-    </form>
+    <UsuariosContext.Consumer>
+      {usuario => (
+        <form id="form-usuario" className="d-flex flex-column gap-2">
+          <Campo id="nombres"
+                 tipoCampo={TipoCampo.Texto}
+                 etiqueta="Nombre(s)"
+                 placeholder="Nombre"
+                 requerido={true}
+                 onChange={(value: string) => usuario.nombre = value}
+          />
+          <Campo id="apellidos"
+                 tipoCampo={TipoCampo.Texto}
+                 etiqueta="Apellidos"
+                 placeholder="Apellidos"
+                 requerido={true}
+                 onChange={(value: string) => usuario.apellidos = value}
+          />
+          <Campo id="tipo"
+                 tipoCampo={TipoCampo.Desplegable}
+                 etiqueta="Tipo de usuario"
+                 placeholder="Elegir tipo de usuario"
+                 requerido={true}
+                 opciones={[
+                   {value: "Administrador Secundario", label: "Administrador Secundario"},
+                   {value: "Becario", label: "Becario"}
+                 ]}
+                 onChange={(value: string) => usuario.tipo = value}
+          />
+          <Campo id="permisos"
+                 tipoCampo={TipoCampo.Desplegable}
+                 etiqueta="Permisos"
+                 placeholder="Elegir permisos"
+                 opciones={Permisos}
+                 requerido={true}
+                 multi={true}
+                 onChange={(value: string) => {
+                   if (usuario.permisos.includes(value)) {
+                     usuario.permisos.splice(usuario.permisos.indexOf(value), 1)
+                   } else {
+                     usuario.permisos.push(value)
+                   }
+                 }}
+          />
+          <Campo id="correo"
+                 tipoCampo={TipoCampo.Email}
+                 etiqueta="Correo"
+                 placeholder="ejemplo@.uaslp.mx"
+                 requerido={true}
+                 onChange={(value: string) => usuario.email = value}
+          />
+        </form>
+      )}
+    </UsuariosContext.Consumer>
   );
 }
 
