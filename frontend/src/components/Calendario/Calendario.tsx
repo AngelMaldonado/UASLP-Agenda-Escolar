@@ -17,7 +17,7 @@ const Calendario: React.FC<CalendarioProps> = ({ onDateChange }) => {
   };
 
   return (
-    <div>
+    <div style={{ width: '300px', height: '400px' }}>
       <Calendar onChange={handleDateChange} value={date} />
     </div>
   );
