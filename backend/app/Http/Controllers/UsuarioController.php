@@ -26,18 +26,18 @@ class UsuarioController extends Controller
         return response()->json([], 200);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): Usuario
     {
         // Validación de datos aquí
         // Crear un nuevo usuario
         $usuario = new Usuario();
-        $usuario->nombre = $request->input('nombres') . $request->input('apellidos');
+        $usuario->nombre = $request->input('nombre');
         $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
         $usuario->permisos = Json::encode($request->input('permisos')); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
 
-        return redirect('/administrador');
+        return $usuario;
     }
 
     public function edit($id)
