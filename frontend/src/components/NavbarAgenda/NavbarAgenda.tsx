@@ -9,15 +9,25 @@ import {TamanoComponente, TemaComponente} from "../../utils/Utils.ts";
 import {FaRegListAlt} from "react-icons/fa";
 import ChipUsuario from "../ChipUsuario";
 import {TipoCampo} from "../Campo/Campo.tsx";
+import Comunidades from "../../models/Comunidades.ts";
+import Areas from "../../models/Areas.ts";
 
 function NavbarAgenda() {
   return (
     <nav className="navbar navbar-expand-lg bg-tertiary">
       <div className="container gap-5 justify-content-between">
         <div className="d-flex flex-grow-1 gap-2">
-          <Campo id="busqueda" placeholder="Placeholder...." type={TipoCampo.Desplegable}/>
-          <Campo id="busqueda" placeholder="Placeholder...."/>
-          <Campo id="busqueda" placeholder="Placeholder...." type={TipoCampo.Desplegable}/>
+          <Campo id="comunidad"
+                 placeholder="Comunidad"
+                 type={TipoCampo.Desplegable}
+                 options={Comunidades}
+          />
+          <Campo id="busqueda" placeholder="Buscar"/>
+          <Campo id="area"
+                 placeholder="Área"
+                 type={TipoCampo.Desplegable}
+                 options={Areas}
+          />
         </div>
         <Boton tema={TemaComponente.Secundario} etiqueta="Agenda" icono={<FaRegListAlt/>}/>
         <Boton tema={TemaComponente.Secundario} etiqueta="Más Eventos"/>
