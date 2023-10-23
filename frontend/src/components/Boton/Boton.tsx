@@ -1,57 +1,43 @@
 import "./_boton.scss"
-import React, {Component} from "react"
+import React from "react"
 import {TemaComponente} from "../../utils/Utils.ts"
 
-export enum TipoBoton {
-  Link = "link",
-  Normal = "button",
-  Submit = "submit",
-}
-
-export interface BotonProps {
+export type BotonProps = {
+  type?: "button" | "submit" | "reset" | undefined,
+  onClick: (() => void)
   seleccionado?: boolean,
   tema?: TemaComponente,
   etiqueta?: string,
   icono?: React.ReactElement,
-  tipoBoton?: TipoBoton,
-  onClick: React.MouseEventHandler
+  cierraModal?: boolean
 }
 
-class Boton extends Component<BotonProps> {
-  static defaultProps = {
-    seleccionado: false,
-    tema: TemaComponente.Primario,
-    etiqueta: "",
-    tipoBoton: TipoBoton.Normal,
-    onClick: () => {
-    },
-  }
+function Boton(props: BotonProps) {
+  const {
+    seleccionado,
+    tema,
+    etiqueta,
+    icono,
+    cierraModal,
+    ...atributos
+  } = props
 
-  render() {
-    switch (this.props.tipoBoton) {
-      case TipoBoton.Normal:
-        return (
-          <button className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
-            {this.props.etiqueta}
-            {this.props.icono}
-          </button>
-        )
-      case TipoBoton.Link:
-        return (
-          <a className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
-            {this.props.etiqueta}
-            {this.props.icono}
-          </a>
-        )
-      case TipoBoton.Submit:
-        return (
-          <button className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
-            {this.props.etiqueta}
-            {this.props.icono}
-          </button>
-        )
-    }
-  }
+  return (
+    <button className={"btn btn-" + tema} data-bs-dismiss={cierraModal ? "modal" : null} {...atributos}>
+      {props.etiqueta}
+      {props.icono}
+    </button>
+  )
+}
+
+Boton.defaultProps = {
+  type: "button",
+  onClick: (() => {
+  }),
+  seleccionado: false,
+  tema: TemaComponente.Primario,
+  etiqueta: "",
+  cierraModal: false,
 }
 
 export default Boton

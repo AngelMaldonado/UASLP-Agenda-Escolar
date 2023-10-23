@@ -50,6 +50,22 @@
   }
 }
 
-.form-control, input[type="text"] {
-  width: 100%;
+.campo {
+  > span {
+    padding: 3px;
+    color: red;
+    display: none;
+  }
+}
+
+input:invalid[aria-selected="true"] {
+  border: 1px solid u.$danger;
+
+  &:focus {
+    box-shadow: u.$input-focus-box-shadow-invalid;
+  }
+}
+
+input:invalid[aria-selected="true"] ~ span {
+  display: block;
 }

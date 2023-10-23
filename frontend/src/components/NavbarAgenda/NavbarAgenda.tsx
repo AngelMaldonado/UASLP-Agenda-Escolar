@@ -15,9 +15,9 @@ function NavbarAgenda() {
     <nav className="navbar navbar-expand-lg bg-tertiary">
       <div className="container gap-5 justify-content-between">
         <div className="d-flex flex-grow-1 gap-2">
-          <Campo id="busqueda" placeholder="Placeholder...." tipoCampo={TipoCampo.Desplegable}/>
+          <Campo id="busqueda" placeholder="Placeholder...." type={TipoCampo.Desplegable}/>
           <Campo id="busqueda" placeholder="Placeholder...."/>
-          <Campo id="busqueda" placeholder="Placeholder...." tipoCampo={TipoCampo.Desplegable}/>
+          <Campo id="busqueda" placeholder="Placeholder...." type={TipoCampo.Desplegable}/>
         </div>
         <Boton tema={TemaComponente.Secundario} etiqueta="Agenda" icono={<FaRegListAlt/>}/>
         <Boton tema={TemaComponente.Secundario} etiqueta="Más Eventos"/>

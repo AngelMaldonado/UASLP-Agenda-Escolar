@@ -1,3 +1,4 @@
+//TODO: Arreglar Model/Usuario para que no se tenga que hacer Parse de los permiso
 import "./card-usuario.scss"
 import {Component, ReactElement} from "react"
 import Usuario from "../../models/Usuario.ts"
@@ -24,8 +25,11 @@ class CardUsuario extends Component<{ usuario: Usuario }> {
           <h3 className="card-title flex-fill">{this.props.usuario.nombre}</h3>
           <p className="card-text">{this.props.usuario.email}</p>
           <div className="badges d-flex flex-column gap-2">
-            <span className="w-100 badge rounded-pill fs-6 fw-light">Mi fuente</span>
-            <span className="w-100 badge rounded-pill fs-6 fw-light">Administrador secundario</span>
+            <span className="w-100 badge rounded-pill fs-6 fw-light">
+              {/* !! No se debe hacer JSON.parse a los permisos, arreglar en Model/Usuario */}
+              {JSON.parse(this.props.usuario.permisos.toString()).length} Permisos
+            </span>
+            <span className="w-100 badge rounded-pill fs-6 fw-light">{this.props.usuario.tipo}</span>
           </div>
         </div>
       </div>

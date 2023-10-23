@@ -1,5 +1,7 @@
+// TODO: Hacer Parse de los permisos correctamente en tipo string[]
+
 class Usuario {
-  private _id: number
+  private readonly _id: number
   private _nombre: string
   private _apellidos: string
   private _tipo: string
