@@ -9,6 +9,9 @@ const Calendario: React.FC = () => {
   // Punto 1: Configurar un estado para gestionar los eventos
   const [events, setEvents] = useState([
     { title: 'Evento 1', date: '2023-10-05' },
+    {
+      firstDay: 1
+    }
     // Otros eventos iniciales
   ]);
 
@@ -29,27 +32,31 @@ const Calendario: React.FC = () => {
   return (
     <div className="calendar-container">
       <div>
-        <input
+        {/* <input
           type="text"
           name="title"
           placeholder="Título del evento"
           value={newEvent.title}
           onChange={handleInputChange}
-        />
-        <input
+        /> */}
+        {/* <input
           type="date"
           name="date"
           value={newEvent.date}
           onChange={handleInputChange}
         />
-        <button onClick={addEvent}>Agregar Evento</button>
+        <button onClick={addEvent}>Agregar Evento</button> */}
       </div>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={events}
+        locale = 'es-ES'
+        firstDay = { 1 }
+        
         // Resto de las propiedades del calendario...
       />
+      
     </div>
   );
 };

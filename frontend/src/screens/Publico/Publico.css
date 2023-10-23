@@ -11,18 +11,24 @@
 .flex{
   display: flex;
   justify-content: space-between;
-  height: 90vh;
+  height: auto;
+}
+
+.fc{
+  height: 100vh;
 }
 
 .smallCalendar{
-  background: var(--prim);
-  width: 25%;
-  height: 900px;
+  background-color: #144ff3;
+  width: 20%;
+  height: 100vh;
   color: #fff;
+  display: block;
+  overflow-y: scroll;
 }
 
 .react-calendar{
-  width:60% !important;
+  width:90% !important;
 
   font-size: 15px;
   color: #000;

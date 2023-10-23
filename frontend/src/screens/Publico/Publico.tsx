@@ -3,6 +3,7 @@ import NavbarAdmin from "../../components/NavbarAdmin";
 import {useNavigate} from "react-router-dom";
 import Calendar from 'react-calendar';
 import Calendario from '../../components/Klendario/Calendario';
+import TarjetaCalendario from '../../components/TarjetaCalendario/TarjetaCalendario';
 
 function Publico() {
   const navigate = useNavigate()
@@ -20,6 +21,29 @@ function Publico() {
           
           locale = 'es'
          />
+        <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
+         <TarjetaCalendario />
          </div>
 
       </div>
