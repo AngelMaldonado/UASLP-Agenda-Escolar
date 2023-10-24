@@ -3,36 +3,30 @@ import Boton from "../Boton";
 import {Modal} from "react-bootstrap";
 import {FaTimes} from "react-icons/fa";
 import {TemaComponente} from "../../utils/Utils.ts";
-import React, {ReactComponentElement, useState} from "react";
+import React, {ReactComponentElement} from "react";
 
 type ModalProps = {
   trigger: React.ReactElement,
   titulo?: React.ReactElement,
   contenido: React.ReactElement,
   botones?: ReactComponentElement<typeof Boton>[],
-  onClose?: (() => void)
   botonCancelar?: boolean,
+  mostrar?: boolean,
+  muestraModal: (() => void)
+  ocultaModal: (() => void)
 }
 
 function Dialog(props: ModalProps) {
-  const [show, setShow] = useState(false);
-
-  const handleShow = () => setShow(true);
-  const handleClose = () => {
-    props.onClose ? props.onClose() : null
-    setShow(false)
-  };
-
   return (
     <>
-      <div onClick={handleShow}>
+      <div onClick={props.muestraModal}>
         {props.trigger}
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={props.mostrar} onHide={props.ocultaModal} centered>
         <Modal.Header>
           {props.titulo}
-          <div className="btn-cerrar" onClick={handleClose}>
+          <div className="btn-cerrar" onClick={props.ocultaModal}>
             <Boton icono={<FaTimes/>}/>
           </div>
         </Modal.Header>
@@ -41,7 +35,11 @@ function Dialog(props: ModalProps) {
         </Modal.Body>
         <Modal.Footer className={"py-2 " + (props.botones ? "visible" : "invisible")}>
           {props.botonCancelar ?
-            <Boton tema={TemaComponente.DangerInverso} etiqueta="Cancelar" icono={<FaTimes/>} onClick={handleClose}/>
+            <Boton
+              tema={TemaComponente.DangerInverso}
+              etiqueta="Cancelar"
+              icono={<FaTimes/>}
+              onClick={props.ocultaModal}/>
             : null}
           {props.botones ? props.botones.map((boton) => boton) : null}
         </Modal.Footer>

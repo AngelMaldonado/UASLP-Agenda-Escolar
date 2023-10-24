@@ -11,24 +11,51 @@ import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario())
+  const [mostrarModal, setMostrarModal] = useState(false)
+
   const {usuarios} = useObtenUsuarios()
   const {agregaUsuario} = useAgregaUsuario()
+
+  const cambiaUsuario = {
+    onNombresChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, nombres: value}))),
+    onApellidosChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, apellidos: value}))),
+    onTipoChange: ((value: string) =>
+        setNuevoUsuario(prevState => ({...prevState, tipo: value}))
+    ),
+    onPermisosChange: ((value: string) => {
+      let permisos: string[] = nuevoUsuario.permisos
+      if (permisos.find(permiso => permiso == value)) {
+        permisos.splice(nuevoUsuario.permisos.indexOf(value), 1)
+      } else {
+        permisos.push(value)
+      }
+      setNuevoUsuario(prevState => ({...prevState, permisos: permisos}))
+    }),
+    onEmailChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, email: value})))
+  }
 
   return (
     <div className="cards-usuarios py-4 container">
       <Modal
+        mostrar={mostrarModal}
+        muestraModal={muestraModal}
+        ocultaModal={ocultaModal}
         trigger={CardUsuario.CardNuevoUsuario}
-        titulo={<div><FaRegUser/> <p className="fs-5">Nuevo Usuario</p></div>}
-        contenido={<FormularioUsuario usuario={nuevoUsuario}/>}
+        titulo={<div><FaRegUser/><p className="fs-5">Nuevo Usuario</p></div>}
+        contenido={<FormularioUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
         botones={[
           <Boton key={"boton-guardar"}
                  tema={TemaComponente.SuccessInverso}
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
-                 onClick={guardaUsuario}
+                 onClick={() => {
+                   if (FormularioUsuario.valida()) {
+                     agregaUsuario(nuevoUsuario)
+                     ocultaModal()
+                   }
+                 }}
           />
         ]}
-        onClose={() => setNuevoUsuario(new Usuario())}
         botonCancelar={true}
       />
       {usuarios?.map(usuario => {
@@ -37,36 +64,14 @@ function Usuarios() {
     </div>
   );
 
-  // !! Refactorizar
-  function guardaUsuario() {
-    let formulario = (document.getElementById("form-nuevo-usuario") as HTMLFormElement)
-    //let campos = formulario.querySelectorAll("input")
-    if (formulario.reportValidity()) {
-      agregaUsuario(nuevoUsuario)
-      setNuevoUsuario(new Usuario())
-      /*
-      formulario.reset()
-      campos.forEach(campo => {
-        campo.setAttribute("aria-selected", "false")
-      })
-       */
-    }
+  function muestraModal() {
+    setMostrarModal(true)
+  }
+
+  function ocultaModal() {
+    setNuevoUsuario(new Usuario())
+    setMostrarModal(false)
   }
 }
-
-/*
-
-
-function actualizaUsuarios() {
-  UsuarioService.obtenUsuarios()
-    .then(res => this.setState({usuarios: res.data})
-    )
-    .catch(err => {
-        this.setState({usuarios: []})
-        console.log(err)
-      }
-    )
-}
- */
 
 export default Usuarios;
