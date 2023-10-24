@@ -34,7 +34,7 @@ class UsuarioController extends Controller
         $usuario->nombre = $request->input('nombre');
         $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
-        $usuario->permisos = Json::encode($request->input('permisos')); // Asegúrate de que los datos se manejen adecuadamente como JSON.
+        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
 
         return $usuario;
