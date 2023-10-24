@@ -1,4 +1,3 @@
-//TODO: Arreglar Model/Usuario para que no se tenga que hacer Parse de los permiso
 import "./card-usuario.scss"
 import Usuario from "../../models/Usuario.ts"
 import Boton from "../Boton"
@@ -12,7 +11,7 @@ function CardUsuario(props: { usuario: Usuario }) {
     <div key={props.usuario.id} className="card card-usuario text-center">
       <div className="card-header d-flex justify-content-between align-items-center bg-transparent border-0">
         <p className="m-0">#{props.usuario.id}</p>
-        <div className="d-inline-flex">
+        {/*<div className="d-inline-flex">
           <Modal
             titulo={<div><FaRegUser/> <p className="fs-5">Nuevo Usuario</p></div>}
             trigger={<Boton tema={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
@@ -25,7 +24,7 @@ function CardUsuario(props: { usuario: Usuario }) {
             ]}
           />
           <Boton tema={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>} onClick={() => alert("delete")}/>
-        </div>
+        </div>*/}
       </div>
       <div className="card-body">
         <div className="w-50 mx-auto my-2 position-relative">
@@ -36,8 +35,7 @@ function CardUsuario(props: { usuario: Usuario }) {
         <p className="card-text">{props.usuario.email}</p>
         <div className="badges d-flex flex-column gap-2">
             <span className="w-100 badge rounded-pill fs-6 fw-light">
-              {/* !! No se debe hacer JSON.parse a los permisos, arreglar en Model/Usuario */}
-              {JSON.parse(props.usuario.permisos.toString()).length} Permisos
+              {props.usuario.permisos.length} Permisos
             </span>
           <span className="w-100 badge rounded-pill fs-6 fw-light">{props.usuario.tipo}</span>
         </div>

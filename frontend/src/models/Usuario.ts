@@ -1,7 +1,6 @@
-// TODO: Hacer Parse de los permisos correctamente en tipo string[]
-
 class Usuario {
   public readonly id: number
+  public nombre: string
   public nombres: string
   public apellidos: string
   public tipo: string
@@ -9,10 +8,11 @@ class Usuario {
   public permisos: string[]
 
   constructor()
-  constructor(id: number, nombre: string, apellidos: string, tipo: string, email: string, permisos: string[])
-  constructor(id?: number, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
+  constructor(id: number, nombre: string, nombres: string, apellidos: string, tipo: string, email: string, permisos: string[])
+  constructor(id?: number, nombres?: string, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
     this.id = id ?? -1
-    this.nombres = nombre ?? ""
+    this.nombre = nombre ?? ""
+    this.nombres = nombres ?? ""
     this.apellidos = apellidos ?? ""
     this.tipo = tipo ?? ""
     this.email = email ?? ""
