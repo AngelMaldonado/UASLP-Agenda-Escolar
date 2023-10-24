@@ -1,43 +1,52 @@
 import "./_modal.scss"
-import React, {ReactComponentElement} from "react";
-import {FaTimes} from "react-icons/fa";
 import Boton from "../Boton";
+import {Modal} from "react-bootstrap";
+import {FaTimes} from "react-icons/fa";
+import {TemaComponente} from "../../utils/Utils.ts";
+import React, {ReactComponentElement, useState} from "react";
 
-interface ModalProps {
-  titulo?: React.ReactElement,
+type ModalProps = {
   trigger: React.ReactElement,
-  contenido: React.ReactElement
+  titulo?: React.ReactElement,
+  contenido: React.ReactElement,
   botones?: ReactComponentElement<typeof Boton>[],
+  onClose?: (() => void)
+  botonCancelar?: boolean,
 }
 
-class Modal extends React.Component<ModalProps> {
-  render() {
-    return (
-      <>
-        <div data-bs-toggle="modal" className="bg-blanco-80" data-bs-target="#Modal">
-          {this.props.trigger}
-        </div>
+function Dialog(props: ModalProps) {
+  const [show, setShow] = useState(false);
 
-        <div className="modal fade" id="Modal" tabIndex={-1} aria-labelledby="ModalLabel" aria-hidden="true">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                {this.props.titulo}
-                <div className="btn-cerrar" data-bs-dismiss="modal" aria-label="Cerrar"><Boton icono={<FaTimes/>}/>
-                </div>
-              </div>
-              <div className="modal-body">
-                {this.props.contenido}
-              </div>
-              <div className={"modal-footer py-2 " + (this.props.botones ? "visible" : "invisible")}>
-                {this.props.botones ? this.props.botones.map((boton) => boton) : null}
-              </div>
-            </div>
+  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    props.onClose ? props.onClose() : null
+    setShow(false)
+  };
+
+  return (
+    <>
+      <div onClick={handleShow}>
+        {props.trigger}
+      </div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          {props.titulo}
+          <div className="btn-cerrar" onClick={handleClose}>
+            <Boton icono={<FaTimes/>}/>
           </div>
-        </div>
-      </>
-    )
-  }
+        </Modal.Header>
+        <Modal.Body>
+          {props.contenido}
+        </Modal.Body>
+        <Modal.Footer className={"py-2 " + (props.botones ? "visible" : "invisible")}>
+          {props.botonCancelar ?
+            <Boton tema={TemaComponente.DangerInverso} etiqueta="Cancelar" icono={<FaTimes/>} onClick={handleClose}/>
+            : null}
+          {props.botones ? props.botones.map((boton) => boton) : null}
+        </Modal.Footer>
+      </Modal>
+    </>)
 }
 
-export default Modal
+export default Dialog

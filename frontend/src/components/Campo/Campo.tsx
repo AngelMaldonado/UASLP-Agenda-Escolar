@@ -13,6 +13,7 @@ export enum TipoCampo {
 type CampoProps = {
   /* Input Props */
   id: string,
+  value?: string | Array<string>,
   type?: TipoCampo,
   placeholder?: string,
   required?: boolean,
@@ -29,6 +30,7 @@ type CampoProps = {
 
 function Campo(props: CampoProps) {
   const {
+    value,
     etiqueta,
     onChange,
     mensajeError,
@@ -52,6 +54,7 @@ function Campo(props: CampoProps) {
         {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
         <input
           {...inputProps}
+          value={value}
           className="form-control"
           aria-selected={focused}
           onBlur={handleFocus}
@@ -73,6 +76,7 @@ function Campo(props: CampoProps) {
         {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
         <Select
           {...inputProps}
+          defaultValue={value ? {value: value, label: value} : null}
           onChange={handleChange}
           className={"form-control"}
           classNamePrefix={"select"}

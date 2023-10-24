@@ -15,7 +15,7 @@ class ServicioUsuario {
   public static async nuevo(usuario: Usuario) {
     try {
       await axios.post(Configuraciones.apiURL + "usuarios", {
-        nombre: usuario.nombre + " " + usuario.apellidos,
+        nombre: usuario.nombres + " " + usuario.apellidos,
         tipo: usuario.tipo,
         email: usuario.email,
         permisos: usuario.permisos

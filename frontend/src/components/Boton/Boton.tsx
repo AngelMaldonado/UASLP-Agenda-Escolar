@@ -9,7 +9,6 @@ export type BotonProps = {
   tema?: TemaComponente,
   etiqueta?: string,
   icono?: React.ReactElement,
-  cierraModal?: boolean
 }
 
 function Boton(props: BotonProps) {
@@ -18,12 +17,11 @@ function Boton(props: BotonProps) {
     tema,
     etiqueta,
     icono,
-    cierraModal,
     ...atributos
   } = props
 
   return (
-    <button className={"btn btn-" + tema} data-bs-dismiss={cierraModal ? "modal" : null} {...atributos}>
+    <button className={"btn btn-" + tema} {...atributos}>
       {props.etiqueta}
       {props.icono}
     </button>
@@ -37,7 +35,6 @@ Boton.defaultProps = {
   seleccionado: false,
   tema: TemaComponente.Primario,
   etiqueta: "",
-  cierraModal: false,
 }
 
 export default Boton
