@@ -45,12 +45,12 @@ function Usuarios() {
         contenido={<NuevoUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
         botones={[
           <Boton key={"boton-cancelar"}
-                 tema={TemaComponente.DangerInverso}
+                 variant={TemaComponente.DangerInverso}
                  etiqueta="Cancelar"
                  icono={<FaTimes/>}
                  onClick={ocultaModal}/>,
           <Boton key={"boton-guardar"}
-                 tema={TemaComponente.SuccessInverso}
+                 variant={TemaComponente.SuccessInverso}
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {

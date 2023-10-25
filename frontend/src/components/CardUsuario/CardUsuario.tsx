@@ -41,21 +41,21 @@ function CardUsuario(props: { usuario: Usuario }) {
             muestraModal={muestraModal}
             ocultaModal={ocultaModal}
             titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
-            trigger={<Boton tema={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+            trigger={<Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
             contenido={<ModificaUsuario usuario={usuarioState} {...cambiaUsuario}/>}
             botones={[
               <Boton key={"boton-caneclar"}
-                     tema={TemaComponente.PrimarioInverso}
+                     variant={TemaComponente.PrimarioInverso}
                      etiqueta="Cancelar"
                      icono={<FaTimes/>}
                      onClick={ocultaModal}/>,
               <Boton key={"boton-eliminar"}
-                     tema={TemaComponente.DangerInverso}
+                     variant={TemaComponente.DangerInverso}
                      etiqueta="Eliminar"
                      icono={<FaTrash/>}
               />,
               <Boton key={"boton-guardar"}
-                     tema={TemaComponente.SuccessInverso}
+                     variant={TemaComponente.SuccessInverso}
                      etiqueta="Guardar"
                      icono={<FaRegPlusSquare/>}
                      onClick={() => {
@@ -67,7 +67,7 @@ function CardUsuario(props: { usuario: Usuario }) {
               />
             ]}
           />
-          <Boton tema={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>} onClick={() => alert("delete")}/>
+          <Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>} onClick={() => alert("delete")}/>
         </div>
       </div>
       <div className="card-body">

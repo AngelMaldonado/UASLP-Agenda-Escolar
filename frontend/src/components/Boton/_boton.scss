@@ -1,6 +1,6 @@
 @use "../../utils" as u;
 
-.btn {
+.btn, .navbar-expand .navbar-nav .nav-link {
   padding: u.$btn-padding-y u.$btn-padding-x;
   display: flex;
   align-items: center;
@@ -9,7 +9,7 @@
   border: none;
   border-radius: u.$btn-border-radius;
 
-  &.btn-primary {
+  &.btn-primary, &[variant="primary"] {
     color: u.$blanco;
     background-color: u.$primary;
 
@@ -22,7 +22,7 @@
     }
   }
 
-  &.btn-primary-inverse {
+  &.btn-primary-inverse, &[variant="primary-inverse"] {
     color: u.$primary;
 
     &:hover {

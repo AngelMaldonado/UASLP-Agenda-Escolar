@@ -1,40 +1,38 @@
 import "./_boton.scss"
+import Nav from "react-bootstrap/Nav";
 import React from "react"
+import {Button} from "react-bootstrap";
 import {TemaComponente} from "../../utils/Utils.ts"
 
-export type BotonProps = {
-  type?: "button" | "submit" | "reset" | undefined,
-  onClick: (() => void)
-  seleccionado?: boolean,
-  tema?: TemaComponente,
+type BotonProps = {
+  active?: boolean,
+  variant?: TemaComponente,
   etiqueta?: string,
   icono?: React.ReactElement,
+  eventKey?: string,
+  href?: string,
+  onClick?: (() => void)
 }
 
 function Boton(props: BotonProps) {
   const {
-    seleccionado,
-    tema,
     etiqueta,
     icono,
     ...atributos
   } = props
 
-  return (
-    <button className={"btn btn-" + tema} {...atributos}>
-      {props.etiqueta}
-      {props.icono}
-    </button>
-  )
+  if (atributos.href != null || atributos.eventKey != null) {
+    return (<Nav.Link {...atributos}>{props.etiqueta} {props.icono}</Nav.Link>)
+  } else return (<Button {...atributos}>{props.etiqueta} {props.icono}</Button>)
 }
 
 Boton.defaultProps = {
-  type: "button",
-  onClick: (() => {
-  }),
-  seleccionado: false,
-  tema: TemaComponente.Primario,
+  active: false,
+  variant: TemaComponente.Primario,
   etiqueta: "",
+  icono: null,
+  href: null,
+  onClick: (() => alert("Click desde botón")),
 }
 
 export default Boton
