@@ -13,6 +13,7 @@ Route::middleware(['auth'])->get('/user', function (Request $request) {
 Route::controller(UsuarioController::class)->group(function (){
     Route::get('/usuarios', 'index');
     Route::post('/usuarios', 'store');
+    Route::put('/usuarios', 'update');
 });
 
 //Ruta para mostrar eventos en FullCalendar
