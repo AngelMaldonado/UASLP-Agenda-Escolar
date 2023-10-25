@@ -15,7 +15,7 @@ type FormularioUsuarioProps = {
 
 const formNuevoUsuarioId = "form-nuevo-usuario"
 
-function FormularioUsuario(props: FormularioUsuarioProps) {
+function NuevoUsuario(props: FormularioUsuarioProps) {
   return (
     <form id={formNuevoUsuarioId} className="d-flex flex-column gap-2 text-start">
       <Campo id="nombres"
@@ -72,8 +72,8 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
   );
 }
 
-FormularioUsuario.valida = () => {
+NuevoUsuario.valida = () => {
   return (document.getElementById(formNuevoUsuarioId) as HTMLFormElement).reportValidity()
 }
 
-export default FormularioUsuario
+export default NuevoUsuario

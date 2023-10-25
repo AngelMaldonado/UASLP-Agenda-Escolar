@@ -28,6 +28,8 @@ type CampoProps = {
   mensajeError?: string,
 }
 
+type SelectOption = { label: string, value: string }
+
 function Campo(props: CampoProps) {
   const {
     value,
@@ -76,7 +78,7 @@ function Campo(props: CampoProps) {
         {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
         <Select
           {...inputProps}
-          defaultValue={value ? {value: value, label: value} : null}
+          defaultValue={value ? getDefaultSelectedOptions() : null}
           onChange={handleChange}
           className={"form-control"}
           classNamePrefix={"select"}
@@ -85,6 +87,14 @@ function Campo(props: CampoProps) {
         />
       </div>
     )
+  }
+
+  function getDefaultSelectedOptions(): SelectOption[] | SelectOption {
+    if (inputProps.isMulti) {
+      return [...(value as string[]).map((s: string): SelectOption => ({label: s, value: s}))]
+    } else {
+      return {label: (value as string), value: (value as string)}
+    }
   }
 
   function handleChange(option: SingleValue<any>, actionMeta: ActionMeta<any>) {

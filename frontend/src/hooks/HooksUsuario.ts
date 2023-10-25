@@ -22,3 +22,14 @@ export const useAgregaUsuario = () => {
   })
   return {agregaUsuario}
 }
+
+export const useModificaUsuario = () => {
+  const queryClient = useQueryClient()
+  const {
+    mutate: modificaUsuario
+  } = useMutation({
+    mutationFn: ServicioUsuario.modifica,
+    onSuccess: () => queryClient.invalidateQueries("usuarios")
+  })
+  return {modificaUsuario}
+}
