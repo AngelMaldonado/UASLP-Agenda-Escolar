@@ -27,6 +27,16 @@ class ServicioUsuario {
     }
   }
 
+  public static async modifica(usuario: Usuario) {
+    try {
+      await axios.put(Configuraciones.apiURL + "usuarios", usuario)
+      return true
+    } catch (err) {
+      console.log(err)
+      return false
+    }
+  }
+
   /*
   public static eliminaUsuario(id) {
     return axios.post(id);

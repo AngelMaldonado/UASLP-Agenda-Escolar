@@ -5,9 +5,9 @@ import Usuario from "../../models/Usuario.ts"
 import {useState} from "react"
 import CardUsuario from "../CardUsuario";
 import {TemaComponente} from "../../utils/Utils.ts";
-import FormularioUsuario from "../FormularioUsuario";
+import {NuevoUsuario} from "../FormularioUsuario";
 import {useAgregaUsuario, useObtenUsuarios} from "../../hooks/HooksUsuario.ts";
-import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
+import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario())
@@ -42,24 +42,28 @@ function Usuarios() {
         ocultaModal={ocultaModal}
         trigger={CardUsuario.CardNuevoUsuario}
         titulo={<div><FaRegUser/><p className="fs-5">Nuevo Usuario</p></div>}
-        contenido={<FormularioUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
+        contenido={<NuevoUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
         botones={[
+          <Boton key={"boton-cancelar"}
+                 tema={TemaComponente.DangerInverso}
+                 etiqueta="Cancelar"
+                 icono={<FaTimes/>}
+                 onClick={ocultaModal}/>,
           <Boton key={"boton-guardar"}
                  tema={TemaComponente.SuccessInverso}
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   if (FormularioUsuario.valida()) {
+                   if (NuevoUsuario.valida()) {
                      agregaUsuario(nuevoUsuario)
                      ocultaModal()
                    }
                  }}
           />
         ]}
-        botonCancelar={true}
       />
       {usuarios?.map(usuario => {
-        return <CardUsuario key={usuario.id} usuario={usuario}/>
+        return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>
       })}
     </div>
   );
