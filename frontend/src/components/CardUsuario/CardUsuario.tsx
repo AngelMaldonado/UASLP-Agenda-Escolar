@@ -11,6 +11,7 @@ import {useModificaUsuario} from "../../hooks/HooksUsuario.ts";
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioState, setUsuarioState] = useState(props.usuario)
   const [mostrarModal, setMostrarModal] = useState(false)
+  const [mostrarModalElimr,setMostrarModalElimr] = useState(false)
 
   const {modificaUsuario} = useModificaUsuario()
 
@@ -67,7 +68,28 @@ function CardUsuario(props: { usuario: Usuario }) {
               />
             ]}
           />
-          <Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>} onClick={() => alert("delete")}/>
+          <Modal 
+            mostrar={mostrarModalElimr}
+            muestraModal={muestraModalElimr}
+            ocultaModal={ocultaModalElimr}
+            titulo={<div><p className=""></p></div>}
+            trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el usuario  <strong> [{props.usuario.nombre}] </strong> ?</p></>}
+            botones={[
+              <Boton key={"boton-caneclar"}
+                    variant={TemaComponente.PrimarioInverso}
+                    etiqueta="Cancelar"
+                    icono={<FaTimes/>}
+                    onClick={ocultaModalElimr}/>,
+              <Boton key={"boton-eliminar"}
+                    variant={TemaComponente.DangerInverso}
+                    etiqueta="Eliminar"
+                    icono={<FaTrash/>}
+              />,
+            ]}
+          
+          />
+
         </div>
       </div>
       <div className="card-body">
@@ -94,7 +116,16 @@ function CardUsuario(props: { usuario: Usuario }) {
   function ocultaModal() {
     setMostrarModal(false)
   }
+
+  function muestraModalElimr() {
+    setMostrarModalElimr(true)
+  }
+
+  function ocultaModalElimr() {
+    setMostrarModalElimr(false)
+  }
 }
+
 
 CardUsuario.CardNuevoUsuario = (
   <div className="card card-nuevo-usuario text-center">
