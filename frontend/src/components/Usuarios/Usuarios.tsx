@@ -1,79 +1,80 @@
 import "./_usuarios.scss"
-import React from "react"
-import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
 import Boton from "../Boton";
-import Modal from "../Modal"
+import Modal from "../Modal";
 import Usuario from "../../models/Usuario.ts"
-import CardUsuario from "../CardUsuario"
-import UsuarioService from "../../services/UsuarioService.ts"
+import {useState} from "react"
+import CardUsuario from "../CardUsuario";
 import {TemaComponente} from "../../utils/Utils.ts";
-import FormularioUsuario from "../FormularioUsuario/FormularioUsuario.tsx"
+import {NuevoUsuario} from "../FormularioUsuario";
+import {useAgregaUsuario, useObtenUsuarios} from "../../hooks/HooksUsuario.ts";
+import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
 
-export const UsuariosContext = React.createContext<Usuario>(new Usuario())
+function Usuarios() {
+  const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario())
+  const [mostrarModal, setMostrarModal] = useState(false)
 
-interface UsuariosState {
-  usuarios: Usuario[],
-  nuevoUsuario: Usuario
-}
+  const {usuarios} = useObtenUsuarios()
+  const {agregaUsuario} = useAgregaUsuario()
 
-class Usuarios extends React.Component<any, UsuariosState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {usuarios: [], nuevoUsuario: new Usuario()}
+  const cambiaUsuario = {
+    onNombresChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, nombres: value}))),
+    onApellidosChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, apellidos: value}))),
+    onTipoChange: ((value: string) =>
+        setNuevoUsuario(prevState => ({...prevState, tipo: value}))
+    ),
+    onPermisosChange: ((value: string) => {
+      let permisos: string[] = nuevoUsuario.permisos
+      if (permisos.find(permiso => permiso == value)) {
+        permisos.splice(nuevoUsuario.permisos.indexOf(value), 1)
+      } else {
+        permisos.push(value)
+      }
+      setNuevoUsuario(prevState => ({...prevState, permisos: permisos}))
+    }),
+    onEmailChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, email: value})))
   }
 
-  render() {
-    return (
-      <div className="cards-usuarios py-4 container">
-        <UsuariosContext.Provider value={this.state.nuevoUsuario}>
-          <Modal
-            titulo={<div><FaRegUser/> <p className="fs-5">Nuevo Usuario</p></div>}
-            trigger={CardUsuario.CardNuevoUsuario}
-            contenido={<FormularioUsuario/>}
-            botones={[
-              <Boton key={"boton-cancelar"} tema={TemaComponente.DangerInverso}
-                     etiqueta="Cancelar"
-                     icono={<FaTimes/>}/>,
-              <Boton key={"boton-guardar"} tema={TemaComponente.SuccessInverso}
-                     etiqueta="Guardar"
-                     icono={<FaRegPlusSquare/>}
-                     onClick={this.guardaUsuario}
-              />
-            ]}
+  return (
+    <div className="cards-usuarios py-4 container">
+      <Modal
+        mostrar={mostrarModal}
+        muestraModal={muestraModal}
+        ocultaModal={ocultaModal}
+        trigger={CardUsuario.CardNuevoUsuario}
+        titulo={<div><FaRegUser/><p className="fs-5">Nuevo Usuario</p></div>}
+        contenido={<NuevoUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
+        botones={[
+          <Boton key={"boton-cancelar"}
+                 variant={TemaComponente.DangerInverso}
+                 etiqueta="Cancelar"
+                 icono={<FaTimes/>}
+                 onClick={ocultaModal}/>,
+          <Boton key={"boton-guardar"}
+                 variant={TemaComponente.SuccessInverso}
+                 etiqueta="Guardar"
+                 icono={<FaRegPlusSquare/>}
+                 onClick={() => {
+                   if (NuevoUsuario.valida()) {
+                     agregaUsuario(nuevoUsuario)
+                     ocultaModal()
+                   }
+                 }}
           />
-        </UsuariosContext.Provider>
-        {this.state.usuarios.length > 0 && this.state.usuarios.map((usuario) => (
-          <CardUsuario usuario={usuario}/>
-        ))}
-      </div>
-    );
+        ]}
+      />
+      {usuarios?.map(usuario => {
+        return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>
+      })}
+    </div>
+  );
+
+  function muestraModal() {
+    setMostrarModal(true)
   }
 
-  private obtenUsuarios() {
-    let usuarios: Usuario[] = []
-    UsuarioService.obtenUsuarios()
-      .then(res => {
-        usuarios = res.data
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    return usuarios
-  }
-
-  private guardaUsuario() {
-    UsuarioService.nuevo(this.state.nuevoUsuario)
-  }
-
-  private actualizaUsuarios() {
-    UsuarioService.obtenUsuarios()
-      .then(res => this.setState({usuarios: res.data})
-      )
-      .catch(err => {
-          this.setState({usuarios: []})
-          console.log(err)
-        }
-      )
+  function ocultaModal() {
+    setNuevoUsuario(new Usuario())
+    setMostrarModal(false)
   }
 }
 

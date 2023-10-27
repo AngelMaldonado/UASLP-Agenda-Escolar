@@ -1,3 +1,4 @@
-import FormularioUsuario from "./FormularioUsuario.tsx"
+import NuevoUsuario from "./NuevoUsuario.tsx"
+import ModificaUsuario from "./ModificaUsuario.tsx";
 
-export default FormularioUsuario
+export {NuevoUsuario, ModificaUsuario}

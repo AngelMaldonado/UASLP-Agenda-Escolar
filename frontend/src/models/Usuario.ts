@@ -1,64 +1,22 @@
 class Usuario {
-  private _id: number
-  private _nombre: string
-  private _apellidos: string
-  private _tipo: string
-  private _email: string
-  private _permisos: string[]
+  public readonly id: number
+  public nombre: string
+  public nombres: string
+  public apellidos: string
+  public tipo: string
+  public email: string
+  public permisos: string[]
 
   constructor()
-  constructor(id: number, nombre: string, apellidos: string, tipo: string, email: string, permisos: string[])
-  constructor(id?: number, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
-    this._id = id ?? -1
-    this._nombre = nombre ?? ""
-    this._apellidos = apellidos ?? ""
-    this._tipo = tipo ?? ""
-    this._email = email ?? ""
-    this._permisos = permisos ?? []
-  }
-
-  get permisos(): string[] {
-    return this._permisos;
-  }
-
-  get email(): string {
-    return this._email;
-  }
-
-  get tipo(): string {
-    return this._tipo;
-  }
-
-  get nombre(): string {
-    return this._nombre;
-  }
-
-  get apellidos(): string {
-    return this._apellidos;
-  }
-
-  get id(): number {
-    return this._id;
-  }
-
-  set permisos(value: string[]) {
-    this._permisos = value;
-  }
-
-  set email(value: string) {
-    this._email = value;
-  }
-
-  set tipo(value: string) {
-    this._tipo = value;
-  }
-
-  set apellidos(value: string) {
-    this._apellidos = value;
-  }
-
-  set nombre(value: string) {
-    this._nombre = value;
+  constructor(id: number, nombre: string, nombres: string, apellidos: string, tipo: string, email: string, permisos: string[])
+  constructor(id?: number, nombres?: string, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
+    this.id = id ?? -1
+    this.nombre = nombre ?? ""
+    this.nombres = nombres ?? ""
+    this.apellidos = apellidos ?? ""
+    this.tipo = tipo ?? ""
+    this.email = email ?? ""
+    this.permisos = permisos ?? []
   }
 }
 

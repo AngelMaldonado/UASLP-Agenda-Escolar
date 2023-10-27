@@ -1,8 +1,6 @@
 import "./_campo.scss"
-import Boton from "../Boton/";
-import React, {ReactElement} from "react";
+import React, {ReactElement, useState} from "react";
 import Select, {ActionMeta, SingleValue} from "react-select";
-import {UseFormRegister} from "react-hook-form";
 
 export enum TipoCampo {
   Texto = "text",
@@ -13,20 +11,37 @@ export enum TipoCampo {
 }
 
 type CampoProps = {
+  /* Input Props */
   id: string,
-  tipoCampo: TipoCampo,
-  boton?: React.ReactElement<Boton>,
-  multi?: boolean,
-  onChange?: ((value: string) => void),
-  etiqueta?: string,
-  opciones?: { value: string, label: string }[]
-  requerido?: boolean,
+  value?: string | Array<string>,
+  type?: TipoCampo,
   placeholder?: string,
-  register?: UseFormRegister<any>
+  required?: boolean,
+  pattern?: string,
+  isMulti?: boolean,
+  boton?: React.ReactElement,
+  options?: { value: string, label: string }[]
+  /* Label Props */
+  etiqueta?: string,
+  /* Events Props */
+  onChange?: ((value: string) => void),
+  mensajeError?: string,
 }
 
+type SelectOption = { label: string, value: string }
+
 function Campo(props: CampoProps) {
-  switch (props.tipoCampo) {
+  const {
+    value,
+    etiqueta,
+    onChange,
+    mensajeError,
+    boton,
+    ...inputProps
+  } = props
+  const [focused, setFocused] = useState(false)
+
+  switch (props.type) {
     case TipoCampo.Texto:
       return inputElement()
     case TipoCampo.Email:
@@ -37,55 +52,63 @@ function Campo(props: CampoProps) {
 
   function inputElement(): ReactElement {
     return (
-      <div className="w-100">
-        <label className="form-label" htmlFor={props.id} hidden={props.etiqueta == null}>
-          {props.etiqueta}
-        </label>
-        <input className="form-control"
-               title={props.id}
-               id={props.id}
-               type={props.tipoCampo}
-               placeholder={props.placeholder}
-               {...props.register != null ? {...props.register("example")} : null}
-               onChange={event => {
-                 if (props.onChange != null) {
-                   props.onChange(event.target.value)
-                 }
-               }}
+      <div className="w-100 campo">
+        {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
+        <input
+          {...inputProps}
+          value={value}
+          className="form-control"
+          aria-selected={focused}
+          onBlur={handleFocus}
+          onChange={event => {
+            if (onChange != null) {
+              onChange(event.target.value)
+            }
+          }}
         />
-        {props.boton}
+        {boton}
+        <span>{mensajeError}</span>
       </div>
     )
   }
 
   function selectElement(): ReactElement {
     return (
-      <div className="w-100">
-        <label className="form-label" htmlFor={props.id} hidden={props.etiqueta == null}>
-          {props.etiqueta}
-        </label>
-        <Select options={props.opciones}
-                required={props.requerido}
-                closeMenuOnSelect={!props.multi}
-                isMulti={props.multi}
-                unstyled={true}
-                className={"form-control"}
-                classNamePrefix={"select"}
-                placeholder={props.placeholder}
-                onChange={handleChange}
+      <div className="w-100 campo">
+        {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
+        <Select
+          {...inputProps}
+          defaultValue={value ? getDefaultSelectedOptions() : null}
+          onChange={handleChange}
+          className={"form-control"}
+          classNamePrefix={"select"}
+          closeMenuOnSelect={!inputProps.isMulti}
+          unstyled={true}
         />
       </div>
     )
   }
 
+  function getDefaultSelectedOptions(): SelectOption[] | SelectOption {
+    if (inputProps.isMulti) {
+      return [...(value as string[]).map((s: string): SelectOption => ({label: s, value: s}))]
+    } else {
+      return {label: (value as string), value: (value as string)}
+    }
+  }
+
   function handleChange(option: SingleValue<any>, actionMeta: ActionMeta<any>) {
     if (props.onChange != null) {
-      if (props.multi) {
+      if (props.isMulti) {
         onSelectChangeMulti(actionMeta)
       } else {
         onSelectChangeSingle(option as SingleValue<{ value: string, label: string }>)
       }
     }
+  }
+
+  function handleFocus() {
+    setFocused(true)
   }
 
   function onSelectChangeSingle(option: SingleValue<{ value: string, label: string }>) {
@@ -107,6 +130,10 @@ function Campo(props: CampoProps) {
         break
     }
   }
+}
+
+Campo.defaultProps = {
+  type: TipoCampo.Texto
 }
 
 export default Campo

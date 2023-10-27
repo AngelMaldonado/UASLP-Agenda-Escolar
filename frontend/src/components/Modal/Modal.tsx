@@ -1,43 +1,41 @@
 import "./_modal.scss"
-import React, {ReactComponentElement} from "react";
-import {FaTimes} from "react-icons/fa";
 import Boton from "../Boton";
+import {Modal} from "react-bootstrap";
+import {FaTimes} from "react-icons/fa";
+import React, {ReactComponentElement} from "react";
 
-interface ModalProps {
-  titulo?: React.ReactElement,
+type ModalProps = {
   trigger: React.ReactElement,
-  contenido: React.ReactElement
+  titulo?: React.ReactElement,
+  contenido: React.ReactElement,
   botones?: ReactComponentElement<typeof Boton>[],
+  mostrar?: boolean,
+  muestraModal: (() => void)
+  ocultaModal: (() => void)
 }
 
-class Modal extends React.Component<ModalProps> {
-  render() {
-    return (
-      <>
-        <div data-bs-toggle="modal" className="bg-blanco-80" data-bs-target="#Modal">
-          {this.props.trigger}
-        </div>
+function Dialog(props: ModalProps) {
+  return (
+    <>
+      <div onClick={props.muestraModal}>
+        {props.trigger}
+      </div>
 
-        <div className="modal fade" id="Modal" tabIndex={-1} aria-labelledby="ModalLabel" aria-hidden="true">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                {this.props.titulo}
-                <div className="btn-cerrar" data-bs-dismiss="modal" aria-label="Cerrar"><Boton icono={<FaTimes/>}/>
-                </div>
-              </div>
-              <div className="modal-body">
-                {this.props.contenido}
-              </div>
-              <div className={"modal-footer py-2 " + (this.props.botones ? "visible" : "invisible")}>
-                {this.props.botones ? this.props.botones.map((boton) => boton) : null}
-              </div>
-            </div>
+      <Modal show={props.mostrar} onHide={props.ocultaModal} centered>
+        <Modal.Header>
+          {props.titulo}
+          <div className="btn-cerrar" onClick={props.ocultaModal}>
+            <Boton icono={<FaTimes/>}/>
           </div>
-        </div>
-      </>
-    )
-  }
+        </Modal.Header>
+        <Modal.Body>
+          {props.contenido}
+        </Modal.Body>
+        <Modal.Footer className={"py-2 " + (props.botones ? "visible" : "invisible")}>
+          {props.botones ? props.botones.map((boton) => boton) : null}
+        </Modal.Footer>
+      </Modal>
+    </>)
 }
 
-export default Modal
+export default Dialog

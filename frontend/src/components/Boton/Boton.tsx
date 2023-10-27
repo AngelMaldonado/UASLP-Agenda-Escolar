@@ -1,57 +1,38 @@
 import "./_boton.scss"
-import React, {Component} from "react"
+import Nav from "react-bootstrap/Nav";
+import React from "react"
+import {Button} from "react-bootstrap";
 import {TemaComponente} from "../../utils/Utils.ts"
 
-export enum TipoBoton {
-  Link = "link",
-  Normal = "button",
-  Submit = "submit",
-}
-
-export interface BotonProps {
-  seleccionado?: boolean,
-  tema?: TemaComponente,
+type BotonProps = {
+  active?: boolean,
+  variant?: TemaComponente,
   etiqueta?: string,
   icono?: React.ReactElement,
-  tipoBoton?: TipoBoton,
-  onClick: React.MouseEventHandler
+  eventKey?: string,
+  href?: string,
+  onClick?: (() => void)
 }
 
-class Boton extends Component<BotonProps> {
-  static defaultProps = {
-    seleccionado: false,
-    tema: TemaComponente.Primario,
-    etiqueta: "",
-    tipoBoton: TipoBoton.Normal,
-    onClick: () => {
-    },
-  }
+function Boton(props: BotonProps) {
+  const {
+    etiqueta,
+    icono,
+    ...atributos
+  } = props
 
-  render() {
-    switch (this.props.tipoBoton) {
-      case TipoBoton.Normal:
-        return (
-          <button className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
-            {this.props.etiqueta}
-            {this.props.icono}
-          </button>
-        )
-      case TipoBoton.Link:
-        return (
-          <a className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
-            {this.props.etiqueta}
-            {this.props.icono}
-          </a>
-        )
-      case TipoBoton.Submit:
-        return (
-          <button className={"btn btn-" + this.props.tema} type={this.props.tipoBoton} onClick={this.props.onClick}>
-            {this.props.etiqueta}
-            {this.props.icono}
-          </button>
-        )
-    }
-  }
+  if (atributos.href != null || atributos.eventKey != null) {
+    return (<Nav.Link {...atributos}>{props.etiqueta} {props.icono}</Nav.Link>)
+  } else return (<Button {...atributos}>{props.etiqueta} {props.icono}</Button>)
+}
+
+Boton.defaultProps = {
+  active: false,
+  variant: TemaComponente.Primario,
+  etiqueta: "",
+  icono: null,
+  href: null,
+  onClick: (() => alert("Click desde botón")),
 }
 
 export default Boton
