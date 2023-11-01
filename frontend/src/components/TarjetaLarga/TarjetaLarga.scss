@@ -1,8 +1,11 @@
+@use '../../utils' as u;
+
 .cardLarge{
     width: 100%;
     display: flex;
     min-height: 150px;
-    box-shadow: 5px 5px 10px #7a7a7a;
+    box-shadow: u.$card-box-shadow;//5px 5px 10px #7a7a7a;
+
     border-radius: 10px;
     transition: ease;
 }
