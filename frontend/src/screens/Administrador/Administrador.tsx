@@ -8,6 +8,8 @@ import Calendar from 'react-calendar'
 //import {useState} from "react"
 import Tab from "react-bootstrap/Tab"
 import 'react-calendar/dist/Calendar.css'
+import Calendario from '../../components/Klendario/Calendario';
+import TarjetaCalendario from '../../components/TarjetaCalendario/TarjetaCalendario';
 
 const idVistaAdministrador = "vista-administrador"
 
@@ -30,7 +32,39 @@ function Administrador() {
   function tabContent() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
-        <Calendar/>
+        <div className='flex'>
+          <Calendario/>
+          <div className='smallCalendar'>
+              <Calendar 
+                locale = 'es'
+               />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+              <TarjetaCalendario />
+            </div>
+          </div>
+      
+
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <h1>Cards agenda...</h1>

@@ -13,7 +13,7 @@ function Publico() {
       <header className='header-agenda'>
         <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button>
       </header>
-      <NavbarAdmin/>
+      <NavbarAdmin eventKeys={[]}/>
       <div className='flex'>
          <Calendario/>
          <div className='smallCalendar'>

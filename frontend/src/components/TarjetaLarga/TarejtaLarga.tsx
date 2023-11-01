@@ -1,24 +1,25 @@
 import './TarjetaLarga.scss'
+import Evento from '../../models/Evento';
 
-const TarjetaLarga = () => {
+const TarjetaLarga = (props: { evento : Evento}  ) => {
     return (
         <div className="cardLarge">
-            <div className="bgColor green"></div>
+            <div className="bgColor green"> <img src={props.evento.ruta} alt="" />  </div>
             <div className="content">
                 <div className='bold'>
-                    Cursos intersemestrales
+                    {props.evento.nombre}
                     <div className="pills">
                         <span>Estudiantes</span>
                         <span>Ingenieria</span>
                     </div>
                 </div>
                 <div className='fechas'>
-                    Inicia <br /> 23/10/2023
-                    <br /> Termina <br />
-                    29/10/2023
+                    Inicia <br /> {props.evento.fecha_inicio.toString()}
+                    <br /> Termina <br /> {props.evento.fecha_fin.toString()}
+                    
                 </div>
                 <div className='text'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    {props.evento.descripcion}
                 </div>
             </div>
         </div>
