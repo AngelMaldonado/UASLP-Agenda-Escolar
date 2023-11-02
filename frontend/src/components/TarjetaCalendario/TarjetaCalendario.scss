@@ -1,3 +1,5 @@
+@use "../../utils/colors" as c;
+
 .card{
     border-radius: 100px !important;
     box-shadow: 5px 5px 5px #050505;
@@ -11,6 +13,7 @@
     padding-left: 15px;
     padding-right: 15px;
     position: relative;
+    background-color: c.$blanco;
 }
 
 .card:hover{
@@ -31,11 +34,12 @@
     left:0px;
     display: flex;
     justify-content:left;
+    
 }
 
 .pills span{
-    background-color: blue;
-    color: #fff;
+    background-color: c.$secondary!important;
+    color: white;
     margin-right: 4px;
     margin-left:0px;
     padding:4px 10px;

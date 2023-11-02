@@ -1,10 +1,12 @@
 import './TarjetaLarga.scss'
 import Evento from '../../models/Evento';
+import {CgCalendarToday} from 'react-icons/cg'
 
 const TarjetaLarga = (props: { evento : Evento}  ) => {
     return (
+
         <div className="cardLarge">
-            <div className="bgColor green"> <img src={props.evento.ruta} alt="" />  </div>
+            <div className="bgColor green"> <img src={props.evento.ruta} alt=""/> </div>
             <div className="content">
                 <div className='bold'>
                     {props.evento.nombre}
@@ -13,9 +15,9 @@ const TarjetaLarga = (props: { evento : Evento}  ) => {
                         <span>Ingenieria</span>
                     </div>
                 </div>
-                <div className='fechas'>
-                    Inicia <br /> {props.evento.fecha_inicio.toString()}
-                    <br /> Termina <br /> {props.evento.fecha_fin.toString()}
+                <div className='fechas' >
+                    Inicia: <br /> <CgCalendarToday/> {props.evento.fecha_inicio.toString()}
+                    <br /> Termina: <br /> <CgCalendarToday/> {props.evento.fecha_fin.toString()}
                     
                 </div>
                 <div className='text'>

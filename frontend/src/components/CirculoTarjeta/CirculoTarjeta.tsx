@@ -1,10 +1,18 @@
 import './CirculoTarjeta.css'
 
-const CirculoTarjeta = () => {
+type simbologiaRuta = {
+    ruta: string, 
+    fechaInicio: Date, 
+    fechaFin: Date,
+    
+ }
+
+const CirculoTarjeta = ( props: simbologiaRuta ) => {
     return (
-        <div className="circle">
-            <small>JUN</small>
-            5-6
+        <div className="circle" > 
+            <img src= {props.ruta} alt=""/>
+            <small>{props.fechaInicio.toString()}</small>
+            {props.fechaFin.toString()}
         </div>
     );
 }

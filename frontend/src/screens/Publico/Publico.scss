@@ -1,3 +1,6 @@
+@use "../../utils/colors" as c;
+
+
 .header-uaslp {
   height: 13rem;
   background-color: var(--prim);
@@ -19,7 +22,7 @@
 }
 
 .smallCalendar{
-  background-color: #144ff3;
+  background-color: c.$primary-80 !important;
   width: 20%;
   height: 100vh;
   color: #fff;
