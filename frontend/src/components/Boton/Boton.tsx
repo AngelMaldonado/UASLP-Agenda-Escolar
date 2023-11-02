@@ -32,7 +32,6 @@ Boton.defaultProps = {
   etiqueta: "",
   icono: null,
   href: null,
-  onClick: (() => alert("Click desde botón")),
 }
 
 export default Boton

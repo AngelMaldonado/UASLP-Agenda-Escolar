@@ -21,7 +21,7 @@ function Administrador() {
   return (
     <Tab.Container id={idVistaAdministrador} defaultActiveKey={"calendario"}>
       <header className='header-uaslp'></header>
-      <NavbarAgenda/>
+      <NavbarAgenda eventKeys={eventKeysAgenda}/>
       <NavbarAdmin eventKeys={eventKeysAdmin}/>
       <Tab.Content>
         {...tabContent()}
@@ -66,11 +66,14 @@ function Administrador() {
       
 
       </Tab.Pane>,
-      <Tab.Pane eventKey={eventKeysAgenda[0]}>
-        <h1>Cards agenda...</h1>
+      <Tab.Pane eventKey={eventKeysAgenda[1]}>
+        <Calendar/>
+      </Tab.Pane>,
+      <Tab.Pane eventKey={eventKeysAgenda[2]}>
+        <></>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
-        <h1>Tabla eventos</h1>
+        <h1>Tabla eventoasdfasdfasdfasdfs</h1>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>

@@ -19,10 +19,60 @@
       margin: 0 0 0 auto;
     }
   }
-
+  
   > .modal-footer {
     justify-content: center;
     border-top: 1px solid u.$negro-20;
     background-color: u.$blanco-80;
+  }
+
+  .FaTimes {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color:white;
+    color: gray;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    margin: 0 0 0 auto;
+
+    &:hover {
+   
+      background-color:gray;
+      color: white;
+    }
+  }
+
+
+  > .close {
+    color: u.$blanco;
+    background-color: transparent;
+    padding-bottom: 0;
+    padding-top: 2%;
+
+    > :first-child {
+      display: flex;
+      align-items: center;
+      
+
+      > * {
+        margin: 0;
+      }
+    }
+
+    > .btn-cerrar {
+      margin: 0 0 0 auto;
+    }
+  }
+  
+    
+  > .close-footer {
+    justify-content: center;
+    border-top: 1px solid u.$negro-20;
+    background-color: u.$blanco-80;
+    margin: 0;
+    padding-top: 0;
   }
 }

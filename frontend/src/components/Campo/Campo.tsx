@@ -20,7 +20,7 @@ type CampoProps = {
   pattern?: string,
   isMulti?: boolean,
   boton?: React.ReactElement,
-  options?: { value: string, label: string }[]
+  options?: { value: string, label: string, icon: React.ReactElement}[]
   /* Label Props */
   etiqueta?: string,
   /* Events Props */

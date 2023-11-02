@@ -1,6 +1,6 @@
 @use "../../utils" as u;
 
-.btn, .navbar-expand .navbar-nav .nav-link {
+.btn, .navbar-expand .navbar-nav .nav-link, .nav-link {
   padding: u.$btn-padding-y u.$btn-padding-x;
   display: flex;
   align-items: center;
@@ -36,8 +36,22 @@
     }
   }
 
-  &.btn-secondary {
+  &.btn-secondary, &[variant="secondary"] {
     background-color: transparent;
+    color: u.$negro;
+    &:hover {
+      color: u.$blanco;
+      background-color: gray;
+    }
+
+    &:active {
+      background-color: u.$blanco-80;
+    }
+  }
+  
+  &.btn-secondary-inverse, &[variant="secondary-inverse"] {
+    background-color: transparent;
+    color: u.$blanco;
 
     &:hover {
       color: u.$negro;
@@ -80,4 +94,5 @@
       background-color: u.$success-80;
     }
   }
+
 }

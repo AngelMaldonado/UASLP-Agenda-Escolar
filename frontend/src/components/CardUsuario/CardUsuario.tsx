@@ -2,6 +2,7 @@ import "./card-usuario.scss"
 import Usuario from "../../models/Usuario.ts"
 import Boton from "../Boton"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser, FaTimes, FaTrash} from "react-icons/fa"
+import {FcCancel} from "react-icons/fc"
 import {TemaComponente} from "../../utils/Utils.ts"
 import Modal from "../Modal";
 import {useState} from "react";
@@ -72,17 +73,20 @@ function CardUsuario(props: { usuario: Usuario }) {
             mostrar={mostrarModalElimr}
             muestraModal={muestraModalElimr}
             ocultaModal={ocultaModalElimr}
-            titulo={<div><p className=""></p></div>}
+            titulo={<></>}
+            variante={TemaComponente.Secundario}
+            estiloVariante="FaTimes"
+            close="close"
             trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
             contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el usuario  <strong> [{props.usuario.nombre}] </strong> ?</p></>}
             botones={[
               <Boton key={"boton-caneclar"}
-                    variant={TemaComponente.PrimarioInverso}
-                    etiqueta="Cancelar"
-                    icono={<FaTimes/>}
-                    onClick={ocultaModalElimr}/>,
-              <Boton key={"boton-eliminar"}
                     variant={TemaComponente.DangerInverso}
+                    etiqueta="Cancelar"
+                    icono={<FcCancel/>}
+                    onClick={ocultaModalElimr}/>,
+              <Boton key={"boton-eliminar"} 
+                    variant={TemaComponente.PrimarioInverso}
                     etiqueta="Eliminar"
                     icono={<FaTrash/>}
               />,
