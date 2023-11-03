@@ -12,16 +12,15 @@ import {useModificaUsuario} from "../../hooks/HooksUsuario.ts";
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioState, setUsuarioState] = useState(props.usuario)
   const [mostrarModal, setMostrarModal] = useState(false)
-  const [mostrarModalElimr,setMostrarModalElimr] = useState(false)
+  const [mostrarModalElimr, setMostrarModalElimr] = useState(false)
 
   const {modificaUsuario} = useModificaUsuario()
 
   const cambiaUsuario = {
-    onNombreChange: ((value: string) => setUsuarioState(prevState => ({...prevState, nombre: value}))),
-    onTipoChange: ((value: string) =>
-        setUsuarioState(prevState => ({...prevState, tipo: value}))
-    ),
-    onPermisosChange: ((value: string) => {
+    onSingleChange: ((field: string, value: string) => setUsuarioState(prevState => ({
+      ...prevState, [field]: value
+    }))),
+    onMultipleChange: ((field: string, value: string) => {
       let permisos: string[] = usuarioState.permisos
       if (permisos.find(permiso => permiso == value)) {
         permisos.splice(usuarioState.permisos.indexOf(value), 1)
@@ -30,7 +29,6 @@ function CardUsuario(props: { usuario: Usuario }) {
       }
       setUsuarioState(prevState => ({...prevState, permisos: permisos}))
     }),
-    onEmailChange: ((value: string) => setUsuarioState(prevState => ({...prevState, email: value})))
   }
 
   return (
@@ -69,7 +67,7 @@ function CardUsuario(props: { usuario: Usuario }) {
               />
             ]}
           />
-          <Modal 
+          <Modal
             mostrar={mostrarModalElimr}
             muestraModal={muestraModalElimr}
             ocultaModal={ocultaModalElimr}
@@ -78,20 +76,21 @@ function CardUsuario(props: { usuario: Usuario }) {
             estiloVariante="FaTimes"
             close="close"
             trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
-            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el usuario  <strong> [{props.usuario.nombre}] </strong> ?</p></>}
+            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
+              usuario <strong> [{props.usuario.nombre}] </strong> ?</p></>}
             botones={[
               <Boton key={"boton-caneclar"}
-                    variant={TemaComponente.DangerInverso}
-                    etiqueta="Cancelar"
-                    icono={<FcCancel/>}
-                    onClick={ocultaModalElimr}/>,
-              <Boton key={"boton-eliminar"} 
-                    variant={TemaComponente.PrimarioInverso}
-                    etiqueta="Eliminar"
-                    icono={<FaTrash/>}
+                     variant={TemaComponente.DangerInverso}
+                     etiqueta="Cancelar"
+                     icono={<FcCancel/>}
+                     onClick={ocultaModalElimr}/>,
+              <Boton key={"boton-eliminar"}
+                     variant={TemaComponente.PrimarioInverso}
+                     etiqueta="Eliminar"
+                     icono={<FaTrash/>}
               />,
             ]}
-          
+
           />
 
         </div>

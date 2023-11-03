@@ -20,11 +20,11 @@ type CampoProps = {
   pattern?: string,
   isMulti?: boolean,
   boton?: React.ReactElement,
-  options?: { value: string, label: string, icon: React.ReactElement}[]
+  options?: { value: string, label: string, icon?: React.ReactElement }[]
   /* Label Props */
   etiqueta?: string,
   /* Events Props */
-  onChange?: ((value: string) => void),
+  onChange?: ((field: string, value: string) => void),
   mensajeError?: string,
 }
 
@@ -62,7 +62,7 @@ function Campo(props: CampoProps) {
           onBlur={handleFocus}
           onChange={event => {
             if (onChange != null) {
-              onChange(event.target.value)
+              onChange(event.target.id, event.target.value)
             }
           }}
         />
@@ -112,20 +112,20 @@ function Campo(props: CampoProps) {
   }
 
   function onSelectChangeSingle(option: SingleValue<{ value: string, label: string }>) {
-    props.onChange!(option!.value)
+    props.onChange!(props.id, option!.value)
   }
 
   function onSelectChangeMulti(actionMeta: ActionMeta<{ value: string, label: string }>) {
     switch (actionMeta.action) {
       case "select-option":
-        props.onChange!(actionMeta.option!.value)
+        props.onChange!(props.id, actionMeta.option!.value)
         break
       case "remove-value":
-        props.onChange!(actionMeta.removedValue.value)
+        props.onChange!(props.id, actionMeta.removedValue.value)
         break
       case "clear":
         actionMeta.removedValues.forEach(option => {
-          props.onChange!(option.value)
+          props.onChange!(props.id, option.value)
         })
         break
     }

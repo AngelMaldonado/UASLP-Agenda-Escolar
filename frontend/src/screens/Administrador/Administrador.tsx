@@ -1,4 +1,5 @@
 // TODO: ver la forma de utilizar rutas para cambiar de tab (#usuarios, #calendario, etc...)
+// TODO: solucionar error: 'React does not recognize the `eventKey` prop on a DOM element.'
 
 import "./_administrador.scss"
 import NavbarAdmin from "../../components/NavbarAdmin"

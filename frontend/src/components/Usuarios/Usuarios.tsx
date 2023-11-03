@@ -17,12 +17,10 @@ function Usuarios() {
   const {agregaUsuario} = useAgregaUsuario()
 
   const cambiaUsuario = {
-    onNombresChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, nombres: value}))),
-    onApellidosChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, apellidos: value}))),
-    onTipoChange: ((value: string) =>
-        setNuevoUsuario(prevState => ({...prevState, tipo: value}))
-    ),
-    onPermisosChange: ((value: string) => {
+    onSingleChange: ((field: string, value: string) => setNuevoUsuario(prevState => ({
+      ...prevState, [field]: value
+    }))),
+    onMultipleChange: ((field: string, value: string) => {
       let permisos: string[] = nuevoUsuario.permisos
       if (permisos.find(permiso => permiso == value)) {
         permisos.splice(nuevoUsuario.permisos.indexOf(value), 1)
@@ -31,7 +29,6 @@ function Usuarios() {
       }
       setNuevoUsuario(prevState => ({...prevState, permisos: permisos}))
     }),
-    onEmailChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, email: value})))
   }
 
   return (

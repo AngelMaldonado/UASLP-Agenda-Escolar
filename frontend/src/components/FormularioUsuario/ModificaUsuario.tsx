@@ -6,10 +6,8 @@ import Usuario from "../../models/Usuario.ts";
 
 type FormularioUsuarioProps = {
   usuario: Usuario,
-  onNombreChange: ((value: string) => void),
-  onTipoChange: ((value: string) => void),
-  onPermisosChange: ((value: string) => void),
-  onEmailChange: ((value: string) => void),
+  onSingleChange: ((field: string, value: string) => void),
+  onMultipleChange: ((field: string, value: string) => void),
 }
 
 const formModificaUsuarioId = "form-modifica-usuario"
@@ -25,7 +23,7 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
              required={true}
              pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"}
              mensajeError="Ingrese nombre(s) válido (A-Z, a-z, máx 50)"
-             onChange={props.onNombreChange}
+             onChange={props.onSingleChange}
       />
       <Campo id="tipo"
              value={props.usuario.tipo}
@@ -37,7 +35,7 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
                {value: "Administrador Secundario", label: "Administrador Secundario"},
                {value: "Becario", label: "Becario"}
              ]}
-             onChange={props.onTipoChange}
+             onChange={props.onSingleChange}
       />
       <Campo id="permisos"
              value={props.usuario.permisos}
@@ -47,16 +45,16 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
              options={Permisos}
              required={true}
              isMulti={true}
-             onChange={props.onPermisosChange}
+             onChange={props.onMultipleChange}
       />
-      <Campo id="correo"
+      <Campo id="email"
              value={props.usuario.email}
              type={TipoCampo.Email}
              etiqueta="Correo"
              placeholder="ejemplo@.uaslp.mx"
              required={true}
              mensajeError="Ingrese un correo válido"
-             onChange={props.onEmailChange}
+             onChange={props.onSingleChange}
       />
     </form>
   );

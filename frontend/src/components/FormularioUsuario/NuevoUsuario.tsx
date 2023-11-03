@@ -6,11 +6,8 @@ import Usuario from "../../models/Usuario.ts";
 
 type FormularioUsuarioProps = {
   usuario: Usuario,
-  onNombresChange: ((value: string) => void),
-  onApellidosChange: ((value: string) => void),
-  onTipoChange: ((value: string) => void),
-  onPermisosChange: ((value: string) => void),
-  onEmailChange: ((value: string) => void),
+  onSingleChange: ((field: string, value: string) => void),
+  onMultipleChange: ((field: string, value: string) => void),
 }
 
 const formNuevoUsuarioId = "form-nuevo-usuario"
@@ -26,7 +23,7 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
              required={true}
              pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"}
              mensajeError="Ingrese nombre(s) válido (A-Z, a-z, máx 50)"
-             onChange={props.onNombresChange}
+             onChange={props.onSingleChange}
       />
       <Campo id="apellidos"
              value={props.usuario.apellidos}
@@ -36,7 +33,7 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
              required={true}
              pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"}
              mensajeError="Ingrese nombre(s) válido (A-Z, a-z, máx 50)"
-             onChange={props.onApellidosChange}
+             onChange={props.onSingleChange}
       />
       <Campo id="tipo"
              value={props.usuario.tipo}
@@ -48,7 +45,7 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
                {value: "Administrador Secundario", label: "Administrador Secundario"},
                {value: "Becario", label: "Becario"}
              ]}
-             onChange={props.onTipoChange}
+             onChange={props.onSingleChange}
       />
       <Campo id="permisos"
              type={TipoCampo.Desplegable}
@@ -57,16 +54,16 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
              options={Permisos}
              required={true}
              isMulti={true}
-             onChange={props.onPermisosChange}
+             onChange={props.onMultipleChange}
       />
-      <Campo id="correo"
+      <Campo id="email"
              value={props.usuario.email}
              type={TipoCampo.Email}
              etiqueta="Correo"
              placeholder="ejemplo@.uaslp.mx"
              required={true}
              mensajeError="Ingrese un correo válido"
-             onChange={props.onEmailChange}
+             onChange={props.onSingleChange}
       />
     </form>
   );
