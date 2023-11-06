@@ -58,6 +58,28 @@ class EventController extends Controller
         return response()->json($event);
     }
 
+    
+    public function destroy(Request $request)
+    {
+        // Validar que el objeto JSON incluye un campo "id"
+        $request->validate([
+            'id' => 'required|exists:event', // Asegurarse de que el evento exista en la base de datos.
+        ]);
+
+        // Obtener el ID del evento a eliminar
+        $eventId = $request->input('id');
+
+        // Buscar el evento en la base de datos
+        $event = Event::findOrFail($eventId);
+
+        // Eliminar el evento de la base de datos
+        $event->delete();
+
+        // Respuesta exitosa con un mensaje en formato JSON y código de estado 200 (OK).
+        return response()->json(['message' => 'Evento eliminado con éxito'], 200);
+    }
+
+
     public function EventosCalendario($fecha)
     {
         // Validar el formato de la fecha
