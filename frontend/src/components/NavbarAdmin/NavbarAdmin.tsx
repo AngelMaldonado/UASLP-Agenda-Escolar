@@ -8,20 +8,25 @@ import {ReactComponentElement, useState} from "react";
 import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream, FaTimes} from 'react-icons/fa'
 import Modal from "../Modal";
 import NuevoEvento from "../FormularioEvento/NuevoEvento.tsx";
-import {NuevoUsuario} from "../FormularioUsuario";
 import Evento from "../../models/Evento.ts";
-import FormularioEvento from "../FormularioEvento";
-import evento from "../../models/Evento.ts";
 
 function NavbarAdmin(props: { eventKeys: string[] }) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
   const [mostrarModal, setMostrarModal] = useState(false)
 
   const cambiaEvento = {
-    onSingleChange: ((field: string, value: string) => setNuevoEvento(prevState => ({
+    onSingleChange: ((field: string, value: string | Date) => setNuevoEvento(prevState => ({
       ...prevState, [field]: value,
     }))),
-    onMultipleChange: ((value: string) => console.log(value)),
+    onMultipleChange: ((value: string) => {
+      let hipervinculos: string[] = nuevoEvento.hipervinculos
+      if (hipervinculos.find(permiso => permiso == value)) {
+        hipervinculos.splice(nuevoEvento.hipervinculos.indexOf(value), 1)
+      } else {
+        hipervinculos.push(value)
+      }
+      setNuevoEvento(prevState => ({...prevState, hipervinculos: hipervinculos}))
+    }),
   }
 
   const opciones: ReactComponentElement<typeof Boton>[] = [
@@ -80,10 +85,11 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   if (NuevoUsuario.valida()) {
-                     //agregaUsuario(nuevoUsuario)
-                     ocultaModal()
-                   }
+                   console.log(nuevoEvento)
+                   //if (NuevoUsuario.valida()) {
+                   //agregaUsuario(nuevoUsuario)
+                   //ocultaModal()
+                   //}
                  }}
           />
         ]}

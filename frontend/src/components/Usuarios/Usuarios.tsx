@@ -20,7 +20,7 @@ function Usuarios() {
     onSingleChange: ((field: string, value: string) => setNuevoUsuario(prevState => ({
       ...prevState, [field]: value
     }))),
-    onMultipleChange: ((field: string, value: string) => {
+    onMultipleChange: ((_: string, value: string) => {
       let permisos: string[] = nuevoUsuario.permisos
       if (permisos.find(permiso => permiso == value)) {
         permisos.splice(nuevoUsuario.permisos.indexOf(value), 1)

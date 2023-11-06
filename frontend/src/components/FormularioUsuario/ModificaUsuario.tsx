@@ -1,6 +1,5 @@
 import "./_formulariousuario.scss"
-import Campo from "../Campo"
-import {TipoCampo} from "../Campo/Campo.tsx"
+import Campo, {CampoDesplegable, TipoCampoTexto} from "../Campo"
 import Permisos from "../../models/Permisos.ts"
 import Usuario from "../../models/Usuario.ts";
 
@@ -17,7 +16,7 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
     <form id={formModificaUsuarioId} className="d-flex flex-column gap-2 text-start">
       <Campo id="nombre"
              value={props.usuario.nombre}
-             type={TipoCampo.Texto}
+             type={TipoCampoTexto.Texto}
              placeholder="Nombre"
              etiqueta="Nombre"
              required={true}
@@ -25,31 +24,29 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
              mensajeError="Ingrese nombre(s) válido (A-Z, a-z, máx 50)"
              onChange={props.onSingleChange}
       />
-      <Campo id="tipo"
-             value={props.usuario.tipo}
-             type={TipoCampo.Desplegable}
-             etiqueta="Tipo de usuario"
-             placeholder="Elegir tipo de usuario"
-             required={true}
-             options={[
-               {value: "Administrador Secundario", label: "Administrador Secundario"},
-               {value: "Becario", label: "Becario"}
-             ]}
-             onChange={props.onSingleChange}
+      <CampoDesplegable id="tipo"
+                        value={props.usuario.tipo}
+                        etiqueta="Tipo de usuario"
+                        placeholder="Elegir tipo de usuario"
+                        required={true}
+                        options={[
+                          {value: "Administrador Secundario", label: "Administrador Secundario"},
+                          {value: "Becario", label: "Becario"}
+                        ]}
+                        onChange={props.onSingleChange}
       />
-      <Campo id="permisos"
-             value={props.usuario.permisos}
-             type={TipoCampo.Desplegable}
-             etiqueta="Permisos"
-             placeholder="Elegir permisos"
-             options={Permisos}
-             required={true}
-             isMulti={true}
-             onChange={props.onMultipleChange}
+      <CampoDesplegable id="permisos"
+                        value={props.usuario.permisos}
+                        etiqueta="Permisos"
+                        placeholder="Elegir permisos"
+                        options={Permisos}
+                        required={true}
+                        isMulti={true}
+                        onChange={props.onMultipleChange}
       />
       <Campo id="email"
              value={props.usuario.email}
-             type={TipoCampo.Email}
+             type={TipoCampoTexto.Email}
              etiqueta="Correo"
              placeholder="ejemplo@.uaslp.mx"
              required={true}

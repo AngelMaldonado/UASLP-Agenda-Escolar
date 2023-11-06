@@ -5,12 +5,12 @@ import "./_administrador.scss"
 import NavbarAdmin from "../../components/NavbarAdmin"
 import Usuarios from "../../components/Usuarios/Usuarios.tsx"
 import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx"
-import Calendar from 'react-calendar'
 //import {useState} from "react"
 import Tab from "react-bootstrap/Tab"
-import 'react-calendar/dist/Calendar.css'
-import Calendario from '../../components/Klendario/Calendario';
-import TarjetaCalendario from '../../components/TarjetaCalendario/TarjetaCalendario';
+import Calendario from '../../components/Calendario/Calendario';
+import CardCalendario from '../../components/CardCalendario/CardCalendario.tsx';
+import eventos from "../../models/Eventos.ts";
+import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
 
 const idVistaAdministrador = "vista-administrador"
 
@@ -33,45 +33,21 @@ function Administrador() {
   function tabContent() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
+        <div className="container my-4 d-flex flex-column gap-5">
+          {eventos.map((evento) => (
+            <TarjetaLarga evento={evento}/>
+          ))}
+        </div>
+      </Tab.Pane>,
+      <Tab.Pane eventKey={eventKeysAgenda[1]}>
         <div className='flex'>
           <Calendario/>
           <div className='smallCalendar'>
-              <Calendar 
-                locale = 'es'
-               />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-              <TarjetaCalendario />
-            </div>
+            {eventos.map((evento) => (
+              <CardCalendario evento={evento}/>
+            ))}
           </div>
-      
-
-      </Tab.Pane>,
-      <Tab.Pane eventKey={eventKeysAgenda[1]}>
-        <Calendar/>
-      </Tab.Pane>,
-      <Tab.Pane eventKey={eventKeysAgenda[2]}>
-        <></>
+        </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
         <h1>Tabla eventoasdfasdfasdfasdfs</h1>

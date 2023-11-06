@@ -1,58 +1,47 @@
-import './Publico.css'
-import NavbarAdmin from "../../components/NavbarAdmin";
+import './_publico.scss'
 // import {useNavigate} from "react-router-dom";
-import Calendar from 'react-calendar';
-import Calendario from '../../components/Klendario/Calendario';
-import TarjetaCalendario from "../../components/TarjetaCalendario/TarjetaCalendario.tsx";
+import Calendario from "../../components/Calendario/Calendario.tsx";
+import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
 import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx"
-
+import eventos from "../../models/Eventos.ts";
+import Tab from "react-bootstrap/Tab";
+import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
 
 function Publico() {
+  const eventKeysAgenda = ["calendario", "agenda"]
   // const navigate = useNavigate()
   return (
-    <>
+    <Tab.Container defaultActiveKey={"calendario"}>
       <header className='header-uaslp'></header>
-      <header className='header-agenda'>
-        {/* <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button> */}
-        <NavbarAgenda eventKeys={[]} />
-      </header>
-      <NavbarAdmin eventKeys={[]}/>
-      <div className='flex'>
-        <Calendario/>
-        <div className='smallCalendar'>
-          <Calendar
-
-            locale='es'
-          />
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-          <TarjetaCalendario/>
-        </div>
-
-      </div>
-
-    </>
+      {/* <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button> */}
+      <NavbarAgenda eventKeys={eventKeysAgenda}/>
+      <Tab.Content>
+        {tabContent()}
+      </Tab.Content>
+    </Tab.Container>
   );
+
+  function tabContent() {
+    return [
+      <Tab.Pane eventKey={eventKeysAgenda[0]}>
+        <div className="container my-4 d-flex flex-column gap-5">
+          {eventos.map((evento) => (
+            <TarjetaLarga evento={evento}/>
+          ))}
+        </div>
+      </Tab.Pane>,
+      <Tab.Pane eventKey={eventKeysAgenda[1]}>
+        <div className='flex'>
+          <Calendario/>
+          <div className='smallCalendar'>
+            {eventos.map((evento) => (
+              <CardCalendario evento={evento}/>
+            ))}
+          </div>
+        </div>
+      </Tab.Pane>,
+    ]
+  }
 }
 
 export default Publico

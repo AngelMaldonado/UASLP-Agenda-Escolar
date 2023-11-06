@@ -9,9 +9,6 @@ import {useState} from "react";
 import {ModificaUsuario} from "../FormularioUsuario";
 import {useModificaUsuario, useEliminaUsuario} from "../../hooks/HooksUsuario.ts";
 
-
-
-
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioState, setUsuarioState] = useState(props.usuario)
   const [mostrarModal, setMostrarModal] = useState(false)
@@ -92,10 +89,10 @@ function CardUsuario(props: { usuario: Usuario }) {
                      variant={TemaComponente.PrimarioInverso}
                      etiqueta="Eliminar"
                      icono={<FaTrash/>}
-                    onClick={() => {
-                        eliminaUsuario(usuarioState)
-                        ocultaModal()  
-                    }}
+                     onClick={() => {
+                       eliminaUsuario(usuarioState)
+                       ocultaModal()
+                     }}
               />,
             ]}
 
@@ -105,7 +102,7 @@ function CardUsuario(props: { usuario: Usuario }) {
       </div>
       <div className="card-body">
         <div className="w-50 mx-auto my-2 position-relative">
-          <img className="w-100 rounded-circle" src="./src/assets/example.jpg" alt="example"/>
+          <img className="w-100 rounded-circle" src="https://i.pravatar.cc/300" alt="example"/>
           <span className="position-absolute bottom-0 end-0 p-3 bg-success rounded-circle"></span>
         </div>
         <h3 className="card-title flex-fill">{props.usuario.nombre}</h3>

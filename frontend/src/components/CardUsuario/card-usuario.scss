@@ -2,7 +2,7 @@
 
 .card-usuario, .card.card-nuevo-usuario {
   width: 17rem;
-  height: 28rem;
+  min-height: 28rem;
   box-shadow: u.$card-box-shadow;
   border-width: u.$card-border-width;
   border-radius: u.$card-border-radius;

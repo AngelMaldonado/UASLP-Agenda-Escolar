@@ -1,6 +1,5 @@
 // Calendar.tsx
-// Calendar.tsx
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
@@ -8,7 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 const Calendario: React.FC = () => {
   // Punto 1: Configurar un estado para gestionar los eventos
   const [events, setEvents] = useState([
-    { title: 'Evento 1', date: '2023-10-05' },
+    {title: 'Evento 1', date: '2023-10-05'},
     {
       firstDay: 1
     }
@@ -16,16 +15,16 @@ const Calendario: React.FC = () => {
   ]);
 
   // Punto 2: Configurar una forma para crear eventos
-  const [newEvent, setNewEvent] = useState({ title: '', date: '' });
+  const [newEvent, setNewEvent] = useState({title: '', date: ''});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewEvent({ ...newEvent, [name]: value });
+    const {name, value} = e.target;
+    setNewEvent({...newEvent, [name]: value});
   };
 
   const addEvent = () => {
     setEvents([...events, newEvent]);
-    setNewEvent({ title: '', date: '' });
+    setNewEvent({title: '', date: ''});
   };
 
   // Punto 3: Configurar el componente FullCalendar
@@ -51,12 +50,12 @@ const Calendario: React.FC = () => {
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={events}
-        locale = 'es-ES'
-        firstDay = { 1 }
-        
+        locale='es-ES'
+        firstDay={1}
+
         // Resto de las propiedades del calendario...
       />
-      
+
     </div>
   );
 };

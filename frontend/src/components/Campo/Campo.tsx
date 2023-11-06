@@ -1,62 +1,70 @@
 import "./_campo.scss"
-import React, {ReactElement, useState} from "react";
+import {useState} from "react";
 import Select, {ActionMeta, SingleValue} from "react-select";
 
-export enum TipoCampo {
+export enum TipoCampoTexto {
   Texto = "text",
-  Email = "email",
-  Fecha = "date",
-  Desplegable = "select",
-  Archivo = "file"
+  Email = "email"
 }
 
-type CampoProps = {
-  /* Input Props */
+export type SelectOption = { label: string, value: string }
+
+export type CampoProps = {
   id: string,
-  value?: string | Array<string>,
-  type?: TipoCampo,
-  placeholder?: string,
-  required?: boolean,
-  pattern?: string,
-  isMulti?: boolean,
-  boton?: React.ReactElement,
-  options?: { value: string, label: string, icon?: React.ReactElement }[]
-  /* Label Props */
   etiqueta?: string,
-  /* Events Props */
+  required?: boolean,
+  placeholder?: string,
   onChange?: ((field: string, value: string) => void),
   mensajeError?: string,
 }
 
-type SelectOption = { label: string, value: string }
+export type CampoTextoProps = CampoProps & {
+  type?: "text" | "email" | "password" | "file",
+  value?: string,
+  boton?: React.ReactElement,
+  pattern?: string,
+}
 
-function Campo(props: CampoProps) {
+export type CampoMultiTextoProps = CampoProps & {
+  value?: string,
+  rows: number,
+}
+
+export type CampoDesplegableProps = CampoProps & {
+  value?: string | Array<string>,
+  options?: { label: string, value: string }[],
+  isSearchable?: boolean,
+  closeMenuOnSelect?: boolean,
+  isMulti?: boolean,
+  components?: {}
+}
+
+export type CampoArchivoProps = CampoProps & {
+  accept: string
+}
+
+export type CampoFechaProps = CampoProps & {
+  onDateChange?: ((field: string, date: Date) => void)
+  value: string,
+  min: string,
+  max: string
+}
+
+export default function CampoTexto(props: CampoTextoProps) {
+  const [focused, setFocused] = useState(false)
   const {
-    value,
     etiqueta,
     onChange,
     mensajeError,
     boton,
     ...inputProps
   } = props
-  const [focused, setFocused] = useState(false)
-
-  switch (props.type) {
-    case TipoCampo.Texto:
-      return inputElement()
-    case TipoCampo.Email:
-      return inputElement()
-    case TipoCampo.Desplegable:
-      return selectElement()
-  }
-
-  function inputElement(): ReactElement {
-    return (
-      <div className="w-100 campo">
-        {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
+  return (
+    <div className="w-100 campo">
+      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
+      <div className="d-flex position-relative">
         <input
           {...inputProps}
-          value={value}
           className="form-control"
           aria-selected={focused}
           onBlur={handleFocus}
@@ -67,27 +75,67 @@ function Campo(props: CampoProps) {
           }}
         />
         {boton}
-        <span>{mensajeError}</span>
       </div>
-    )
-  }
+      <span>{mensajeError}</span>
+    </div>
+  )
 
-  function selectElement(): ReactElement {
-    return (
-      <div className="w-100 campo">
-        {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
-        <Select
-          {...inputProps}
-          defaultValue={value ? getDefaultSelectedOptions() : null}
-          onChange={handleChange}
-          className={"form-control"}
-          classNamePrefix={"select"}
-          closeMenuOnSelect={!inputProps.isMulti}
-          unstyled={true}
-        />
-      </div>
-    )
+  function handleFocus() {
+    setFocused(true)
   }
+}
+
+export function CampoMultiTexto(props: CampoMultiTextoProps) {
+  const [focused, setFocused] = useState(false)
+  const {
+    etiqueta,
+    onChange,
+    mensajeError,
+    ...inputProps
+  } = props
+  return (
+    <div className="w-100 campo">
+      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
+      <textarea
+        {...inputProps}
+        className="form-control"
+        aria-selected={focused}
+        onBlur={handleFocus}
+        onChange={event => {
+          if (onChange != null) {
+            onChange(event.target.id, event.target.value)
+          }
+        }}
+      />
+      <span>{mensajeError}</span>
+    </div>
+  )
+
+  function handleFocus() {
+    setFocused(true)
+  }
+}
+
+export function CampoDesplegable(props: CampoDesplegableProps) {
+  const {
+    etiqueta,
+    value,
+    ...inputProps
+  } = props
+  return (
+    <div className="w-100 campo">
+      {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
+      <Select
+        {...inputProps}
+        defaultValue={value ? getDefaultSelectedOptions() : null}
+        onChange={handleChange}
+        className={"form-control"}
+        classNamePrefix={"select"}
+        closeMenuOnSelect={!inputProps.isMulti}
+        unstyled={true}
+      />
+    </div>
+  )
 
   function getDefaultSelectedOptions(): SelectOption[] | SelectOption {
     if (inputProps.isMulti) {
@@ -105,10 +153,6 @@ function Campo(props: CampoProps) {
         onSelectChangeSingle(option as SingleValue<{ value: string, label: string }>)
       }
     }
-  }
-
-  function handleFocus() {
-    setFocused(true)
   }
 
   function onSelectChangeSingle(option: SingleValue<{ value: string, label: string }>) {
@@ -132,8 +176,68 @@ function Campo(props: CampoProps) {
   }
 }
 
-Campo.defaultProps = {
-  type: TipoCampo.Texto
+export function CampoArchivo(props: CampoArchivoProps) {
+  const [focused, setFocused] = useState(false)
+  const {
+    etiqueta,
+    onChange,
+    mensajeError,
+    ...inputProps
+  } = props
+  return (
+    <div className="w-100 campo">
+      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
+      <input
+        {...inputProps}
+        type="file"
+        className="form-control"
+        aria-selected={focused}
+        onBlur={handleFocus}
+        onChange={event => {
+          if (onChange != null) {
+            onChange(event.target.id, event.target.value)
+          }
+        }}
+      />
+      <span>{mensajeError}</span>
+    </div>
+  )
+
+  function handleFocus() {
+    setFocused(true)
+  }
 }
 
-export default Campo
+export function CampoFecha(props: CampoFechaProps) {
+  const [focused, setFocused] = useState(false)
+  const {
+    etiqueta,
+    onChange,
+    onDateChange,
+    mensajeError,
+    ...inputProps
+  } = props
+  return (
+    <div className="w-100 campo">
+      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
+      <input
+        {...inputProps}
+        type="date"
+        className="form-control"
+        aria-selected={focused}
+        onBlur={handleFocus}
+        onChange={event => {
+          if (onDateChange != null) {
+            console.log(event.target.value.toLocaleLowerCase().toString())
+            onDateChange(event.target.id, new Date(event.target.value))
+          }
+        }}
+      />
+      <span>{mensajeError}</span>
+    </div>
+  )
+
+  function handleFocus() {
+    setFocused(true)
+  }
+}

@@ -1,6 +1,5 @@
 import "./_formulariousuario.scss"
-import Campo from "../Campo"
-import {TipoCampo} from "../Campo/Campo.tsx"
+import Campo, {CampoDesplegable, TipoCampoTexto} from "../Campo"
 import Permisos from "../../models/Permisos.ts"
 import Usuario from "../../models/Usuario.ts";
 
@@ -17,7 +16,7 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
     <form id={formNuevoUsuarioId} className="d-flex flex-column gap-2 text-start">
       <Campo id="nombres"
              value={props.usuario.nombres}
-             type={TipoCampo.Texto}
+             type={TipoCampoTexto.Texto}
              placeholder="Nombres"
              etiqueta="Nombres"
              required={true}
@@ -27,7 +26,7 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
       />
       <Campo id="apellidos"
              value={props.usuario.apellidos}
-             type={TipoCampo.Texto}
+             type={TipoCampoTexto.Texto}
              placeholder="Apellidos"
              etiqueta="Apellidos"
              required={true}
@@ -35,30 +34,28 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
              mensajeError="Ingrese nombre(s) válido (A-Z, a-z, máx 50)"
              onChange={props.onSingleChange}
       />
-      <Campo id="tipo"
-             value={props.usuario.tipo}
-             type={TipoCampo.Desplegable}
-             etiqueta="Tipo de usuario"
-             placeholder="Elegir tipo de usuario"
-             required={true}
-             options={[
-               {value: "Administrador Secundario", label: "Administrador Secundario"},
-               {value: "Becario", label: "Becario"}
-             ]}
-             onChange={props.onSingleChange}
+      <CampoDesplegable id="tipo"
+                        value={props.usuario.tipo}
+                        etiqueta="Tipo de usuario"
+                        placeholder="Elegir tipo de usuario"
+                        required={true}
+                        options={[
+                          {value: "Administrador Secundario", label: "Administrador Secundario"},
+                          {value: "Becario", label: "Becario"}
+                        ]}
+                        onChange={props.onSingleChange}
       />
-      <Campo id="permisos"
-             type={TipoCampo.Desplegable}
-             etiqueta="Permisos"
-             placeholder="Elegir permisos"
-             options={Permisos}
-             required={true}
-             isMulti={true}
-             onChange={props.onMultipleChange}
+      <CampoDesplegable id="permisos"
+                        etiqueta="Permisos"
+                        placeholder="Elegir permisos"
+                        options={Permisos}
+                        required={true}
+                        isMulti={true}
+                        onChange={props.onMultipleChange}
       />
       <Campo id="email"
              value={props.usuario.email}
-             type={TipoCampo.Email}
+             type={TipoCampoTexto.Email}
              etiqueta="Correo"
              placeholder="ejemplo@.uaslp.mx"
              required={true}

@@ -37,17 +37,17 @@ class ServicioUsuario {
     }
   }
 
-  
+
   public static async elimina(usuario: Usuario) {
     try {
-      await axios.post(Configuraciones.apiURL + "usuarios",{id: usuario.id});
+      await axios.delete(Configuraciones.apiURL + "usuarios", {data: {id: usuario.id}});
       return true
     } catch (err) {
       console.log(err)
       return false
     }
   }
-  
+
 }
 
 export default ServicioUsuario
