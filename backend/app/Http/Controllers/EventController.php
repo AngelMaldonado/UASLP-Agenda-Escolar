@@ -58,7 +58,7 @@ class EventController extends Controller
         return response()->json($event);
     }
 
-    
+    //Tipo DELETE
     public function destroy(Request $request, $id)
     {
         // Validar que el evento existe en la base de datos
@@ -74,6 +74,7 @@ class EventController extends Controller
         // Respuesta exitosa con un mensaje en formato JSON y código de estado 200 (OK).
         return response()->json(['message' => 'Evento eliminado con éxito'], 200);
     }
+
     
     public function EventosCalendario($fecha)
     {
