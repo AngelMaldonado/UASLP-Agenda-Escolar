@@ -38,7 +38,7 @@ function Dialog(props: ModalProps) {
         <Modal.Body>
           {props.contenido}
         </Modal.Body>
-        <Modal.Footer className={"py-2" + (props.botones ? "visible" : "invisible")}>
+        <Modal.Footer className={"py-2" + (props.botones ? "visible" : "invisible" )} id={props.estiloVariante}>
           {props.botones ? props.botones.map((boton) => boton) : null}
         </Modal.Footer>
       </Modal>

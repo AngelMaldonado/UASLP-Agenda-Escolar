@@ -77,7 +77,7 @@ function CardUsuario(props: { usuario: Usuario }) {
             ocultaModal={ocultaModalElimr}
             titulo={<></>}
             variante={TemaComponente.Secundario}
-            estiloVariante="FaTimes"
+            estiloVariante="close-footer"
             close="close"
             trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
             contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el

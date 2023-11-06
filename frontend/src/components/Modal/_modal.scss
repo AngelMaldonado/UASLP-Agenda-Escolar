@@ -50,7 +50,8 @@
     color: u.$blanco;
     background-color: transparent;
     padding-bottom: 0;
-    padding-top: 2%;
+    padding-top: 1%;
+    border: none;
 
     > :first-child {
       display: flex;
@@ -68,10 +69,10 @@
   }
   
     
-  > .close-footer {
-    justify-content: center;
-    border-top: 1px solid u.$negro-20;
-    background-color: u.$blanco-80;
+  > #close-footer {
+    justify-content: space-evenly;
+    border-top: none;
+    background-color: u.$blanco;
     margin: 0;
     padding-top: 0;
   }
