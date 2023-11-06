@@ -77,14 +77,14 @@ class UsuarioController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         // Buscar el usuario en la base de datos
-        $usuario = Usuario::findOrFail($id);
-    
+        $usuario = Usuario::findOrFail($request->input('id'));
+
         // Eliminar el usuario de la base de datos
         $usuario->delete();
-    
+
         // Respuesta exitosa con un mensaje en formato JSON y código de estado 200 (OK).
         return response()->json(['message' => 'Usuario eliminado'], 200);
     }
