@@ -34,3 +34,14 @@ export const useModificaUsuario = () => {
   return {modificaUsuario}
 }
 ///Agregar funcion deeliminar   /checar funcion del QueryClient
+
+export const useEliminaUsuario = () => {
+  const queryClient = useQueryClient()
+  const {
+    mutate: eliminaUsuario
+  } = useMutation({
+    mutationFn: ServicioUsuario.elimina,
+    onSuccess: () => queryClient.invalidateQueries("usuarios")
+  })
+  return {eliminaUsuario}
+}

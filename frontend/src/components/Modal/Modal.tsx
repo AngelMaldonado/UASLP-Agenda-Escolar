@@ -32,7 +32,7 @@ function Dialog(props: ModalProps) {
           <div className="btn-cerrar" onClick={props.ocultaModal}>
             <Boton icono={<FaTimes />}
                    variant={props.variante}
-            />
+            /> 
           </div>
         </Modal.Header>
         <Modal.Body>

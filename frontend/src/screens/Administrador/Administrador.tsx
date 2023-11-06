@@ -22,7 +22,7 @@ function Administrador() {
   return (
     <Tab.Container id={idVistaAdministrador} defaultActiveKey={"calendario"}>
       <header className='header-uaslp'></header>
-      <NavbarAgenda eventKeys={eventKeysAgenda}/>
+      <NavbarAgenda eventKeys={eventKeysAgenda} sesionAdmi={true}/>
       <NavbarAdmin eventKeys={eventKeysAdmin}/>
       <Tab.Content>
         {...tabContent()}

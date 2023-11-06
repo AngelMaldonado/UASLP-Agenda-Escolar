@@ -20,9 +20,9 @@ function Boton(props: BotonProps) {
     icono,
     ...atributos
   } = props
-
+  
   if (atributos.href != null || atributos.eventKey != null) {
-    return (<Nav.Link {...atributos}>{props.etiqueta} {props.icono}</Nav.Link>)
+    return(<Nav.Link {...atributos}> <span /*className="border-bottom"*/>{props.etiqueta} {props.icono}</span></Nav.Link>)
   } else return (<Button {...atributos}>{props.etiqueta} {props.icono}</Button>)
 }
 

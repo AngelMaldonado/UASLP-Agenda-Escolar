@@ -56,11 +56,13 @@
     &:hover {
       color: u.$negro;
       background-color: u.$blanco;
+
     }
 
     &:active {
       background-color: u.$blanco-80;
     }
+
   }
 
   &.btn-danger {
@@ -95,4 +97,16 @@
     }
   }
 
+}
+
+.link-text {
+  margin-right: 0.5rem;
+}
+
+.line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: black;
+  margin-top: 0.5rem;
 }

@@ -7,7 +7,7 @@ class Evento {
   public hipervinculos: string[]
   public imagen: string
   public descripcion: string
-  public ruta: string
+  public simbolo: string
 
   constructor()
   constructor(cat_evento_id: number, usuario_id: number, nombre: string, fecha_inicio: Date, fecha_fin: Date, hipervinculos: string[], imagen: string, descripcion: string, ruta: string)
@@ -20,7 +20,7 @@ class Evento {
     this.hipervinculos = hipervinculos ?? []
     this.imagen = imagen ?? ""
     this.descripcion = descripcion ?? ""
-    this.ruta = ruta ?? ""
+    this.simbolo = ruta ?? ""
   }
 }
 

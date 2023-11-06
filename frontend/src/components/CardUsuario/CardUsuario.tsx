@@ -7,7 +7,10 @@ import {TemaComponente} from "../../utils/Utils.ts"
 import Modal from "../Modal";
 import {useState} from "react";
 import {ModificaUsuario} from "../FormularioUsuario";
-import {useModificaUsuario} from "../../hooks/HooksUsuario.ts";
+import {useModificaUsuario, useEliminaUsuario} from "../../hooks/HooksUsuario.ts";
+
+
+
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioState, setUsuarioState] = useState(props.usuario)
@@ -15,6 +18,7 @@ function CardUsuario(props: { usuario: Usuario }) {
   const [mostrarModalElimr, setMostrarModalElimr] = useState(false)
 
   const {modificaUsuario} = useModificaUsuario()
+  const {eliminaUsuario} = useEliminaUsuario()
 
   const cambiaUsuario = {
     onSingleChange: ((field: string, value: string) => setUsuarioState(prevState => ({
@@ -88,6 +92,10 @@ function CardUsuario(props: { usuario: Usuario }) {
                      variant={TemaComponente.PrimarioInverso}
                      etiqueta="Eliminar"
                      icono={<FaTrash/>}
+                    onClick={() => {
+                        eliminaUsuario(usuarioState)
+                        ocultaModal()  
+                    }}
               />,
             ]}
 

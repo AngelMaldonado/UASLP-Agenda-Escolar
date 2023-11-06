@@ -1,10 +1,11 @@
 import './TarjetaLarga.scss'
 import Evento from '../../models/Evento';
 
+
 const TarjetaLarga = (props: { evento : Evento}  ) => {
     return (
         <div className="cardLarge">
-            <div className="bgColor green"> <img src={props.evento.ruta} alt="" />  </div>
+            <div className="bgColor green"> <img src={props.evento.simbolo} alt="" />  </div>
             <div className="content">
                 <div className='bold'>
                     {props.evento.nombre}
