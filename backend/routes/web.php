@@ -14,6 +14,7 @@ Route::controller(UsuarioController::class)->group(function (){
     Route::get('/usuarios', 'index');
     Route::post('/usuarios', 'store');
     Route::put('/usuarios', 'update');
+    Route::DELETE('/usuarios', 'delete');
 });
 
 //Ruta para mostrar eventos en FullCalendar

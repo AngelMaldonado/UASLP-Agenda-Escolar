@@ -77,11 +77,15 @@ class UsuarioController extends Controller
     }
 
 
-    public function destroy($id): \Illuminate\Http\JsonResponse
+    public function destroy($id)
     {
+        // Buscar el usuario en la base de datos
         $usuario = Usuario::findOrFail($id);
+    
+        // Eliminar el usuario de la base de datos
         $usuario->delete();
-
+    
+        // Respuesta exitosa con un mensaje en formato JSON y código de estado 200 (OK).
         return response()->json(['message' => 'Usuario eliminado'], 200);
     }
 }
