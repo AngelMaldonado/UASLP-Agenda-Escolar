@@ -75,7 +75,7 @@ class EventController extends Controller
         return response()->json(['message' => 'Evento eliminado con éxito'], 200);
     }
 
-    
+    //El parametro se recibe por valor numerico del mes y regresa todos los eventos del mismo
     public function EventosCalendario($fecha)
     {
         // Validar el formato de la fecha
