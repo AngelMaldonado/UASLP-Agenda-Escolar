@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 
 class EventController extends Controller
 {
@@ -75,21 +77,23 @@ class EventController extends Controller
         return response()->json(['message' => 'Evento eliminado con éxito'], 200);
     }
 
-    //El parametro se recibe por valor numerico del mes y regresa todos los eventos del mismo
-    public function EventosCalendario($fecha)
+    public function EventosCalendario(Request $request)
     {
-        // Validar el formato de la fecha
-        $validator = Validator::make(['fecha' => $fecha], [
-        'fecha' => 'date_format:Y-m-d',
+        // Validar que el objeto JSON incluye un campo "mes" con un número del 1 al 12
+        $validator = Validator::make($request->all(), [
+            'mes' => 'required|integer|between:1,12',
         ]);
 
         // Comprobar si la validación falló
         if ($validator->fails()) {
-            return response()->json(['message' => 'Formato de fecha no válido'], 400); // Puedes ajustar el código de estado (400 para datos no válidos)
+            return response()->json(['message' => 'El campo "mes" debe ser un número del 1 al 12'], 400);
         }
 
-        // Consulta la base de datos para obtener los eventos del día
-        $events = Event::whereDate('fecha', $fecha)->get();
+        // Obtener el número de mes del objeto JSON
+        $mes = $request->input('mes');
+
+        // Consultar la base de datos para obtener los eventos correspondientes al mes
+        $events = Event::whereMonth('fecha', $mes)->get();
 
         return response()->json($events);
     }
