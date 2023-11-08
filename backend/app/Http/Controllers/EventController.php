@@ -79,23 +79,20 @@ class EventController extends Controller
 
     public function EventosCalendario(Request $request)
     {
-        // Validar que el objeto JSON incluye un campo "mes" con un número del 1 al 12
-        $validator = Validator::make($request->all(), [
-            'mes' => 'required|integer|between:1,12',
-        ]);
-
-        // Comprobar si la validación falló
-        if ($validator->fails()) {
-            return response()->json(['message' => 'El campo "mes" debe ser un número del 1 al 12'], 400);
-        }
-
-        // Obtener el número de mes del objeto JSON
         $mes = $request->input('mes');
 
-        // Consultar la base de datos para obtener los eventos correspondientes al mes
-        $events = Event::whereMonth('fecha', $mes)->get();
+        // Validar si el valor del parámetro "mes" es un número del 1 al 12 o "all"
+        if ($mes === 'all') {
+            // Consulta para obtener eventos de todos los meses ordenados por fecha
+            $eventos = Event::orderBy('fecha_inicio', 'asc')->get();
+        } elseif (is_numeric($mes) && $mes >= 1 && $mes <= 12) {
+            // Consulta para obtener eventos del mes especificado
+            $eventos = Event::whereMonth('fecha_inicio', $mes)->orderBy('fecha_inicio', 'asc')->get();
+        } else {
+            // Valor no válido para el parámetro "mes"
+            return response()->json(['message' => 'Valor de mes no válido'], 400);
+        }
 
-        return response()->json($events);
-    }
+        return response()->json($eventos);}
 
 }
