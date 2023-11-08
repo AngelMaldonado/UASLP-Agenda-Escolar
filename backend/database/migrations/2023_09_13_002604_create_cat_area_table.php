@@ -9,6 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+     //create_cat_area_table
     public function up(): void
     {
         Schema::create('cat_area', function (Blueprint $table) {

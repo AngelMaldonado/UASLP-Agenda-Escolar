@@ -9,6 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+    //create_usuario_table 
     public function up(): void
     {
         Schema::create('usuario', function (Blueprint $table) {

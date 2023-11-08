@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    //create_evento_area_table
     public function up(): void
     {
         Schema::create('evento_area', function (Blueprint $table) {

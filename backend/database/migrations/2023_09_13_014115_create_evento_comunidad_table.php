@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    //create_evento_comunidad_table
     public function up(): void
     {
         Schema::create('evento_comunidad', function (Blueprint $table) {

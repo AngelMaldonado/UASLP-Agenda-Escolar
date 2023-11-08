@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    //create_cat_comunidad_table
     public function up(): void
     {
         Schema::create('cat_comunidad', function (Blueprint $table) {
