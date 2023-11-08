@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CatEvento;
 
 //Ruta para el CRUD de usuarios
 Route::middleware(['auth'])->get('/user', function (Request $request) {
@@ -25,4 +26,13 @@ Route::controller(EventController::class)->group(function(){
     Route::post('/eventos', 'store');
     Route::put('/eventos', 'update');
     Route::delete('/eventos', 'destroy');
+});
+
+Route::controller(CatEvento::class)->group(function(){
+    Route::get('/cat_eventos', 'index');
+   
+   
+    //Route::post('/cat_eventos', 'store');
+    //Route::put('/cat_eventos', 'update');
+    //Route::delete('/cat_eventos', 'destroy');
 });
