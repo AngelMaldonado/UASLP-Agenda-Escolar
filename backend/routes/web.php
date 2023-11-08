@@ -18,5 +18,11 @@ Route::controller(UsuarioController::class)->group(function (){
 });
 
 //Ruta para mostrar eventos en FullCalendar
-Route::get('/eventos/{fecha}', [EventController::class, 'showEventsByDay']);
+//Route::get('/eventos/{fecha}', [EventController::class, 'showEventsByDay']);
 
+Route::controller(EventController::class)->group(function(){
+    Route::get('/eventos', 'EventosCalendario');
+    Route::post('/eventos', 'store');
+    Route::put('/eventos', 'update');
+    Route::delete('/eventos', 'destroy');
+});
