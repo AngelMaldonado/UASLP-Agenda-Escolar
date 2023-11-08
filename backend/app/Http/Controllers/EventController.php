@@ -10,19 +10,23 @@ use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
+    // Función para almacenar un nuevo evento
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|max:100', // El campo 'nombre' es obligatorio y no debe exceder los 100 caracteres.
-            'cat_evento_id' => 'required|exists:cat_evento,id', // El campo 'cat_evento_id' es obligatorio y debe existir en la tabla 'cat_evento'.
-            'usuario_id' => 'required|exists:usuario,id', // El campo 'usuario_id' es obligatorio y debe existir en la tabla 'usuario'.
-            'nombre' => 'required|max:100', // El campo 'nombre' es obligatorio y no debe exceder los 100 caracteres.
-            'fecha_inicio' => 'required|date', // El campo 'fecha_inicio' es obligatorio y debe ser una fecha válida.
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio', // El campo 'fecha_fin' es obligatorio, debe ser una fecha válida y debe ser posterior o igual a 'fecha_inicio'.
-            'hipervinculos' => 'json', // Asegúrate de que los datos se manejen adecuadamente como JSON.
-            'imagen' => 'required|string|max:200', // El campo 'imagen' es obligatorio, debe ser una cadena de caracteres y no debe exceder los 200 caracteres.
-            'descripcion' => 'required|string|max:250', // El campo 'descripcion' es obligatorio, debe ser una cadena de caracteres y no debe exceder los 250 caracteres.
-            'tipo' => 'required|string|max:10', // El campo 'tipo' es obligatorio, debe ser una cadena de caracteres y no debe exceder los 10 caracteres.
+            'cat_evento_id' => 'nullable|exists:cat_evento,id', // Validamos que cat_evento_id sea opcional y exista en la tabla cat_evento.
+            'usuario_id' => 'required|exists:usuario,id', // Validamos que usuario_id sea obligatorio y exista en la tabla usuario.
+            'nombre' => 'required|max:100',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => [
+                'required',
+                'date',
+                'after_or_equal:fecha_inicio',
+            ],
+            'hipervinculos' => 'json',
+            'imagen' => 'max:200',
+            'descripcion' => 'max:250',
+            'tipo' => 'max:10',
         ]);
 
         $event = Event::create($request->all());
@@ -30,19 +34,23 @@ class EventController extends Controller
         return response()->json($event);
     }
 
+    // Función para actualizar un evento existente
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|max:100', // El campo 'nombre' es obligatorio y no debe exceder los 100 caracteres.
-            'cat_evento_id' => 'required|exists:cat_evento,id', // El campo 'cat_evento_id' es obligatorio y debe existir en la tabla 'cat_evento'.
-            'usuario_id' => 'required|exists:usuario,id', // El campo 'usuario_id' es obligatorio y debe existir en la tabla 'usuario'.
-            'nombre' => 'required|max:100', // El campo 'nombre' es obligatorio y no debe exceder los 100 caracteres.
-            'fecha_inicio' => 'required|date', // El campo 'fecha_inicio' es obligatorio y debe ser una fecha válida.
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio', // El campo 'fecha_fin' es obligatorio, debe ser una fecha válida y debe ser posterior o igual a 'fecha_inicio'.
-            'hipervinculos' => 'json', // Asegúrate de que los datos se manejen adecuadamente como JSON.
-            'imagen' => 'required|string|max:200', // El campo 'imagen' es obligatorio, debe ser una cadena de caracteres y no debe exceder los 200 caracteres.
-            'descripcion' => 'required|string|max:250', // El campo 'descripcion' es obligatorio, debe ser una cadena de caracteres y no debe exceder los 250 caracteres.
-            'tipo' => 'required|string|max:10', // El campo 'tipo' es obligatorio, debe ser una cadena de caracteres y no debe exceder los 10 caracteres.
+            'cat_evento_id' => 'nullable|exists:cat_evento,id',
+            'usuario_id' => 'required|exists:usuario,id',
+            'nombre' => 'required|max:100',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => [
+                'required',
+                'date',
+                'after_or_equal:fecha_inicio',
+            ],
+            'hipervinculos' => 'json',
+            'imagen' => 'max:200',
+            'descripcion' => 'max:250',
+            'tipo' => 'max:10',
         ]);
 
         $event = Event::find($id);
@@ -56,6 +64,7 @@ class EventController extends Controller
         return response()->json($event);
     }
 
+    
     public function EventosCalendario(Request $request)
     {
         $mes = $request->input('mes');
