@@ -64,6 +64,7 @@ class EventController extends Controller
 
         return response()->json($event);
     }
+
     // Actualizar un evento existente
     public function update(Request $request, $id)
     {
