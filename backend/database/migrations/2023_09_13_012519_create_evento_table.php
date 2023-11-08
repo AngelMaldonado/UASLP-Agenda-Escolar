@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('evento', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cat_evento_id');
+            $table->unsignedBigInteger('cat_evento_id')->nullable;
             $table->unsignedBigInteger('usuario_id');
+            $table->string('nombre', 100);
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
             $table->json('hipervinculos');
             $table->string('imagen', 200);
             $table->string('descripcion', 250);
+            //los tipos seran: facultad, alumnado, catalogo
+            $table->string('tipo',10);
 
             $table->foreign('cat_evento_id')->references('id')->on('cat_evento')
                 ->onUpdate('cascade')
