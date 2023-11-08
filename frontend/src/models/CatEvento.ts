@@ -1,4 +1,4 @@
-/*class CatEvento {
+export default class CatEvento {
   public readonly id: number
   public nombre: string
   public descripcion: string
@@ -12,75 +12,28 @@
     this.descripcion = descripcion ?? ""
     this.simbolo = simbolo ?? ""
   }
-}*/
 
-export type CatEventoOption = {
-  value: string,
-  label: string,
-  simbolo: string
+  public static obtenOpcionesDesplegable(catalogo: CatEvento[]) {
+    return catalogo.map(evento => ({value: evento, label: evento.nombre}))
+  }
 }
 
-const CatEventos: CatEventoOption[] = [
-  {
-    value: "Inscripción y pago de programas de posgrado",
-    label: "Inscripción y pago de programas de posgrado",
-    simbolo: `./public/simbologia/1.webp`,
-  },
-  {
-    value: "Período vacacional de la UASLP",
-    label: "Período vacacional de la UASLP",
-    simbolo: `./public/simbologia/2.webp`,
-  },
-  {
-    value: "Reunión de inicio de semestre con Profesores de la facultad",
-    label: "Reunión de inicio de semestre con Profesores de la facultad",
-    simbolo: `./public/simbologia/3.webp`,
-  },
-  {
-    value: "Aplicación del examen general de conocimientos como opción de titulación",
-    label: "Aplicación del examen general de conocimientos como opción de titulación",
-    simbolo: `./public/simbologia/4.webp`,
-  },
-  {
-    value: "1er reunión de información alumnos de nuevo ingreso",
-    label: "1er reunión de información alumnos de nuevo ingreso",
-    simbolo: `./public/simbologia/5.webp`,
-  },
-  {
-    value: "Inicio de clases del semestre",
-    label: "Inicio de clases del semestre",
-    simbolo: `./public/simbologia/6.webp`,
-  },
-  {
-    value: "Periodo de bajas de materias del Departamento Físico Matemáticas",
-    label: "Periodo de bajas de materias del Departamento Físico Matemáticas",
-    simbolo: `./public/simbologia/7.webp`,
-  },
-  {
-    value: "Reunión del Consejo de Posgrado de la Facultad de Ingeniería",
-    label: "Reunión del Consejo de Posgrado de la Facultad de Ingeniería",
-    simbolo: `./public/simbologia/8.webp`,
-  },
-  {
-    value: "Período de altas y bajas de materias del DUI",
-    label: "Período de altas y bajas de materias del DUI",
-    simbolo: `./public/simbologia/9.webp`,
-  },
-  {
-    value: "Sesión ordinaria del H. Consejo Técnico Consultivo",
-    label: "Sesión ordinaria del H. Consejo Técnico Consultivo",
-    simbolo: `./public/simbologia/10.webp`,
-  },
-  {
-    value: "Inicio de cursos del DUI",
-    label: "Inicio de cursos del DUI",
-    simbolo: `./public/simbologia/11.webp`,
-  },
-  {
-    value: "Día inhábil",
-    label: "Día inhábil",
-    simbolo: `./public/simbologia/12.webp`,
-  },
+const eventos_catalogo: CatEvento[] = [
+  new CatEvento(1, "Inscripción y pago de programas de posgrado", "Descripción del evento 1", "/simbologia/1.webp"),
+  new CatEvento(2, "Período vacacional de la UASLP", "Descripción del evento 2", "/simbologia/2.webp"),
+  new CatEvento(3, "Reunión de inicio de semestre con Profesores de la facultad", "Descripción del evento 3", "/simbologia/3.webp"),
+  new CatEvento(4, "Aplicación del examen general de conocimientos como opción de titulación", "Descripción del evento 4", "/simbologia/4.webp"),
+  new CatEvento(5, "1er reunión de información alumnos de nuevo ingreso", "Descripción del evento 5", "/simbologia/5.webp"),
+  new CatEvento(6, "Inicio de clases del semestre", "Descripción del evento 6", "/simbologia/6.webp"),
+  new CatEvento(7, "Periodo de bajas de materias del Departamento Físico Matemáticas", "Descripción del evento 7", "/simbologia/7.webp"),
+  new CatEvento(8, "Reunión del Consejo de Posgrado de la Facultad de Ingeniería", "Descripción del evento 8", "/simbologia/8.webp"),
+  new CatEvento(9, "Período de altas y bajas de materias del DUI", "Descripción del evento 9", "/simbologia/9.webp"),
+  new CatEvento(10, "Sesión ordinaria del H. Consejo Técnico Consultivo", "Descripción del evento 10", "/simbologia/10.webp"),
 ];
 
-export default CatEventos
+export type CatEventoOption = {
+  value: CatEvento,
+  label: string,
+}
+
+export const eventos_catalogo_opciones = eventos_catalogo.map(evento => ({value: evento, label: evento.nombre}))

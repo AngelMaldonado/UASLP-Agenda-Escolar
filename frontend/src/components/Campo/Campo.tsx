@@ -14,7 +14,7 @@ export type CampoProps = {
   etiqueta?: string,
   required?: boolean,
   placeholder?: string,
-  onChange?: ((field: string, value: string) => void),
+  onChange?: ((field: string, value: any) => void),
   mensajeError?: string,
 }
 
@@ -31,8 +31,8 @@ export type CampoMultiTextoProps = CampoProps & {
 }
 
 export type CampoDesplegableProps = CampoProps & {
-  value?: string | Array<string>,
-  options?: { label: string, value: string }[],
+  value?: any | Array<any>,
+  options?: { value: any, label: string }[],
   isSearchable?: boolean,
   closeMenuOnSelect?: boolean,
   isMulti?: boolean,
@@ -228,7 +228,6 @@ export function CampoFecha(props: CampoFechaProps) {
         onBlur={handleFocus}
         onChange={event => {
           if (onDateChange != null) {
-            console.log(event.target.value.toLocaleLowerCase().toString())
             onDateChange(event.target.id, new Date(event.target.value))
           }
         }}

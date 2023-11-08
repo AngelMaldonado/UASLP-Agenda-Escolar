@@ -9,23 +9,24 @@ import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream, 
 import Modal from "../Modal";
 import NuevoEvento from "../FormularioEvento/NuevoEvento.tsx";
 import Evento from "../../models/Evento.ts";
+import CatEvento from "../../models/CatEvento.ts";
 
 function NavbarAdmin(props: { eventKeys: string[] }) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
   const [mostrarModal, setMostrarModal] = useState(false)
 
   const cambiaEvento = {
-    onSingleChange: ((field: string, value: string | Date) => setNuevoEvento(prevState => ({
+    onSingleChange: ((field: string, value: string | Date | CatEvento) => setNuevoEvento(prevState => ({
       ...prevState, [field]: value,
     }))),
-    onMultipleChange: ((value: string) => {
-      let hipervinculos: string[] = nuevoEvento.hipervinculos
-      if (hipervinculos.find(permiso => permiso == value)) {
-        hipervinculos.splice(nuevoEvento.hipervinculos.indexOf(value), 1)
+    onMultipleChange: ((field: string, value: any) => {
+      let elementos = nuevoEvento[field as keyof typeof nuevoEvento] as any[]
+      if (elementos.find(elemento => elemento == value)) {
+        elementos.splice(elementos.indexOf(value), 1)
       } else {
-        hipervinculos.push(value)
+        elementos.push(value)
       }
-      setNuevoEvento(prevState => ({...prevState, hipervinculos: hipervinculos}))
+      setNuevoEvento(prevState => ({...prevState, [field]: elementos}))
     }),
   }
 

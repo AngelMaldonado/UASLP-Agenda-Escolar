@@ -1,14 +1,18 @@
-const Areas: { value: string, label: string }[] = [
-  /* Permisos básicos */
-  {value: "Ciencias de la computación", label: "Ciencias de la computación"},
-  {value: "Agroindustrial", label: "Agroindustrial"},
-  {value: "Ciencias de la tierra", label: "Ciencias de la tierra"},
-  {value: "Formación humanística", label: "Formación humanística"},
-  {value: "Civil", label: "Civil"},
-  {value: "Mecánica Eléctrica", label: "Mecánica Eléctrica"},
-  {value: "Metalurgia y Materiales", label: "Metalurgia y Materiales"},
-  {value: "Investigación y Posgrado", label: "Investigación y Posgrado"},
-  {value: "Centro de Capacitación", label: "Centro de Capacitación"},
+export type AreasOption = {
+  value: number,
+  label: string
+}
+
+const Areas: AreasOption[] = [
+  {value: 1, label: "Ciencias de la computación"},
+  {value: 2, label: "Agroindustrial"},
+  {value: 3, label: "Ciencias de la tierra"},
+  {value: 4, label: "Formación humanística"},
+  {value: 5, label: "Civil"},
+  {value: 6, label: "Mecánica Eléctrica"},
+  {value: 7, label: "Metalurgia y Materiales"},
+  {value: 8, label: "Investigación y Posgrado"},
+  {value: 9, label: "Centro de Capacitación"},
 ]
 
 export default Areas
