@@ -14,16 +14,15 @@ class ServicioUsuario {
 
   public static async nuevo(usuario: Usuario) {
     try {
-      await axios.post(Configuraciones.apiURL + "usuarios", {
+      const response = await axios.post(Configuraciones.apiURL + "usuarios", {
         nombre: usuario.nombres + " " + usuario.apellidos,
         tipo: usuario.tipo,
         email: usuario.email,
         permisos: usuario.permisos
       })
-      return true
+      return response.status == 200
     } catch (err) {
-      console.log(err)
-      return false
+      return err
     }
   }
 

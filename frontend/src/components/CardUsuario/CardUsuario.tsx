@@ -12,10 +12,12 @@ import {useModificaUsuario, useEliminaUsuario} from "../../hooks/HooksUsuario.ts
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioState, setUsuarioState] = useState(props.usuario)
   const [mostrarModal, setMostrarModal] = useState(false)
+  const [mostrarModalRespuesta, setMostrarModalRespuesta] = useState(false)
+  const [mostrarModalRespuestaEliminar, setMostrarModalRespuestaEliminar] = useState(false)
   const [mostrarModalElimr, setMostrarModalElimr] = useState(false)
 
-  const {modificaUsuario} = useModificaUsuario()
-  const {eliminaUsuario} = useEliminaUsuario()
+  const {modificaUsuario} = useModificaUsuario(onSuccess)
+  const {eliminaUsuario} = useEliminaUsuario(onSuccessEliminar)
 
   const cambiaUsuario = {
     onSingleChange: ((field: string, value: string) => setUsuarioState(prevState => ({
@@ -114,8 +116,57 @@ function CardUsuario(props: { usuario: Usuario }) {
           <span className="w-100 badge rounded-pill fs-6 fw-light">{props.usuario.tipo}</span>
         </div>
       </div>
+      {modalRespuestaModificar()}
+      {modalRespuestaEliminar()}
     </div>
   );
+
+  function onSuccess() {
+    setMostrarModalRespuesta(true)
+  }
+
+  function onSuccessEliminar() {
+    setMostrarModalRespuestaEliminar(true)
+  }
+
+  function modalRespuestaModificar() {
+    return (
+      <Modal
+        mostrar={mostrarModalRespuesta}
+        titulo={<div><FaRegUser/><p className="fs-5">Modificar Usuario</p></div>}
+        contenido={<p>El usuario se modificó con éxito</p>}
+        muestraModal={onSuccess}
+        ocultaModal={
+          () => {
+            setMostrarModalRespuesta(false)
+          }
+        }
+        botones={[
+          <Boton onClick={() => setMostrarModalRespuesta(false)} variant={TemaComponente.Primario} etiqueta={"Ok"}/>
+        ]}
+      />
+    )
+  }
+
+  function modalRespuestaEliminar() {
+    return (
+      <Modal
+        mostrar={mostrarModalRespuestaEliminar}
+        titulo={<div><FaRegUser/><p className="fs-5">Eliminar Usuario</p></div>}
+        contenido={<p>El usuario se eliminó con éxito</p>}
+        muestraModal={onSuccess}
+        ocultaModal={
+          () => {
+            setMostrarModalRespuestaEliminar(false)
+          }
+        }
+        botones={[
+          <Boton onClick={() => setMostrarModalRespuestaEliminar(false)} variant={TemaComponente.Primario}
+                 etiqueta={"Ok"}/>
+        ]}
+      />
+    )
+  }
 
   function muestraModal() {
     setMostrarModal(true)
