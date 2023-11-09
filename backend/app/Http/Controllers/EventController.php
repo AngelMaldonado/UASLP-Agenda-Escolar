@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 
+
 class EventController extends Controller
 {
     // Obtener eventos para un mes específico o todos los meses

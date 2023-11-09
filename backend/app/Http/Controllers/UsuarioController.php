@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Http;
+use Spatie\Permission\Traits\HasRoles;
 
 class UsuarioController extends Controller
 {
@@ -26,18 +27,44 @@ class UsuarioController extends Controller
         return response()->json([], 200);
     }
 
-    public function store(Request $request): Usuario
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        // Validación de datos aquí
-        // Crear un nuevo usuario
+        $rules = [
+            'nombre' => 'required|string|max:50',
+            'puesto' => 'required|string|max:30',
+            'email' => 'required|string|email|unique:usuario,email',
+            'permisos' => 'required|array', // Asegúrate de que los datos se manejen adecuadamente como un arreglo.
+        ];
+
+        $messages = [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
+            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
+            'unique' => 'El campo :attribute ya está en uso.',
+            'array' => 'El campo :attribute debe ser un arreglo.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        // Crear el usuario
         $usuario = new Usuario();
         $usuario->nombre = $request->input('nombre');
-        $usuario->tipo = $request->input('tipo');
+        $usuario->puesto = $request->input('puesto');
         $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
         $usuario->save();
 
-        return $usuario;
+        // Asignar permisos al usuario
+        foreach ($request->input('permisos') as $permiso) {
+            $permission = Permission::firstOrCreate(['name' => $permiso]);
+            $usuario->givePermissionTo($permission);
+        }
+
+        return response()->json($usuario, 200);
     }
 
     public function edit($id)
@@ -46,33 +73,46 @@ class UsuarioController extends Controller
         return response()->json($usuario);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        // Validar los datos recibidos en la solicitud
-        $request->validate([
-            'id' => 'required|exists:usuario', // Asegurarse de que el usuario exista
+        $rules = [
             'nombre' => 'required|string|max:50',
-            'tipo' => 'required|string|max:30',
-            'email' => 'required|string|email|unique:usuario,email,' . $request->input('id'),
-            'permisos' => 'required|array', // Asegurarse de que los datos de permisos se manejen adecuadamente como JSON.
-        ]);
+            'puesto' => 'required|string|max:30',
+            'email' => 'required|string|email|unique:usuario,email,' . $id,
+            'permisos' => 'required|array', // Asegúrate de que los datos se manejen adecuadamente como un arreglo.
+        ];
 
-        // Obtener el ID del usuario a actualizar
-        $userId = $request->input('id');
+        $messages = [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
+            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
+            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
+            'unique' => 'El campo :attribute ya está en uso.',
+            'array' => 'El campo :attribute debe ser un arreglo.',
+        ];
 
-        // Buscar el usuario en la base de datos
-        $usuario = Usuario::findOrFail($userId);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
-        // Actualizar los datos del usuario con los valores recibidos en la solicitud
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        // Actualizar el usuario
+        $usuario = Usuario::findOrFail($id);
         $usuario->nombre = $request->input('nombre');
-        $usuario->tipo = $request->input('tipo');
+        $usuario->puesto = $request->input('puesto');
         $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // Asegurarse de que los datos de permisos se manejen adecuadamente como JSON.
-
-        // Guardar los cambios en la base de datos
         $usuario->save();
 
-        // Respuesta exitosa con el usuario actualizado en formato JSON y código de estado 200 (OK).
+        // Limpiar permisos antiguos del usuario
+        $usuario->syncPermissions([]);
+
+        // Asignar permisos al usuario
+        foreach ($request->input('permisos') as $permiso) {
+            $permission = Permission::firstOrCreate(['name' => $permiso]);
+            $usuario->givePermissionTo($permission);
+        }
+
         return response()->json($usuario, 200);
     }
 
@@ -88,4 +128,43 @@ class UsuarioController extends Controller
         // Respuesta exitosa con un mensaje en formato JSON y código de estado 200 (OK).
         return response()->json(['message' => 'Usuario eliminado'], 200);
     }
+
+    public function asignarRol($usuarioId, $nombreRol)
+    {
+        $usuario = Usuario::find($usuarioId);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        $rol = Role::where('name', $nombreRol)->first();
+
+        if (!$rol) {
+            return response()->json(['message' => 'Rol no encontrado'], 404);
+        }
+
+        $usuario->assignRole($rol);
+
+        return response()->json(['message' => 'Rol asignado con éxito'], 200);
+    }
+
+    public function asignarPermiso($usuarioId, $nombrePermiso)
+    {
+        $usuario = Usuario::find($usuarioId);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        $permiso = Permission::where('name', $nombrePermiso)->first();
+
+        if (!$permiso) {
+            return response()->json(['message' => 'Permiso no encontrado'], 404);
+        }
+
+        $usuario->givePermissionTo($permiso);
+
+        return response()->json(['message' => 'Permiso asignado con éxito'], 200);
+    }
+
 }
