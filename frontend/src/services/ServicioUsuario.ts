@@ -14,16 +14,15 @@ class ServicioUsuario {
 
   public static async nuevo(usuario: Usuario) {
     try {
-      await axios.post(Configuraciones.apiURL + "usuarios", {
+      const response = await axios.post(Configuraciones.apiURL + "usuarios", {
         nombre: usuario.nombres + " " + usuario.apellidos,
         tipo: usuario.tipo,
         email: usuario.email,
         permisos: usuario.permisos
       })
-      return true
+      return response.status == 200
     } catch (err) {
-      console.log(err)
-      return false
+      return err
     }
   }
 
@@ -37,11 +36,17 @@ class ServicioUsuario {
     }
   }
 
-  /*
-  public static eliminaUsuario(id) {
-    return axios.post(id);
+
+  public static async elimina(usuario: Usuario) {
+    try {
+      await axios.delete(Configuraciones.apiURL + "usuarios", {data: {id: usuario.id}});
+      return true
+    } catch (err) {
+      console.log(err)
+      return false
+    }
   }
-   */
+
 }
 
 export default ServicioUsuario

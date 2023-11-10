@@ -1,3 +1,2 @@
-import Campo from "./Campo"
-
-export default Campo
+export * from "./Campo.tsx"
+export {default} from "./Campo.tsx"

@@ -1,0 +1,29 @@
+@use "../../utils" as u;
+
+.header-uaslp {
+  height: 8rem;
+  background-color: u.$primary;
+}
+
+.header-agenda {
+  height: 4rem;
+  background-color: var(--terc);
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+}
+
+.fc {
+  height: 100vh;
+}
+
+.smallCalendar {
+  background-color: u.$primary-80;
+  width: 20%;
+  height: 100vh;
+  color: #fff;
+  overflow-y: scroll;
+}

@@ -1,11 +1,11 @@
 import './_card.scss'
-import TarjetaLarga from '../../components/TarjetaLarga/TarejtaLarga';
+import TarjetaLarga from '../../components/CardAgenda/CardAgenda.tsx';
 
 function Card() {
 
   return (
     <div className='container'>
-        <TarjetaLarga />
+      <TarjetaLarga/>
     </div>
   );
 }

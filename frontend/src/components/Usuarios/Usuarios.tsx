@@ -12,17 +12,16 @@ import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario())
   const [mostrarModal, setMostrarModal] = useState(false)
+  const [mostrarModalRespuesta, setMostrarModalRespuesta] = useState(false)
 
   const {usuarios} = useObtenUsuarios()
-  const {agregaUsuario} = useAgregaUsuario()
+  const {agregaUsuario} = useAgregaUsuario(onSuccess)
 
   const cambiaUsuario = {
-    onNombresChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, nombres: value}))),
-    onApellidosChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, apellidos: value}))),
-    onTipoChange: ((value: string) =>
-        setNuevoUsuario(prevState => ({...prevState, tipo: value}))
-    ),
-    onPermisosChange: ((value: string) => {
+    onSingleChange: ((field: string, value: string) => setNuevoUsuario(prevState => ({
+      ...prevState, [field]: value
+    }))),
+    onMultipleChange: ((_: string, value: string) => {
       let permisos: string[] = nuevoUsuario.permisos
       if (permisos.find(permiso => permiso == value)) {
         permisos.splice(nuevoUsuario.permisos.indexOf(value), 1)
@@ -31,7 +30,6 @@ function Usuarios() {
       }
       setNuevoUsuario(prevState => ({...prevState, permisos: permisos}))
     }),
-    onEmailChange: ((value: string) => setNuevoUsuario(prevState => ({...prevState, email: value})))
   }
 
   return (
@@ -62,11 +60,35 @@ function Usuarios() {
           />
         ]}
       />
+      {modalRespuesta()}
       {usuarios?.map(usuario => {
         return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>
       })}
     </div>
   );
+
+  function modalRespuesta() {
+    return (
+      <Modal
+        mostrar={mostrarModalRespuesta}
+        titulo={<div><FaRegUser/><p className="fs-5">Nuevo Usuario</p></div>}
+        contenido={<p>El usuario se agregó con éxito</p>}
+        muestraModal={onSuccess}
+        ocultaModal={
+          () => {
+            setMostrarModalRespuesta(false)
+          }
+        }
+        botones={[
+          <Boton onClick={() => setMostrarModalRespuesta(false)} variant={TemaComponente.Primario} etiqueta={"Ok"}/>
+        ]}
+      />
+    )
+  }
+
+  function onSuccess() {
+    setMostrarModalRespuesta(true)
+  }
 
   function muestraModal() {
     setMostrarModal(true)

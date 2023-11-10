@@ -56,6 +56,14 @@
     color: red;
     display: none;
   }
+
+  > div {
+    .btn {
+      position: absolute;
+      height: 100%;
+      right: 0;
+    }
+  }
 }
 
 input:invalid[aria-selected="true"] {
@@ -68,4 +76,8 @@ input:invalid[aria-selected="true"] {
 
 input:invalid[aria-selected="true"] ~ span {
   display: block;
+}
+
+textarea {
+  resize: none;
 }

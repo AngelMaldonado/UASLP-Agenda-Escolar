@@ -2,25 +2,28 @@ import "./card-usuario.scss"
 import Usuario from "../../models/Usuario.ts"
 import Boton from "../Boton"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser, FaTimes, FaTrash} from "react-icons/fa"
+import {FcCancel} from "react-icons/fc"
 import {TemaComponente} from "../../utils/Utils.ts"
 import Modal from "../Modal";
 import {useState} from "react";
 import {ModificaUsuario} from "../FormularioUsuario";
-import {useModificaUsuario} from "../../hooks/HooksUsuario.ts";
+import {useModificaUsuario, useEliminaUsuario} from "../../hooks/HooksUsuario.ts";
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioState, setUsuarioState] = useState(props.usuario)
   const [mostrarModal, setMostrarModal] = useState(false)
-  const [mostrarModalElimr,setMostrarModalElimr] = useState(false)
+  const [mostrarModalRespuesta, setMostrarModalRespuesta] = useState(false)
+  const [mostrarModalRespuestaEliminar, setMostrarModalRespuestaEliminar] = useState(false)
+  const [mostrarModalElimr, setMostrarModalElimr] = useState(false)
 
-  const {modificaUsuario} = useModificaUsuario()
+  const {modificaUsuario} = useModificaUsuario(onSuccess)
+  const {eliminaUsuario} = useEliminaUsuario(onSuccessEliminar)
 
   const cambiaUsuario = {
-    onNombreChange: ((value: string) => setUsuarioState(prevState => ({...prevState, nombre: value}))),
-    onTipoChange: ((value: string) =>
-        setUsuarioState(prevState => ({...prevState, tipo: value}))
-    ),
-    onPermisosChange: ((value: string) => {
+    onSingleChange: ((field: string, value: string) => setUsuarioState(prevState => ({
+      ...prevState, [field]: value
+    }))),
+    onMultipleChange: ((field: string, value: string) => {
       let permisos: string[] = usuarioState.permisos
       if (permisos.find(permiso => permiso == value)) {
         permisos.splice(usuarioState.permisos.indexOf(value), 1)
@@ -29,7 +32,6 @@ function CardUsuario(props: { usuario: Usuario }) {
       }
       setUsuarioState(prevState => ({...prevState, permisos: permisos}))
     }),
-    onEmailChange: ((value: string) => setUsuarioState(prevState => ({...prevState, email: value})))
   }
 
   return (
@@ -68,33 +70,41 @@ function CardUsuario(props: { usuario: Usuario }) {
               />
             ]}
           />
-          <Modal 
+          <Modal
             mostrar={mostrarModalElimr}
             muestraModal={muestraModalElimr}
             ocultaModal={ocultaModalElimr}
-            titulo={<div><p className=""></p></div>}
+            titulo={<></>}
+            variante={TemaComponente.Secundario}
+            estiloVariante="close-footer"
+            close="close"
             trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
-            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el usuario  <strong> [{props.usuario.nombre}] </strong> ?</p></>}
+            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
+              usuario <strong> [{props.usuario.nombre}] </strong> ?</p></>}
             botones={[
               <Boton key={"boton-caneclar"}
-                    variant={TemaComponente.PrimarioInverso}
-                    etiqueta="Cancelar"
-                    icono={<FaTimes/>}
-                    onClick={ocultaModalElimr}/>,
+                     variant={TemaComponente.DangerInverso}
+                     etiqueta="Cancelar"
+                     icono={<FcCancel/>}
+                     onClick={ocultaModalElimr}/>,
               <Boton key={"boton-eliminar"}
-                    variant={TemaComponente.DangerInverso}
-                    etiqueta="Eliminar"
-                    icono={<FaTrash/>}
+                     variant={TemaComponente.PrimarioInverso}
+                     etiqueta="Eliminar"
+                     icono={<FaTrash/>}
+                     onClick={() => {
+                       eliminaUsuario(usuarioState)
+                       ocultaModal()
+                     }}
               />,
             ]}
-          
+
           />
 
         </div>
       </div>
       <div className="card-body">
         <div className="w-50 mx-auto my-2 position-relative">
-          <img className="w-100 rounded-circle" src="./src/assets/example.jpg" alt="example"/>
+          <img className="w-100 rounded-circle" src="https://i.pravatar.cc/300" alt="example"/>
           <span className="position-absolute bottom-0 end-0 p-3 bg-success rounded-circle"></span>
         </div>
         <h3 className="card-title flex-fill">{props.usuario.nombre}</h3>
@@ -106,8 +116,57 @@ function CardUsuario(props: { usuario: Usuario }) {
           <span className="w-100 badge rounded-pill fs-6 fw-light">{props.usuario.tipo}</span>
         </div>
       </div>
+      {modalRespuestaModificar()}
+      {modalRespuestaEliminar()}
     </div>
   );
+
+  function onSuccess() {
+    setMostrarModalRespuesta(true)
+  }
+
+  function onSuccessEliminar() {
+    setMostrarModalRespuestaEliminar(true)
+  }
+
+  function modalRespuestaModificar() {
+    return (
+      <Modal
+        mostrar={mostrarModalRespuesta}
+        titulo={<div><FaRegUser/><p className="fs-5">Modificar Usuario</p></div>}
+        contenido={<p>El usuario se modificó con éxito</p>}
+        muestraModal={onSuccess}
+        ocultaModal={
+          () => {
+            setMostrarModalRespuesta(false)
+          }
+        }
+        botones={[
+          <Boton onClick={() => setMostrarModalRespuesta(false)} variant={TemaComponente.Primario} etiqueta={"Ok"}/>
+        ]}
+      />
+    )
+  }
+
+  function modalRespuestaEliminar() {
+    return (
+      <Modal
+        mostrar={mostrarModalRespuestaEliminar}
+        titulo={<div><FaRegUser/><p className="fs-5">Eliminar Usuario</p></div>}
+        contenido={<p>El usuario se eliminó con éxito</p>}
+        muestraModal={onSuccess}
+        ocultaModal={
+          () => {
+            setMostrarModalRespuestaEliminar(false)
+          }
+        }
+        botones={[
+          <Boton onClick={() => setMostrarModalRespuestaEliminar(false)} variant={TemaComponente.Primario}
+                 etiqueta={"Ok"}/>
+        ]}
+      />
+    )
+  }
 
   function muestraModal() {
     setMostrarModal(true)
