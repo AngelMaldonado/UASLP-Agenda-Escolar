@@ -25,7 +25,7 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
              onChange={props.onSingleChange}
       />
       <CampoDesplegable id="tipo"
-                        value={props.usuario.tipo}
+                        value={{value: props.usuario.tipo, label: props.usuario.tipo}}
                         etiqueta="Tipo de usuario"
                         placeholder="Elegir tipo de usuario"
                         required={true}
@@ -36,7 +36,7 @@ function ModificaUsuario(props: FormularioUsuarioProps) {
                         onChange={props.onSingleChange}
       />
       <CampoDesplegable id="permisos"
-                        value={props.usuario.permisos}
+                        value={[...props.usuario.permisos.map(p => ({value: p, label: p}))]}
                         etiqueta="Permisos"
                         placeholder="Elegir permisos"
                         options={Permisos}
