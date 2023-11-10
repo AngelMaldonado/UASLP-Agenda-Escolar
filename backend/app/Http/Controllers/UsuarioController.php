@@ -8,12 +8,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
 
 class UsuarioController extends Controller
 {
