@@ -122,6 +122,7 @@ function NuevoEvento(props: FormularioEventoProps) {
                        value={props.evento.descripcion}
                        etiqueta="Descripción"
                        placeholder="Descripción"
+                       maxLength={250}
                        required={true}
                        mensajeError="Campo obligatorio"
                        onChange={props.onSingleChange}

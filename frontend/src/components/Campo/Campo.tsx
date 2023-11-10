@@ -1,3 +1,6 @@
+// TODO: mostrar número de caracteres en textarea
+// TODO: estilos para invalid Select
+
 import "./_campo.scss"
 import {useState} from "react";
 import Select, {ActionMeta, SingleValue} from "react-select";
@@ -28,6 +31,7 @@ export type CampoTextoProps = CampoProps & {
 
 export type CampoMultiTextoProps = CampoProps & {
   value?: string,
+  maxLength?: number,
   rows: number,
 }
 
@@ -148,6 +152,7 @@ export function CampoDesplegable(props: CampoDesplegableProps) {
         onSelectChangeSingle(option as SingleValue<{ value: string, label: string }>)
       }
     }
+
   }
 
   function onSelectChangeSingle(option: SingleValue<{ value: string, label: string }>) {

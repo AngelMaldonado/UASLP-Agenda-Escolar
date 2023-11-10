@@ -35,7 +35,7 @@ function NuevoUsuario(props: FormularioUsuarioProps) {
              onChange={props.onSingleChange}
       />
       <CampoDesplegable id="tipo"
-                        value={{value: props.usuario.tipo, label: props.usuario.tipo}}
+                        value={props.usuario.tipo ? {value: props.usuario.tipo, label: props.usuario.tipo} : null}
                         etiqueta="Tipo de usuario"
                         placeholder="Elegir tipo de usuario"
                         required={true}
