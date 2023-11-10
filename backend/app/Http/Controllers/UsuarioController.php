@@ -60,6 +60,7 @@ class UsuarioController extends Controller
         $usuario->nombre = $request->input('nombre');
         $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
+        $usuario->permisos = $request->input('permisos');
         $usuario->save();
 
         // Asignar permisos al usuario
