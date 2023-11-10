@@ -1,19 +1,19 @@
 import "./_formularioEvento.scss"
-import CampoTexto, {CampoArchivo, CampoDesplegable, CampoFecha, CampoMultiTexto} from "../Campo"
+import CampoTexto, {CampoArchivo, CampoDesplegable, CampoFecha, CampoMultiTexto, TipoCampoTexto} from "../Campo"
 import Comunidades from "../../models/Comunidades.ts";
 import Areas from "../../models/Areas.ts";
 import Evento from "../../models/Evento.ts"
-import CatEvento, {eventos_catalogo_opciones} from "../../models/CatEvento.ts";
+import CatEvento, {eventos_catalogo_opciones, obten_evento_catalogo_opcion} from "../../models/CatEvento.ts";
 import {components, OptionProps} from "react-select";
 import Boton from "../Boton";
 import {Badge} from "react-bootstrap";
 import {FaPlus, FaTimes} from "react-icons/fa";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SimbologiaOption, simbologias} from "../../models/Simbologias.ts";
 
 type FormularioEventoProps = {
   evento: Evento,
-  onSingleChange: ((field: string, value: string | Date | CatEvento) => void),
+  onSingleChange: ((field: string, value: string | Date | number) => void),
   onMultipleChange: ((field: string, value: any) => void),
 }
 
@@ -21,6 +21,11 @@ const formNuevoEventoId = "form-nuevo-evento"
 
 function NuevoEvento(props: FormularioEventoProps) {
   const [nuevoHipervinculo, setNuevoHipervinculo] = useState("")
+  const [simbolo, setSimbolo] = useState(simbologias[0])
+
+  useEffect(() => {
+    setSimbolo(simbologias.find(s => s.value == props.evento.simbolo) ?? simbologias[0])
+  }, [props.evento]);
 
   const Option = (props: OptionProps<SimbologiaOption>) => (
     <components.Option {...props} children={
@@ -37,33 +42,36 @@ function NuevoEvento(props: FormularioEventoProps) {
   return (
     <form id={formNuevoEventoId} className="d-flex flex-column gap-2 text-start">
       <CampoDesplegable id="nombre"
-                        value={props.evento.nombre}
+                        value={obten_evento_catalogo_opcion(props.evento.cat_evento_id)}
                         options={eventos_catalogo_opciones}
                         placeholder="Nombre"
                         etiqueta="Nombre"
                         required={true}
         /*pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"} // <- Agregar también dígitos*/
-                        mensajeError="Ingrese nombre(s) válido (A-Z, a-z, 0-9 máx 100)"
+                        mensajeError="Seleccione un valor"
                         onChange={(field, value: CatEvento) => {
                           props.onSingleChange(field, value.nombre)
                           props.onSingleChange("simbolo", value.simbolo)
-                          props.onSingleChange("cat_evento", value)
+                          props.onSingleChange("descripcion", value.descripcion)
+                          props.onSingleChange("cat_evento_id", value.id)
                         }}
       />
       <div className="d-flex gap-2">
         <CampoDesplegable id="simbolo"
-                          value={props.evento.simbolo}
+                          value={simbolo}
                           options={simbologias}
                           placeholder="Simbología"
                           etiqueta="Simbología"
                           isSearchable={false}
+                          onChange={props.onSingleChange}
                           components={{Option, SingleValue}}
                           required={true}
-                          onChange={props.onSingleChange}
         />
         <CampoArchivo id="imagen"
                       etiqueta="Imagen"
-                      onChange={props.onSingleChange}
+                      onChange={(field, value: File[]) => {
+                        props.onSingleChange(field, "/imagenes/" + value[0].name)
+                      }}
                       accept="image/png, image/jpg, image/jpeg, image/webp"
         />
       </div>
@@ -102,8 +110,10 @@ function NuevoEvento(props: FormularioEventoProps) {
         />
       </div>
       <CampoTexto id={"link"}
+                  type={TipoCampoTexto.Enlace}
                   value={nuevoHipervinculo}
                   onChange={(_, value) => setNuevoHipervinculo(value)}
+                  mensajeError={"Ingrese una URL válida (https://www.ejemplo.com)"}
                   etiqueta="Hipervínculos"
                   boton={<Boton icono={<FaPlus/>}
                                 onClick={() => props.onMultipleChange("hipervinculos", nuevoHipervinculo)}/>}/>
@@ -112,6 +122,8 @@ function NuevoEvento(props: FormularioEventoProps) {
                        value={props.evento.descripcion}
                        etiqueta="Descripción"
                        placeholder="Descripción"
+                       required={true}
+                       mensajeError="Campo obligatorio"
                        onChange={props.onSingleChange}
                        rows={3}
       />
@@ -124,7 +136,8 @@ function NuevoEvento(props: FormularioEventoProps) {
         <div className="d-flex flex-wrap gap-2">
           {props.evento.hipervinculos.map((hipervinculo, index) => (
             <Badge key={"link-" + index}
-                   onClick={() => props.onMultipleChange("hipervinculos", hipervinculo)}>{hipervinculo} <FaTimes/>
+                   onClick={() => props.onMultipleChange("hipervinculos", hipervinculo)}>{hipervinculo}
+              <FaTimes/>
             </Badge>
           ))}
         </div>

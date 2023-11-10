@@ -56,17 +56,10 @@
     color: red;
     display: none;
   }
-
-  > div {
-    .btn {
-      position: absolute;
-      height: 100%;
-      right: 0;
-    }
-  }
 }
 
-input:invalid[aria-selected="true"] {
+input:invalid[aria-selected="true"],
+textarea:invalid[aria-selected="true"] {
   border: 1px solid u.$danger;
 
   &:focus {
@@ -74,7 +67,9 @@ input:invalid[aria-selected="true"] {
   }
 }
 
-input:invalid[aria-selected="true"] ~ span {
+.campo > div:has(input:invalid[aria-selected="true"]) ~ span,
+input:invalid[aria-selected="true"] ~ span,
+textarea:invalid[aria-selected="true"] ~ span {
   display: block;
 }
 

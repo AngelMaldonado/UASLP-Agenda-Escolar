@@ -4,7 +4,8 @@ import Select, {ActionMeta, SingleValue} from "react-select";
 
 export enum TipoCampoTexto {
   Texto = "text",
-  Email = "email"
+  Email = "email",
+  Enlace = "url"
 }
 
 export type SelectOption = { label: string, value: string }
@@ -19,7 +20,7 @@ export type CampoProps = {
 }
 
 export type CampoTextoProps = CampoProps & {
-  type?: "text" | "email" | "password" | "file",
+  type?: "text" | "email" | "password" | "url",
   value?: string,
   boton?: React.ReactElement,
   pattern?: string,
@@ -33,6 +34,7 @@ export type CampoMultiTextoProps = CampoProps & {
 export type CampoDesplegableProps = CampoProps & {
   value?: any | Array<any>,
   options?: { value: any, label: string }[],
+  defaultValue?: { value: any, label: string } | { value: any, label: string }[],
   isSearchable?: boolean,
   closeMenuOnSelect?: boolean,
   isMulti?: boolean,
@@ -62,7 +64,7 @@ export default function CampoTexto(props: CampoTextoProps) {
   return (
     <div className="w-100 campo">
       {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
-      <div className="d-flex position-relative">
+      <div className="flex gap-2">
         <input
           {...inputProps}
           className="form-control"
@@ -71,6 +73,7 @@ export default function CampoTexto(props: CampoTextoProps) {
           onChange={event => {
             if (onChange != null) {
               onChange(event.target.id, event.target.value)
+              setFocused(true)
             }
           }}
         />
@@ -118,8 +121,8 @@ export function CampoMultiTexto(props: CampoMultiTextoProps) {
 
 export function CampoDesplegable(props: CampoDesplegableProps) {
   const {
+    mensajeError,
     etiqueta,
-    value,
     ...inputProps
   } = props
   return (
@@ -127,23 +130,15 @@ export function CampoDesplegable(props: CampoDesplegableProps) {
       {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
       <Select
         {...inputProps}
-        defaultValue={value ? getDefaultSelectedOptions() : null}
         onChange={handleChange}
         className={"form-control"}
         classNamePrefix={"select"}
         closeMenuOnSelect={!inputProps.isMulti}
         unstyled={true}
       />
+      <span>{mensajeError}</span>
     </div>
   )
-
-  function getDefaultSelectedOptions(): SelectOption[] | SelectOption {
-    if (inputProps.isMulti) {
-      return [...(value as string[]).map((s: string): SelectOption => ({label: s, value: s}))]
-    } else {
-      return {label: (value as string), value: (value as string)}
-    }
-  }
 
   function handleChange(option: SingleValue<any>, actionMeta: ActionMeta<any>) {
     if (props.onChange != null) {
@@ -195,7 +190,7 @@ export function CampoArchivo(props: CampoArchivoProps) {
         onBlur={handleFocus}
         onChange={event => {
           if (onChange != null) {
-            onChange(event.target.id, event.target.value)
+            onChange(event.target.id, event.target.files)
           }
         }}
       />

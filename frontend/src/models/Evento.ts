@@ -1,7 +1,5 @@
-import CatEvento from "./CatEvento.ts";
-
 class Evento {
-  public cat_evento: CatEvento | null
+  public cat_evento_id: number | null
   public comunidades: number[]
   public areas: number[]
   public usuario_id: number
@@ -14,7 +12,7 @@ class Evento {
   public simbolo: string
 
   constructor()
-  constructor(cat_evento: CatEvento,
+  constructor(cat_evento_id: number,
               comunidades: number[],
               areas: number[],
               usuario_id: number,
@@ -25,7 +23,7 @@ class Evento {
               imagen: string,
               descripcion: string,
               simbolo: string)
-  constructor(cat_evento?: CatEvento,
+  constructor(cat_evento?: number,
               comunidades?: number[],
               areas?: number[],
               usuario_id?: number,
@@ -36,7 +34,7 @@ class Evento {
               imagen?: string,
               descripcion?: string,
               simbolo?: string) {
-    this.cat_evento = cat_evento ?? null
+    this.cat_evento_id = cat_evento ?? null
     this.comunidades = comunidades ?? []
     this.areas = areas ?? []
     this.usuario_id = usuario_id ?? -1

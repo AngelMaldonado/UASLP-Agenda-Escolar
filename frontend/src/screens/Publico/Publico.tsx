@@ -11,48 +11,37 @@ function Publico() {
   const eventKeysAgenda = ["calendario", "agenda"]
   // const navigate = useNavigate()
   return (
-    <Tab.Container defaultActiveKey={"calendario"}>
+    <Tab.Container defaultActiveKey={eventKeysAgenda[1]}>
       <header className='header-uaslp'></header>
-      <header className='header-agenda'>
-        <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button>
-      </header>
-      <NavbarAdmin eventKeys={[]}/>
-      <div className='flex'>
-         <Calendario/>
-         <div className='smallCalendar'>
-         <Calendar 
-          
-          locale = 'es'
-         />
-        <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         <TarjetaCalendario />
-         </div>
-
-      </div>
-
-    </>
+      {/* <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button> */}
+      <NavbarAgenda eventKeys={eventKeysAgenda}/>
+      <Tab.Content>
+        {tabContent()}
+      </Tab.Content>
+    </Tab.Container>
   );
+
+  function tabContent() {
+    return [
+      <Tab.Pane eventKey={eventKeysAgenda[0]}>
+        <div className="container my-4 d-flex flex-column gap-5">
+          {eventos.map((evento) => (
+            <TarjetaLarga evento={evento}/>
+          ))}
+        </div>
+      </Tab.Pane>,
+      <Tab.Pane eventKey={eventKeysAgenda[1]}>
+        <div className='flex'>
+          <Calendario/>
+          <div className='smallCalendar'>
+            {eventos.map((evento) => (
+              <CardCalendario evento={evento}/>
+            ))}
+          </div>
+        </div>
+      </Tab.Pane>,
+    ]
+  }
 }
 
 export default Publico

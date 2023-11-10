@@ -37,3 +37,7 @@ export type CatEventoOption = {
 }
 
 export const eventos_catalogo_opciones = eventos_catalogo.map(evento => ({value: evento, label: evento.nombre}))
+
+export function obten_evento_catalogo_opcion(id: number | null): CatEventoOption | undefined {
+  return eventos_catalogo_opciones.find(opcion => opcion.value.id == id)
+}
