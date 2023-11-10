@@ -5,7 +5,7 @@ import Configuraciones from "../utils/Configuraciones.ts"
 import Evento from "../models/Evento.ts";
 
 class ServicioEvento {
-  public static async obtenUsuarios() {
+  public static async obtenEventos() {
     try {
       return (await axios.get<Evento[]>(Configuraciones.apiURL + "eventos")).data
     } catch (err) {
@@ -16,7 +16,12 @@ class ServicioEvento {
 
   public static async nuevo(evento: Evento) {
     try {
-      await axios.post(Configuraciones.apiURL + "eventos", evento)
+      await axios.post(Configuraciones.apiURL + "eventos", {
+        ...evento,
+        usuario_id: 1,
+        fecha_inicio: evento.fecha_inicio.toISOString().split("T")[0],
+        fecha_fin: evento.fecha_fin.toISOString().split("T")[0]
+      })
       return true
     } catch (err) {
       console.log(err)

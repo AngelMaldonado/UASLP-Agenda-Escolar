@@ -9,10 +9,13 @@ import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream, 
 import Modal from "../Modal";
 import NuevoEvento from "../FormularioEvento/NuevoEvento.tsx";
 import Evento from "../../models/Evento.ts";
+import {useAgregaEvento} from "../../hooks/HooksEvento.ts";
 
 function NavbarAdmin(props: { eventKeys: string[] }) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
   const [mostrarModal, setMostrarModal] = useState(false)
+
+  const {agregaEvento} = useAgregaEvento()
 
   const cambiaEvento = {
     onSingleChange: ((field: string, value: string | Date | number) => setNuevoEvento(prevState => ({
@@ -85,11 +88,10 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   console.log(nuevoEvento)
-                   //if (NuevoUsuario.valida()) {
-                   //agregaUsuario(nuevoUsuario)
-                   //ocultaModal()
-                   //}
+                   if (NuevoEvento.valida()) {
+                     agregaEvento(nuevoEvento)
+                     ocultaModal()
+                   }
                  }}
           />
         ]}

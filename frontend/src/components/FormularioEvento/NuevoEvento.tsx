@@ -95,6 +95,7 @@ function NuevoEvento(props: FormularioEventoProps) {
         <CampoFecha id="fecha_inicio"
                     value={props.evento.fecha_inicio.toISOString().split("T")[0]}
                     etiqueta="Fecha Inicio"
+                    required={true}
                     placeholder="Fecha Inicio"
                     onDateChange={props.onSingleChange}
                     max={"2023/01/01"}
@@ -103,6 +104,7 @@ function NuevoEvento(props: FormularioEventoProps) {
         <CampoFecha id="fecha_fin"
                     value={props.evento.fecha_fin.toISOString().split("T")[0]}
                     etiqueta="Fecha Fin"
+                    required={true}
                     placeholder="Fecha Fin"
                     onDateChange={props.onSingleChange}
                     max={"2023/01/01"}
