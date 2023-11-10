@@ -35,7 +35,7 @@ class UsuarioController extends Controller
     {
         $rules = [
             'nombre' => 'required|string|max:50',
-            'puesto' => 'required|string|max:30',
+            'tipo' => 'required|string|max:30',
             'email' => 'required|string|email|unique:usuario,email',
             'permisos' => 'required|array', // Asegúrate de que los datos se manejen adecuadamente como un arreglo.
         ];
@@ -58,7 +58,7 @@ class UsuarioController extends Controller
         // Crear el usuario
         $usuario = new Usuario();
         $usuario->nombre = $request->input('nombre');
-        $usuario->puesto = $request->input('puesto');
+        $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
         $usuario->save();
 
@@ -81,7 +81,7 @@ class UsuarioController extends Controller
     {
         $rules = [
             'nombre' => 'required|string|max:50',
-            'puesto' => 'required|string|max:30',
+            'tipo' => 'required|string|max:30',
             'email' => 'required|string|email|unique:usuario,email,' . $id,
             'permisos' => 'required|array', // Asegúrate de que los datos se manejen adecuadamente como un arreglo.
         ];
@@ -104,7 +104,7 @@ class UsuarioController extends Controller
         // Actualizar el usuario
         $usuario = Usuario::findOrFail($id);
         $usuario->nombre = $request->input('nombre');
-        $usuario->puesto = $request->input('puesto');
+        $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
         $usuario->save();
 
