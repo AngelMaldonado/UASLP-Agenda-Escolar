@@ -7,8 +7,6 @@ use App\Models\Event;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-
-
 class EventController extends Controller
 {
     // Obtener eventos para un mes específico o todos los meses
@@ -37,7 +35,7 @@ class EventController extends Controller
             'nombre' => 'required|max:100',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-            'hipervinculos' => 'json',
+            'hipervinculos' => 'array',
             'imagen' => 'string|max:200',
             'descripcion' => 'string|max:250',
             'tipo' => 'string|max:10',

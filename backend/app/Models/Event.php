@@ -1,9 +1,9 @@
 <?php
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Event;
+namespace App\Models;
 
-class EventController extends Controller
+use Illuminate\Database\Eloquent\Model;
+
+class Event extends Model
 {
     public function showEventsByDay($fecha)
     {
