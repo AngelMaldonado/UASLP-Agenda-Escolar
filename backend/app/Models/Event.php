@@ -5,13 +5,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    use HasFactory;
+    
 
     protected $table = 'evento'; // Referencia a la tabla en la base de datos
-
+    
+    use HasFactory;
     protected $fillable = [
-        'cat_evento_id', 'usuario_id', 'nombre', 'fecha_inicio', 'fecha_fin',
-        'hipervinculos', 'imagen','descripcion', 'tipo'
+        'cat_evento_id',
+        'usuario_id',
+        'nombre',
+        'fecha_inicio',
+        'fecha_fin',
+        'hipervinculos',
+        'imagen',
+        'descripcion',
+        'tipo',
+    ];
+
+    protected $casts = [
+        'hipervinculos' => 'array',
     ];
 
     // Relacion con la categoria de eventos
