@@ -10,6 +10,7 @@ class Evento {
   public imagen: string
   public descripcion: string
   public simbolo: string
+  public tipo: string
 
   constructor()
   constructor(cat_evento_id: number,
@@ -22,7 +23,8 @@ class Evento {
               hipervinculos: string[],
               imagen: string,
               descripcion: string,
-              simbolo: string)
+              simbolo: string,
+              tipo: string)
   constructor(cat_evento?: number,
               comunidades?: number[],
               areas?: number[],
@@ -33,7 +35,8 @@ class Evento {
               hipervinculos?: string[],
               imagen?: string,
               descripcion?: string,
-              simbolo?: string) {
+              simbolo?: string,
+              tipo?: string) {
     this.cat_evento_id = cat_evento ?? null
     this.comunidades = comunidades ?? []
     this.areas = areas ?? []
@@ -45,6 +48,7 @@ class Evento {
     this.imagen = imagen ?? ""
     this.descripcion = descripcion ?? ""
     this.simbolo = simbolo ?? ""
+    this.tipo = tipo ?? ""
   }
 }
 

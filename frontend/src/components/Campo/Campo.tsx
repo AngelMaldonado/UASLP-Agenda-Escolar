@@ -52,8 +52,8 @@ export type CampoArchivoProps = CampoProps & {
 export type CampoFechaProps = CampoProps & {
   onDateChange?: ((field: string, date: Date) => void)
   value: string,
-  min: string,
-  max: string
+  min?: string,
+  max?: string
 }
 
 export default function CampoTexto(props: CampoTextoProps) {
@@ -77,7 +77,6 @@ export default function CampoTexto(props: CampoTextoProps) {
           onChange={event => {
             if (onChange != null) {
               onChange(event.target.id, event.target.value)
-              setFocused(true)
             }
           }}
         />
@@ -239,4 +238,8 @@ export function CampoFecha(props: CampoFechaProps) {
   function handleFocus() {
     setFocused(true)
   }
+}
+
+CampoTexto.valida = (id: string) => {
+  return (document.getElementById(id) as HTMLFormElement).reportValidity()
 }
