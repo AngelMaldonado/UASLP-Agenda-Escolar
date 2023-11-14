@@ -1,14 +1,15 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Databas\Eloquent\Relations\BelongsToMany;
 class Event extends Model
 {
-    
+
 
     protected $table = 'evento'; // Referencia a la tabla en la base de datos
-    
+
     use HasFactory;
     protected $fillable = [
         'cat_evento_id',
@@ -21,6 +22,8 @@ class Event extends Model
         'descripcion',
         'tipo',
     ];
+
+    public $timestamps = false;
 
     protected $casts = [
         'hipervinculos' => 'array',
