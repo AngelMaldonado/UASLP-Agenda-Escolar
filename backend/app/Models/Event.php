@@ -29,27 +29,27 @@ class Event extends Model
         'hipervinculos' => 'array',
     ];
 
-    // Relacion con la categoria de eventos
+    // Relación con la categoría de eventos
     public function category()
     {
-        return $this->belongsTo(Event::class, 'cat_evento_id');
+        return $this->belongsTo(CatEvento::class, 'cat_evento_id');
     }
 
     // Relación con el usuario
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Event::class, 'usuario_id');
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
     // Relación muchos a muchos con áreas
     public function areas()
     {
-        return $this->belongsToMany(Event::class, 'evento_area', 'cat_evento_id', 'cat_area_id');
+        return $this->belongsToMany(CatArea::class, 'evento_area', 'cat_evento_id', 'cat_area_id');
     }
 
-     // Relación muchos a muchos con comunidades
-     public function comunidades()
-     {
-         return $this->belongsToMany(Event::class, 'evento_comunidad', 'cat_evento_id', 'cat_comunidad_id');
-     }
+    // Relación muchos a muchos con comunidades
+    public function communities()
+    {
+        return $this->belongsToMany(CatComunidad::class, 'evento_comunidad', 'cat_evento_id', 'cat_comunidad_id');
+    }
 }
