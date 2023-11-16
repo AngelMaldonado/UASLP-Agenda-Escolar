@@ -13,13 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('evento_comunidad', function (Blueprint $table) {
-            $table->unsignedBigInteger('cat_evento_id');
-            $table->unsignedBigInteger('cat_comunidad_id');
-
-            $table->foreign('cat_evento_id')->references('id')->on('cat_evento')
+            $table->foreignId('evento_id')
+                ->constrained('evento')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('cat_comunidad_id')->references('id')->on('cat_comunidad')
+            $table->foreignId('cat_comunidad_id')
+                ->constrained('cat_comunidad')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

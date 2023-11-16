@@ -3,11 +3,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Databas\Eloquent\Relations\BelongsToMany;
 class Event extends Model
 {
-
-
     protected $table = 'evento'; // Referencia a la tabla en la base de datos
 
     use HasFactory;
@@ -44,12 +41,12 @@ class Event extends Model
     // Relación muchos a muchos con áreas
     public function areas()
     {
-        return $this->belongsToMany(CatArea::class, 'evento_area', 'cat_evento_id', 'cat_area_id');
+        return $this->belongsToMany(CatArea::class, 'evento_area', 'evento_id', 'cat_area_id');
     }
 
     // Relación muchos a muchos con comunidades
-    public function communities()
+    public function comunidades()
     {
-        return $this->belongsToMany(CatComunidad::class, 'evento_comunidad', 'cat_evento_id', 'cat_comunidad_id');
+        return $this->belongsToMany(CatComunidad::class, 'evento_comunidad', 'evento_id', 'cat_comunidad_id');
     }
 }

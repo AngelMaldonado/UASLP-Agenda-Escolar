@@ -15,6 +15,6 @@ class CatComunidad extends Model
     protected $fillable = ['descripcion'];
     public function eventos()
     {
-        return $this->belongsToMany(Event::class, 'evento_comunidad', 'cat_comunidad_id', 'cat_evento_id');
+        return $this->belongsToMany(Event::class, 'evento_comunidad', 'cat_comunidad_id', 'evento_id');
     }
 }

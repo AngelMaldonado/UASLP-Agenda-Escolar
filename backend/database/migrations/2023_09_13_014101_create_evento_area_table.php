@@ -13,13 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('evento_area', function (Blueprint $table) {
-            $table->unsignedBigInteger('cat_evento_id');
-            $table->unsignedBigInteger('cat_area_id');
-
-            $table->foreign('cat_evento_id')->references('id')->on('cat_evento')
+            $table->foreignId('evento_id')
+                ->constrained('evento')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('cat_area_id')->references('id')->on('cat_area')
+            $table->foreignId('cat_area_id')
+                ->constrained('cat_area')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
