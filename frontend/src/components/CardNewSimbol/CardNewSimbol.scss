@@ -1,0 +1,19 @@
+@use "../../utils/colors" as u;
+
+.card-body{
+    transition: 2s ease;
+    font-size:1.4rem;
+}
+
+.card-body.cardzoom:hover{
+    color: #fff;
+    transform: scale(1.2);
+}
+
+.CardNewSimbol {
+    width: '12rem'; 
+    height: '250px';
+    background-color: u.$secondary-50 !important;
+    border-radius: 10% !important;
+
+}

@@ -7,22 +7,22 @@ const TarjetaLarga = (props: { evento: Evento }) => {
   return (
     <div className="cardLarge">
       <div className="content">
-        <img src={props.evento.simbolo} alt={"Simbolo " + props.evento.nombre}/>
+        <img src={props.evento?.simbolo} alt={"Simbolo " + props.evento?.nombre}/>
         <div className='bold me-3'>
-          {props.evento.nombre}
+          {props.evento?.nombre}
         </div>
         <div className='fechas'>
           Inicia:
           <div className="d-flex gap-2 align-items-center fecha">
-            <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento.fecha_inicio).toUpperCase()}
+            <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento?.fecha_inicio).toUpperCase()}
           </div>
           Termina:
           <div className="d-flex gap-2 align-items-center fecha">
-            <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento.fecha_fin).toUpperCase()}
+            <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento?.fecha_fin).toUpperCase()}
           </div>
         </div>
         <div className='text'>
-          {props.evento.descripcion}
+          {props.evento?.descripcion}
         </div>
       </div>
       <div className="pills">

@@ -11,7 +11,9 @@ import Comunidades from "../../models/Comunidades.ts";
 import Areas from "../../models/Areas.ts";
 import {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import TarjetaLarga from "../CardAgenda/CardAgenda.tsx";
 
 type NavbarAgendaProps = {
   eventKeys: string[],
@@ -22,7 +24,8 @@ type NavbarAgendaProps = {
 function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate()
 
-
+  // const [nuevoEvento, setNuevoEvento] = useState(new Evento())
+  const [showModal, setShowModal] = useState(false)
   const [muestraOp1, cambiaOp1] = useState(true);
 
   const opcion1Click = () => cambiaOp1(true);
@@ -61,8 +64,10 @@ function NavbarAgenda(props: NavbarAgendaProps) {
 
         <Boton eventKey={props.eventKeys[2]}
                etiqueta="Más Eventos"
-               variant={TemaComponente.SecundarioInverso}/>
-
+               variant={TemaComponente.SecundarioInverso}
+               onClick = {()=>verModal()}
+       
+        />
         {props.sesionAdmi?
         (
           <div className="d-flex gap-1">
@@ -79,10 +84,41 @@ function NavbarAgenda(props: NavbarAgendaProps) {
             onClick={() => navigate('/login')}
           />
         }
-
+        {modalMasEventos()}
       </div>
     </nav>
   )
+
+
+  function modalMasEventos() {
+    return (
+        // <div
+        // className="modal show"
+        // style={{ display: 'block', position: 'initial' }}>
+          <Modal size="lg" show = {showModal} onHide={ocultaModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal Eventos</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <TarjetaLarga />
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="primary">Agregar Evento</Button>
+            </Modal.Footer>
+          </Modal>
+      // </div>
+    )
+  }
+
+  function verModal() {
+    setShowModal(true)
+  }
+
+  function ocultaModal() {
+    setShowModal(false)
+  }
 
 }
 

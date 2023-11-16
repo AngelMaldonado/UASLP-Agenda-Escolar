@@ -1,0 +1,13 @@
+@use "../../utils/colors" as u;
+
+.circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 100% !important;
+    
+}
+
+.CardSimbol{
+    background-color: u.$blanco;
+    
+}

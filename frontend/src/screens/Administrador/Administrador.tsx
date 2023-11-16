@@ -11,6 +11,8 @@ import Calendario from '../../components/Calendario/Calendario';
 import CardCalendario from '../../components/CardCalendario/CardCalendario.tsx';
 import eventos from "../../models/Eventos.ts";
 import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
+import CardNewSimbol from "../../components/CardNewSimbol/CardNewSimbol.tsx"
+import CardSimbol from "../../components/CardSimbol/CardSimbol.tsx"
 
 const idVistaAdministrador = "vista-administrador"
 
@@ -59,7 +61,16 @@ function Administrador() {
         <h1>Filtros...</h1>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[3]}>
-        <h1>Símbolos...</h1>
+        <div className="d-flex justify-content-around p-5">
+              <CardNewSimbol/>
+              <CardSimbol/>
+              <CardSimbol/>
+              <CardSimbol/>
+              <CardSimbol/>
+              <CardSimbol/>
+
+        </div>
+    
       </Tab.Pane>
     ]
   }
