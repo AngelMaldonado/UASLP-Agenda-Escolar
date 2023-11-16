@@ -9,7 +9,8 @@ use Illuminate\Databas\Eloquent\Relations\BelongsToMany;
 class CatEvento extends Model
 {
     use HasFactory;
-
+    protected $table = 'cat_evnto';
+    protected $fillable = ['nombre', 'descripción', 'simbolo'];
     // Relación muchos a muchos con eventos
     public function eventos()
     {
