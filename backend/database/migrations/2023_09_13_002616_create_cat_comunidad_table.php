@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('cat_comunidad', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion', 250);
+            $table->string('icono');
         });
     }
 
