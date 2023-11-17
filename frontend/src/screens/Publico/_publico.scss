@@ -20,10 +20,14 @@
   height: 100vh;
 }
 
-.smallCalendar {
+.contenedorTarjetas {
   background-color: u.$primary-80;
   width: 20%;
   height: 100vh;
   color: #fff;
   overflow-y: scroll;
+
+  &.admin {
+    width: 25%;
+  }
 }

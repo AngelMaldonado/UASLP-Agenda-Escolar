@@ -33,7 +33,7 @@ function Publico() {
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
         <div className='flex'>
           <Calendario/>
-          <div className='smallCalendar'>
+          <div className='contenedorTarjetas'>
             {eventos.map((evento) => (
               <CardCalendario evento={evento}/>
             ))}

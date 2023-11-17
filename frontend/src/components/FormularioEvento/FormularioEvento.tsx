@@ -1,7 +1,7 @@
 import "./_formularioEvento.scss"
 import CampoTexto, {CampoArchivo, CampoDesplegable, CampoFecha, CampoMultiTexto, TipoCampoTexto} from "../Campo"
-import Comunidades from "../../models/Comunidades.ts";
-import Areas from "../../models/Areas.ts";
+import Comunidades, {ComunidadesOption} from "../../models/Comunidades.ts";
+import Areas, {AreasOption} from "../../models/Areas.ts";
 import Evento from "../../models/Evento.ts"
 import CatEvento, {eventos_catalogo_opciones, obten_evento_catalogo_opcion} from "../../models/CatEvento.ts";
 import {components, OptionProps} from "react-select";
@@ -11,7 +11,7 @@ import {FaPlus, FaTimes} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {SimbologiaOption, simbologias} from "../../models/Simbologias.ts";
 
-type FormularioEventoProps = {
+type FormularioNuevoEventoProps = {
   evento: Evento,
   onSingleChange: ((field: string, value: string | Date | number) => void),
   onMultipleChange: ((field: string, value: any) => void),
@@ -19,7 +19,7 @@ type FormularioEventoProps = {
 
 const formNuevoEventoId = "form-nuevo-evento"
 
-function NuevoEvento(props: FormularioEventoProps) {
+function FormularioEvento(props: FormularioNuevoEventoProps) {
   const [nuevoHipervinculo, setNuevoHipervinculo] = useState("")
   const [simbolo, setSimbolo] = useState(simbologias[0])
 
@@ -78,6 +78,7 @@ function NuevoEvento(props: FormularioEventoProps) {
       <CampoDesplegable id="comunidades"
                         etiqueta="Comunidades"
                         placeholder="Comunidades"
+                        defaultValue={obtenComunidades()}
                         options={Comunidades}
                         isMulti={true}
                         required={true}
@@ -86,6 +87,7 @@ function NuevoEvento(props: FormularioEventoProps) {
       <CampoDesplegable id="areas"
                         etiqueta="Áreas"
                         placeholder="Áreas"
+                        defaultValue={obtenAreas()}
                         required={true}
                         isMulti={true}
                         options={Areas}
@@ -143,6 +145,32 @@ function NuevoEvento(props: FormularioEventoProps) {
     </form>
   );
 
+  function obtenAreas() {
+    let areas: AreasOption[] = []
+    if (props.evento.areas.length > 0) {
+      props.evento.areas.forEach(area => {
+        Areas.find(opcion => {
+          if (opcion.value == area)
+            areas.push(opcion)
+        })
+      })
+    }
+    return areas
+  }
+
+  function obtenComunidades() {
+    let comunidades: ComunidadesOption[] = []
+    if (props.evento.comunidades.length > 0) {
+      props.evento.comunidades.forEach(comunidad => {
+        Comunidades.find(opcion => {
+          if (opcion.value == comunidad)
+            comunidades.push(opcion)
+        })
+      })
+    }
+    return comunidades
+  }
+
   function muestraHipervinculos() {
     if (props.evento.hipervinculos.length > 0) {
       return (
@@ -161,8 +189,8 @@ function NuevoEvento(props: FormularioEventoProps) {
   }
 }
 
-NuevoEvento.valida = () => {
+FormularioEvento.valida = () => {
   return (document.getElementById(formNuevoEventoId) as HTMLFormElement).reportValidity()
 }
 
-export default NuevoEvento
+export default FormularioEvento

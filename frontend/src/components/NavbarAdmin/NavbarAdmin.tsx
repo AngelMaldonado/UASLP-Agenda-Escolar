@@ -7,7 +7,7 @@ import {TemaComponente} from "../../utils/Utils.ts";
 import {ReactComponentElement, useState} from "react";
 import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream, FaTimes} from 'react-icons/fa'
 import Modal from "../Modal";
-import NuevoEvento from "../FormularioEvento/NuevoEvento.tsx";
+import FormularioEvento from "../FormularioEvento/FormularioEvento.tsx";
 import Evento from "../../models/Evento.ts";
 import {useAgregaEvento} from "../../hooks/HooksEvento.ts";
 
@@ -76,7 +76,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
         muestraModal={muestraModal}
         ocultaModal={ocultaModal}
         titulo={<div><FaRegCalendarAlt/><p className="fs-5">Nuevo Evento</p></div>}
-        contenido={<NuevoEvento evento={nuevoEvento} {...cambiaEvento}/>}
+        contenido={<FormularioEvento evento={nuevoEvento} {...cambiaEvento}/>}
         botones={[
           <Boton key={"boton-cancelar"}
                  variant={TemaComponente.DangerInverso}
@@ -88,7 +88,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   if (NuevoEvento.valida()) {
+                   if (FormularioEvento.valida()) {
                      agregaEvento(nuevoEvento)
                      ocultaModal()
                    }

@@ -5,7 +5,6 @@ import "./_administrador.scss";
 import NavbarAdmin from "../../components/NavbarAdmin";
 import Usuarios from "../../components/Usuarios/Usuarios.tsx";
 import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx";
-//import {useState} from "react"
 import Tab from "react-bootstrap/Tab";
 import Calendario from "../../components/Calendario/Calendario";
 import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
@@ -13,7 +12,6 @@ import eventos from "../../models/Eventos.ts";
 import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
 import CardNuevoSimbolo from "../../components/CardNuevoSimbolo";
 import CardSimbol from "../../components/CardSimbol/CardSimbol.tsx";
-import Filtros from "../../models/Filtros.ts";
 
 const idVistaAdministrador = "vista-administrador";
 
@@ -23,10 +21,10 @@ function Administrador() {
   const eventKeysAdmin = ["tabla-eventos", "usuarios", "filtros", "simbolos"];
 
   return (
-    <Tab.Container id={idVistaAdministrador} defaultActiveKey={"calendario"}>
+    <Tab.Container id={idVistaAdministrador} defaultActiveKey={"agenda"}>
       <header className="header-uaslp"></header>
-      <NavbarAgenda eventKeys={eventKeysAgenda} sesionAdmi={true} />
-      <NavbarAdmin eventKeys={eventKeysAdmin} />
+      <NavbarAgenda eventKeys={eventKeysAgenda} sesionAdmi={true}/>
+      <NavbarAdmin eventKeys={eventKeysAdmin}/>
       <Tab.Content>{...tabContent()}</Tab.Content>
     </Tab.Container>
   );
@@ -36,16 +34,16 @@ function Administrador() {
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className="container my-4 d-flex flex-column gap-5">
           {eventos.map((evento) => (
-            <TarjetaLarga evento={evento} />
+            <TarjetaLarga evento={evento}/>
           ))}
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
-        <div className="flex">
-          <Calendario />
-          <div className="smallCalendar">
+        <div className='flex'>
+          <Calendario/>
+          <div className='contenedorTarjetas admin'>
             {eventos.map((evento) => (
-              <CardCalendario evento={evento} />
+              <CardCalendario admin={true} evento={evento}/>
             ))}
           </div>
         </div>
@@ -54,7 +52,7 @@ function Administrador() {
         <h1>Tabla eventoasdfasdfasdfasdfs</h1>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
-        <Usuarios />
+        <Usuarios/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[2]}>
         <h1>Filtros...</h1>
@@ -63,12 +61,12 @@ function Administrador() {
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[3]}>
         <div className="d-flex justify-content-around p-5">
-          <CardNuevoSimbolo />
-          <CardSimbol />
-          <CardSimbol />
-          <CardSimbol />
-          <CardSimbol />
-          <CardSimbol />
+          <CardNuevoSimbolo/>
+          <CardSimbol/>
+          <CardSimbol/>
+          <CardSimbol/>
+          <CardSimbol/>
+          <CardSimbol/>
         </div>
       </Tab.Pane>,
     ];

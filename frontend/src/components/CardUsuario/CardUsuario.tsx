@@ -23,7 +23,7 @@ function CardUsuario(props: { usuario: Usuario }) {
     onSingleChange: ((field: string, value: string) => setUsuarioState(prevState => ({
       ...prevState, [field]: value
     }))),
-    onMultipleChange: ((field: string, value: string) => {
+    onMultipleChange: ((_: string, value: string) => {
       let permisos: string[] = usuarioState.permisos
       if (permisos.find(permiso => permiso == value)) {
         permisos.splice(usuarioState.permisos.indexOf(value), 1)
@@ -38,13 +38,13 @@ function CardUsuario(props: { usuario: Usuario }) {
     <div className="card card-usuario text-center">
       <div className="card-header d-flex justify-content-between align-items-center bg-transparent border-0">
         <p className="m-0">#{props.usuario.id}</p>
-        <div className="d-inline-flex">
+        <div className="d-inline-flex gap-1">
           <Modal
             mostrar={mostrarModal}
             muestraModal={muestraModal}
             ocultaModal={ocultaModal}
             titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
-            trigger={<Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+            trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
             contenido={<ModificaUsuario usuario={usuarioState} {...cambiaUsuario}/>}
             botones={[
               <Boton key={"boton-caneclar"}
@@ -78,7 +78,7 @@ function CardUsuario(props: { usuario: Usuario }) {
             variante={TemaComponente.Secundario}
             estiloVariante="close-footer"
             close="close"
-            trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+            trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
             contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
               usuario <strong> [{props.usuario.nombre}] </strong> ?</p></>}
             botones={[
@@ -97,9 +97,7 @@ function CardUsuario(props: { usuario: Usuario }) {
                      }}
               />,
             ]}
-
           />
-
         </div>
       </div>
       <div className="card-body">

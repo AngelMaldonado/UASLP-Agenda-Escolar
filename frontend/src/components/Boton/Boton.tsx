@@ -11,7 +11,7 @@ type BotonProps = {
   icono?: React.ReactElement,
   eventKey?: string,
   href?: string,
-  clase? : string
+  rounded?: boolean
   onClick?: (() => void)
 }
 
@@ -19,13 +19,19 @@ function Boton(props: BotonProps) {
   const {
     etiqueta,
     icono,
-    clase,
     ...atributos
   } = props
-  
+
   if (atributos.href != null || atributos.eventKey != null) {
-    return(<Nav.Link {...atributos}> <span /*className="border-bottom"*/>{props.etiqueta} {props.icono}</span></Nav.Link>)
-  } else return (<Button className ={ clase } {...atributos}>{props.etiqueta} {props.icono}</Button>)
+    return (
+      <Nav.Link {...atributos}> <span /*className="border-bottom"*/>{props.etiqueta} {props.icono}</span></Nav.Link>)
+  } else return (
+    <Button
+      className={atributos.rounded ? "rounded-circle" : ""}
+      {...atributos}>
+      {props.etiqueta} {props.icono}
+    </Button>
+  )
 }
 
 Boton.defaultProps = {
