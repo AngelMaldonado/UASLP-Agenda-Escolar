@@ -6,7 +6,6 @@ import {TemaComponente} from "../../utils/Utils.ts";
 import Modal from "../Modal";
 import FormularioEvento from "../FormularioEvento";
 import {useState} from "react";
-import {ModificaUsuario} from "../FormularioUsuario";
 import {FcCancel} from "react-icons/fc";
 
 type CardCalendarioProps = {
