@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<Publico/>}/>
           <Route path="/administracion" element={<Administrador/>}/>
           <Route path="/card" element={<Card/>}/>
-          <Route path="/Login" element={<LoginAdmin/>}/>
+          <Route path="/login" element={<LoginAdmin/>}/>
           
         </Routes>
       </QueryClientProvider>

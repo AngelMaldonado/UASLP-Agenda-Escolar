@@ -1,13 +1,13 @@
 import "./_usuarios.scss"
 import Boton from "../Boton";
 import Modal from "../Modal";
-import Usuario from "../../models/Usuario.ts"
 import {useState} from "react"
 import CardUsuario from "../CardUsuario";
-import {TemaComponente} from "../../utils/Utils.ts";
+import Usuario from "../../models/Usuario.ts"
 import {NuevoUsuario} from "../FormularioUsuario";
-import {useAgregaUsuario, useObtenUsuarios} from "../../hooks/HooksUsuario.ts";
+import {TemaComponente} from "../../utils/Utils.ts";
 import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
+import {useAgregaUsuario, useObtenUsuarios} from "../../hooks/HooksUsuario.ts";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario())

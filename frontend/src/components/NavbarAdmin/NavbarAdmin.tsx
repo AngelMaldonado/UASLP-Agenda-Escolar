@@ -104,6 +104,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
   }
 
   function ocultaModal() {
+    setNuevoEvento(new Evento())
     setMostrarModal(false)
   }
 }

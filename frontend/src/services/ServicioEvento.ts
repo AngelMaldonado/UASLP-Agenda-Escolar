@@ -19,6 +19,7 @@ class ServicioEvento {
       await axios.post(Configuraciones.apiURL + "eventos", {
         ...evento,
         usuario_id: 1,
+        tipo: "facultad",
         fecha_inicio: evento.fecha_inicio.toISOString().split("T")[0],
         fecha_fin: evento.fecha_fin.toISOString().split("T")[0]
       })

@@ -97,9 +97,10 @@ function NuevoEvento(props: FormularioEventoProps) {
                     etiqueta="Fecha Inicio"
                     required={true}
                     placeholder="Fecha Inicio"
-                    onDateChange={props.onSingleChange}
-                    max={"2023/01/01"}
-                    min={"2024/01/01"}
+                    onDateChange={(field, date) => {
+                      props.onSingleChange(field, date)
+                      props.onSingleChange("fecha_fin", date)
+                    }}
         />
         <CampoFecha id="fecha_fin"
                     value={props.evento.fecha_fin.toISOString().split("T")[0]}
@@ -107,22 +108,31 @@ function NuevoEvento(props: FormularioEventoProps) {
                     required={true}
                     placeholder="Fecha Fin"
                     onDateChange={props.onSingleChange}
-                    max={"2023/01/01"}
-                    min={"2024/01/01"}
+                    min={props.evento.fecha_inicio.toISOString().split("T")[0]}
         />
       </div>
       <CampoTexto id={"link"}
                   type={TipoCampoTexto.Enlace}
                   value={nuevoHipervinculo}
+                  pattern={"^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$\n"}
+                  placeholder="https://www.dominio.com"
                   onChange={(_, value) => setNuevoHipervinculo(value)}
                   mensajeError={"Ingrese una URL válida (https://www.ejemplo.com)"}
-                  etiqueta="Hipervínculos"
-                  boton={<Boton icono={<FaPlus/>}
-                                onClick={() => props.onMultipleChange("hipervinculos", nuevoHipervinculo)}/>}/>
+                  etiqueta={"Hipervínculos (" + props.evento.hipervinculos.length + "/5)"}
+                  boton={
+                    <Boton icono={<FaPlus/>}
+                           onClick={() => {
+                             if (CampoTexto.valida("link") && nuevoHipervinculo != "" && props.evento.hipervinculos.length < 5) {
+                               props.onMultipleChange("hipervinculos", nuevoHipervinculo)
+                               setNuevoHipervinculo("")
+                             }
+                           }}
+                    />}
+      />
       {muestraHipervinculos()}
       <CampoMultiTexto id="descripcion"
                        value={props.evento.descripcion}
-                       etiqueta="Descripción"
+                       etiqueta={"Descripción (" + props.evento.descripcion.length + "/250)"}
                        placeholder="Descripción"
                        maxLength={250}
                        required={true}

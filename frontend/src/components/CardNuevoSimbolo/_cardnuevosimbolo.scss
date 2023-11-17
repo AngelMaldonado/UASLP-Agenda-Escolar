@@ -13,7 +13,9 @@
 .CardNewSimbol {
     width: '12rem'; 
     height: '250px';
-    background-color: u.$secondary-50 !important;
-    border-radius: 10% !important;
-
+    background-color: u.$secondary-50;
+    border-radius: 10%;
+    >.card-body{
+        >h3{color: u.$primary;}
+    }
 }
