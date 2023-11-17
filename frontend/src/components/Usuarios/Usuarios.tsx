@@ -80,7 +80,10 @@ function Usuarios() {
           }
         }
         botones={[
-          <Boton onClick={() => setMostrarModalRespuesta(false)} variant={TemaComponente.Primario} etiqueta={"Ok"}/>
+          <Boton key="Boton ok"
+                 onClick={() => setMostrarModalRespuesta(false)}
+                 variant={TemaComponente.Primario}
+                 etiqueta={"Ok"}/>
         ]}
       />
     )
