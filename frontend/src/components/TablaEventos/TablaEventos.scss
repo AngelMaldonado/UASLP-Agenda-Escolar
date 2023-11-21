@@ -1,0 +1,14 @@
+@use "../../utils" as u;
+
+.tablaEvento tr td{
+
+//    color: blueviolet;
+//    display: ;
+   
+}
+
+
+.tableHead tr th {
+    color: u.$primary;
+    // font-family: u.$;
+}
