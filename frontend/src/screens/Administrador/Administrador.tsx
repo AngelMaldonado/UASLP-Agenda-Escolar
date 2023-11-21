@@ -50,8 +50,9 @@ function Administrador() {
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
-        <h1>Tabla eventos</h1>
-        <TablaEventos/>
+        <div className=''>
+              <TablaEventos eventos={eventos}/>
+          </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>
