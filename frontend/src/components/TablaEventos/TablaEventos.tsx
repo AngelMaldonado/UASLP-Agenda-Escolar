@@ -60,13 +60,13 @@ function TablaEventos(props: Eventos ) {
               <th></th>
             </tr>
         </thead>
-        <tbody className='text-center tablaEvento'>
+        <tbody className=' tablaEvento text-center '>
             
             {props.eventos.map((events) => (
             <tr className=''>
               <td>{events.cat_evento_id}</td>
               <td>{events.nombre}</td>
-              <td className='d-flex justify-content-center '><div className='w-50'><img src={events.simbolo} alt=""  className='img-fluid'/>
+              <td ><div className=' d-flex justify-content-center  '><img src={events.simbolo} alt=""  className='img-fluid'/>
                 </div></td>
               <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
               <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
@@ -75,8 +75,8 @@ function TablaEventos(props: Eventos ) {
               </td>
               <td>{events.areas}</td>
               <td>{events.descripcion}</td>
-              <td className='d-flex justify-content-center'>
-                <div className='w-50'><img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid'/>
+              <td>
+                <div className='vh-50 d-flex justify-content-center '><img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid ' />
                 </div>
               </td>
               <td>{events.hipervinculos}</td>

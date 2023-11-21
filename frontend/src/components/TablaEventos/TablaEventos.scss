@@ -7,6 +7,10 @@
    
 }
 
+.tablaEvento tr td:hover {
+    background-color: u.$blanco-80;
+}
+
 
 .tableHead tr th {
     color: u.$primary;
