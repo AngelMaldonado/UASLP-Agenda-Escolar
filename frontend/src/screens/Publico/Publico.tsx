@@ -16,7 +16,7 @@ function Publico() {
       {/* <button className='boton --secundario' onClick={() => navigate('/login')}>Administración</button> */}
       <NavbarAgenda eventKeys={eventKeysAgenda}/>
       <Tab.Content>
-        {tabContent()}
+        {...tabContent()}
       </Tab.Content>
     </Tab.Container>
   );
@@ -26,7 +26,7 @@ function Publico() {
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className="container my-4 d-flex flex-column gap-5">
           {eventos.map((evento) => (
-            <TarjetaLarga evento={evento}/>
+            <TarjetaLarga key={"Card agenda " + evento.nombre} evento={evento}/>
           ))}
         </div>
       </Tab.Pane>,
@@ -35,7 +35,7 @@ function Publico() {
           <Calendario/>
           <div className='contenedorTarjetas'>
             {eventos.map((evento) => (
-              <CardCalendario evento={evento}/>
+              <CardCalendario key={"Card calendario " + evento.nombre} evento={evento}/>
             ))}
           </div>
         </div>

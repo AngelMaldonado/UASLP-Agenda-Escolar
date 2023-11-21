@@ -1,5 +1,4 @@
 // TODO: ver la forma de utilizar rutas para cambiar de tab (#usuarios, #calendario, etc...)
-// TODO: solucionar error: 'React does not recognize the `eventKey` prop on a DOM element.'
 
 import "./_administrador.scss";
 import NavbarAdmin from "../../components/NavbarAdmin";
@@ -36,7 +35,7 @@ function Administrador() {
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className="container my-4 d-flex flex-column gap-5">
           {eventos.map((evento) => (
-            <TarjetaLarga evento={evento}/>
+            <TarjetaLarga key={"Card agenda " + evento.nombre} evento={evento}/>
           ))}
         </div>
       </Tab.Pane>,
@@ -45,7 +44,7 @@ function Administrador() {
           <Calendario/>
           <div className='contenedorTarjetas admin'>
             {eventos.map((evento) => (
-              <CardCalendario admin={true} evento={evento}/>
+              <CardCalendario key={"Card calendario" + evento.nombre} admin={true} evento={evento}/>
             ))}
           </div>
         </div>

@@ -11,8 +11,6 @@ export enum TipoCampoTexto {
   Enlace = "url"
 }
 
-export type SelectOption = { label: string, value: string }
-
 export type CampoProps = {
   id: string,
   etiqueta?: string,
