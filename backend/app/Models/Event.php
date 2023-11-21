@@ -24,6 +24,8 @@ class Event extends Model
 
     protected $casts = [
         'hipervinculos' => 'array',
+        'fecha_inicio' => 'date',
+        'fecha_fin' => 'date'
     ];
 
     // Relación con la categoría de eventos

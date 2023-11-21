@@ -22,7 +22,7 @@ Route::controller(UsuarioController::class)->group(function (){
 //Route::get('/eventos/{fecha}', [EventController::class, 'showEventsByDay']);
 
 Route::controller(EventController::class)->group(function(){
-    Route::get('/eventos', 'EventosCalendario');
+    Route::get('/eventos', 'index');
     Route::post('/eventos', 'store');
     Route::put('/eventos', 'update');
     Route::delete('/eventos', 'destroy');
@@ -30,8 +30,8 @@ Route::controller(EventController::class)->group(function(){
 
 Route::controller(CatEvento::class)->group(function(){
     Route::get('/cat_eventos', 'index');
-   
-   
+
+
     //Route::post('/cat_eventos', 'store');
     //Route::put('/cat_eventos', 'update');
     //Route::delete('/cat_eventos', 'destroy');

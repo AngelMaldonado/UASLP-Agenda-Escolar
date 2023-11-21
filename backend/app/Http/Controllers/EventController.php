@@ -13,7 +13,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         // Verificar si se proporciona un mes en la solicitud
-        $month = $request->input('month');
+        $month = (int)$request->input('mes');
 
         if ($month === 'all') {
             // Obtener todos los eventos
