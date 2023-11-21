@@ -40,8 +40,8 @@ class EventController extends Controller
             'descripcion' => 'string|max:250',
             'tipo' => 'string|max:10',
             'cat_evento_id' => 'exists:cat_evento,id',
-            'comunidades' => 'array',
             'areas' => 'array',
+            'comunidades' => 'array',
         ]);
 
         if ($validator->fails()) {
@@ -49,17 +49,19 @@ class EventController extends Controller
         }
 
         $eventData = $request->all();
-        $event = Event::create($eventData);
 
         // Asociar áreas a eventos
-        if (isset($eventData['areas'])) {
-            $event->areas()->attach($eventData['areas']);
-        }
+        $areas = $eventData['areas'] ?? [];
+        unset($eventData['areas']);
 
         // Asociar comunidades a eventos
-        if (isset($eventData['comunidades'])) {
-            $event->comunidades()->attach($eventData['comunidades']);
-        }
+        $comunidades = $eventData['comunidades'] ?? [];
+        unset($eventData['comunidades']);
+
+        $event = Event::create($eventData);
+
+        $event->areas()->attach($areas);
+        $event->comunidades()->attach($comunidades);
 
         return response()->json($event);
     }
@@ -67,31 +69,35 @@ class EventController extends Controller
     // Actualizar un evento existente
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'cat_evento_id' => 'exists:cat_evento,id',
-            'usuario_id' => 'exists:usuario,id',
-            'nombre' => 'max:100',
-            'fecha_inicio' => 'date',
-            'fecha_fin' => 'date|after_or_equal:fecha_inicio',
-            'hipervinculos' => 'json',
-            'imagen' => 'string|max:200',
-            'descripcion' => 'string|max:250',
-            'tipo' => 'string|max:10',
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'cat_evento_id' => 'exists:cat_evento,id',
+                'usuario_id' => 'exists:usuario,id',
+                'nombre' => 'max:100',
+                'fecha_inicio' => 'date',
+                'fecha_fin' => 'date|after_or_equal:fecha_inicio',
+                'hipervinculos' => 'json',
+                'imagen' => 'string|max:200',
+                'descripcion' => 'string|max:250',
+                'tipo' => 'string|max:10',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
+
+            $event = Event::find($id);
+
+            if (!$event) {
+                return response()->json(['message' => 'Evento no encontrado'], 404);
+            }
+
+            $event->update($request->all());
+
+            return response()->json($event);
+        } catch (ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 400);
         }
-
-        $event = Event::find($id);
-
-        if (!$event) {
-            return response()->json(['message' => 'Evento no encontrado'], 404);
-        }
-
-        $event->update($request->all());
-
-        return response()->json($event);
     }
 
     // Eliminar un evento
