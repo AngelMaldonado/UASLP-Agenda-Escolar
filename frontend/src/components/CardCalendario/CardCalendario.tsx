@@ -7,6 +7,7 @@ import Modal from "../Modal";
 import FormularioEvento from "../FormularioEvento";
 import {useState} from "react";
 import {FcCancel} from "react-icons/fc";
+import {useEliminaEvento, useModificaEvento} from "../../hooks/HooksEvento.ts";
 
 type CardCalendarioProps = {
   evento: Evento
@@ -18,8 +19,11 @@ function CardCalendario(props: CardCalendarioProps) {
   const [mostrarModalModificar, setMostrarModalModificar] = useState(false)
   const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false)
 
+  const {modificaEvento} = useModificaEvento()
+  const {eliminaEvento} = useEliminaEvento()
+
   const cambiaEvento = {
-    onSingleChange: ((field: string, value: string | Date | number) => setEvento(prevState => ({
+    onSingleChange: ((field: string, value: string | Date | number | null) => setEvento(prevState => ({
       ...prevState, [field]: value,
     }))),
     onMultipleChange: ((field: string, value: any) => {
@@ -39,7 +43,7 @@ function CardCalendario(props: CardCalendarioProps) {
         <div className="circle bg-info-subtle rounded-circle">
           <img src={props.evento.simbolo} alt={"Simbologia " + props.evento.nombre}/>
           <small>
-            {Intl.DateTimeFormat('es-MX', {month: 'short'}).format(props.evento.fecha_inicio.getMonth()).toUpperCase()}
+            {/*{Intl.DateTimeFormat('es-MX', {month: 'short'}).format(props.evento.fecha_inicio.getMonth()).toUpperCase()}*/}
           </small>
           5-6
         </div>
@@ -86,7 +90,7 @@ function CardCalendario(props: CardCalendarioProps) {
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
                    if (FormularioEvento.valida()) {
-                     //modificaUsuario(usuarioState)
+                     modificaEvento(evento)
                      ocultaModalModificar()
                    }
                  }}
@@ -117,7 +121,7 @@ function CardCalendario(props: CardCalendarioProps) {
                  etiqueta="Eliminar"
                  icono={<FaTrash/>}
                  onClick={() => {
-                   //eliminaUsuario(usuarioState)
+                   eliminaEvento(evento)
                    ocultaModalEliminar()
                  }}
           />

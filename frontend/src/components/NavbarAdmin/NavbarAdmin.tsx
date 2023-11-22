@@ -18,7 +18,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
   const {agregaEvento} = useAgregaEvento()
 
   const cambiaEvento = {
-    onSingleChange: ((field: string, value: string | Date | number) => setNuevoEvento(prevState => ({
+    onSingleChange: ((field: string, value: string | Date | number | null) => setNuevoEvento(prevState => ({
       ...prevState, [field]: value,
     }))),
     onMultipleChange: ((field: string, value: any) => {

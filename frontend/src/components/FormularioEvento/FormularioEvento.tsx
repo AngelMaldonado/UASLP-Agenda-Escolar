@@ -1,5 +1,12 @@
 import "./_formularioEvento.scss"
-import CampoTexto, {CampoArchivo, CampoDesplegable, CampoFecha, CampoMultiTexto, TipoCampoTexto} from "../Campo"
+import CampoTexto, {
+  CampoArchivo,
+  CampoDesplegable,
+  CampoFecha,
+  CampoMultiTexto,
+  TipoCampoTexto
+} from "../Campo"
+
 import Comunidades, {ComunidadesOption} from "../../models/Comunidades.ts";
 import Areas, {AreasOption} from "../../models/Areas.ts";
 import Evento from "../../models/Evento.ts"
@@ -13,7 +20,7 @@ import {SimbologiaOption, simbologias} from "../../models/Simbologias.ts";
 
 type FormularioNuevoEventoProps = {
   evento: Evento,
-  onSingleChange: ((field: string, value: string | Date | number) => void),
+  onSingleChange: ((field: string, value: string | Date | number | null) => void),
   onMultipleChange: ((field: string, value: any) => void),
 }
 
@@ -21,11 +28,16 @@ const formNuevoEventoId = "form-nuevo-evento"
 
 function FormularioEvento(props: FormularioNuevoEventoProps) {
   const [nuevoHipervinculo, setNuevoHipervinculo] = useState("")
-  const [simbolo, setSimbolo] = useState(simbologias[0])
+  const [simbolo, setSimbolo] = useState(
+    {value: "", label: ""}
+  )
 
   useEffect(() => {
-    setSimbolo(simbologias.find(s => s.value == props.evento.simbolo) ?? simbologias[0])
-  }, [props.evento]);
+    const simboloNuevo = simbologias.find(s => s.value == props.evento.simbolo)
+    if (simboloNuevo != undefined) {
+      setSimbolo(simboloNuevo)
+    }
+  }, [props.evento.simbolo]);
 
   const Option = (props: OptionProps<SimbologiaOption>) => (
     <components.Option {...props} children={
@@ -42,23 +54,35 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
   return (
     <form id={formNuevoEventoId} className="d-flex flex-column gap-2 text-start">
       <CampoDesplegable id="nombre"
-                        value={obten_evento_catalogo_opcion(props.evento.cat_evento_id)}
+                        creacional={true}
+                        value={
+                          obten_evento_catalogo_opcion(props.evento.cat_evento_id) ??
+                          {value: props.evento.nombre, label: props.evento.nombre}
+                        }
                         options={eventos_catalogo_opciones}
                         placeholder="Nombre"
                         etiqueta="Nombre"
                         required={true}
-        /*pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"} // <- Agregar también dígitos*/
                         mensajeError="Seleccione un valor"
-                        onChange={(field, value: CatEvento) => {
-                          props.onSingleChange(field, value.nombre)
-                          props.onSingleChange("simbolo", value.simbolo)
-                          props.onSingleChange("descripcion", value.descripcion)
-                          props.onSingleChange("cat_evento_id", value.id)
+                        onChange={(field, value: CatEvento | string) => {
+                          if (value instanceof CatEvento) {
+                            props.onSingleChange(field, value.nombre)
+                            props.onSingleChange("simbolo", value.simbolo)
+                            props.onSingleChange("descripcion", value.descripcion)
+                            props.onSingleChange("cat_evento_id", value.id)
+                            props.onSingleChange("tipo", "catalogo")
+                          } else {
+                            props.onSingleChange(field, value)
+                            props.onSingleChange("simbolo", "")
+                            props.onSingleChange("descripcion", "")
+                            props.onSingleChange("cat_evento_id", null)
+                            props.onSingleChange("tipo", "facultad")
+                          }
                         }}
       />
       <div className="d-flex gap-2">
         <CampoDesplegable id="simbolo"
-                          value={simbolo}
+                          value={simbolo.value ? simbolo : null}
                           options={simbologias}
                           placeholder="Simbología"
                           etiqueta="Simbología"
@@ -116,7 +140,6 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
       <CampoTexto id={"link"}
                   type={TipoCampoTexto.Enlace}
                   value={nuevoHipervinculo}
-                  pattern={"^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$\n"}
                   placeholder="https://www.dominio.com"
                   onChange={(_, value) => setNuevoHipervinculo(value)}
                   mensajeError={"Ingrese una URL válida (https://www.ejemplo.com)"}

@@ -7,17 +7,21 @@ import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx";
 import Tab from "react-bootstrap/Tab";
 import Calendario from "../../components/Calendario/Calendario";
 import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
-import eventos from "../../models/Eventos.ts";
 import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
 import CardNuevoSimbolo from "../../components/CardNuevoSimbolo";
 import CardSimbol from "../../components/CardSimbol/CardSimbol.tsx";
 import Filtros from "../../components/Filtros/Filtros.tsx";
 import TablaEventos from "../../components/TablaEventos/TablaEventos.tsx";
+import {useObtenEventos} from "../../hooks/HooksEvento.ts";
+import {useState} from "react";
 
 const idVistaAdministrador = "vista-administrador";
 
 function Administrador() {
   //const [date, setDate] = useState(new Date());
+  const [mes, setMes] = useState(new Date().getMonth());
+  const {eventos} = useObtenEventos(mes);
+
   const eventKeysAgenda = ["calendario", "agenda"];
   const eventKeysAdmin = ["tabla-eventos", "usuarios", "filtros", "simbolos"];
 
@@ -34,7 +38,7 @@ function Administrador() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className="container my-4 d-flex flex-column gap-5">
-          {eventos.map((evento) => (
+          {eventos?.map((evento) => (
             <TarjetaLarga key={"Card agenda " + evento.nombre} evento={evento}/>
           ))}
         </div>
@@ -43,7 +47,7 @@ function Administrador() {
         <div className='flex'>
           <Calendario/>
           <div className='contenedorTarjetas admin'>
-            {eventos.map((evento) => (
+            {eventos?.map((evento) => (
               <CardCalendario key={"Card calendario" + evento.nombre} admin={true} evento={evento}/>
             ))}
           </div>
@@ -51,15 +55,15 @@ function Administrador() {
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
         <div className=''>
-              <TablaEventos eventos={eventos}/>
-          </div>
+          {/*<TablaEventos eventos={eventos}/>*/}
+        </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[2]}>
         <h1>Filtros...</h1>
-        <Filtros />
+        <Filtros/>
         {/* <CardFiltro/> */}
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[3]}>

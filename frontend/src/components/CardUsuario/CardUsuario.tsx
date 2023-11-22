@@ -44,7 +44,8 @@ function CardUsuario(props: { usuario: Usuario }) {
             muestraModal={muestraModal}
             ocultaModal={ocultaModal}
             titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
-            trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+            trigger={<Boton key={"boton-modificar-usuario-" + props.usuario.id} rounded={true}
+                            variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
             contenido={<ModificaUsuario usuario={usuarioState} {...cambiaUsuario}/>}
             botones={[
               <Boton key={"boton-caneclar"}
@@ -78,7 +79,10 @@ function CardUsuario(props: { usuario: Usuario }) {
             variante={TemaComponente.Secundario}
             estiloVariante="close-footer"
             close="close"
-            trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+            trigger={<Boton key={"eliminar-usuario" + props.usuario.id}
+                            rounded={true}
+                            variant={TemaComponente.DangerInverso}
+                            icono={<FaRegTrashAlt/>}/>}
             contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
               usuario <strong> [{props.usuario.nombre}] </strong> ?</p></>}
             botones={[
@@ -140,7 +144,10 @@ function CardUsuario(props: { usuario: Usuario }) {
           }
         }
         botones={[
-          <Boton onClick={() => setMostrarModalRespuesta(false)} variant={TemaComponente.Primario} etiqueta={"Ok"}/>
+          <Boton key="boton-ok"
+                 onClick={() => setMostrarModalRespuesta(false)}
+                 variant={TemaComponente.Primario}
+                 etiqueta={"Ok"}/>
         ]}
       />
     )
@@ -159,7 +166,8 @@ function CardUsuario(props: { usuario: Usuario }) {
           }
         }
         botones={[
-          <Boton onClick={() => setMostrarModalRespuestaEliminar(false)} variant={TemaComponente.Primario}
+          <Boton key="boton-ok" onClick={() => setMostrarModalRespuestaEliminar(false)}
+                 variant={TemaComponente.Primario}
                  etiqueta={"Ok"}/>
         ]}
       />

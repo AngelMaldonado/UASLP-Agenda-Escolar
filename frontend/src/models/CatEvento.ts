@@ -36,8 +36,16 @@ export type CatEventoOption = {
   label: string,
 }
 
-export const eventos_catalogo_opciones = eventos_catalogo.map(evento => ({value: evento, label: evento.nombre}))
+export const eventos_catalogo_opciones: { value: CatEvento | string, label: string }[] =
+  eventos_catalogo.map(evento => ({value: evento, label: evento.nombre}))
 
-export function obten_evento_catalogo_opcion(id: number | null): CatEventoOption | undefined {
-  return eventos_catalogo_opciones.find(opcion => opcion.value.id == id)
+export function obten_evento_catalogo_opcion(id: number | null): {
+  value: CatEvento | string,
+  label: string
+} | undefined {
+  return eventos_catalogo_opciones.find(opcion => {
+    if (opcion.value instanceof CatEvento) {
+      return opcion.value.id == id
+    }
+  })
 }
