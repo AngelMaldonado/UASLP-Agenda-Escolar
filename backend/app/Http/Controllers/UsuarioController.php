@@ -31,25 +31,14 @@ class UsuarioController extends Controller
         return response()->json([], 200);
     }
 
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request)
     {
-        $rules = [
+        $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:50',
-            'tipo' => 'required|string|max:30',
+            'tipo' => 'required|in:Administrador Secundario,Becario',
             'email' => 'required|string|email|unique:usuario,email',
-            'permisos' => 'required|array', // Asegúrate de que los datos se manejen adecuadamente como un arreglo.
-        ];
-
-        $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
-            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
-            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
-            'unique' => 'El campo :attribute ya está en uso.',
-            'array' => 'El campo :attribute debe ser un arreglo.',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
+            'permisos' => 'required|array',
+        ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);

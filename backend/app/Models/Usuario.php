@@ -9,13 +9,14 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Usuario extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRoles;
+
     protected $table = 'usuario';
     protected $fillable = ['nombre', 'tipo', 'email', 'permisos'];
     protected $casts = ['permisos' => 'array'];
     public $timestamps = false;
-    use HasRoles;
 
+    
     public function eventos()
     {
         return $this->hasMany(Event::class, 'usuario_id');

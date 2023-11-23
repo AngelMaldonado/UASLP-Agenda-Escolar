@@ -135,4 +135,9 @@ return new class extends Migration
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
     }
+
+    Schema::table('usuario', function (Blueprint $table) {
+        $table->string('tipo')->after('nombre');
+        $table->json('permisos')->nullable()->after('email');
+    });
 };
