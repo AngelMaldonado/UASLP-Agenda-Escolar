@@ -4,7 +4,6 @@ import Boton from "../Boton"
 import Modal from "../Modal";
 import {useState} from "react";
 import {FcCancel} from "react-icons/fc"
-import Filtros from '../../models/Filtros.ts'
 import {TemaComponente} from "../../utils/Utils.ts"
 import {ModificaUsuario} from "../FormularioUsuario";
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser, FaTimes, FaTrash} from "react-icons/fa"
