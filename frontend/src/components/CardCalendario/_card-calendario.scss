@@ -3,7 +3,7 @@
 .card.card-evento {
   border-radius: 100px !important;
   box-shadow: u.$card-sm-box-shadow;
-  height: 4.8rem;
+  height: 5rem;
   width: 85%;
   display: flex;
   flex-direction: row !important;
@@ -12,7 +12,27 @@
   margin: 30px auto;
   padding: 0 0.5rem;
   position: relative;
+<<<<<<< HEAD
   background-color: #fff;
+=======
+
+  > div {
+    > div > .btn {
+      padding: u.$btn-padding-x*0.6;
+      font-size: small;
+    }
+
+    > .circle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      width: 3.9rem;
+      height: 3.9rem;
+    }
+  }
+>>>>>>> da1419496d00073123a03ca075a9722208ce75d8
 }
 
 .card.card-evento:hover {
@@ -56,15 +76,6 @@
   cursor: pointer;
 }
 
-.circle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  overflow: hidden;
-}
 
 .circle small {
   font-size: 8px;

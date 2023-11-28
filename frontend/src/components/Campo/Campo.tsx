@@ -1,17 +1,15 @@
-// TODO: mostrar número de caracteres en textarea
 // TODO: estilos para invalid Select
 
 import "./_campo.scss"
 import {useState} from "react";
 import Select, {ActionMeta, SingleValue} from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 export enum TipoCampoTexto {
   Texto = "text",
   Email = "email",
   Enlace = "url"
 }
-
-export type SelectOption = { label: string, value: string }
 
 export type CampoProps = {
   id: string,
@@ -37,12 +35,18 @@ export type CampoMultiTextoProps = CampoProps & {
 
 export type CampoDesplegableProps = CampoProps & {
   value?: any | Array<any>,
+  creacional?: boolean,
   options?: { value: any, label: string }[],
   defaultValue?: { value: any, label: string } | { value: any, label: string }[],
   isSearchable?: boolean,
   closeMenuOnSelect?: boolean,
   isMulti?: boolean,
   components?: {}
+}
+
+export type CampoRadiosProps = CampoProps & {
+  value?: any,
+  options: { value: any, label: string }[]
 }
 
 export type CampoArchivoProps = CampoProps & {
@@ -126,22 +130,38 @@ export function CampoDesplegable(props: CampoDesplegableProps) {
   const {
     mensajeError,
     etiqueta,
+    creacional,
     ...inputProps
   } = props
   return (
     <div className="w-100 campo">
       {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
-      <Select
-        {...inputProps}
-        onChange={handleChange}
-        className={"form-control"}
-        classNamePrefix={"select"}
-        closeMenuOnSelect={!inputProps.isMulti}
-        unstyled={true}
-      />
+      {creacional ?
+        <CreatableSelect
+          {...inputProps}
+          onCreateOption={(value: string) => handleCreate(value)}
+          onChange={handleChange}
+          className="form-control"
+          classNamePrefix="select"
+          closeMenuOnSelect={!inputProps.isMulti}
+          unstyled={true}
+        /> :
+        <Select
+          {...inputProps}
+          onChange={handleChange}
+          className="form-control"
+          classNamePrefix="select"
+          closeMenuOnSelect={!inputProps.isMulti}
+          unstyled={true}
+        />
+      }
       <span>{mensajeError}</span>
     </div>
   )
+
+  function handleCreate(inputValue: string) {
+    onSelectChangeSingle({value: inputValue, label: inputValue})
+  }
 
   function handleChange(option: SingleValue<any>, actionMeta: ActionMeta<any>) {
     if (props.onChange != null) {
@@ -173,6 +193,38 @@ export function CampoDesplegable(props: CampoDesplegableProps) {
         break
     }
   }
+}
+
+export function CampoRadios(props: CampoRadiosProps) {
+  const {
+    value,
+    options,
+    onChange,
+    etiqueta,
+    id,
+    ...inputProps
+  } = props
+  return (
+    <div className="w-100 campo d-flex gap-2">
+      {options.map((option) => (
+        <label className="form-control d-flex gap-2" key={"Opcion Radio" + option.label} htmlFor={option.value}>
+          <input
+            type="radio"
+            id={option.value}
+            value={value}
+            name={id}
+            {...inputProps}
+            onChange={(event) => {
+              if (onChange != null && event.target.checked) {
+                onChange(event.target.id, event.target.value)
+              }
+            }}
+          />
+          {option.label}
+        </label>
+      ))}
+    </div>
+  )
 }
 
 export function CampoArchivo(props: CampoArchivoProps) {

@@ -9,6 +9,10 @@
   border: none;
   border-radius: u.$btn-border-radius;
 
+  &.rounded-circle {
+    padding: u.$btn-padding-x;
+  }
+
   &.btn-primary, &[variant="primary"] {
     color: u.$blanco;
     background-color: u.$primary;
@@ -39,6 +43,7 @@
   &.btn-secondary, &[variant="secondary"] {
     background-color: transparent;
     color: u.$negro;
+
     &:hover {
       color: u.$blanco;
       background-color: gray;
@@ -48,7 +53,7 @@
       background-color: u.$blanco-80;
     }
   }
-  
+
   &.btn-secondary-inverse, &[variant="secondary-inverse"] {
     background-color: transparent;
     color: u.$blanco;

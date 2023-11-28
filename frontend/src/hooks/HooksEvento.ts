@@ -1,13 +1,13 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioEvento from "../services/ServicioEvento.ts";
 
-export const useObtenEventos = () => {
+export const useObtenEventos = (mes: number) => {
   const {
     data: eventos,
     isLoading
   } = useQuery({
     queryKey: "eventos",
-    queryFn: ServicioEvento.obtenEventos
+    queryFn: () => ServicioEvento.obtenEventos(mes)
   })
   return {eventos, isLoading}
 }

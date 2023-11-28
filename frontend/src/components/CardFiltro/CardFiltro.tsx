@@ -4,7 +4,6 @@ import Boton from "../Boton"
 import Modal from "../Modal";
 import {useState} from "react";
 import {FcCancel} from "react-icons/fc"
-import Filtros from '../../models/Filtros.ts'
 import {TemaComponente} from "../../utils/Utils.ts"
 import {ModificaUsuario} from "../FormularioUsuario";
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser, FaTimes, FaTrash} from "react-icons/fa"
@@ -27,7 +26,7 @@ function CardFiltro(/*props: { filtro: Filtros}*/) {
               muestraModal={muestraModal}
               ocultaModal={ocultaModal}
               titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
-              trigger={<Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+              trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
               contenido={<></>}
               botones={[
           
@@ -56,7 +55,7 @@ function CardFiltro(/*props: { filtro: Filtros}*/) {
               variante={TemaComponente.Secundario}
               estiloVariante="close-footer"
               close="close"
-              trigger={<Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+              trigger={<Boton  rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
               contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
               filtro <strong> [{/*props.filtro.id*/}] </strong> ?</p></>}
               botones={[
@@ -123,6 +122,7 @@ CardFiltro.CardNuevoFiltro = (
       <div className="new-icon">
         <FaPlus/>
       </div>
+      <br />
       <h3 className="card-title">Nuevo Filtro</h3>
     </div>
   </div>

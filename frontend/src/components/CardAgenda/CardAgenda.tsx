@@ -2,7 +2,6 @@ import './_card-agenda.scss'
 import Evento from '../../models/Evento';
 import {FaRegCalendar} from "react-icons/fa";
 
-
 const TarjetaLarga = (props: { evento: Evento }) => {
   return (
     <div className="cardLarge">

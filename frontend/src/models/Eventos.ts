@@ -1,22 +1,22 @@
 import Evento from "./Evento.ts";
-import CatEvento from "./CatEvento.ts";
 
 const eventos: Evento[] = [
   new Evento(
-    new CatEvento(),
-    [],
-    [],
+    1,
+    [1, 2, 3],
+    [1, 2, 3],
     1,
     'Inscripción y pago de programas de posgrado',
     new Date('2023-08-19'),
     new Date('2023-08-25'),
-    [],
+    ["www.google.com"],
     '/imagenes/imagen1.webp',
     'Período de inscripción y pago de colegiatura de los programas de posgrado',
     '/simbologia/1.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    2,
     [],
     [],
     1,
@@ -27,9 +27,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen2.webp',
     'Período vacacional de la UASLP',
     '/simbologia/2.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    3,
     [],
     [],
     1,
@@ -40,9 +41,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen3.webp',
     'Reunión de inicio del semestre con Profesores de la Facultad.',
     '/simbologia/3.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    4,
     [],
     [],
     1,
@@ -53,9 +55,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen4.webp',
     'Aplicación del examen general de conocimientos como opción de titulación',
     '/simbologia/4.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    5,
     [],
     [],
     1,
@@ -66,9 +69,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen5.webp',
     '1er reunión de información: Autoridades de la Facultad de Ingeniería con Padres de familia y Alumnos de primer ingreso.',
     '/simbologia/5.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    6,
     [],
     [],
     1,
@@ -79,9 +83,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen6.webp',
     'Inicio de clases del semestre',
     '/simbologia/6.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    7,
     [],
     [],
     1,
@@ -92,9 +97,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen7.webp',
     'Período de bajas de materias del Departamento Fisico Matematico',
     '/simbologia/7.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    8,
     [],
     [],
     1,
@@ -105,9 +111,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen8.webp',
     'Reunión del Consejo de Posgrado de la Facultad de Ingeniería',
     '/simbologia/8.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    9,
     [],
     [],
     1,
@@ -118,9 +125,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen9.webp',
     'Período de altas y bajas de materias del Departamento Universitario de Inglés',
     '/simbologia/9.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    10,
     [],
     [],
     1,
@@ -131,9 +139,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen10.webp',
     'Sesión ordinaria del H. Consejo Técnico Consultivo.',
     '/simbologia/10.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    11,
     [],
     [],
     1,
@@ -144,9 +153,10 @@ const eventos: Evento[] = [
     '/imagenes/imagen11.webp',
     'Inicio de cursos del Departamento Universitario de Inglés',
     '/simbologia/11.webp',
+    'facultad'
   ),
   new Evento(
-    new CatEvento(),
+    12,
     [],
     [],
     1,
@@ -157,6 +167,7 @@ const eventos: Evento[] = [
     '/imagenes/imagen12.webp',
     'Día inhábil',
     '/simbologia/12.webp',
+    'facultad'
   ),
 ]
 

@@ -1,7 +1,14 @@
 import "./_formularioEvento.scss"
-import CampoTexto, {CampoArchivo, CampoDesplegable, CampoFecha, CampoMultiTexto, TipoCampoTexto} from "../Campo"
-import Comunidades from "../../models/Comunidades.ts";
-import Areas from "../../models/Areas.ts";
+import CampoTexto, {
+  CampoArchivo,
+  CampoDesplegable,
+  CampoFecha,
+  CampoMultiTexto,
+  TipoCampoTexto
+} from "../Campo"
+
+import Comunidades, {ComunidadesOption} from "../../models/Comunidades.ts";
+import Areas, {AreasOption} from "../../models/Areas.ts";
 import Evento from "../../models/Evento.ts"
 import CatEvento, {eventos_catalogo_opciones, obten_evento_catalogo_opcion} from "../../models/CatEvento.ts";
 import {components, OptionProps} from "react-select";
@@ -11,21 +18,26 @@ import {FaPlus, FaTimes} from "react-icons/fa";
 import {useEffect, useState} from "react";
 import {SimbologiaOption, simbologias} from "../../models/Simbologias.ts";
 
-type FormularioEventoProps = {
+type FormularioNuevoEventoProps = {
   evento: Evento,
-  onSingleChange: ((field: string, value: string | Date | number) => void),
+  onSingleChange: ((field: string, value: string | Date | number | null) => void),
   onMultipleChange: ((field: string, value: any) => void),
 }
 
 const formNuevoEventoId = "form-nuevo-evento"
 
-function NuevoEvento(props: FormularioEventoProps) {
+function FormularioEvento(props: FormularioNuevoEventoProps) {
   const [nuevoHipervinculo, setNuevoHipervinculo] = useState("")
-  const [simbolo, setSimbolo] = useState(simbologias[0])
+  const [simbolo, setSimbolo] = useState(
+    {value: "", label: ""}
+  )
 
   useEffect(() => {
-    setSimbolo(simbologias.find(s => s.value == props.evento.simbolo) ?? simbologias[0])
-  }, [props.evento]);
+    const simboloNuevo = simbologias.find(s => s.value == props.evento.simbolo)
+    if (simboloNuevo != undefined) {
+      setSimbolo(simboloNuevo)
+    }
+  }, [props.evento.simbolo]);
 
   const Option = (props: OptionProps<SimbologiaOption>) => (
     <components.Option {...props} children={
@@ -42,23 +54,35 @@ function NuevoEvento(props: FormularioEventoProps) {
   return (
     <form id={formNuevoEventoId} className="d-flex flex-column gap-2 text-start">
       <CampoDesplegable id="nombre"
-                        value={obten_evento_catalogo_opcion(props.evento.cat_evento_id)}
+                        creacional={true}
+                        value={
+                          obten_evento_catalogo_opcion(props.evento.cat_evento_id) ??
+                          {value: props.evento.nombre, label: props.evento.nombre}
+                        }
                         options={eventos_catalogo_opciones}
                         placeholder="Nombre"
                         etiqueta="Nombre"
                         required={true}
-        /*pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"} // <- Agregar también dígitos*/
                         mensajeError="Seleccione un valor"
-                        onChange={(field, value: CatEvento) => {
-                          props.onSingleChange(field, value.nombre)
-                          props.onSingleChange("simbolo", value.simbolo)
-                          props.onSingleChange("descripcion", value.descripcion)
-                          props.onSingleChange("cat_evento_id", value.id)
+                        onChange={(field, value: CatEvento | string) => {
+                          if (value instanceof CatEvento) {
+                            props.onSingleChange(field, value.nombre)
+                            props.onSingleChange("simbolo", value.simbolo)
+                            props.onSingleChange("descripcion", value.descripcion)
+                            props.onSingleChange("cat_evento_id", value.id)
+                            props.onSingleChange("tipo", "catalogo")
+                          } else {
+                            props.onSingleChange(field, value)
+                            props.onSingleChange("simbolo", "")
+                            props.onSingleChange("descripcion", "")
+                            props.onSingleChange("cat_evento_id", null)
+                            props.onSingleChange("tipo", "facultad")
+                          }
                         }}
       />
       <div className="d-flex gap-2">
         <CampoDesplegable id="simbolo"
-                          value={simbolo}
+                          value={simbolo.value ? simbolo : null}
                           options={simbologias}
                           placeholder="Simbología"
                           etiqueta="Simbología"
@@ -78,6 +102,7 @@ function NuevoEvento(props: FormularioEventoProps) {
       <CampoDesplegable id="comunidades"
                         etiqueta="Comunidades"
                         placeholder="Comunidades"
+                        defaultValue={obtenComunidades()}
                         options={Comunidades}
                         isMulti={true}
                         required={true}
@@ -86,6 +111,7 @@ function NuevoEvento(props: FormularioEventoProps) {
       <CampoDesplegable id="areas"
                         etiqueta="Áreas"
                         placeholder="Áreas"
+                        defaultValue={obtenAreas()}
                         required={true}
                         isMulti={true}
                         options={Areas}
@@ -114,7 +140,6 @@ function NuevoEvento(props: FormularioEventoProps) {
       <CampoTexto id={"link"}
                   type={TipoCampoTexto.Enlace}
                   value={nuevoHipervinculo}
-                  pattern={"^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$\n"}
                   placeholder="https://www.dominio.com"
                   onChange={(_, value) => setNuevoHipervinculo(value)}
                   mensajeError={"Ingrese una URL válida (https://www.ejemplo.com)"}
@@ -143,6 +168,32 @@ function NuevoEvento(props: FormularioEventoProps) {
     </form>
   );
 
+  function obtenAreas() {
+    let areas: AreasOption[] = []
+    if (props.evento.areas.length > 0) {
+      props.evento.areas.forEach(area => {
+        Areas.find(opcion => {
+          if (opcion.value == area)
+            areas.push(opcion)
+        })
+      })
+    }
+    return areas
+  }
+
+  function obtenComunidades() {
+    let comunidades: ComunidadesOption[] = []
+    if (props.evento.comunidades.length > 0) {
+      props.evento.comunidades.forEach(comunidad => {
+        Comunidades.find(opcion => {
+          if (opcion.value == comunidad)
+            comunidades.push(opcion)
+        })
+      })
+    }
+    return comunidades
+  }
+
   function muestraHipervinculos() {
     if (props.evento.hipervinculos.length > 0) {
       return (
@@ -161,8 +212,8 @@ function NuevoEvento(props: FormularioEventoProps) {
   }
 }
 
-NuevoEvento.valida = () => {
+FormularioEvento.valida = () => {
   return (document.getElementById(formNuevoEventoId) as HTMLFormElement).reportValidity()
 }
 
-export default NuevoEvento
+export default FormularioEvento

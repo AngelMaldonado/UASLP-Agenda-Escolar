@@ -1,4 +1,5 @@
 class Evento {
+  public id: number | null
   public cat_evento_id: number | null
   public comunidades: number[]
   public areas: number[]
@@ -13,7 +14,8 @@ class Evento {
   public tipo: string
 
   constructor()
-  constructor(cat_evento_id: number,
+  constructor(id: number,
+              cat_evento_id: number,
               comunidades: number[],
               areas: number[],
               usuario_id: number,
@@ -25,7 +27,8 @@ class Evento {
               descripcion: string,
               simbolo: string,
               tipo: string)
-  constructor(cat_evento?: number,
+  constructor(id?: number,
+              cat_evento?: number,
               comunidades?: number[],
               areas?: number[],
               usuario_id?: number,
@@ -37,6 +40,7 @@ class Evento {
               descripcion?: string,
               simbolo?: string,
               tipo?: string) {
+    this.id = id ?? null
     this.cat_evento_id = cat_evento ?? null
     this.comunidades = comunidades ?? []
     this.areas = areas ?? []

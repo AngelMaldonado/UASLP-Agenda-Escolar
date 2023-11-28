@@ -1,3 +1,3 @@
-import NuevoEvento from "./NuevoEvento.tsx"
+import FormularioEvento from "./FormularioEvento.tsx"
 
-export default {NuevoEvento}
+export default FormularioEvento

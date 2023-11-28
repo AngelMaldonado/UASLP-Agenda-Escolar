@@ -1,2 +1,1 @@
-import Boton from './Boton.tsx'
-export default Boton
+export {default} from "./Boton.tsx"
