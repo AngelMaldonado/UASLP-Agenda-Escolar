@@ -1,6 +1,6 @@
 @use "../../utils" as u;
 
-.card.card-evento{
+.card.nuevo-evento{
   border-radius: 100px !important;
   box-shadow: u.$card-sm-box-shadow;
   height: 4.8rem;
@@ -15,7 +15,7 @@
   background-color: u.$success-50;
 }
 
-.card.card-evento:hover {
+.card.nuevo-evento:hover {
   box-shadow: u.$card-sm-box-shadow-hover;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
   font-size: 11px;
 }
 
-.card.card-evento:hover .pills span {
+.card.nuevo-evento:hover .pills span {
   box-shadow: u.$card-sm-box-shadow-hover;
   cursor: pointer;
 }
@@ -68,4 +68,11 @@
 
 .circle small {
   font-size: 8px;
+}
+
+.destello{
+  position: absolute;
+  max-width: 70px;
+  left:-35px;
+  top:-25px;
 }

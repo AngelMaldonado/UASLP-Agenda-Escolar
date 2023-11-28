@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Boton from "../Boton";
 import {GoPencil} from "react-icons/go";
-import './CardSimbol.scss';
+import './_cardsimbolo.scss';
 import {BsFillTrash3Fill} from "react-icons/bs";
 import { TemaComponente } from '../../utils/Utils';
 

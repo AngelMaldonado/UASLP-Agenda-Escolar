@@ -1,0 +1,17 @@
+.cardMasEventos{
+    height: 140px;
+    padding:0px;
+    .content{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        img{
+            max-width: 140px;
+        }
+
+        .bottons{
+            padding:10px;
+        }
+    }
+}

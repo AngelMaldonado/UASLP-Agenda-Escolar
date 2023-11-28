@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import TarjetaLarga from "../CardAgenda/CardAgenda.tsx";
 import Evento from "../../models/Evento";
+import CardMasEventos from "../CardMasEventos/CardMasEventos.tsx";
 
 function ModalEventos() {
   let evento = new Evento();
@@ -20,7 +21,9 @@ function ModalEventos() {
           <Modal.Title>Modal Eventos</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>Hola</Modal.Body>
+        <Modal.Body>
+          <CardMasEventos />
+        </Modal.Body>
 
         <Modal.Footer>
           <Button variant="primary">Agregar Evento</Button>
