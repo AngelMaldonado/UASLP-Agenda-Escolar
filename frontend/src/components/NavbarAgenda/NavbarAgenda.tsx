@@ -1,35 +1,19 @@
-<<<<<<< HEAD
-import "./NavbarAgenda.scss";
-import { CgCalendarToday } from "react-icons/cg";
-import BotonesFiltros from "../BtnFiltros/BtnsFiltros";
-import Avatares from "../UserStatus/UserStatus";
-import Campo, { CampoDesplegable } from "../Campo";
-=======
 import "./NavbarAgenda.scss"
 import {CgCalendarToday} from 'react-icons/cg'
 import Campo, {CampoDesplegable} from "../Campo";
->>>>>>> da1419496d00073123a03ca075a9722208ce75d8
 import Boton from "../Boton";
 import { TamanoComponente, TemaComponente } from "../../utils/Utils.ts";
 import { FaRegListAlt } from "react-icons/fa";
 import ChipUsuario from "../ChipUsuario";
 import Comunidades from "../../models/Comunidades.ts";
 import Areas from "../../models/Areas.ts";
-<<<<<<< HEAD
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import TarjetaLarga from "../CardAgenda/CardAgenda.tsx";
-import CardMasEventos from "../CardMasEventos/CardMasEventos.tsx";
-=======
 import {ReactComponentElement, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import TarjetaLarga from "../CardAgenda/CardAgenda.tsx";
 import Nav from "react-bootstrap/Nav";
->>>>>>> da1419496d00073123a03ca075a9722208ce75d8
+import CardMasEventos from "../CardMasEventos/CardMasEventos.tsx";
 
 type NavbarAgendaProps = {
   eventKeys: string[];
@@ -39,12 +23,7 @@ type NavbarAgendaProps = {
 function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  // const [nuevoEvento, setNuevoEvento] = useState(new Evento())
-  const [showModal, setShowModal] = useState(false);
-=======
   const [showModal, setShowModal] = useState(false)
->>>>>>> da1419496d00073123a03ca075a9722208ce75d8
   const [muestraOp1, cambiaOp1] = useState(true);
 
   const opcion1Click = () => cambiaOp1(true);
@@ -88,7 +67,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
           <Campo id="busqueda" placeholder="Buscar" />
           <CampoDesplegable id="area" placeholder="Área" options={Areas} />
         </div>
-<<<<<<< HEAD
         {muestraOp1 ? (
           <Boton
             eventKey={props.eventKeys[0]}
@@ -130,31 +108,8 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         )}
         {modalMasEventos()}
       </div>
-    </nav>
-  );
-=======
-        {muestraOp1 ?
-          <Nav.Item>{opciones[0]}</Nav.Item> :
-          <Nav.Item>{opciones[1]}</Nav.Item>
-        }
-        {opciones[2]}
-        {props.sesionAdmi ?
-          (
-            <div className="d-flex gap-1">
-              <ChipUsuario tamano={TamanoComponente.Sm}/>
-              <ChipUsuario tamano={TamanoComponente.Sm}/>
-              <ChipUsuario tamano={TamanoComponente.Sm}/>
-              <ChipUsuario tamano={TamanoComponente.Sm}/>
-            </div>
-          ) :
-          opciones[3]
-        }
-        {modalMasEventos()}
-      </div>
     </Nav>
-  )
-
->>>>>>> da1419496d00073123a03ca075a9722208ce75d8
+  );
 
   function modalMasEventos() {
     return (
@@ -167,15 +122,11 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         </Modal.Header>
 
         <Modal.Body>
-<<<<<<< HEAD
           <CardMasEventos />
           <CardMasEventos />
           <CardMasEventos />
           <CardMasEventos />
           <CardMasEventos />
-=======
-          <TarjetaLarga/>
->>>>>>> da1419496d00073123a03ca075a9722208ce75d8
         </Modal.Body>
 
         <Modal.Footer>

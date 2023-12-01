@@ -14,13 +14,6 @@
   border-width: u.$card-border-width;
   transition: all 0.3s;
 
-  > header {
-    height: fit-content;
-    margin: 0 auto;
-    display: flex;
-    gap: 1.3rem;
-  }
-
   .card-body {
     gap: 2rem;
     margin: 60px 0px;

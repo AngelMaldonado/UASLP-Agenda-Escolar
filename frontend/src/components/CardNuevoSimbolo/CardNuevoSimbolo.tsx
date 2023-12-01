@@ -7,7 +7,9 @@ function CardNuevoSimbolo() {
   return (
     <Card className="CardNuevoSimbolo">
       <Card.Body className="text-center d-flex flex-column  justify-content-center align-items-center cardzoom">
-        <Boton icono={<FaPlus />} />
+        <div className="new-icon">
+          <FaPlus/>
+        </div>
         <h3>Nuevo Simbolo</h3>
       </Card.Body>
     </Card>

@@ -19,7 +19,7 @@ function CardFiltro(/*props: { filtro: Filtros}*/) {
 
   return (
     <div className='CardFiltro'>
-      <div className='card-header d-flex justify-content-evenly align-items-center bg-transparent border-0'>
+      <div className='d-flex justify-content-evenly align-items-center'>
         <div className='d-inline-flex'>
           <Modal
               mostrar={mostrarModalFiltro}

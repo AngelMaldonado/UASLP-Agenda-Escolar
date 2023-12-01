@@ -1,12 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Boton from "../Boton";
-<<<<<<< HEAD
-import {GoPencil} from "react-icons/go";
-import './_cardsimbolo.scss';
-=======
 import {FaRegEdit} from "react-icons/fa";
-import './CardSimbol.scss';
->>>>>>> da1419496d00073123a03ca075a9722208ce75d8
+import './_cardsimbolo.scss';
 import {BsFillTrash3Fill} from "react-icons/bs";
 import { TemaComponente } from '../../utils/Utils';
 
@@ -14,7 +9,7 @@ import { TemaComponente } from '../../utils/Utils';
 function CardSimbol() {  return (
     <Card style={{ width: '17rem', height: '20rem', padding: '0px 0px 10px 0px' }} className="CardSimbol">
       <Card.Body className='text-center align-items-center'>
-        <div className='d-flex justify-content-around'>
+        <div className='d-flex justify-content-around align-items-center'>
             
             <Boton
                 rounded={true}

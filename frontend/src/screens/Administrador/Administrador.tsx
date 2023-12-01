@@ -55,7 +55,7 @@ function Administrador() {
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
         <div className=''>
-          {/*<TablaEventos eventos={eventos}/>*/}
+          {/* <TablaEventos eventos={eventos}/> */}
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
