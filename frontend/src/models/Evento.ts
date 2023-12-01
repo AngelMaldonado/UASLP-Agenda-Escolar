@@ -54,6 +54,19 @@ class Evento {
     this.simbolo = simbolo ?? ""
     this.tipo = tipo ?? ""
   }
+
+  static ParseEventosCalendario(eventos: Evento[]) {
+    return eventos.map(evento => {
+      const {id, ...atributos} = evento
+      return {
+        id: evento.id?.toString() ?? "",
+        start: evento.fecha_inicio.toISOString(),
+        end: evento.fecha_fin.toISOString(),
+        title: evento.nombre,
+        ...atributos,
+      }
+    })
+  }
 }
 
 export default Evento

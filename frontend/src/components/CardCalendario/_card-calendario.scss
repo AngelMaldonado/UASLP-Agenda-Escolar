@@ -13,6 +13,13 @@
   padding: 0 0.5rem;
   position: relative;
   background-color: #fff;
+
+  > div {
+    > .circle {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
 }
 
 .card.card-evento:hover {

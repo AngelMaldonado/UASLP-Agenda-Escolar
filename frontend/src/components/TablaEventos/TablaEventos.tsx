@@ -55,12 +55,12 @@ function TablaEventos(props: Eventos ) {
               </td>
               <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
               <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
-              <td>   
+              <td>
               {/* {obtenComunidades({ comunidades: events.comunidades})} */}
               <div className='d-flex justify-content-center'>
                 {TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre) }
               </div>
-              
+
               </td>
               <td>
                 <div className='d-flex justify content-center'>
@@ -77,12 +77,12 @@ function TablaEventos(props: Eventos ) {
               </td>
               <td>{events.hipervinculos}</td>
               <td>
-                <div className='d-flex-column'> 
+                <div className='d-flex-column'>
                   {botonEliminar(events)}
                   {botonEdicion(events)}
-                </div>  
+                </div>
               </td>
-            </tr>  
+            </tr>
           ))}
         </tbody>
       </Table>
@@ -91,10 +91,10 @@ function TablaEventos(props: Eventos ) {
 
 
 
-  
+
 
   function obtenComunidades(comunidades: number[]) {
-    
+
     return comunidades.map(comunidad => {
 
       const opcionEncontrada = Comunidades.find(opcion => opcion.value === comunidad);
@@ -111,7 +111,7 @@ function TablaEventos(props: Eventos ) {
   }
 
   function obtenAreas(areas: number[]) {
-    
+
     return areas.map(comunidad => {
 
       const opcionEncontrada = Areas.find(opcion => opcion.value === comunidad);
@@ -129,7 +129,7 @@ function TablaEventos(props: Eventos ) {
 
 }
 
-  
+
 function botonEdicion(events: Evento) {
   const [evento, setEvento] = useState(events);
   const [muestraModalModifEvento, setMostrarModalModificar] = useState(false)
@@ -224,7 +224,7 @@ function botonEliminar(evento: Evento) {
       ]}
     />
   )
-    
+
   function muestraModalEliminar() {
     setMostrarModalEliminar(true)
   }

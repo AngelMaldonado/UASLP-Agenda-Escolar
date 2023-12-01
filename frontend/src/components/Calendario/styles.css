@@ -4,3 +4,15 @@
   height: 100vh; /* El 60% de la altura de la ventana gráfica (viewport height) */
   padding: 10px 20px;
 }
+
+.evento-calendario {
+  position: relative;
+  border: none;
+  padding: 0;
+}
+
+.titulo-evento-calendario {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

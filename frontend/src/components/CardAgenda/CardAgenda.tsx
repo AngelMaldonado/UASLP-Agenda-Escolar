@@ -13,11 +13,11 @@ const TarjetaLarga = (props: { evento: Evento }) => {
         <div className='fechas'>
           Inicia:
           <div className="d-flex gap-2 align-items-center fecha">
-            {/* <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento?.fecha_inicio).toUpperCase()} */}
+            <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento?.fecha_inicio).toUpperCase()}
           </div>
           Termina:
           <div className="d-flex gap-2 align-items-center fecha">
-            {/* <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento?.fecha_fin).toUpperCase()} */}
+            <FaRegCalendar/> {Intl.DateTimeFormat('es-MX').format(props.evento?.fecha_fin).toUpperCase()}
           </div>
         </div>
         <div className='text'>

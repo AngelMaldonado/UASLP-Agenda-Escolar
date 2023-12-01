@@ -40,7 +40,7 @@ function CardCalendario(props: CardCalendarioProps) {
   return (
     <div className="card card-evento">
       <div className="flex-grow-0">
-        <div className="circle bg-info-subtle rounded-circle">
+        <div className="circle bg-info-subtle rounded-circle overflow-hidden">
           <img src={props.evento.simbolo} alt={"Simbologia " + props.evento.nombre}/>
           <small>
             {/*{Intl.DateTimeFormat('es-MX', {month: 'short'}).format(props.evento.fecha_inicio.getMonth()).toUpperCase()}*/}
