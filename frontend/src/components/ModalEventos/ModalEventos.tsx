@@ -1,7 +1,7 @@
-import { useState } from "react";
+import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import TarjetaLarga from "../CardAgenda/CardAgenda.tsx";
+import CardAgenda from "../CardAgenda/CardAgenda.tsx";
 import Evento from "../../models/Evento";
 import CardMasEventos from "../CardMasEventos/CardMasEventos.tsx";
 
@@ -14,7 +14,7 @@ function ModalEventos() {
   return (
     <div
       className="modal show"
-      style={{ display: "block", position: "initial" }}
+      style={{display: "block", position: "initial"}}
     >
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -22,7 +22,7 @@ function ModalEventos() {
         </Modal.Header>
 
         <Modal.Body>
-          <CardMasEventos />
+          <CardMasEventos/>
         </Modal.Body>
 
         <Modal.Footer>

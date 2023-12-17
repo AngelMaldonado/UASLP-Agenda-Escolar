@@ -3,9 +3,10 @@
 .btn, .navbar-expand .navbar-nav .nav-link, .nav-link {
   padding: u.$btn-padding-y u.$btn-padding-x;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  font-size: larger;
+  font-size: 1rem;
   border: none;
   border-radius: u.$btn-border-radius;
 

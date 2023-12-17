@@ -2,8 +2,8 @@ import "./NavbarAgenda.scss"
 import {CgCalendarToday} from 'react-icons/cg'
 import Campo, {CampoDesplegable} from "../Campo";
 import Boton from "../Boton";
-import { TamanoComponente, TemaComponente } from "../../utils/Utils.ts";
-import { FaRegListAlt } from "react-icons/fa";
+import {TamanoComponente, TemaComponente} from "../../utils/Utils.ts";
+import {FaRegListAlt} from "react-icons/fa";
 import ChipUsuario from "../ChipUsuario";
 import Comunidades from "../../models/Comunidades.ts";
 import Areas from "../../models/Areas.ts";
@@ -11,7 +11,7 @@ import {ReactComponentElement, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import TarjetaLarga from "../CardAgenda/CardAgenda.tsx";
+import CardAgenda from "../CardAgenda/CardAgenda.tsx";
 import Nav from "react-bootstrap/Nav";
 import CardMasEventos from "../CardMasEventos/CardMasEventos.tsx";
 
@@ -64,15 +64,15 @@ function NavbarAgenda(props: NavbarAgendaProps) {
             placeholder="Comunidad"
             options={Comunidades}
           />
-          <Campo id="busqueda" placeholder="Buscar" />
-          <CampoDesplegable id="area" placeholder="Área" options={Areas} />
+          <Campo id="busqueda" placeholder="Buscar"/>
+          <CampoDesplegable id="area" placeholder="Área" options={Areas}/>
         </div>
         {muestraOp1 ? (
           <Boton
             eventKey={props.eventKeys[0]}
             variant={TemaComponente.SecundarioInverso}
             etiqueta="Agenda"
-            icono={<FaRegListAlt />}
+            icono={<FaRegListAlt/>}
             onClick={opcion2Click}
           />
         ) : (
@@ -80,7 +80,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
             eventKey={props.eventKeys[1]}
             variant={TemaComponente.SecundarioInverso}
             etiqueta="Calendario"
-            icono={<CgCalendarToday />}
+            icono={<CgCalendarToday/>}
             onClick={opcion1Click}
           />
         )}
@@ -93,10 +93,10 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         />
         {props.sesionAdmi ? (
           <div className="d-flex gap-1">
-            <ChipUsuario tamano={TamanoComponente.Sm} />
-            <ChipUsuario tamano={TamanoComponente.Sm} />
-            <ChipUsuario tamano={TamanoComponente.Sm} />
-            <ChipUsuario tamano={TamanoComponente.Sm} />
+            <ChipUsuario tamano={TamanoComponente.Sm}/>
+            <ChipUsuario tamano={TamanoComponente.Sm}/>
+            <ChipUsuario tamano={TamanoComponente.Sm}/>
+            <ChipUsuario tamano={TamanoComponente.Sm}/>
           </div>
         ) : (
           <Boton
@@ -122,11 +122,11 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         </Modal.Header>
 
         <Modal.Body>
-          <CardMasEventos />
-          <CardMasEventos />
-          <CardMasEventos />
-          <CardMasEventos />
-          <CardMasEventos />
+          <CardMasEventos/>
+          <CardMasEventos/>
+          <CardMasEventos/>
+          <CardMasEventos/>
+          <CardMasEventos/>
         </Modal.Body>
 
         <Modal.Footer>

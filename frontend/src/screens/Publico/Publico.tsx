@@ -6,8 +6,8 @@ import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
 import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx";
 import eventos from "../../models/Eventos.ts";
 import Tab from "react-bootstrap/Tab";
-import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
-import CardCalendarioNotificacion from "../../components/CardCalendarioNotificacion/CardCalendarioNotificacion.tsx";
+import CardAgenda from "../../components/CardAgenda/CardAgenda.tsx";
+//import CardCalendarioNotificacion from "../../components/CardCalendarioNotificacion/CardCalendarioNotificacion.tsx";
 import {useState} from "react";
 
 function Publico() {
@@ -60,7 +60,7 @@ function Publico() {
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className="container my-4 d-flex flex-column gap-5">
           {eventos?.map((evento) => (
-            <TarjetaLarga key={"Card agenda " + evento.nombre} evento={evento}/>
+            <CardAgenda key={"Card agenda " + evento.nombre} evento={evento}/>
           ))}
         </div>
       </Tab.Pane>,

@@ -8,7 +8,7 @@ import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx";
 import Tab from "react-bootstrap/Tab";
 import Calendario from "../../components/Calendario/Calendario";
 import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
-import TarjetaLarga from "../../components/CardAgenda/CardAgenda.tsx";
+import CardAgenda from "../../components/CardAgenda/CardAgenda.tsx";
 import CardNuevoSimbolo from "../../components/CardNuevoSimbolo";
 import CardSimbol from "../../components/CardSimbol/CardSimbol.tsx";
 import Filtros from "../../components/Filtros/Filtros.tsx";
@@ -71,7 +71,7 @@ function Administrador() {
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className="container my-4 d-flex flex-column gap-5">
           {eventosBD?.map((evento) => (
-            <TarjetaLarga key={"Card agenda " + evento.nombre} evento={evento}/>
+            <CardAgenda key={"Card agenda " + evento.nombre} evento={evento}/>
           ))}
         </div>
       </Tab.Pane>,
