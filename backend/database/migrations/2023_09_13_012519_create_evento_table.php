@@ -22,6 +22,10 @@ return new class extends Migration
             $table->foreignId('usuario_id')
                 ->constrained('usuario')
                 ->onUpdate('cascade');
+            $table->foreignId('simbologia_id')
+                ->constrained('simbologia')
+                ->onUpdate('cascade')
+                ->OnDelete('cascade');
             $table->string('nombre', 100);
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');

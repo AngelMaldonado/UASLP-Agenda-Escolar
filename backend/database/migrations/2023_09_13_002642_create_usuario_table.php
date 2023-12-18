@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('usuario', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50);
-            $table->string('tipo')->after('nombre');
+            $table->string('nombre',50);
+            $table->string('tipo');
+            $table->string('apellido',50);
             $table->string('email')->unique();
-            $table->json('permisos')->nullable()->after('email');
+            $table->json('permisos')->nullable();
+            $table->integer('rpe')->unique()->nullable();
         });
     }
 
