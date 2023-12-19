@@ -5,9 +5,9 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import Publico from "../../screens/Publico";
 import Administrador from "../../screens/Administrador";
 import Card from '../../screens/Card/Card';
-import LoginAdmin from '../LoginAdmin/LoginAdmin';
 
-import '../Calendario/styles.css'; // Importa los estilos del calendario
+import '../Calendario/styles.css';
+import Login from "../../screens/Login"; // Importa los estilos del calendario
 
 const queryClient = new QueryClient()
 
@@ -19,8 +19,7 @@ function App() {
           <Route path="/" element={<Publico/>}/>
           <Route path="/administracion" element={<Administrador/>}/>
           <Route path="/card" element={<Card/>}/>
-          <Route path="/login" element={<LoginAdmin/>}/>
-          
+          <Route path="/login" element={<Login/>}/>
         </Routes>
       </QueryClientProvider>
     </>

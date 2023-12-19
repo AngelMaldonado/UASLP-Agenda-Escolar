@@ -1,11 +1,13 @@
-import './Login.css'
-import LoginAdmin from '../../components/LoginAdmin/LoginAdmin';
-import '../../components/LoginAdmin/LoginAdmin.scss';
+import './_login.scss'
+import FormularioLogin from '../../components/FormularioLogin';
+import NavbarUASLP from "../../components/NavbarUASLP";
+import Container from "react-bootstrap/Container";
 
-function Login() {
+export default function Login() {
   return (
-    <LoginAdmin/>
+    <Container fluid className="p-0 vh-100">
+      <NavbarUASLP/>
+      <FormularioLogin/>
+    </Container>
   );
 }
-
-export default Login;

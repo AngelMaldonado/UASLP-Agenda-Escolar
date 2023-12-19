@@ -1,0 +1,37 @@
+@use "../../utils" as u;
+
+.NavbarUASLP {
+  height: 8rem;
+  background-color: u.$primary;
+  position: relative;
+
+  .container {
+    .vr {
+      width: 2px;
+      height: 110%;
+      color: u.$blanco;
+      opacity: 1;
+    }
+
+    img {
+    }
+  }
+
+  ::after {
+    content: " ";
+    height: 0.5rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: u.$secondary;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .NavbarUASLP {
+    .container {
+      justify-content: center;
+    }
+  }
+}
