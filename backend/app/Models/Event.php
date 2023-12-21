@@ -11,6 +11,7 @@ class Event extends Model
     protected $fillable = [
         'cat_evento_id',
         'usuario_id',
+        'simbologia_id',
         'nombre',
         'fecha_inicio',
         'fecha_fin',

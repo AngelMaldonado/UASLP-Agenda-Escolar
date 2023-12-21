@@ -38,6 +38,8 @@ class UsuarioController extends Controller
             'tipo' => 'required|in:Administrador Secundario,Becario',
             'email' => 'required|string|email|unique:usuario,email',
             'permisos' => 'required|array',
+            'apellido' => 'required|string|max:50',
+            'rpe' => 'unique:usuario,rpe',
         ]);
 
         if ($validator->fails()) {
@@ -47,9 +49,11 @@ class UsuarioController extends Controller
         // Crear el usuario
         $usuario = new Usuario();
         $usuario->nombre = $request->input('nombre');
+        $usuario->apellido = $request->input('apellido');
         $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
         $usuario->permisos = $request->input('permisos');
+        $usuario->rpe = $request->input('rpe');
         $usuario->save();
 
         // Asignar permisos al usuario
@@ -71,9 +75,11 @@ class UsuarioController extends Controller
     {
         $rules = [
             'nombre' => 'required|string|max:50',
+            'apellido' => 'required|string|max:50',
             'tipo' => 'required|string|max:30',
             'email' => 'required|string|email|unique:usuario,email,' . $id,
             'permisos' => 'required|array', // Asegúrate de que los datos se manejen adecuadamente como un arreglo.
+            'rpe' => 'unique:usuario,rpe,' . $id,
         ];
 
         $messages = [
@@ -94,8 +100,10 @@ class UsuarioController extends Controller
         // Actualizar el usuario
         $usuario = Usuario::findOrFail($id);
         $usuario->nombre = $request->input('nombre');
+        $usuario->apellido = $request->input('apellido');
         $usuario->tipo = $request->input('tipo');
         $usuario->email = $request->input('email');
+        $usuario->rpe = $request->input('rpe');
         $usuario->save();
 
         // Limpiar permisos antiguos del usuario

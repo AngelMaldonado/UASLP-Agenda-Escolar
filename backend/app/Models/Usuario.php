@@ -12,7 +12,7 @@ class Usuario extends Model
     use HasFactory, HasRoles;
 
     protected $table = 'usuario';
-    protected $fillable = ['nombre', 'tipo', 'email', 'permisos'];
+    protected $fillable = ['nombre','apellido' 'tipo', 'email', 'permisos', 'rpe'];
     protected $casts = ['permisos' => 'array'];
     public $timestamps = false;
 

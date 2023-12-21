@@ -31,7 +31,9 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'cat_evento_id' => 'exists:cat_evento,id',
             'usuario_id' => 'required|exists:usuario,id',
+            'simbologia_id' => 'exists:simbologia,id',
             'nombre' => 'required|max:100',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
