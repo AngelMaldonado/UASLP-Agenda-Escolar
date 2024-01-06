@@ -1,6 +1,6 @@
 import './_login.scss'
-import FormularioLogin from '../../components/FormularioLogin';
-import NavbarUASLP from "../../components/NavbarUASLP";
+import FormularioLogin from '../../components/Formularios/FormularioLogin';
+import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 import Container from "react-bootstrap/Container";
 
 export default function Login() {

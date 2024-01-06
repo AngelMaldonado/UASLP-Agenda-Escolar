@@ -1,96 +1,93 @@
 import './TablaEventos.scss'
-import Boton from '../Boton';
-import { useState } from 'react';
-import Modal from '../Modal/index.ts';
+import Boton from '../Inputs/Boton';
+import {useState} from 'react';
+import Modal from '../Modales/Modal/index.ts';
 import {FcCancel} from "react-icons/fc";
 import Table from 'react-bootstrap/Table';
-import Areas  from "../../models/Areas.ts";
+import Areas from "../../models/Areas.ts";
 import Button from 'react-bootstrap/Button';
 import Evento from "../../models/Evento.ts";
 import Tooltip from 'react-bootstrap/Tooltip';
-import { TemaComponente } from '../../utils/Utils';
+import {TemaComponente} from '../../utils/Utils';
 import Comunidades from "../../models/Comunidades.ts";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import FormularioEvento from '../FormularioEvento/FormularioEvento.tsx';
+import FormularioEvento from '../Formularios/FormularioEvento/FormularioEvento.tsx';
 import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaTimes, FaTrash} from "react-icons/fa";
 
-type Eventos  =  {
+type Eventos = {
   eventos: Evento[];
 }
 
 
-function TablaEventos(props: Eventos ) {
+function TablaEventos(props: Eventos) {
 
   return (
 
-    <div className='container table-responsive tableDesplaz-y' >
-      <br />
+    <div className='container table-responsive tableDesplaz-y'>
+      <br/>
       <Table responsive="sm" className='table-hover'>
         <thead className='text-center tableHead shadow '>
-            <tr>
-              <th>#</th>
-              <th>Evento</th>
-              <th>Simbologia</th>
-              <th>Inicio</th>
-              <th>Fin</th>
-              <th>Comunidad</th>
-              <th>Área</th>
-              <th>Descripción</th>
-              <th>Imagen</th>
-              <th>Hipervinculos</th>
-              <th></th>
-            </tr>
+        <tr>
+          <th>#</th>
+          <th>Evento</th>
+          <th>Simbologia</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Comunidad</th>
+          <th>Área</th>
+          <th>Descripción</th>
+          <th>Imagen</th>
+          <th>Hipervinculos</th>
+          <th></th>
+        </tr>
         </thead>
         <tbody className=' tablaEvento text-center shadow'>
-            {props.eventos.map((events) => (
-            <tr className=''>
-              <td>{events.cat_evento_id}</td>
-              <td>{events.nombre}</td>
-              <td>
-                <div className='image-container'>
+        {props.eventos.map((events) => (
+          <tr className=''>
+            <td>{events.cat_evento_id}</td>
+            <td>{events.nombre}</td>
+            <td>
+              <div className='image-container'>
                   <span className='w-75'>
-                    <img src={events.simbolo} alt=""  className='img-fluid'/>
+                    <img src={events.simbolo} alt="" className='img-fluid'/>
                   </span>
-                </div>
-              </td>
-              <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
-              <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
-              <td>
+              </div>
+            </td>
+            <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
+            <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
+            <td>
               {/* {obtenComunidades({ comunidades: events.comunidades})} */}
               <div className='d-flex justify-content-center'>
-                {TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre) }
+                {TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre)}
               </div>
 
-              </td>
-              <td>
-                <div className='d-flex justify content-center'>
-                  {TooltipPositionedExample(obtenAreas(events.areas), events.nombre) }
-                </div>
-              </td>
-              <td>{events.descripcion}</td>
-              <td>
-                <div className='image-container'>
+            </td>
+            <td>
+              <div className='d-flex justify content-center'>
+                {TooltipPositionedExample(obtenAreas(events.areas), events.nombre)}
+              </div>
+            </td>
+            <td>{events.descripcion}</td>
+            <td>
+              <div className='image-container'>
                   <span className='w-75'>
-                    <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid ' />
+                    <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid '/>
                   </span>
-                </div>
-              </td>
-              <td>{events.hipervinculos}</td>
-              <td>
-                <div className='d-flex-column'>
-                  {botonEliminar(events)}
-                  {botonEdicion(events)}
-                </div>
-              </td>
-            </tr>
-          ))}
+              </div>
+            </td>
+            <td>{events.hipervinculos}</td>
+            <td>
+              <div className='d-flex-column'>
+                {botonEliminar(events)}
+                {botonEdicion(events)}
+              </div>
+            </td>
+          </tr>
+        ))}
         </tbody>
       </Table>
     </div>
   );
-
-
-
 
 
   function obtenComunidades(comunidades: number[]) {
@@ -99,11 +96,9 @@ function TablaEventos(props: Eventos ) {
 
       const opcionEncontrada = Comunidades.find(opcion => opcion.value === comunidad);
 
-      if(opcionEncontrada != undefined)
-      {
+      if (opcionEncontrada != undefined) {
         return opcionEncontrada.label;
-      }
-      else{
+      } else {
         return "";
       }
 
@@ -116,11 +111,9 @@ function TablaEventos(props: Eventos ) {
 
       const opcionEncontrada = Areas.find(opcion => opcion.value === comunidad);
 
-      if(opcionEncontrada != undefined)
-      {
+      if (opcionEncontrada != undefined) {
         return opcionEncontrada.label;
-      }
-      else{
+      } else {
         return "";
       }
 
@@ -159,25 +152,25 @@ function botonEdicion(events: Evento) {
       ocultaModal={ocultaModalModificar}
       botones={[
         <Boton key={"boton-caneclar"}
-                variant={TemaComponente.PrimarioInverso}
-                etiqueta="Cancelar"
-                icono={<FaTimes/>}
-                onClick={ocultaModalModificar}/>,
+               variant={TemaComponente.PrimarioInverso}
+               etiqueta="Cancelar"
+               icono={<FaTimes/>}
+               onClick={ocultaModalModificar}/>,
         <Boton key={"boton-eliminar"}
-                variant={TemaComponente.DangerInverso}
-                etiqueta="Eliminar"
-                icono={<FaTrash/>}
+               variant={TemaComponente.DangerInverso}
+               etiqueta="Eliminar"
+               icono={<FaTrash/>}
         />,
         <Boton key={"boton-guardar"}
-                variant={TemaComponente.SuccessInverso}
-                etiqueta="Guardar"
-                icono={<FaRegPlusSquare/>}
-                onClick={() => {
-                  if (FormularioEvento.valida()) {
-                    //modificaUsuario(usuarioState)
-                    ocultaModalModificar()
-                  }
-                }}
+               variant={TemaComponente.SuccessInverso}
+               etiqueta="Guardar"
+               icono={<FaRegPlusSquare/>}
+               onClick={() => {
+                 if (FormularioEvento.valida()) {
+                   //modificaUsuario(usuarioState)
+                   ocultaModalModificar()
+                 }
+               }}
         />
       ]}
     />
@@ -208,18 +201,18 @@ function botonEliminar(evento: Evento) {
       ocultaModal={ocultaModalEliminar}
       botones={[
         <Boton key={"boton-caneclar"}
-                variant={TemaComponente.DangerInverso}
-                etiqueta="Cancelar"
-                icono={<FcCancel/>}
-                onClick={ocultaModalEliminar}/>,
+               variant={TemaComponente.DangerInverso}
+               etiqueta="Cancelar"
+               icono={<FcCancel/>}
+               onClick={ocultaModalEliminar}/>,
         <Boton key={"boton-eliminar"}
-                variant={TemaComponente.PrimarioInverso}
-                etiqueta="Eliminar"
-                icono={<FaTrash/>}
-                onClick={() => {
-                  //eliminaUsuario(usuarioState)
-                  ocultaModalEliminar()
-                }}
+               variant={TemaComponente.PrimarioInverso}
+               etiqueta="Eliminar"
+               icono={<FaTrash/>}
+               onClick={() => {
+                 //eliminaUsuario(usuarioState)
+                 ocultaModalEliminar()
+               }}
         />
       ]}
     />
@@ -239,21 +232,21 @@ function botonEliminar(evento: Evento) {
 function TooltipPositionedExample(filtros: string[], id: string) {
   return (
     <OverlayTrigger
-    key={"tooltip" + id}
-    placement={"bottom"}
-    overlay={
-      <Tooltip id={`tooltip-${id}`}>
-        {filtros.map( filtro =>(
-          <span>
+      key={"tooltip" + id}
+      placement={"bottom"}
+      overlay={
+        <Tooltip id={`tooltip-${id}`}>
+          {filtros.map(filtro => (
+            <span>
             {filtro}
-            <br />
+              <br/>
           </span>
-        )) }
-      </Tooltip>
-    }
-  >
-    <Button variant="secondary">{filtros.length} </Button>
-  </OverlayTrigger>
+          ))}
+        </Tooltip>
+      }
+    >
+      <Button variant="secondary">{filtros.length} </Button>
+    </OverlayTrigger>
   );
 }
 

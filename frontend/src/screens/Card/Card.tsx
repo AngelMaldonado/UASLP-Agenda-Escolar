@@ -1,5 +1,5 @@
 import './_card.scss'
-import CardAgenda from '../../components/CardAgenda/CardAgenda.tsx';
+import CardAgenda from '../../components/Cards/CardAgenda/CardAgenda.tsx';
 
 function Card() {
 

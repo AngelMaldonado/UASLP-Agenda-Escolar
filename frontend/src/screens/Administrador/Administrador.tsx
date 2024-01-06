@@ -1,22 +1,21 @@
 // TODO: ver la forma de utilizar rutas para cambiar de tab (#usuarios, #calendario, etc...)
 
 import "./_administrador.scss";
-import "./Site.css"
-import NavbarAdmin from "../../components/NavbarAdmin";
-import Usuarios from "../../components/Usuarios/Usuarios.tsx";
-import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx";
-import Tab from "react-bootstrap/Tab";
+import Filtros from "../../components/Paneles/Filtros";
+import Usuarios from "../../components/Paneles/Usuarios";
+import TablaEventos from "../../components/TablaEventos";
+import CardSimbol from "../../components/Cards/CardSimbol";
+import CardAgenda from "../../components/Cards/CardAgenda";
+import NavbarAdmin from "../../components/Navbars/NavbarAdmin";
+import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 import Calendario from "../../components/Calendario/Calendario";
-import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
-import CardAgenda from "../../components/CardAgenda/CardAgenda.tsx";
-import CardNuevoSimbolo from "../../components/CardNuevoSimbolo";
-import CardSimbol from "../../components/CardSimbol/CardSimbol.tsx";
-import Filtros from "../../components/Filtros/Filtros.tsx";
-import TablaEventos from "../../components/TablaEventos/TablaEventos.tsx";
-import {useObtenEventos} from "../../hooks/HooksEvento.ts";
+import NavbarAgenda from "../../components/Navbars/NavbarAgenda";
+import CardCalendario from "../../components/Cards/CardCalendario";
+import CardNuevoSimbolo from "../../components/Cards/CardNuevoSimbolo";
 import {useState} from "react";
+import {useObtenEventos} from "../../hooks/HooksEvento.ts";
+import Tab from "react-bootstrap/Tab";
 import eventos from "../../models/Eventos.ts";
-import NavbarUASLP from "../../components/NavbarUASLP";
 
 const idVistaAdministrador = "vista-administrador";
 
@@ -66,7 +65,6 @@ function Administrador() {
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[2]}>
         <Filtros/>
-        {/* <CardFiltro/> */}
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[3]}>
         <div className="d-flex justify-content-around p-5">

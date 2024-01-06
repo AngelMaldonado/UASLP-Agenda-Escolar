@@ -2,14 +2,14 @@ import "./_publico.scss";
 // import {useNavigate} from "react-router-dom";
 //import {useObtenEventos} from "../../hooks/HooksEvento.ts";
 import Calendario from "../../components/Calendario/Calendario.tsx";
-import CardCalendario from "../../components/CardCalendario/CardCalendario.tsx";
-import NavbarAgenda from "../../components/NavbarAgenda/NavbarAgenda.tsx";
+import CardCalendario from "../../components/Cards/CardCalendario/CardCalendario.tsx";
+import NavbarAgenda from "../../components/Navbars/NavbarAgenda/NavbarAgenda.tsx";
 import eventos from "../../models/Eventos.ts";
 import Tab from "react-bootstrap/Tab";
-import CardAgenda from "../../components/CardAgenda/CardAgenda.tsx";
+import CardAgenda from "../../components/Cards/CardAgenda/CardAgenda.tsx";
 //import CardCalendarioNotificacion from "../../components/CardCalendarioNotificacion/CardCalendarioNotificacion.tsx";
 import {useState} from "react";
-import NavbarUASLP from "../../components/NavbarUASLP";
+import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 
 function Publico() {
   const eventKeysAgenda = ["calendario", "agenda"]
