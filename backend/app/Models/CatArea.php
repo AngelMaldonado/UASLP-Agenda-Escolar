@@ -8,12 +8,11 @@ use Illuminate\Databas\Eloquent\Relations\BelongsToMany;
 
 class CatArea extends Model
 {
-
     use HasFactory;
 
     protected $table = 'cat_area';
-    protected $fillable = ['descripción'];
-
+    protected $fillable = ['descripcion', 'icono'];
+    public $timestamps = false;
 
     public function eventos()
     {

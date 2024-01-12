@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FiltroController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
@@ -30,9 +31,11 @@ Route::controller(EventController::class)->group(function(){
 
 Route::controller(CatEvento::class)->group(function(){
     Route::get('/cat_eventos', 'index');
+});
 
-
-    //Route::post('/cat_eventos', 'store');
-    //Route::put('/cat_eventos', 'update');
-    //Route::delete('/cat_eventos', 'destroy');
+Route::controller(FiltroController::class)->group(function(){
+    Route::get('/filtros', 'index');
+    Route::post('/filtros', 'store');
+    Route::put('/filtros', 'update');
+    Route::delete('/filtros', 'destroy');
 });

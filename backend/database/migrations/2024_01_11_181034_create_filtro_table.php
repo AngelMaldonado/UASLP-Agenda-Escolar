@@ -9,14 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
-     //create_cat_area_table
     public function up(): void
     {
-        Schema::create('cat_area', function (Blueprint $table) {
+        Schema::create('filtro', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion', 250);
-            $table->string('icono');
+            $table->string('nombre', 60);
+            $table->string('icono', 62); // <- iconos/categoria/unique_id.svg
+            $table->enum('categoria', ['área', 'comunidad']);
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cat_area');
+        Schema::dropIfExists('filtro');
     }
 };

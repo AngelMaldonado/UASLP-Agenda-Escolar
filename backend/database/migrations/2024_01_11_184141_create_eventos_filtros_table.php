@@ -9,16 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    //create_evento_area_table
     public function up(): void
     {
-        Schema::create('evento_area', function (Blueprint $table) {
+        Schema::create('eventos_filtros', function (Blueprint $table) {
             $table->foreignId('evento_id')
                 ->constrained('evento')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('cat_area_id')
-                ->constrained('cat_area')
+            $table->foreignId('filtro_id')
+                ->constrained('filtro')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evento_area');
+        Schema::dropIfExists('eventos_filtros');
     }
 };

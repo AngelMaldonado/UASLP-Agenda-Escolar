@@ -9,10 +9,11 @@ use Illuminate\Databas\Eloquent\Relations\BelongsToMany;
 class CatComunidad extends Model
 {
     use HasFactory;
-     // Relación muchos a muchos con eventos
 
     protected $table = 'cat_comunidad';
-    protected $fillable = ['descripcion'];
+    protected $fillable = ['descripcion', 'icono'];
+    public $timestamps = false;
+
     public function eventos()
     {
         return $this->belongsToMany(Event::class, 'evento_comunidad', 'cat_comunidad_id', 'evento_id');
