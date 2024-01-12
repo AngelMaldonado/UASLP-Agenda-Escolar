@@ -3,6 +3,7 @@ import Boton from "../../Inputs/Boton";
 import {Modal} from "react-bootstrap";
 import {FaTimes} from "react-icons/fa";
 import React, {ReactComponentElement} from "react";
+import {TemaComponente} from "../../../utils/Utils.ts";
 
 type ModalProps = {
   trigger?: React.ReactElement,
@@ -10,9 +11,7 @@ type ModalProps = {
   contenido: React.ReactElement,
   botones?: ReactComponentElement<typeof Boton>[],
   mostrar?: boolean,
-  variante?: React.ReactElement,
-  estiloVariante?: string,
-  close?: string;
+  sinFondo?: boolean,
   muestraModal: (() => void)
   ocultaModal: (() => void)
 }
@@ -27,18 +26,17 @@ function Dialog(props: ModalProps) {
       ) : null}
 
       <Modal show={props.mostrar} onHide={props.ocultaModal} centered>
-        <Modal.Header className={props.close}>
+        <Modal.Header className={props.sinFondo ? "bg-white border-0" : undefined}>
           {props.titulo}
           <div className="btn-cerrar" onClick={props.ocultaModal}>
-            <Boton icono={<FaTimes/>}
-                   variant={props.variante}
-            />
+            <Boton icono={<FaTimes/>} variant={props.sinFondo ? TemaComponente.Secundario : TemaComponente.Primario}/>
           </div>
         </Modal.Header>
         <Modal.Body>
           {props.contenido}
         </Modal.Body>
-        <Modal.Footer className={"py-2" + (props.botones ? "visible" : "invisible")} id={props.estiloVariante}>
+        <Modal.Footer
+          className={"py-2 " + (props.botones ? "visible" : "invisible") + (props.sinFondo ? " bg-white border-0" : "")}>
           {props.botones ? props.botones.map((boton) => boton) : null}
         </Modal.Footer>
       </Modal>

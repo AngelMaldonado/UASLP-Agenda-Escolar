@@ -5,10 +5,22 @@ import Modal from '../../Modales/Modal/Modal.tsx'
 import './Filtros.scss'
 import {useState} from "react"
 import Boton from "../../Inputs/Boton";
-
+import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
+import Filtro from "../../../models/Filtro.ts";
+import {useAgregaFiltro, useObtenFiltros} from "../../../hooks/HooksFiltros.ts";
 
 function Filtros() {
+  const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
   const [mostrarModal, setMostrarModal] = useState(false)
+
+  const {filtros} = useObtenFiltros()
+  const {agregaFiltro} = useAgregaFiltro()
+
+  const cambiaFiltro = {
+    onSingleChange: ((field: string, value: string | File) => setNuevoFiltro(prevState => ({
+      ...prevState, [field]: value
+    }))),
+  }
 
   return (
     <div className="cards-filtros py-4 container">
@@ -18,7 +30,7 @@ function Filtros() {
         ocultaModal={ocultaModal}
         trigger={CardFiltros.CardNuevoFiltro}
         titulo={<div><FaRegUser/><p className="fs-5">Filtro nuevo</p></div>}
-        contenido={<></>}
+        contenido={<FormularioFiltro filtro={nuevoFiltro} {...cambiaFiltro}/>}
         botones={[
           <Boton key={"boton-cancelar"}
                  variant={TemaComponente.DangerInverso}
@@ -30,14 +42,17 @@ function Filtros() {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-
-                   ocultaModal()
-
+                   if (FormularioFiltro.valida()) {
+                     agregaFiltro(nuevoFiltro)
+                     ocultaModal()
+                   }
                  }}
           />
         ]}
       />
-      <CardFiltros/>
+      {filtros?.map(filtro => {
+        return <CardFiltros key={"filtro-" + filtro.id} filtro={filtro}/>
+      })}
       {/* {modalRespuesta()}
                 {filtros?.map(filtro => {
                     return <CardFiltro key={"filtro-" + filtro.id} filtro={filtro}/>
@@ -47,12 +62,12 @@ function Filtros() {
 
   );
 
-
   function muestraModal() {
     setMostrarModal(true)
   }
 
   function ocultaModal() {
+    setNuevoFiltro(new Filtro())
     setMostrarModal(false)
   }
 }

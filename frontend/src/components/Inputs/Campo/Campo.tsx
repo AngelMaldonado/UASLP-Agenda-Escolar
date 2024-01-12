@@ -1,8 +1,9 @@
 // TODO: estilos para invalid Select
+// TODO: mensajes de error en select y file
 
 import "./_campo.scss"
 import {useState} from "react";
-import Select, {ActionMeta, SingleValue} from "react-select";
+import Select, {ActionMeta, NoticeProps, SingleValue, components} from "react-select";
 import CreatableSelect from "react-select/creatable";
 
 export enum TipoCampoTexto {
@@ -25,6 +26,7 @@ export type CampoTextoProps = CampoProps & {
   value?: string,
   boton?: React.ReactElement,
   pattern?: string,
+  maxLength?: number,
 }
 
 export type CampoMultiTextoProps = CampoProps & {
@@ -50,6 +52,7 @@ export type CampoRadiosProps = CampoProps & {
 }
 
 export type CampoArchivoProps = CampoProps & {
+  value: File | string,
   accept: string
 }
 
@@ -133,21 +136,31 @@ export function CampoDesplegable(props: CampoDesplegableProps) {
     creacional,
     ...inputProps
   } = props
+
+  const NoOptionsMessage = (props: NoticeProps) => {
+    return (
+      <components.NoOptionsMessage {...props} children={"Sin opciones"}/>
+    );
+  };
+
   return (
     <div className="w-100 campo">
       {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
       {creacional ?
         <CreatableSelect
           {...inputProps}
+          components={{...inputProps.components, NoOptionsMessage}}
           onCreateOption={(value: string) => handleCreate(value)}
           onChange={handleChange}
           className="form-control"
           classNamePrefix="select"
           closeMenuOnSelect={!inputProps.isMulti}
           unstyled={true}
+          formatCreateLabel={(inputValue) => `Crear "${inputValue}"`}
         /> :
         <Select
           {...inputProps}
+          components={{...inputProps.components, NoOptionsMessage}}
           onChange={handleChange}
           className="form-control"
           classNamePrefix="select"
@@ -228,25 +241,27 @@ export function CampoRadios(props: CampoRadiosProps) {
 }
 
 export function CampoArchivo(props: CampoArchivoProps) {
-  const [focused, setFocused] = useState(false)
   const {
     etiqueta,
     onChange,
     mensajeError,
+    value,
     ...inputProps
   } = props
   return (
     <div className="w-100 campo">
       {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
+      <label className="form-control" htmlFor={props.id}>
+        {placeholder()}
+      </label>
       <input
         {...inputProps}
         type="file"
-        className="form-control"
-        aria-selected={focused}
-        onBlur={handleFocus}
+        multiple={false}
+        className="visually-hidden"
         onChange={event => {
           if (onChange != null) {
-            onChange(event.target.id, event.target.files)
+            onChange(event.target.id, event.target.files?.item(0))
           }
         }}
       />
@@ -254,8 +269,12 @@ export function CampoArchivo(props: CampoArchivoProps) {
     </div>
   )
 
-  function handleFocus() {
-    setFocused(true)
+  function placeholder() {
+    if (typeof value === "string") {
+      return props.placeholder
+    } else if (value instanceof File) {
+      return value.name
+    }
   }
 }
 

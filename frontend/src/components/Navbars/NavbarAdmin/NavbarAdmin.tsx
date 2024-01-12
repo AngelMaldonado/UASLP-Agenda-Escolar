@@ -60,7 +60,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
              etiqueta="Usuarios" icono={<FaRegUser/>}
              eventKey={props.eventKeys[1]}/>,
       <Boton variant={TemaComponente.PrimarioInverso}
-             etiqueta="Filtros" icono={<FaStream/>}
+             etiqueta="Filtro" icono={<FaStream/>}
              eventKey={props.eventKeys[2]}/>,
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Símbolos" icono={<FaRegFileImage/>}

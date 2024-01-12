@@ -1,0 +1,13 @@
+@use "../../../utils" as u;
+
+.FormularioFiltro {
+  .campo {
+    flex: 1;
+    width: 100%;
+  }
+
+  .img-thumbnail {
+    width: 11%;
+    border-color: u.$negro-50;
+  }
+}

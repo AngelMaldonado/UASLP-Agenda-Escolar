@@ -4,5 +4,4 @@ export enum TemaComponente {
   SecundarioInverso = "secondary-inverse",
   Danger = "danger", DangerInverso = "danger-inverse",
   Success = "success", SuccessInverso = "success-inverse",
-  // Circular = "circular", CircularInverso = "circular-inverse"
 }

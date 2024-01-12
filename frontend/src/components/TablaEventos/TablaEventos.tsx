@@ -56,7 +56,7 @@ function TablaEventos(props: Eventos) {
             <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
             <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
             <td>
-              {/* {obtenComunidades({ comunidades: events.comunidades})} */}
+              {/* {obtenComunidades({ comunidad: events.comunidad})} */}
               <div className='d-flex justify-content-center'>
                 {TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre)}
               </div>

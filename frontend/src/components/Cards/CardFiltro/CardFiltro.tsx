@@ -1,118 +1,139 @@
 import './CardFiltro.scss'
-//////////////////////////////////////////////////////////
 import Boton from "../../Inputs/Boton"
 import Modal from "../../Modales/Modal";
 import {useState} from "react";
-import {FcCancel} from "react-icons/fc"
 import {TemaComponente} from "../../../utils/Utils.ts"
-import {ModificaUsuario} from "../../Formularios/FormularioUsuario";
-import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser, FaTimes, FaTrash} from "react-icons/fa"
+import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaStream, FaTimes, FaTrash} from "react-icons/fa"
+import {Badge, Image} from "react-bootstrap";
+import Configuraciones from "../../../utils/Configuraciones.ts";
+import Filtro from "../../../models/Filtro.ts";
+import Card from "react-bootstrap/Card";
+import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
+import {useEliminaFiltro, useModificaFiltro} from "../../../hooks/HooksFiltros.ts";
+import {TiCancel} from "react-icons/ti";
 
-//import {useModificaUsuario, useEliminaUsuario} from "../../hooks/HooksUsuario.ts";
-///////////////////////////////////////////////////////////////////////////////////////////////////
+type CardFiltroProps = {
+  filtro: Filtro
+}
 
+function CardFiltro(props: CardFiltroProps) {
+  const [modalModificar, setModalModificar] = useState(false)
+  const [modalEliminar, setModalEliminar] = useState(false)
+  const [filtro, setFiltro] = useState(props.filtro)
 
-function CardFiltro(/*props: { filtro: Filtros}*/) {
-  const [mostrarModalFiltro, setMostrarModalFiltro] = useState(false)
-  const [mostrarModalFiltroElimr, setMostrarModalFiltroElimr] = useState(false)
+  const {modificaFiltro} = useModificaFiltro()
+  const {eliminaFiltro} = useEliminaFiltro()
 
+  const cambiaFiltro = {
+    onSingleChange: ((field: string, value: string | File) => setFiltro(prevState => ({
+      ...prevState, [field]: value
+    }))),
+  }
 
   return (
-    <div className='CardFiltro'>
-      <div className='d-flex justify-content-evenly align-items-center'>
-        <div className='d-inline-flex'>
-          <Modal
-            mostrar={mostrarModalFiltro}
-            muestraModal={muestraModal}
-            ocultaModal={ocultaModal}
-            titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
-            trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
-            contenido={<></>}
-            botones={[
-
-              <Boton key={"boton-eliminar"}
-                     variant={TemaComponente.DangerInverso}
-                     etiqueta="Eliminar"
-                     icono={<FaTrash/>}
-              />,
-              <Boton key={"boton-guardar"}
-                     variant={TemaComponente.SuccessInverso}
-                     etiqueta="Guardar"
-                     icono={<FaRegPlusSquare/>}
-                     onClick={() => {
-                       if (ModificaUsuario.valida()) {
-
-                         ocultaModal()
-                       }
-                     }}
-              />
-            ]}
-          />
-          <Modal
-            mostrar={mostrarModalFiltroElimr}
-            muestraModal={muestraModalElimr}
-            ocultaModal={ocultaModalElimr}
-            variante={TemaComponente.Secundario}
-            estiloVariante="close-footer"
-            close="close"
-            trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
-            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
-              filtro <strong> [{/*props.filtro.id*/}] </strong> ?</p></>}
-            botones={[
-              <Boton key={"boton-caneclar"}
-                     variant={TemaComponente.DangerInverso}
-                     etiqueta="Cancelar"
-                     icono={<FcCancel/>}
-                     onClick={ocultaModalElimr}/>,
-              <Boton key={"boton-eliminar"}
-                     variant={TemaComponente.PrimarioInverso}
-                     etiqueta="Eliminar"
-                     icono={<FaTrash/>}
-                     onClick={() => {
-                       ocultaModalElimr()
-                     }}
-              />,
-            ]}
-
-          />
+    <Card text="primary" className="CardFiltro">
+      <Card.Body>
+        <Card.Title>
+          {botonModificar()}
+          {botonEliminar()}
+        </Card.Title>
+        <div className="Icono">
+          <Image className="h-100" src={Configuraciones.apiURL + props.filtro.icono}/>
         </div>
-      </div>
-      <div className='"card-body'>
-        <div className='w-50 mx-auto my-2 d-flex justify-content-center'>
-          <FaTimes className='filtro-icon'/>
-          {/* {props.filtro.icono} */}
-        </div>
-        <h3 className='filtro-text'>
-          {/* {props.filtro.descripcion} */}
-          Aspirantes
-        </h3>
-        <br/>
-        <div className='badges d-flex flex-column gap-2'>
-          <span className="w-100 badge rounded-pill fs-6 fw-light">
-              {/* {props.filtro.tipo} */}
-            comunidad
-          </span>
-        </div>
-      </div>
-    </div>
-
-
+        <Card.Text>
+          {props.filtro.nombre}
+        </Card.Text>
+        <Badge pill bg="secondary">
+          {props.filtro.categoria[0].toUpperCase() + props.filtro.categoria.slice(1)}
+        </Badge>
+      </Card.Body>
+    </Card>
   );
 
-  function muestraModal() {
-    setMostrarModalFiltro(true)
+  function botonModificar() {
+    return (
+      <Modal
+        mostrar={modalModificar}
+        muestraModal={muestraModificar}
+        ocultaModal={ocultaModificar}
+        titulo={<div><FaStream/> <p className="fs-5">Modificar Filtro</p></div>}
+        trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+        contenido={<FormularioFiltro filtro={filtro} {...cambiaFiltro}/>}
+        botones={[
+          <Boton key={"boton-caneclar"}
+                 variant={TemaComponente.PrimarioInverso}
+                 etiqueta="Cancelar"
+                 icono={<FaTimes/>}
+                 onClick={ocultaModificar}
+          />,
+          <Boton key={"boton-eliminar"}
+                 variant={TemaComponente.DangerInverso}
+                 etiqueta="Eliminar"
+                 icono={<FaTrash/>}
+          />,
+          <Boton key={"boton-guardar"}
+                 variant={TemaComponente.SuccessInverso}
+                 etiqueta="Guardar"
+                 icono={<FaRegPlusSquare/>}
+                 onClick={() => {
+                   if (FormularioFiltro.valida()) {
+                     modificaFiltro(filtro)
+                     ocultaModificar()
+                   }
+                 }}
+          />
+        ]}
+      />
+    )
   }
 
-  function ocultaModal() {
-    setMostrarModalFiltro(false)
+  function botonEliminar() {
+    return (
+      <Modal
+        sinFondo
+        mostrar={modalEliminar}
+        muestraModal={muestraEliminar}
+        ocultaModal={ocultaEliminar}
+        trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+        contenido={
+          <p className="fs-5 text-center">
+            ¿Esta seguro que desea eliminar el filtro <strong>[{filtro.nombre}]</strong>?
+          </p>
+        }
+        botones={[
+          <Boton key={"boton-caneclar"}
+                 variant={TemaComponente.DangerInverso}
+                 etiqueta="Cancelar"
+                 icono={<TiCancel/>}
+                 onClick={ocultaEliminar}/>,
+          <Boton key={"boton-eliminar"}
+                 variant={TemaComponente.PrimarioInverso}
+                 etiqueta="Eliminar"
+                 icono={<FaTrash/>}
+                 onClick={() => {
+                   eliminaFiltro(filtro)
+                   ocultaEliminar()
+                 }}
+          />,
+        ]}
+      />
+    )
   }
 
-  function muestraModalElimr() {
-    setMostrarModalFiltroElimr(true)
+  function muestraModificar() {
+    setModalModificar(true)
   }
 
-  function ocultaModalElimr() {
-    setMostrarModalFiltroElimr(false)
+  function ocultaModificar() {
+    setModalModificar(false)
+  }
+
+  function muestraEliminar() {
+    setModalEliminar(true)
+  }
+
+  function ocultaEliminar() {
+    setModalEliminar(false)
   }
 }
 
@@ -129,7 +150,3 @@ CardFiltro.CardNuevoFiltro = (
 )
 
 export default CardFiltro
-
-
-
-

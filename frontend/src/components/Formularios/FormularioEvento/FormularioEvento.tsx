@@ -6,7 +6,6 @@ import CampoTexto, {
   CampoMultiTexto,
   TipoCampoTexto
 } from "../../Inputs/Campo"
-
 import Comunidades, {ComunidadesOption} from "../../../models/Comunidades.ts";
 import Areas, {AreasOption} from "../../../models/Areas.ts";
 import Evento from "../../../models/Evento.ts"

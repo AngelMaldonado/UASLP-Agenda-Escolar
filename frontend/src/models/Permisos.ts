@@ -12,19 +12,19 @@ const Permisos: { value: string, label: string }[] = [
   {value: "Leer Eventos", label: "Leer Eventos"},
   {value: "Leer Símbolos", label: "Leer Símbolos"},
   {value: "Leer Usuarios", label: "Leer Usuarios"},
-  {value: "Leer Filtros", label: "Leer Filtros"},
+  {value: "Leer Filtro", label: "Leer Filtro"},
   {value: "Crear Eventos", label: "Crear Eventos"},
   {value: "Crear Símbolos", label: "Crear Símbolos"},
   {value: "Crear Usuarios", label: "Crear Usuarios"},
-  {value: "Crear Filtros", label: "Crear Filtros"},
+  {value: "Crear Filtro", label: "Crear Filtro"},
   {value: "Modificar Eventos", label: "Modificar Eventos"},
   {value: "Modificar Símbolos", label: "Modificar Símbolos"},
   {value: "Modificar Usuarios", label: "Modificar Usuarios"},
-  {value: "Modificar Filtros", label: "Modificar Filtros"},
+  {value: "Modificar Filtro", label: "Modificar Filtro"},
   {value: "Eliminar Eventos", label: "Eliminar Eventos"},
   {value: "Eliminar Usuarios", label: "Eliminar Usuarios"},
   {value: "Eliminar Símbolos", label: "Eliminar Símbolos"},
-  {value: "Eliminar Filtros", label: "Eliminar Filtros"},
+  {value: "Eliminar Filtro", label: "Eliminar Filtro"},
    */
 ]
 

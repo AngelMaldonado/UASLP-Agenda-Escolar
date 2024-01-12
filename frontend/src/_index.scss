@@ -1,0 +1,9 @@
+/**
+ * _index.scss
+ * Modificación de las variables de bootstrap
+ */
+
+@import "utils";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "components";
+@import "screens";
