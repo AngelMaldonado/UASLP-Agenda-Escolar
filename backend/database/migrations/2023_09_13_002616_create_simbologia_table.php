@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('simbologia', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion', 200);
+            $table->string('simbolo', 64);
         });
     }
 

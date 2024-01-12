@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FiltroController;
+use App\Http\Controllers\SimbologiaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
@@ -38,4 +39,11 @@ Route::controller(FiltroController::class)->group(function(){
     Route::post('/filtros', 'store');
     Route::put('/filtros', 'update');
     Route::delete('/filtros', 'destroy');
+});
+
+Route::controller(SimbologiaController::class)->group(function (){
+    Route::get('/simbolos', 'index');
+    Route::post('/simbolos', 'store');
+    Route::put('/simbolos', 'update');
+    Route::delete('/simbolos', 'destroy');
 });

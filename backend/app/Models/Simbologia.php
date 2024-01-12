@@ -10,6 +10,6 @@ class Simbologia extends Model
     use HasFactory;
 
     protected $table = 'simbologia';
-    protected $fillable = ['descripcion'];
+    protected $fillable = ['simbolo'];
     public $timestamps = false;
 }

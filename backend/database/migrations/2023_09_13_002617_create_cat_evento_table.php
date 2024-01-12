@@ -16,7 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre',100);
             $table->string('descripcion', 250);
-            $table->string('simbolo', 200);
+            $table->foreignId('simbolo_id')
+                ->constrained('simbologia')
+                ->onUpdate('cascade');
         });
     }
 
