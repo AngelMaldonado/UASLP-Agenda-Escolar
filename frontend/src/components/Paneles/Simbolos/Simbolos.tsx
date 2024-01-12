@@ -1,23 +1,23 @@
 import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
 import {TemaComponente} from "../../../utils/Utils.ts";
-import CardFiltros from '../../Cards/CardFiltro/CardFiltro.tsx'
 import Modal from '../../Modales/Modal/Modal.tsx'
-import './Filtros.scss'
+import './_simbolos.scss'
 import {useState} from "react"
 import Boton from "../../Inputs/Boton";
-import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
-import Filtro from "../../../models/Filtro.ts";
-import {useAgregaFiltro, useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
+import Simbologia from "../../../models/Simbologia.ts";
+import CardSimbolo from "../../Cards/CardSimbolo";
+import {useAgregaSimbolo, useObtenSimbolos} from "../../../hooks/HooksSimbolo.ts";
+import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
 
-function Filtros() {
-  const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
+function Simbolos() {
+  const [nuevoSimbolo, setNuevoSimbolo] = useState(new Simbologia())
   const [mostrarModal, setMostrarModal] = useState(false)
 
-  const {simbolos} = useObtenFiltros()
-  const {agregaSimbolo} = useAgregaFiltro()
+  const {simbolos} = useObtenSimbolos()
+  const {agregaSimbolo} = useAgregaSimbolo()
 
-  const cambiaFiltro = {
-    onSingleChange: ((field: string, value: string | File) => setNuevoFiltro(prevState => ({
+  const cambiaSimbolo = {
+    onSingleChange: ((field: string, value: string | File) => setNuevoSimbolo(prevState => ({
       ...prevState, [field]: value
     }))),
   }
@@ -28,9 +28,9 @@ function Filtros() {
         mostrar={mostrarModal}
         muestraModal={muestraModal}
         ocultaModal={ocultaModal}
-        trigger={CardFiltros.CardNuevoFiltro}
-        titulo={<div><FaRegUser/><p className="fs-5">Filtro nuevo</p></div>}
-        contenido={<FormularioFiltro filtro={nuevoFiltro} {...cambiaFiltro}/>}
+        trigger={CardSimbolo.CardNuevoSimbolo}
+        titulo={<div><FaRegUser/><p className="fs-5">Nuevo Símbolo</p></div>}
+        contenido={<FormularioSimbolo simbologia={nuevoSimbolo} {...cambiaSimbolo}/>}
         botones={[
           <Boton key={"boton-cancelar"}
                  variant={TemaComponente.DangerInverso}
@@ -42,16 +42,16 @@ function Filtros() {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   if (FormularioFiltro.valida()) {
-                     agregaSimbolo(nuevoFiltro)
+                   if (FormularioSimbolo.valida()) {
+                     agregaSimbolo(nuevoSimbolo)
                      ocultaModal()
                    }
                  }}
           />
         ]}
       />
-      {simbolos?.map(filtro => {
-        return <CardFiltros key={"filtro-" + filtro.id} filtro={filtro}/>
+      {simbolos?.map(simbolo => {
+        return <CardSimbolo key={"simbolo-" + simbolo.id} simbologia={simbolo}/>
       })}
     </div>
   );
@@ -61,9 +61,9 @@ function Filtros() {
   }
 
   function ocultaModal() {
-    setNuevoFiltro(new Filtro())
+    setNuevoSimbolo(new Simbologia())
     setMostrarModal(false)
   }
 }
 
-export default Filtros;
+export default Simbolos;

@@ -1,52 +1,46 @@
-import './CardFiltro.scss'
-import Boton from "../../Inputs/Boton"
+import Card from 'react-bootstrap/Card';
+import Boton from "../../Inputs/Boton";
+import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaStream, FaTimes, FaTrash} from "react-icons/fa";
+import './_card-simbolo.scss';
+import {TemaComponente} from '../../../utils/Utils.ts';
+import Simbologia from "../../../models/Simbologia.ts";
 import Modal from "../../Modales/Modal";
-import {useState} from "react";
-import {TemaComponente} from "../../../utils/Utils.ts"
-import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaStream, FaTimes, FaTrash} from "react-icons/fa"
-import {Badge, Image} from "react-bootstrap";
-import Configuraciones from "../../../utils/Configuraciones.ts";
-import Filtro from "../../../models/Filtro.ts";
-import Card from "react-bootstrap/Card";
-import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
-import {useEliminaFiltro, useModificaFiltro} from "../../../hooks/HooksFiltro.ts";
 import {TiCancel} from "react-icons/ti";
+import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
+import {useState} from "react";
+import {useEliminaSimbolo, useModificaSimbolo} from "../../../hooks/HooksSimbolo.ts";
+import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Image} from "react-bootstrap";
 
-type CardFiltroProps = {
-  filtro: Filtro
+type CardSimboloProps = {
+  simbologia: Simbologia
 }
 
-function CardFiltro(props: CardFiltroProps) {
+function CardSimbolo(props: CardSimboloProps) {
   const [modalModificar, setModalModificar] = useState(false)
   const [modalEliminar, setModalEliminar] = useState(false)
-  const [filtro, setFiltro] = useState(props.filtro)
+  const [simbologia, setSimbologia] = useState(props.simbologia)
 
-  const {modificaFiltro} = useModificaFiltro()
-  const {eliminaFiltro} = useEliminaFiltro()
+  const {modificaSimbolo} = useModificaSimbolo()
+  const {eliminaSimbolo} = useEliminaSimbolo()
 
-  const cambiaFiltro = {
-    onSingleChange: ((field: string, value: string | File) => setFiltro(prevState => ({
+  const cambiaSimbolo = {
+    onSingleChange: ((field: string, value: string | File) => setSimbologia(prevState => ({
       ...prevState, [field]: value
     }))),
   }
 
   return (
-    <Card text="primary" className="CardFiltro">
+    <Card className="CardSimbolo">
       <Card.Body>
         <Card.Title>
           {botonModificar()}
           {botonEliminar()}
         </Card.Title>
-        <div className="Icono">
-          <Image className="h-100" src={Configuraciones.apiURL + props.filtro.icono}/>
-        </div>
-        <Card.Text>
-          {props.filtro.nombre}
-        </Card.Text>
-        <Badge pill bg="secondary">
-          {props.filtro.categoria[0].toUpperCase() + props.filtro.categoria.slice(1)}
-        </Badge>
       </Card.Body>
+      <Card.Img variant="bottom"
+                src={Configuraciones.apiURL + simbologia.simbolo}
+                alt={`Imagen simbología ${simbologia.id}`}/>
     </Card>
   );
 
@@ -56,9 +50,9 @@ function CardFiltro(props: CardFiltroProps) {
         mostrar={modalModificar}
         muestraModal={muestraModificar}
         ocultaModal={ocultaModificar}
-        titulo={<div><FaStream/> <p className="fs-5">Modificar Filtro</p></div>}
+        titulo={<div><FaStream/> <p className="fs-5">Modificar Símbolo</p></div>}
         trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
-        contenido={<FormularioFiltro filtro={filtro} {...cambiaFiltro}/>}
+        contenido={<FormularioSimbolo simbologia={simbologia} {...cambiaSimbolo}/>}
         botones={[
           <Boton key={"boton-caneclar"}
                  variant={TemaComponente.PrimarioInverso}
@@ -76,8 +70,8 @@ function CardFiltro(props: CardFiltroProps) {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   if (FormularioFiltro.valida()) {
-                     modificaFiltro(filtro)
+                   if (FormularioSimbolo.valida()) {
+                     modificaSimbolo(simbologia)
                      ocultaModificar()
                    }
                  }}
@@ -97,7 +91,8 @@ function CardFiltro(props: CardFiltroProps) {
         trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
         contenido={
           <p className="fs-5 text-center">
-            ¿Esta seguro que desea eliminar el filtro <strong>[{filtro.nombre}]</strong>?
+            ¿Esta seguro que desea eliminar el símbolo [
+            <Image thumbnail width={30} src={Configuraciones.apiURL + simbologia.simbolo}/>]?
           </p>
         }
         botones={[
@@ -111,7 +106,7 @@ function CardFiltro(props: CardFiltroProps) {
                  etiqueta="Eliminar"
                  icono={<FaTrash/>}
                  onClick={() => {
-                   eliminaFiltro(filtro)
+                   eliminaSimbolo(simbologia)
                    ocultaEliminar()
                  }}
           />,
@@ -137,16 +132,16 @@ function CardFiltro(props: CardFiltroProps) {
   }
 }
 
-CardFiltro.CardNuevoFiltro = (
-  <div className="card-filtro-nuevo text-center">
+CardSimbolo.CardNuevoSimbolo = (
+  <div className="card-simbolo-nuevo text-center">
     <div className="card-body">
       <div className="new-icon">
         <FaPlus/>
       </div>
       <br/>
-      <h3 className="card-title">Nuevo Filtro</h3>
+      <h3 className="card-title">Nuevo Símbolo</h3>
     </div>
   </div>
 )
 
-export default CardFiltro
+export default CardSimbolo;

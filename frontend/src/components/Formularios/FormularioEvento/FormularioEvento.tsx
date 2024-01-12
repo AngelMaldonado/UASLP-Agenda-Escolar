@@ -10,12 +10,12 @@ import Comunidades, {ComunidadesOption} from "../../../models/Comunidades.ts";
 import Areas, {AreasOption} from "../../../models/Areas.ts";
 import Evento from "../../../models/Evento.ts"
 import CatEvento, {eventos_catalogo_opciones, obten_evento_catalogo_opcion} from "../../../models/CatEvento.ts";
-import {components, OptionProps} from "react-select";
+//import {components, OptionProps} from "react-select";
 import Boton from "../../Inputs/Boton";
 import {Badge} from "react-bootstrap";
 import {FaPlus, FaTimes} from "react-icons/fa";
 import {useEffect, useState} from "react";
-import {SimbologiaOption, simbologias} from "../../../models/Simbologias.ts";
+//import {SimbologiaOption, simbologia} from "../../../models/Simbologia.ts";
 
 type FormularioNuevoEventoProps = {
   evento: Evento,
@@ -31,13 +31,16 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
     {value: "", label: ""}
   )
 
+  /*
   useEffect(() => {
-    const simboloNuevo = simbologias.find(s => s.value == props.evento.simbolo)
+    const simboloNuevo = simbologia.find(s => s.value == props.evento.simbolo)
     if (simboloNuevo != undefined) {
       setSimbolo(simboloNuevo)
     }
   }, [props.evento.simbolo]);
+   */
 
+  /*
   const Option = (props: OptionProps<SimbologiaOption>) => (
     <components.Option {...props} children={
       <img height={30} src={props.data.value} className="w-100 rounded"
@@ -49,6 +52,7 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
       <img height={20} src={props.data.value} className="w-100 rounded" alt={"Simbología " + props.label}/>
     }/>
   )
+   */
 
   return (
     <form id={formNuevoEventoId} className="d-flex flex-column gap-2 text-start">
@@ -82,15 +86,16 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
       <div className="d-flex gap-2">
         <CampoDesplegable id="simbolo"
                           value={simbolo.value ? simbolo : null}
-                          options={simbologias}
+          /*options={simbologia}*/
                           placeholder="Simbología"
                           etiqueta="Simbología"
                           isSearchable={false}
                           onChange={props.onSingleChange}
-                          components={{Option, SingleValue}}
+          /*components={{Option, SingleValue}}*/
                           required={true}
         />
         <CampoArchivo id="imagen"
+                      value={""}
                       etiqueta="Imagen"
                       onChange={(field, value: File[]) => {
                         props.onSingleChange(field, "/imagenes/" + value[0].name)

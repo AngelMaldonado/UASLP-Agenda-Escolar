@@ -9,7 +9,7 @@ export const useObtenFiltros = () => {
     queryKey: "filtros",
     queryFn: ServicioFiltros.obten
   })
-  return {filtros, isLoading}
+  return {simbolos: filtros, isLoading}
 }
 
 export const useAgregaFiltro = () => {
@@ -20,7 +20,7 @@ export const useAgregaFiltro = () => {
     mutationFn: ServicioFiltros.nuevo,
     onSuccess: () => queryClient.invalidateQueries("filtros")
   })
-  return {agregaFiltro: agregaFiltro}
+  return {agregaSimbolo: agregaFiltro}
 }
 
 export const useModificaFiltro = () => {

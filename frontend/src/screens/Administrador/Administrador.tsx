@@ -4,18 +4,17 @@ import "./_administrador.scss";
 import Filtros from "../../components/Paneles/Filtros";
 import Usuarios from "../../components/Paneles/Usuarios";
 import TablaEventos from "../../components/TablaEventos";
-import CardSimbol from "../../components/Cards/CardSimbol";
 import CardAgenda from "../../components/Cards/CardAgenda";
 import NavbarAdmin from "../../components/Navbars/NavbarAdmin";
 import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 import Calendario from "../../components/Calendario/Calendario";
 import NavbarAgenda from "../../components/Navbars/NavbarAgenda";
 import CardCalendario from "../../components/Cards/CardCalendario";
-import CardNuevoSimbolo from "../../components/Cards/CardNuevoSimbolo";
 import {useState} from "react";
 import {useObtenEventos} from "../../hooks/HooksEvento.ts";
 import Tab from "react-bootstrap/Tab";
 import eventos from "../../models/Eventos.ts";
+import Simbolos from "../../components/Paneles/Simbolos";
 
 const idVistaAdministrador = "vista-administrador";
 
@@ -67,14 +66,7 @@ function Administrador() {
         <Filtros/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[3]}>
-        <div className="d-flex justify-content-around p-5">
-          <CardNuevoSimbolo/>
-          <CardSimbol/>
-          <CardSimbol/>
-          <CardSimbol/>
-          <CardSimbol/>
-          <CardSimbol/>
-        </div>
+        <Simbolos/>
       </Tab.Pane>,
     ];
   }
