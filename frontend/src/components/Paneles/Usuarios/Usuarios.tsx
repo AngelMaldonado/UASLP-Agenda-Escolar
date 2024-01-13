@@ -4,7 +4,7 @@ import Modal from "../../Modales/Modal";
 import {useState} from "react"
 import CardUsuario from "../../Cards/CardUsuario";
 import Usuario from "../../../models/Usuario.ts"
-import {NuevoUsuario} from "../../Formularios/FormularioUsuario";
+import FormularioUsuario from "../../Formularios/FormularioUsuario";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import {FaRegPlusSquare, FaRegUser, FaTimes} from "react-icons/fa";
 import {useAgregaUsuario, useObtenUsuarios} from "../../../hooks/HooksUsuario.ts";
@@ -19,7 +19,7 @@ function Usuarios() {
 
   const cambiaUsuario = {
     onSingleChange: ((field: string, value: string) => setNuevoUsuario(prevState => ({
-      ...prevState, [field]: value
+      ...prevState, [field]: field == "rpe" ? parseInt(value) : value,
     }))),
     onMultipleChange: ((_: string, value: string) => {
       let permisos: string[] = nuevoUsuario.permisos
@@ -40,7 +40,7 @@ function Usuarios() {
         ocultaModal={ocultaModal}
         trigger={CardUsuario.CardNuevoUsuario}
         titulo={<div><FaRegUser/><p className="fs-5">Nuevo Usuario</p></div>}
-        contenido={<NuevoUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
+        contenido={<FormularioUsuario usuario={nuevoUsuario} {...cambiaUsuario}/>}
         botones={[
           <Boton key={"boton-cancelar"}
                  variant={TemaComponente.DangerInverso}
@@ -52,7 +52,7 @@ function Usuarios() {
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
-                   if (NuevoUsuario.valida()) {
+                   if (FormularioUsuario.valida()) {
                      agregaUsuario(nuevoUsuario)
                      ocultaModal()
                    }

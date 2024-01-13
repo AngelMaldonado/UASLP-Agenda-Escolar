@@ -1,4 +1,4 @@
-import "./card-usuario.scss"
+import "./_card-usuario.scss"
 import Usuario from "../../../models/Usuario.ts"
 import Boton from "../../Inputs/Boton"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser, FaTimes, FaTrash} from "react-icons/fa"
@@ -6,7 +6,7 @@ import {FcCancel} from "react-icons/fc"
 import {TemaComponente} from "../../../utils/Utils.ts"
 import Modal from "../../Modales/Modal";
 import {useState} from "react";
-import {ModificaUsuario} from "../../Formularios/FormularioUsuario";
+import FormularioUsuario from "../../Formularios/FormularioUsuario";
 import {useModificaUsuario, useEliminaUsuario} from "../../../hooks/HooksUsuario.ts";
 
 function CardUsuario(props: { usuario: Usuario }) {
@@ -21,7 +21,7 @@ function CardUsuario(props: { usuario: Usuario }) {
 
   const cambiaUsuario = {
     onSingleChange: ((field: string, value: string) => setUsuarioState(prevState => ({
-      ...prevState, [field]: value
+      ...prevState, [field]: field == "rpe" ? parseInt(value) : value
     }))),
     onMultipleChange: ((_: string, value: string) => {
       let permisos: string[] = usuarioState.permisos
@@ -39,69 +39,8 @@ function CardUsuario(props: { usuario: Usuario }) {
       <div className="card-header d-flex justify-content-between align-items-center bg-transparent border-0">
         <p className="m-0">#{props.usuario.id}</p>
         <div className="d-inline-flex gap-1">
-          <Modal
-            mostrar={mostrarModal}
-            muestraModal={muestraModal}
-            ocultaModal={ocultaModal}
-            titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
-            trigger={<Boton key={"boton-modificar-usuario-" + props.usuario.id} rounded={true}
-                            variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
-            contenido={<ModificaUsuario usuario={usuarioState} {...cambiaUsuario}/>}
-            botones={[
-              <Boton key={"boton-caneclar"}
-                     variant={TemaComponente.PrimarioInverso}
-                     etiqueta="Cancelar"
-                     icono={<FaTimes/>}
-                     onClick={ocultaModal}/>,
-              <Boton key={"boton-eliminar"}
-                     variant={TemaComponente.DangerInverso}
-                     etiqueta="Eliminar"
-                     icono={<FaTrash/>}
-              />,
-              <Boton key={"boton-guardar"}
-                     variant={TemaComponente.SuccessInverso}
-                     etiqueta="Guardar"
-                     icono={<FaRegPlusSquare/>}
-                     onClick={() => {
-                       if (ModificaUsuario.valida()) {
-                         modificaUsuario(usuarioState)
-                         ocultaModal()
-                       }
-                     }}
-              />
-            ]}
-          />
-          <Modal
-            mostrar={mostrarModalElimr}
-            muestraModal={muestraModalElimr}
-            ocultaModal={ocultaModalElimr}
-            titulo={<></>}
-            variante={TemaComponente.Secundario}
-            estiloVariante="close-footer"
-            close="close"
-            trigger={<Boton key={"eliminar-usuario" + props.usuario.id}
-                            rounded={true}
-                            variant={TemaComponente.DangerInverso}
-                            icono={<FaRegTrashAlt/>}/>}
-            contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
-              usuario <strong> [{props.usuario.nombre}] </strong> ?</p></>}
-            botones={[
-              <Boton key={"boton-caneclar"}
-                     variant={TemaComponente.DangerInverso}
-                     etiqueta="Cancelar"
-                     icono={<FcCancel/>}
-                     onClick={ocultaModalElimr}/>,
-              <Boton key={"boton-eliminar"}
-                     variant={TemaComponente.PrimarioInverso}
-                     etiqueta="Eliminar"
-                     icono={<FaTrash/>}
-                     onClick={() => {
-                       eliminaUsuario(usuarioState)
-                       ocultaModal()
-                     }}
-              />,
-            ]}
-          />
+          {botonModificar()}
+          {botonEliminar()}
         </div>
       </div>
       <div className="card-body">
@@ -109,19 +48,98 @@ function CardUsuario(props: { usuario: Usuario }) {
           <img className="w-100 rounded-circle" src="https://i.pravatar.cc/300" alt="example"/>
           <span className="position-absolute bottom-0 end-0 p-3 bg-success rounded-circle"></span>
         </div>
-        <h3 className="card-title flex-fill">{props.usuario.nombre}</h3>
+        <h3 className="card-title flex-fill">{props.usuario.nombre + " " + props.usuario.apellido}</h3>
         <p className="card-text">{props.usuario.email}</p>
         <div className="badges d-flex flex-column gap-2">
             <span className="w-100 badge rounded-pill fs-6 fw-light">
               {props.usuario.permisos.length} Permisos
             </span>
-          <span className="w-100 badge rounded-pill fs-6 fw-light">{props.usuario.tipo}</span>
+          <span
+            className="w-100 badge rounded-pill fs-6 fw-light">{props.usuario.tipo![0].toUpperCase() + props.usuario.tipo?.substring(1)}</span>
         </div>
       </div>
       {modalRespuestaModificar()}
       {modalRespuestaEliminar()}
     </div>
   );
+
+  function botonModificar() {
+    return (
+      <Modal
+        mostrar={mostrarModal}
+        muestraModal={muestraModal}
+        ocultaModal={ocultaModal}
+        titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
+        trigger={
+          <Boton key={"boton-modificar-usuario-" + props.usuario.id}
+                 rounded={true}
+                 variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}
+          />
+        }
+        contenido={<FormularioUsuario usuario={usuarioState} {...cambiaUsuario}/>}
+        botones={[
+          <Boton key={"boton-caneclar"}
+                 variant={TemaComponente.PrimarioInverso}
+                 etiqueta="Cancelar"
+                 icono={<FaTimes/>}
+                 onClick={ocultaModal}/>,
+          <Boton key={"boton-eliminar"}
+                 variant={TemaComponente.DangerInverso}
+                 etiqueta="Eliminar"
+                 icono={<FaTrash/>}
+                 onClick={() => {
+                   eliminaUsuario(usuarioState)
+                   ocultaModal()
+                 }}
+          />,
+          <Boton key={"boton-guardar"}
+                 variant={TemaComponente.SuccessInverso}
+                 etiqueta="Guardar"
+                 icono={<FaRegPlusSquare/>}
+                 onClick={() => {
+                   if (FormularioUsuario.valida()) {
+                     modificaUsuario(usuarioState)
+                     ocultaModal()
+                   }
+                 }}
+          />
+        ]}
+      />
+    )
+  }
+
+  function botonEliminar() {
+    return (
+      <Modal
+        sinFondo
+        mostrar={mostrarModalElimr}
+        muestraModal={muestraModalElimr}
+        ocultaModal={ocultaModalElimr}
+        trigger={<Boton key={"eliminar-usuario" + props.usuario.id}
+                        rounded={true}
+                        variant={TemaComponente.DangerInverso}
+                        icono={<FaRegTrashAlt/>}/>}
+        contenido={<><p className="fs-5 text-center">¿Esta seguro que desea eliminar el
+          usuario <strong> [{props.usuario.nombre + " " + props.usuario.apellido}] </strong> ?</p></>}
+        botones={[
+          <Boton key={"boton-caneclar"}
+                 variant={TemaComponente.DangerInverso}
+                 etiqueta="Cancelar"
+                 icono={<FcCancel/>}
+                 onClick={ocultaModalElimr}/>,
+          <Boton key={"boton-eliminar"}
+                 variant={TemaComponente.PrimarioInverso}
+                 etiqueta="Eliminar"
+                 icono={<FaTrash/>}
+                 onClick={() => {
+                   eliminaUsuario(usuarioState)
+                   ocultaModal()
+                 }}
+          />,
+        ]}
+      />
+    )
+  }
 
   function onSuccess() {
     setMostrarModalRespuesta(true)

@@ -1,20 +1,21 @@
 class Usuario {
   public readonly id: number
+  public rpe: number | undefined
   public nombre: string
-  public nombres: string
-  public apellidos: string
-  public tipo: string
+  public apellido: string
+  public tipo: string | undefined
   public email: string
   public permisos: string[]
 
   constructor()
-  constructor(id: number, nombre: string, nombres: string, apellidos: string, tipo: string, email: string, permisos: string[])
-  constructor(id?: number, nombres?: string, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
+  constructor(id: number, rpe: number, nombre: string, nombres: string, apellidos: string, tipo: string, email: string, permisos: string[])
+  constructor(id?: number, rpe?: number, nombres?: string, nombre?: string, apellidos?: string, tipo?: string, email?: string, permisos?: string[]) {
     this.id = id ?? -1
+    this.rpe = rpe ?? undefined
     this.nombre = nombre ?? ""
-    this.nombres = nombres ?? ""
-    this.apellidos = apellidos ?? ""
-    this.tipo = tipo ?? ""
+    this.nombre = nombres ?? ""
+    this.apellido = apellidos ?? ""
+    this.tipo = tipo ?? undefined
     this.email = email ?? ""
     this.permisos = permisos ?? []
   }

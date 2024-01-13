@@ -14,12 +14,7 @@ class ServicioUsuario {
 
   public static async nuevo(usuario: Usuario) {
     try {
-      const response = await axios.post(Configuraciones.apiURL + "usuarios", {
-        nombre: usuario.nombres + " " + usuario.apellidos,
-        tipo: usuario.tipo,
-        email: usuario.email,
-        permisos: usuario.permisos
-      })
+      const response = await axios.post(Configuraciones.apiURL + "usuarios", usuario)
       return response.status == 200
     } catch (err) {
       return err
