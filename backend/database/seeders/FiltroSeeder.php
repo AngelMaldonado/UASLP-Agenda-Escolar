@@ -16,7 +16,8 @@ class FiltroSeeder extends Seeder
         while(($filtro = fgetcsv($csv, 400, ',')) !== FALSE) {
             Filtro::create([
                 'nombre' => $filtro['1'],
-                'icono' => $filtro['2']
+                'icono' => $filtro['2'],
+                'categoria' => $filtro['3'],
             ]);
         }
         fclose($csv);
