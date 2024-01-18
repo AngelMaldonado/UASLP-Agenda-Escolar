@@ -13,7 +13,7 @@ function Filtros() {
   const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
   const [mostrarModal, setMostrarModal] = useState(false)
 
-  const {simbolos} = useObtenFiltros()
+  const {filtros} = useObtenFiltros()
   const {agregaSimbolo} = useAgregaFiltro()
 
   const cambiaFiltro = {
@@ -50,7 +50,7 @@ function Filtros() {
           />
         ]}
       />
-      {simbolos?.map(filtro => {
+      {filtros?.map(filtro => {
         return <CardFiltros key={"filtro-" + filtro.id} filtro={filtro}/>
       })}
     </div>

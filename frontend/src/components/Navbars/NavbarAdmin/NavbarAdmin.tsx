@@ -18,7 +18,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
   const {agregaEvento} = useAgregaEvento()
 
   const cambiaEvento = {
-    onSingleChange: ((field: string, value: string | Date | number | null) => setNuevoEvento(prevState => ({
+    onSingleChange: ((field: string, value: string | Date | File | number | null) => setNuevoEvento(prevState => ({
       ...prevState, [field]: value,
     }))),
     onMultipleChange: ((field: string, value: any) => {
@@ -91,6 +91,7 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
                  icono={<FaRegPlusSquare/>}
                  onClick={() => {
                    if (FormularioEvento.valida()) {
+                     console.log(nuevoEvento)
                      agregaEvento(nuevoEvento)
                      ocultaModal()
                    }

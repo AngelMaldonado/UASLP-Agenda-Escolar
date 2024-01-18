@@ -9,7 +9,7 @@ export const useObtenFiltros = () => {
     queryKey: "filtros",
     queryFn: ServicioFiltros.obten
   })
-  return {simbolos: filtros, isLoading}
+  return {filtros: filtros, isLoading}
 }
 
 export const useAgregaFiltro = () => {

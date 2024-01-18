@@ -32,7 +32,7 @@ class ServicioEvento {
         usuario_id: 1,
         fecha_inicio: evento.fecha_inicio.toISOString().split("T")[0],
         fecha_fin: evento.fecha_fin.toISOString().split("T")[0]
-      })
+      }, {headers: {'Content-Type': 'multipart/form-data'}})
       return true
     } catch (err) {
       console.log(err)

@@ -40,6 +40,7 @@ export type CampoDesplegableProps = CampoProps & {
   creacional?: boolean,
   options?: { value: any, label: string }[],
   defaultValue?: { value: any, label: string } | { value: any, label: string }[],
+  isDisabled?: boolean,
   isSearchable?: boolean,
   closeMenuOnSelect?: boolean,
   isMulti?: boolean,

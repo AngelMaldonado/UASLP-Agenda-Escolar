@@ -38,25 +38,25 @@ function Administrador() {
   function tabContent() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
-        <div className="container my-4 d-flex flex-column gap-5">
+        {/*<div className="container my-4 d-flex flex-column gap-5">
           {eventosBD?.map((evento) => (
             <CardAgenda key={"Card agenda " + evento.nombre} evento={evento}/>
           ))}
-        </div>
+        </div>*/}
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
         <div className='flex'>
-          <Calendario eventos={eventos}/>
+          {/*<Calendario eventos={eventos}/>
           <div className='contenedorTarjetas admin'>
             {eventosBD?.map((evento) => (
               <CardCalendario key={"Card calendario" + evento.nombre} admin={true} evento={evento}/>
             ))}
-          </div>
+          </div>*/}
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
         <div className=''>
-          <TablaEventos eventos={eventos}/>
+          {/*<TablaEventos eventos={eventos}/>*/}
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>

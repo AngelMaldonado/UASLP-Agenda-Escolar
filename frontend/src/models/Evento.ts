@@ -1,23 +1,21 @@
 class Evento {
-  public id: number | null
-  public cat_evento_id: number | null
-  public comunidades: number[]
-  public areas: number[]
+  public id: number | undefined
+  public cat_evento_id: number | undefined
   public usuario_id: number
-  public nombre: string
+  public filtros: number[]
+  public nombre: string | undefined
   public fecha_inicio: Date
   public fecha_fin: Date
   public hipervinculos: string[]
-  public imagen: string
+  public imagen: string | File | undefined
   public descripcion: string
-  public simbolo: string
-  public tipo: string
+  public simbolo_id: number | undefined
+  public tipo: string | undefined
 
   constructor()
   constructor(id: number,
               cat_evento_id: number,
-              comunidades: number[],
-              areas: number[],
+              filtros: number[],
               usuario_id: number,
               nombre: string,
               fecha_inicio: Date,
@@ -25,12 +23,11 @@ class Evento {
               hipervinculos: string[],
               imagen: string,
               descripcion: string,
-              simbolo: string,
+              simbolo: number,
               tipo: string)
   constructor(id?: number,
               cat_evento?: number,
-              comunidades?: number[],
-              areas?: number[],
+              filtros?: number[],
               usuario_id?: number,
               nombre?: string,
               fecha_inicio?: Date,
@@ -38,21 +35,20 @@ class Evento {
               hipervinculos?: string[],
               imagen?: string,
               descripcion?: string,
-              simbolo?: string,
+              simbolo?: number,
               tipo?: string) {
-    this.id = id ?? null
-    this.cat_evento_id = cat_evento ?? null
-    this.comunidades = comunidades ?? []
-    this.areas = areas ?? []
+    this.id = id ?? undefined
+    this.cat_evento_id = cat_evento ?? undefined
+    this.filtros = filtros ?? []
     this.usuario_id = usuario_id ?? -1
-    this.nombre = nombre ?? ""
+    this.nombre = nombre ?? undefined
     this.fecha_inicio = fecha_inicio ?? new Date()
     this.fecha_fin = fecha_fin ?? new Date()
     this.hipervinculos = hipervinculos ?? []
-    this.imagen = imagen ?? ""
+    this.imagen = imagen ?? undefined
     this.descripcion = descripcion ?? ""
-    this.simbolo = simbolo ?? ""
-    this.tipo = tipo ?? ""
+    this.simbolo_id = simbolo ?? undefined
+    this.tipo = tipo ?? undefined
   }
 
   static ParseEventosCalendario(eventos: Evento[]) {
