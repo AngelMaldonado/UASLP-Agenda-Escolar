@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('evento', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('cat_evento_id')->nullable();
             $table->foreignId('cat_evento_id')->nullable()
                 ->constrained('cat_evento')
                 ->onUpdate('cascade')
@@ -22,7 +21,8 @@ return new class extends Migration
             $table->foreignId('usuario_id')
                 ->constrained('usuario')
                 ->onUpdate('cascade');
-            $table->foreignId('simbologia_id')
+            $table->foreignId('simbolo_id')
+                ->nullable()
                 ->constrained('simbologia')
                 ->onUpdate('cascade')
                 ->OnDelete('cascade');
@@ -30,10 +30,9 @@ return new class extends Migration
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
             $table->json('hipervinculos')->nullable();
-            $table->string('imagen', 200)->nullable();
-            $table->string('descripcion', 250);
-            //los tipos seran: facultad, alumnado, catalogo
-            $table->string('tipo',10);
+            $table->string('imagen', 64)->nullable();
+            $table->string('descripcion', 350);
+            $table->enum('tipo', ['facultad', 'alumnado', 'catalogo']);
         });
     }
 

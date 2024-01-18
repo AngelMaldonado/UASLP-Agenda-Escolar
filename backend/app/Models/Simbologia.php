@@ -11,5 +11,6 @@ class Simbologia extends Model
 
     protected $table = 'simbologia';
     protected $fillable = ['simbolo'];
+    protected $casts = ['simbolo' => 'string'];
     public $timestamps = false;
 }

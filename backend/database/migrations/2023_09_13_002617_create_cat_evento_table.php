@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('cat_evento', function (Blueprint $table) {
             $table->id();
             $table->string('nombre',100);
-            $table->string('descripcion', 250);
+            $table->string('descripcion', 350);
             $table->foreignId('simbolo_id')
                 ->constrained('simbologia')
                 ->onUpdate('cascade');

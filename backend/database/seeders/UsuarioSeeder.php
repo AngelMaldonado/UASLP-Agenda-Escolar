@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\TipoUsuarioEnum;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,10 +16,18 @@ class UsuarioSeeder extends Seeder
     public function run(): void
     {
         DB::table('usuario')->insert([
-            'nombre' => Str::random(10),
-            'tipo' => Str::random(10),
-            'email' => Str::random(5).'@gmail.com',
-            'permisos' => Json::encode(['a', 'b', 'c']),
+            'tipo' => TipoUsuarioEnum::BECARIO,
+            'nombre' => 'Angel de Jesús',
+            'apellido' => 'Maldonado Juárez',
+            'email' => 'a292363@alumnos.uaslp.mx',
+            'permisos' => Json::encode(['Crear Eventos', 'Modificar Eventos', 'Eliminar Eventos']),
+        ]);
+        DB::table('usuario')->insert([
+            'tipo' => TipoUsuarioEnum::BECARIO,
+            'nombre' => 'Erika Guadalupe',
+            'apellido' => 'Granados Grifaldo',
+            'email' => 'a284665@alumnos.uaslp.mx',
+            'permisos' => Json::encode(['Crear Usuarios', 'Modificar Usuarios', 'Eliminar Usuarios']),
         ]);
     }
 }

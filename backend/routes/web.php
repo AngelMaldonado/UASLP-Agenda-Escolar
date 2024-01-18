@@ -5,7 +5,7 @@ use App\Http\Controllers\SimbologiaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventoController;
 use App\Http\Controllers\CatEvento;
 
 //Ruta para el CRUD de usuarios
@@ -21,9 +21,9 @@ Route::controller(UsuarioController::class)->group(function (){
 });
 
 //Ruta para mostrar eventos en FullCalendar
-//Route::get('/eventos/{fecha}', [EventController::class, 'showEventsByDay']);
+//Route::get('/eventos/{fecha}', [EventoController::class, 'showEventsByDay']);
 
-Route::controller(EventController::class)->group(function(){
+Route::controller(EventoController::class)->group(function(){
     Route::get('/eventos', 'index');
     Route::post('/eventos', 'store');
     Route::put('/eventos', 'update');
