@@ -76,3 +76,12 @@ textarea:invalid[aria-selected="true"] ~ span {
 textarea {
   resize: none;
 }
+
+@media screen and (min-width: 992px) {
+  .navbar {
+    .campo {
+      min-width: 14.74rem;
+      max-width: 14.74rem;
+    }
+  }
+}

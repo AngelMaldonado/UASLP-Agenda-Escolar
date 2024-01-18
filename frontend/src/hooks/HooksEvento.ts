@@ -9,7 +9,7 @@ export const useObtenEventos = (mes: number) => {
     queryKey: "eventos",
     queryFn: () => ServicioEvento.obtenEventos(mes)
   })
-  return {eventosBD: eventos, isLoading}
+  return {eventos: eventos, isLoading}
 }
 
 export const useAgregaEvento = () => {

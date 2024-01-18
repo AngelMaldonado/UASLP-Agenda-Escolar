@@ -23,7 +23,7 @@ type FormularioNuevoEventoProps = {
   onMultipleChange: ((field: string, value: any) => void),
 }
 
-const formNuevoEventoId = "form-nuevo-evento"
+const formNuevoEventoId = "form-evento"
 
 function FormularioEvento(props: FormularioNuevoEventoProps) {
   const [nuevoHipervinculo, setNuevoHipervinculo] = useState("")

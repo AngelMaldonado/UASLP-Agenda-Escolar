@@ -15,8 +15,13 @@ import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
 import {Stack} from "react-bootstrap";
 import Usuario from "../../../models/Usuario.ts";
+import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
+import {components, OptionProps} from "react-select";
+import Configuraciones from "../../../utils/Configuraciones.ts";
+import Filtro from "../../../models/Filtro.ts";
 
 type NavbarAgendaProps = {
+  setKey: (k: string) => void;
   eventKeys: string[];
   sesionAdmi?: boolean;
 };
@@ -26,6 +31,30 @@ function NavbarAgenda(props: NavbarAgendaProps) {
 
   const [showModal, setShowModal] = useState(false)
 
+  const {filtros} = useObtenFiltros()
+
+  const Option = (props: OptionProps<{ value: Filtro, label: string }>) => (
+    <components.Option {...props} children={
+      <div className="d-flex align-items-center">
+        <p className="flex-fill m-0">{props.label}</p>
+        <img width={25} height={25}
+             src={Configuraciones.apiURL + props.data.value.icono}
+             alt={"Simbología " + props.label}/>
+      </div>
+    }/>
+  )
+
+  const SingleValue = (props: OptionProps<{ value: Filtro, label: string }>) => (
+    <components.SingleValue {...props} children={
+      <div className="d-flex">
+        <p className="flex-fill m-0 text-truncate">{props.data.label}</p>
+        <img width={25} height={25}
+             src={Configuraciones.apiURL + props.data.value.icono}
+             alt={"Simbología " + props.label}/>
+      </div>
+    }/>
+  )
+
   return (
     <Navbar expand="lg" className="NavbarAgenda bg-tertiary">
       <Container>
@@ -34,8 +63,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="w-100 pt-2 pt-lg-0">
             <div className="flex-grow-1 d-flex gap-2">
-              <CampoDesplegable id="comunidad" placeholder="Comunidades"/>
-              <CampoDesplegable id="area" placeholder="Áreas"/>
+              {desplegables()}
             </div>
             {opciones().map((opcion, index) => (
               <Nav.Item key={`navbar-agenda-item${index}`}>
@@ -65,15 +93,37 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     </Navbar>
   );
 
+  function desplegables() {
+    return (
+      <>
+        <CampoDesplegable id="comunidad"
+                          placeholder="Comunidades"
+                          options={filtros?.filter(f => f.categoria === "comunidad")
+                            .map(f => ({value: f, label: f.nombre}))
+                          }
+                          components={{Option, SingleValue}}
+        />
+        <CampoDesplegable id="area"
+                          placeholder="Áreas"
+                          options={filtros?.filter(f => f.categoria === "área")
+                            .map(f => ({value: f, label: f.nombre}))
+                          }
+                          components={{Option, SingleValue}}
+        />
+      </>
+    )
+  }
+
   function opciones() {
     return [
       <Boton variant={TemaComponente.SecundarioInverso}
-             etiqueta="Calendario" icono={<CgCalendarToday/>}
-             eventKey={props.eventKeys[1]}
+             etiqueta="Calendario"
+             icono={<CgCalendarToday/>}
+             onClick={() => props.setKey(props.eventKeys[0])}
       />,
       <Boton variant={TemaComponente.SecundarioInverso}
              etiqueta="Agenda" icono={<FaRegListAlt/>}
-             eventKey={props.eventKeys[0]}
+             onClick={() => props.setKey(props.eventKeys[1])}
       />,
       <Boton
         etiqueta="Más Eventos"
@@ -89,7 +139,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         <Modal.Header closeButton>
           <Modal.Title>Modal Eventos</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <CardMasEventos/>
           <CardMasEventos/>
@@ -97,7 +146,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
           <CardMasEventos/>
           <CardMasEventos/>
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="primary">Agregar Evento</Button>
         </Modal.Footer>
