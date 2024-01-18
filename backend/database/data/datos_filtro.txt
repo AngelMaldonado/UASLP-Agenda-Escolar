@@ -7,8 +7,8 @@
 7,Metalurgia y Materiales,iconos/área/metalmat.svg,área
 8,Centro de investigación y Estudios de Posgrado,iconos/área/ceninvestpos.svg,área
 9,Centro de Capacitacion en Ingenieria y Materiales,iconos/área/cencapingmat.svg,área
-10,Aspirantes,iconos/comunidad/cencapingmat.svg,comunidad
-11,Estudiantes,iconos/comunidad/cencapingmat.svg,comunidad
-12,Académicos,iconos/comunidad/cencapingmat.svg,comunidad
-13,Administrativos,iconos/comunidad/cencapingmat.svg,comunidad
-14,Egresados,iconos/comunidad/cencapingmat.svg,comunidad
+10,Aspirantes,iconos/comunidad/aspirantes.svg,comunidad
+11,Estudiantes,iconos/comunidad/estudiantes.svg,comunidad
+12,Académicos,iconos/comunidad/academicos.svg,comunidad
+13,Administrativos,iconos/comunidad/administrativos.svg,comunidad
+14,Egresados,iconos/comunidad/egresados.svg,comunidad
