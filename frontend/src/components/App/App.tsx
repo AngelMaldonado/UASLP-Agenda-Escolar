@@ -6,7 +6,7 @@ import Publico from "../../screens/Publico";
 import Administrador from "../../screens/Administrador";
 import Card from '../../screens/Card/Card';
 
-import '../Calendario/styles.css';
+import '../Calendario/_calendario.scss';
 import Login from "../../screens/Login"; // Importa los estilos del calendario
 
 const queryClient = new QueryClient()
