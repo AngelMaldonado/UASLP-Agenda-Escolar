@@ -9,6 +9,7 @@ class Evento {
   public hipervinculos: string[]
   public imagen: string | File | undefined
   public descripcion: string
+  public simbolo: string | undefined
   public simbolo_id: number | undefined
   public tipo: string | undefined
 
@@ -23,7 +24,8 @@ class Evento {
               hipervinculos: string[],
               imagen: string,
               descripcion: string,
-              simbolo: number,
+              simbolo: string,
+              simbolo_id: number,
               tipo: string)
   constructor(id?: number,
               cat_evento?: number,
@@ -35,7 +37,8 @@ class Evento {
               hipervinculos?: string[],
               imagen?: string,
               descripcion?: string,
-              simbolo?: number,
+              simbolo?: string,
+              simbolo_id?: number,
               tipo?: string) {
     this.id = id ?? undefined
     this.cat_evento_id = cat_evento ?? undefined
@@ -47,7 +50,8 @@ class Evento {
     this.hipervinculos = hipervinculos ?? []
     this.imagen = imagen ?? undefined
     this.descripcion = descripcion ?? ""
-    this.simbolo_id = simbolo ?? undefined
+    this.simbolo = simbolo ?? undefined
+    this.simbolo_id = simbolo_id ?? undefined
     this.tipo = tipo ?? undefined
   }
 

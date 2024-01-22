@@ -23,7 +23,7 @@ type FormularioNuevoEventoProps = {
   onMultipleChange: ((field: string, value: any) => void),
 }
 
-const formNuevoEventoId = "form-evento"
+const formEventoId = "form-evento"
 
 function FormularioEvento(props: FormularioNuevoEventoProps) {
   const [nuevoHipervinculo, setNuevoHipervinculo] = useState("")
@@ -51,7 +51,7 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
   )
 
   return (
-    <form id={formNuevoEventoId} className="d-flex flex-column gap-2 text-start">
+    <form id={formEventoId} className="d-flex flex-column gap-2 text-start">
       {tipoEvento()}
       {camposTipoEvento()}
       {campos()}
@@ -141,7 +141,9 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
         <div className="d-flex gap-2">
           {simbologia()}
           <CampoArchivo id="imagen"
-                        value={props.evento.imagen ? props.evento.imagen as File : ""}
+                        value={props.evento.imagen ?
+                          props.evento.imagen as File : ""
+                        }
                         placeholder="*.webp"
                         etiqueta="Imagen"
                         onChange={props.onSingleChange}
@@ -261,7 +263,7 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
 }
 
 FormularioEvento.valida = () => {
-  return (document.getElementById(formNuevoEventoId) as HTMLFormElement).reportValidity()
+  return (document.getElementById(formEventoId) as HTMLFormElement).reportValidity()
 }
 
 export default FormularioEvento

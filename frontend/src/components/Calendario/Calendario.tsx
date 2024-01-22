@@ -3,22 +3,20 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Evento from "../../models/Evento.ts";
 import esLocale from "@fullcalendar/core/locales/es"
+import Configuraciones from "../../utils/Configuraciones.ts";
 
 function Calendario(props: { eventos: Evento[] | undefined }) {
-  const weekDays = ["Lunes", "Martes", "Miércoles", "Jueves", "Sábado", "Domingo"]
   const [events, setEvents] = useState(Evento.ParseEventosCalendario(props.eventos ?? []));
 
   useEffect(() => {
     setEvents(Evento.ParseEventosCalendario(props.eventos ?? []))
   }, [props.eventos]);
 
-  console.log(props.eventos)
   return (
     <div className="calendar-container z-0">
       <FullCalendar plugins={[dayGridPlugin]}
                     locale={esLocale}
                     firstDay={1}
-                    displayEventTime={false}
                     titleFormat={{year: "numeric", month: "short"}}
                     dayHeaderFormat={{weekday: "long"}}
                     events={events}
@@ -33,7 +31,7 @@ function Calendario(props: { eventos: Evento[] | undefined }) {
     const evento = arg.event.extendedProps
     return (
       <div className="px-2 py-1 w-100 text-light rounded-4"
-           style={{backgroundImage: `url(${evento.simbolo})`}}
+           style={{backgroundImage: `url(${Configuraciones.apiURL + evento.simbolo})`}}
       >
         <p className="px-2 m-0 bg-dark bg-opacity-75 rounded-4 titulo-evento-calendario"
            style={{

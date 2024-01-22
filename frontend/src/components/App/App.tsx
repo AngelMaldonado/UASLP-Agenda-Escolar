@@ -1,13 +1,11 @@
-import './App.css'
+import './_app.scss'
 
 import {Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 import Publico from "../../screens/Publico";
 import Administrador from "../../screens/Administrador";
 import Card from '../../screens/Card/Card';
-
-import '../Calendario/_calendario.scss';
-import Login from "../../screens/Login"; // Importa los estilos del calendario
+import Login from "../../screens/Login";
 
 const queryClient = new QueryClient()
 
