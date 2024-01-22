@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\TipoEventoEnum;
+use App\Models\Simbologia;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Http\Request;
@@ -22,15 +24,24 @@ class EventoController extends Controller
 
         if ($month === 'all') {
             // Obtener todos los eventos
-            $events = Evento::all();
+            $eventos = Evento::all();
         } elseif (is_numeric($month) && $month >= 1 && $month <= 12) {
             // Obtener eventos para un mes específico
-            $events = Evento::whereMonth('fecha_inicio', $month)->get();
+            $eventos = Evento::whereMonth('fecha_inicio', $month)->get();
         } else {
             return response()->json(['message' => 'Mes no válido'], 400);
         }
 
-        return response()->json($events);
+        /* Cuando se consulte para agenda y calendario agregar al json 'simbolo' para poder mostrar el símbolo */
+        /* Agregar también 'filtros' */
+        foreach ($eventos as $evento) {
+            $evento->simbolo = Simbologia::find($evento->simbolo_id)->simbolo;
+            $evento->filtros = $evento->filtros()->allRelatedIds();
+            if ($evento->imagen === null)
+                unset($evento->imagen);
+        }
+
+        return response()->json($eventos);
     }
 
     public function store(Request $request)
@@ -86,6 +97,8 @@ class EventoController extends Controller
         // Atributos opcionales (hipervinculos, imagen, filtros)
         if ($request->has('hipervinculos'))
             $evento->hipervinculos = $request->input('hipervinculos');
+        else
+            $evento->hipervinculos = [];
         if ($request->hasFile('imagen'))
             $evento->imagen = $request->file('imagen')->store('/imagenes/eventos');
 
@@ -165,6 +178,8 @@ class EventoController extends Controller
         // Atributos opcionales (hipervinculos, imagen, filtros)
         if ($request->has('hipervinculos'))
             $evento->hipervinculos = $request->input('hipervinculos');
+        else
+            $evento->hipervinculos = [];
 
         // Si ya había imagen antes, eliminarla
         if ($evento->imagen !== NULL && Storage::exists($evento->imagen)) {
