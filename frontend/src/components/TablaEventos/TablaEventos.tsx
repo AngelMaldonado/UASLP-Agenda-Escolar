@@ -14,15 +14,13 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import FormularioEvento from '../Formularios/FormularioEvento/FormularioEvento.tsx';
 import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaTimes, FaTrash} from "react-icons/fa";
 
-type Eventos = {
-  eventos: Evento[];
+export type TablaEventosProps = {
+  eventos: Evento[] | undefined;
 }
 
-
-function TablaEventos(props: Eventos) {
+function TablaEventos(props: TablaEventosProps) {
 
   return (
-
     <div className='container table-responsive tableDesplaz-y'>
       <br/>
       <Table responsive="sm" className='table-hover'>
@@ -42,7 +40,7 @@ function TablaEventos(props: Eventos) {
         </tr>
         </thead>
         <tbody className=' tablaEvento text-center shadow'>
-        {props.eventos.map((events) => (
+        {props.eventos?.map((events) => (
           <tr className=''>
             <td>{events.cat_evento_id}</td>
             <td>{events.nombre}</td>
@@ -58,13 +56,13 @@ function TablaEventos(props: Eventos) {
             <td>
               {/* {obtenComunidades({ comunidad: events.comunidad})} */}
               <div className='d-flex justify-content-center'>
-                {TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre)}
+                {/*TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre)*/}
               </div>
 
             </td>
             <td>
               <div className='d-flex justify content-center'>
-                {TooltipPositionedExample(obtenAreas(events.areas), events.nombre)}
+                {/*TooltipPositionedExample(obtenAreas(events.areas), events.nombre)*/}
               </div>
             </td>
             <td>{events.descripcion}</td>

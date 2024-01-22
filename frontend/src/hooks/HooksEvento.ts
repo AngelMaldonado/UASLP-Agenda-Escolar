@@ -6,7 +6,7 @@ export const useObtenEventos = (mes: number) => {
     data: eventos,
     isLoading
   } = useQuery({
-    queryKey: "eventos",
+    queryKey: ["eventos", {mes: mes}],
     queryFn: () => ServicioEvento.obtenEventos(mes)
   })
   return {eventos: eventos, isLoading}

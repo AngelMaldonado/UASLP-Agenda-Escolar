@@ -4,7 +4,6 @@ import "./_administrador.scss";
 import Filtros from "../../components/Paneles/Filtros";
 import Usuarios from "../../components/Paneles/Usuarios";
 import TablaEventos from "../../components/TablaEventos";
-import CardAgenda from "../../components/Cards/CardAgenda";
 import NavbarAdmin from "../../components/Navbars/NavbarAdmin";
 import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 import Calendario from "../../components/Calendario/Calendario";
@@ -14,19 +13,23 @@ import {useState} from "react";
 import {useObtenEventos} from "../../hooks/HooksEvento.ts";
 import Tab from "react-bootstrap/Tab";
 import Simbolos from "../../components/Paneles/Simbolos";
+import Agenda from "../../components/Paneles/Agenda";
 
 const idVistaAdministrador = "vista-administrador";
 
 function Administrador() {
   const [mes, setMes] = useState(new Date().getMonth());
   const [key, setKey] = useState("calendario")
+
   const {eventos} = useObtenEventos(mes);
 
   const eventKeysAgenda = ["calendario", "agenda"];
   const eventKeysAdmin = ["tabla-eventos", "usuarios", "filtros", "simbolos"];
 
+  eventos?.sort((a, b) => a.fecha_inicio.getTime() - b.fecha_inicio.getTime())
+
   return (
-    <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k)}>
+    <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
       <NavbarUASLP/>
       <NavbarAgenda setKey={setKey} eventKeys={eventKeysAgenda} sesionAdmi/>
       <NavbarAdmin eventKeys={eventKeysAdmin}/>
@@ -38,7 +41,7 @@ function Administrador() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className='flex'>
-          <Calendario eventos={eventos}/>
+          <Calendario eventos={eventos} setMes={setMes}/>
           <div className='contenedorTarjetas admin'>
             {eventos?.map((evento) => (
               <CardCalendario key={"Card calendario" + evento.nombre} admin={true} evento={evento}/>
@@ -47,17 +50,10 @@ function Administrador() {
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
-        <>hola</>
-        {/*<div className="container my-4 d-flex flex-column gap-5">
-          {eventosBD?.map((evento) => (
-            <CardAgenda key={"Card agenda " + evento.nombre} evento={evento}/>
-          ))}
-        </div>*/}
+        <Agenda eventos={eventos}/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
-        <div className=''>
-          {/*<TablaEventos eventos={eventos}/>*/}
-        </div>
+        <TablaEventos eventos={eventos}/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>
