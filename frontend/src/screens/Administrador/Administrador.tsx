@@ -32,7 +32,7 @@ function Administrador() {
     <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
       <NavbarUASLP/>
       <NavbarAgenda setKey={setKey} eventKeys={eventKeysAgenda} sesionAdmi/>
-      <NavbarAdmin eventKeys={eventKeysAdmin}/>
+      <NavbarAdmin setKey={setKey} eventKeys={eventKeysAdmin}/>
       <Tab.Content>{...tabContent()}</Tab.Content>
     </Tab.Container>
   );
@@ -46,7 +46,7 @@ function Administrador() {
             {eventos?.map((evento) => (
               <CardCalendario key={"Card calendario" + evento.nombre} admin={true} evento={evento}/>
             ))}
-          </div>
+          </div> 
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>

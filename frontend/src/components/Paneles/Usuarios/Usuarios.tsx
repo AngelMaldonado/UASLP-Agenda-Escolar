@@ -60,11 +60,13 @@ function Usuarios() {
           />
         ]}
       />
+
       {modalRespuesta()}
       {usuarios?.map(usuario => {
         return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>
-      })}
+      })} 
     </div>
+     
   );
 
   function modalRespuesta() {

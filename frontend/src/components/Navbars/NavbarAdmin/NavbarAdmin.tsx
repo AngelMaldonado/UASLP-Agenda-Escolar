@@ -10,8 +10,14 @@ import Evento from "../../../models/Evento.ts";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import { Navbar } from 'react-bootstrap';
 
-function NavbarAdmin(props: { eventKeys: string[] }) {
+export type NavbarAdminProps = {
+  setKey: (k: string) => void,
+  eventKeys: string[] 
+}
+
+function NavbarAdmin(props: NavbarAdminProps) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
   const [mostrarModal, setMostrarModal] = useState(false)
 
@@ -33,38 +39,49 @@ function NavbarAdmin(props: { eventKeys: string[] }) {
   }
 
   return (
-    <Nav className="navbar-expand py-2 bg-blanco-80">
-      <Container className="d-flex gap-4 justify-content-between">
-        <div className="flex-grow-1">
-          <Campo id="busqueda" placeholder="Buscar"/>
-        </div>
-        <ul className="navbar-nav gap-2">
-          {opciones().map((opcion, index) => (
-            <li key={index}>
-              <Nav.Item>
-                {opcion}
-              </Nav.Item>
-            </li>
-          ))}
-        </ul>
+    <Navbar expand="lg" className="bg-body-tertiary bg-blanco-80">
+      <Container className='gap-2'>
+            <div className="flex-grow-1 NavBusqueda">
+              <Campo id="busqueda" placeholder="Buscar"/>
+            </div>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
+            <Navbar.Collapse id="basic-navbar-nav" className=''>
+              <Nav className="w-100 " >
+                <div className='NavbarCollapse'><ul className="navbar-nav gap-2">
+                  {opciones().map((opcion, index) => (
+                    <li key={index}>
+                      <Nav.Item>
+                        {opcion}
+                      </Nav.Item>
+                    </li>
+                  ))}
+                </ul></div>
+                
+              </Nav>
+            </Navbar.Collapse>
       </Container>
-    </Nav>
+    </Navbar>
+   
   )
 
   function opciones() {
     return [
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Tabla de Eventos" icono={<FaRegCalendarAlt/>}
-             eventKey={props.eventKeys[0]}/>,
+             onClick={() => props.setKey(props.eventKeys[0])}/>,
+
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Usuarios" icono={<FaRegUser/>}
-             eventKey={props.eventKeys[1]}/>,
+             onClick={() => props.setKey(props.eventKeys[1])}/>,
+
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Filtro" icono={<FaStream/>}
-             eventKey={props.eventKeys[2]}/>,
-      <Boton variant={TemaComponente.PrimarioInverso}
+             onClick={() => props.setKey(props.eventKeys[2])}/>,
+             
+             <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Símbolos" icono={<FaRegFileImage/>}
-             eventKey={props.eventKeys[3]}/>,
+             onClick={() => props.setKey(props.eventKeys[3])}/>,
+             
       modalNuevoEvento(),
     ]
   }
