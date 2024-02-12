@@ -4,8 +4,7 @@
 .tableHead{
   color:lightgrey;
   border-bottom: 5px solid;
-  margin-bottom: 10px;
-
+  margin-bottom: 0px;
   > tr th{
     color: u.$primary;
     // background-color: u.$blanco-80;
@@ -30,7 +29,7 @@
 
 
 .tableDesplaz-y {
-  height: 500px;
+  height: 72vh;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -39,5 +38,82 @@
 
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
+  }
+}
+
+// .cardTabla {
+//   // color:lightgrey;
+//   border-bottom: 5px solid;
+//   margin-bottom: 0px;
+//   flex-direction: column;
+//   justify-content: space-between;
+
+//   div p:first-of-type {
+//     color: u.$primary;
+//   }
+
+  
+//   .column1 {
+//       flex: 1;
+//   }
+// }
+
+.table {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+  border-bottom: 10px solid lightgrey;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    // border: 1px solid black;
+  }
+
+  .row div {
+    padding: 0;
+    margin: 0;
+  }
+
+  .row div:first-of-type p{
+    color: u.$primary;
+    font-weight: bold;
+  }
+
+  .row div p {
+    margin: 0;
+    padding-bottom: 3px;
+  }
+
+  .column1, .column2 {
+    flex-basis: 50%;
+  }
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
+}
+
+//.tablaSimbolo, .tablaHipervinculo 
+.tablaContenido {
+  display: block; // Asegúrate de que el elemento sea visible de forma predeterminada
+
+  @media (max-width: 575px) {
+    display: none; // El contenido desaparecerá en pantallas con un ancho de 575px o menos
+  }
+
+  @media (max-width: 576px) {
+    display: none; // El contenido desaparecerá en pantallas con un ancho de 575px o menos
+  }
+
+  @media (max-width: 992px) {
+    display: none; // El contenido desaparecerá en pantallas con un ancho de 575px o menos
+  }
+
+  @media (min-width: 1200px) {
+    // Agrega estilos específicos para pantallas con un ancho mínimo de 1200px si es necesario
   }
 }

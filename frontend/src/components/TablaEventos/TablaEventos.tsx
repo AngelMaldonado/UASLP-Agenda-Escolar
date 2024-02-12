@@ -22,69 +22,121 @@ function TablaEventos(props: TablaEventosProps) {
 
   return (
     <div className='container table-responsive tableDesplaz-y'>
-      <br/>
-      <Table responsive="sm" className='table-hover'>
-        <thead className='text-center tableHead shadow '>
-        <tr>
-          <th>#</th>
-          <th>Evento</th>
-          <th>Simbologia</th>
-          <th>Inicio</th>
-          <th>Fin</th>
-          <th>Comunidad</th>
-          <th>Área</th>
-          <th>Descripción</th>
-          <th>Imagen</th>
-          <th>Hipervinculos</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody className=' tablaEvento text-center shadow'>
-        {props.eventos?.map((events) => (
-          <tr className=''>
-            <td>{events.cat_evento_id}</td>
-            <td>{events.nombre}</td>
-            <td>
-              <div className='image-container'>
-                  <span className='w-75'>
-                    <img src={events.simbolo} alt="" className='img-fluid'/>
-                  </span>
-              </div>
-            </td>
-            <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
-            <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
-            <td>
-              {/* {obtenComunidades({ comunidad: events.comunidad})} */}
-              <div className='d-flex justify-content-center'>
-                {/*TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre)*/}
-              </div>
+    <br/>
+    <Table responsive="sm" className='table-hover tablaContenido'>
+      <thead className='text-center tableHead shadow '>
+      <tr>
+        <th>#</th>
+        <th>Evento</th>
+        <th>Simbologia</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Comunidad</th>
+        <th>Área</th>
+        <th>Descripción</th>
+        <th>Imagen</th>
+        <th>Hipervinculos</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody className=' tablaEvento text-center shadow'>
+      {props.eventos?.map((events) => (
+        <tr className=''>
+          <td>{events.cat_evento_id}</td>
+          <td>{events.nombre}</td>
+          <td>
+            <div className='image-container'>
+                <span className='w-75'>
+                  <img src={events.simbolo} alt="" className='img-fluid'/>
+                </span>
+            </div>
+          </td>
+          <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</td>
+          <td>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</td>
+          <td>
+            {/* {obtenComunidades({ comunidad: events.comunidad})} */}
+            <div className='d-flex justify-content-center'>
+              {/*TooltipPositionedExample(obtenComunidades(events.comunidades), events.nombre)*/}
+            </div>
 
-            </td>
-            <td>
-              <div className='d-flex justify content-center'>
-                {/*TooltipPositionedExample(obtenAreas(events.areas), events.nombre)*/}
-              </div>
-            </td>
-            <td>{events.descripcion}</td>
-            <td>
-              <div className='image-container'>
-                  <span className='w-75'>
-                    <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid '/>
-                  </span>
-              </div>
-            </td>
-            <td>{events.hipervinculos}</td>
-            <td>
-              <div className='d-flex-column'>
-                {botonEliminar(events)}
-                {botonEdicion(events)}
-              </div>
-            </td>
-          </tr>
-        ))}
-        </tbody>
-      </Table>
-    </div>
+          </td>
+          <td>
+            <div className='d-flex justify content-center'>
+              {/*TooltipPositionedExample(obtenAreas(events.areas), events.nombre)*/}
+            </div>
+          </td>
+          <td>{events.descripcion}</td>
+          <td>
+            <div className='image-container'>
+                <span className='w-75'>
+                  <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid '/>
+                </span>
+            </div>
+          </td>
+          <td>{events.hipervinculos}</td>
+          <td>
+            <div className='d-flex-column'>
+              {/* {botonEliminar(events)}
+              {botonEdicion(events)} */}
+            </div>
+          </td>
+        </tr>
+      ))}
+      </tbody>
+    </Table>
+    {props.eventos?.map((events) => (
+    <ul className="table">
+      <li className="row">
+        <div className="column1"><p>Evento: </p></div>
+        <div className="column2"><p>{events.nombre}</p></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Simbologia: </p></div>
+        <div className="column2"><div className='image-container'>
+              <span className='w-75'>
+                <img src={events.simbolo} alt="" className='img-fluid'/>
+              </span>
+            </div></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Inicio: </p></div>
+        <div className="column2"><p>{Intl.DateTimeFormat('es-MX').format(events?.fecha_inicio).toUpperCase()}</p></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Fin: </p></div>
+        <div className="column2"><p>{Intl.DateTimeFormat('es-MX').format(events?.fecha_fin).toUpperCase()}</p></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Comunidad: </p></div>
+        <div className="column2"></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Area: </p></div>
+        <div className="column2"></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Descripcion: </p></div>
+        <div className="column2"><p>{events.descripcion}</p></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Imagen: </p></div>
+        <div className="column2"> <div className='image-container'>
+              <span className='w-75'>
+                <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid '/>
+              </span>
+            </div></div>
+      </li>
+      <li className="row">
+        <div className="column1"><p>Hipervinculo: </p></div>
+        <div className="column2"><p>{events.hipervinculos}</p></div>
+      </li>
+      <li className="row">
+         <div className="column1"></div>
+        <div className="colum2"> <div className='d-flex justify-content-end m-5'>{botonEliminar(events)} {botonEdicion(events)}</div></div>
+      </li>
+    </ul>
+    ))}
+  </div>
   );
 
 
@@ -143,7 +195,7 @@ function botonEdicion(events: Evento) {
   return (
     <Modal
       titulo={<div><FaRegCalendarAlt/><p className="fs-5">Modificar Evento</p></div>}
-      trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+      trigger={<Boton rounded={false} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
       contenido={<FormularioEvento evento={evento} {...cambiaEvento}/>}
       mostrar={muestraModalModifEvento}
       muestraModal={muestraModalModificar}
@@ -191,7 +243,7 @@ function botonEliminar(evento: Evento) {
   return (
     <Modal
       titulo={<div><FaRegCalendarAlt/><p className="fs-5">Eliminar Evento</p></div>}
-      trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+      trigger={<Boton rounded={false} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
       contenido={<p className="fs-5 text-center">¿Esta seguro que desea eliminar el
         usuario <strong> [{evento.nombre}]</strong>?</p>}
       mostrar={muestraModalEliminarEvento}
