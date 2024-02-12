@@ -131,8 +131,7 @@ function TablaEventos(props: TablaEventosProps) {
         <div className="column2"><p>{events.hipervinculos}</p></div>
       </li>
       <li className="row">
-         <div className="column1"></div>
-        <div className="colum2"> <div className='d-flex justify-content-end m-5'>{botonEliminar(events)} {botonEdicion(events)}</div></div>
+         <div className='d-flex justify-content-end'>{botonEliminar(events)} {botonEdicion(events)}</div>
       </li>
     </ul>
     ))}
@@ -195,7 +194,7 @@ function botonEdicion(events: Evento) {
   return (
     <Modal
       titulo={<div><FaRegCalendarAlt/><p className="fs-5">Modificar Evento</p></div>}
-      trigger={<Boton rounded={false} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
+      trigger={<Boton rounded={true} variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>}
       contenido={<FormularioEvento evento={evento} {...cambiaEvento}/>}
       mostrar={muestraModalModifEvento}
       muestraModal={muestraModalModificar}
@@ -243,7 +242,7 @@ function botonEliminar(evento: Evento) {
   return (
     <Modal
       titulo={<div><FaRegCalendarAlt/><p className="fs-5">Eliminar Evento</p></div>}
-      trigger={<Boton rounded={false} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
+      trigger={<Boton rounded={true} variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>}
       contenido={<p className="fs-5 text-center">¿Esta seguro que desea eliminar el
         usuario <strong> [{evento.nombre}]</strong>?</p>}
       mostrar={muestraModalEliminarEvento}
@@ -301,3 +300,4 @@ function TooltipPositionedExample(filtros: string[], id: string) {
 }
 
 export default TablaEventos;
+
