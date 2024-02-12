@@ -1,67 +1,60 @@
+// TODO: establecer el id del usuario en nuevoEvento con la sesión
+
 import './_navbar-admin.scss'
 import Boton from "../../Inputs/Boton";
 import Campo from "../../Inputs/Campo";
 import Modal from "../../Modales/Modal";
 import FormularioEvento from "../../Formularios/FormularioEvento/FormularioEvento.tsx";
-import {useState} from "react";
-import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream, FaTimes} from 'react-icons/fa'
+import {Dispatch, SetStateAction, useState} from "react";
+import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream} from 'react-icons/fa'
 import {useAgregaEvento} from "../../../hooks/HooksEvento.ts";
 import Evento from "../../../models/Evento.ts";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import { Navbar } from 'react-bootstrap';
+import {Navbar} from 'react-bootstrap';
+import useModelChange from "../../../hooks/HookModelChange.ts";
+import {ValidationError} from "yup";
 
 export type NavbarAdminProps = {
   setKey: (k: string) => void,
-  eventKeys: string[] 
+  eventKeys: string[]
 }
 
 function NavbarAdmin(props: NavbarAdminProps) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
-  const [mostrarModal, setMostrarModal] = useState(false)
+  const [errores, setErrores] = useState({})
 
-  const {agregaEvento} = useAgregaEvento()
-
-  const cambiaEvento = {
-    onSingleChange: ((field: string, value: string | Date | File | number | null) => setNuevoEvento(prevState => ({
-      ...prevState, [field]: value,
-    }))),
-    onMultipleChange: ((field: string, value: any) => {
-      let elementos = nuevoEvento[field as keyof typeof nuevoEvento] as any[]
-      if (elementos.find(elemento => elemento == value)) {
-        elementos.splice(elementos.indexOf(value), 1)
-      } else {
-        elementos.push(value)
-      }
-      setNuevoEvento(prevState => ({...prevState, [field]: elementos}))
-    }),
-  }
+  const {agregaEvento, registroExitoso, reset} = useAgregaEvento(setErrores)
+  const onEventoChange = useModelChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
+  nuevoEvento.usuario_id = 1
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary bg-blanco-80">
       <Container className='gap-2'>
-            <div className="flex-grow-1 NavBusqueda">
-              <Campo id="busqueda" placeholder="Buscar"/>
+        <div className="flex-grow-1 NavBusqueda">
+          <Campo id="busqueda" placeholder="Buscar"/>
+        </div>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
+        <Navbar.Collapse id="basic-navbar-nav" className=''>
+          <Nav className="w-100 ">
+            <div className='NavbarCollapse'>
+              <ul className="navbar-nav gap-2">
+                {opciones().map((opcion, index) => (
+                  <li key={index}>
+                    <Nav.Item>
+                      {opcion}
+                    </Nav.Item>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
-            <Navbar.Collapse id="basic-navbar-nav" className=''>
-              <Nav className="w-100 " >
-                <div className='NavbarCollapse'><ul className="navbar-nav gap-2">
-                  {opciones().map((opcion, index) => (
-                    <li key={index}>
-                      <Nav.Item>
-                        {opcion}
-                      </Nav.Item>
-                    </li>
-                  ))}
-                </ul></div>
-                
-              </Nav>
-            </Navbar.Collapse>
+
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
-   
+
   )
 
   function opciones() {
@@ -77,11 +70,11 @@ function NavbarAdmin(props: NavbarAdminProps) {
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Filtro" icono={<FaStream/>}
              onClick={() => props.setKey(props.eventKeys[2])}/>,
-             
-             <Boton variant={TemaComponente.PrimarioInverso}
+
+      <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Símbolos" icono={<FaRegFileImage/>}
              onClick={() => props.setKey(props.eventKeys[3])}/>,
-             
+
       modalNuevoEvento(),
     ]
   }
@@ -89,43 +82,48 @@ function NavbarAdmin(props: NavbarAdminProps) {
   function modalNuevoEvento() {
     return (
       <Modal
+        onClose={onClose}
         trigger={<Boton variant={TemaComponente.PrimarioInverso}
                         etiqueta="Crear Evento" icono={<FaRegPlusSquare/>}/>}
-        mostrar={mostrarModal}
-        muestraModal={muestraModal}
-        ocultaModal={ocultaModal}
-        titulo={<div><FaRegCalendarAlt/><p className="fs-5">Nuevo Evento</p></div>}
-        contenido={<FormularioEvento evento={nuevoEvento} {...cambiaEvento}/>}
-        botones={[
-          <Boton key={"boton-cancelar"}
-                 variant={TemaComponente.DangerInverso}
-                 etiqueta="Cancelar"
-                 icono={<FaTimes/>}
-                 onClick={ocultaModal}/>,
+        titulo={<div><FaRegCalendarAlt/> <p className="fs-5">Nuevo Evento</p></div>}
+        contenido={contenidoModal()}
+        timeout={registroExitoso ? 2000 : undefined}
+        sinFondo={registroExitoso}
+        botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}
                  variant={TemaComponente.SuccessInverso}
                  etiqueta="Guardar"
                  icono={<FaRegPlusSquare/>}
-                 onClick={() => {
-                   if (FormularioEvento.valida()) {
-                     console.log(nuevoEvento)
-                     agregaEvento(nuevoEvento)
-                     ocultaModal()
-                   }
-                 }}
+                 onClick={agregaNuevoEvento}
           />
-        ]}
+        ] : []}
       />
     )
   }
 
-  function muestraModal() {
-    setMostrarModal(true)
+  function contenidoModal() {
+    if (registroExitoso)
+      return (<p>El evento se agregó con éxito</p>)
+    else
+      return (<FormularioEvento evento={nuevoEvento} setEvento={onEventoChange} errores={errores}/>)
   }
 
-  function ocultaModal() {
+  function agregaNuevoEvento() {
+    // Valida el nuevoUsuario antes de enviar a back
+    Evento.schema.validate(nuevoEvento)
+      // Si se validó correctamente, enviar a back
+      .then(_ => agregaEvento(nuevoEvento))
+      // Si no coincide con el esquema, mostrar errores en formulario
+      .catch((r: ValidationError) => {
+        setErrores({[r.path!]: r.errors})
+        setTimeout(() => setErrores({}), 5000)
+      })
+  }
+
+  function onClose() {
+    reset()
+    setErrores({})
     setNuevoEvento(new Evento())
-    setMostrarModal(false)
   }
 }
 

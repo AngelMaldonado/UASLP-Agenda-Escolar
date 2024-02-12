@@ -20,18 +20,6 @@
   cursor: pointer;
 }
 
-.titulo-evento {
-  max-height: 80%;
-  width: 100%;
-  display: flex;
-  text-align: left !important;
-  margin-left: 10px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: pre-wrap;
-  font-size: smaller;
-}
-
 .pills {
   width: 100%;
   position: absolute;
@@ -48,7 +36,6 @@
   margin-left: 0px;
   padding: 2px 10px;
   border-radius: 20px;
-  font-size: 11px;
 }
 
 .card.nuevo-evento:hover .pills span {

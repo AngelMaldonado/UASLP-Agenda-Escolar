@@ -14,7 +14,6 @@ export enum TipoCampoTexto {
 
 export type CampoProps = {
   id: string,
-  etiqueta?: string,
   required?: boolean,
   placeholder?: string,
   onChange?: ((field: string, value: any) => void),
@@ -67,7 +66,6 @@ export type CampoFechaProps = CampoProps & {
 export default function CampoTexto(props: CampoTextoProps) {
   const [focused, setFocused] = useState(false)
   const {
-    etiqueta,
     onChange,
     mensajeError,
     boton,
@@ -75,7 +73,6 @@ export default function CampoTexto(props: CampoTextoProps) {
   } = props
   return (
     <div className="w-100 campo">
-      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
       <div className="flex gap-2">
         <input
           {...inputProps}
@@ -102,14 +99,12 @@ export default function CampoTexto(props: CampoTextoProps) {
 export function CampoMultiTexto(props: CampoMultiTextoProps) {
   const [focused, setFocused] = useState(false)
   const {
-    etiqueta,
     onChange,
     mensajeError,
     ...inputProps
   } = props
   return (
     <div className="w-100 campo">
-      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
       <textarea
         {...inputProps}
         className="form-control"
@@ -133,7 +128,6 @@ export function CampoMultiTexto(props: CampoMultiTextoProps) {
 export function CampoDesplegable(props: CampoDesplegableProps) {
   const {
     mensajeError,
-    etiqueta,
     creacional,
     ...inputProps
   } = props
@@ -146,7 +140,6 @@ export function CampoDesplegable(props: CampoDesplegableProps) {
 
   return (
     <div className="w-100 campo">
-      {etiqueta ? <label className="form-label" htmlFor={inputProps.id}>{etiqueta}</label> : null}
       {creacional ?
         <CreatableSelect
           {...inputProps}
@@ -214,7 +207,6 @@ export function CampoRadios(props: CampoRadiosProps) {
     value,
     options,
     onChange,
-    etiqueta,
     id,
     ...inputProps
   } = props
@@ -243,7 +235,6 @@ export function CampoRadios(props: CampoRadiosProps) {
 
 export function CampoArchivo(props: CampoArchivoProps) {
   const {
-    etiqueta,
     onChange,
     mensajeError,
     value,
@@ -251,7 +242,6 @@ export function CampoArchivo(props: CampoArchivoProps) {
   } = props
   return (
     <div className="w-100 campo">
-      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
       <label className="form-control" htmlFor={props.id}>
         {placeholder()}
       </label>
@@ -282,7 +272,6 @@ export function CampoArchivo(props: CampoArchivoProps) {
 export function CampoFecha(props: CampoFechaProps) {
   const [focused, setFocused] = useState(false)
   const {
-    etiqueta,
     onChange,
     onDateChange,
     mensajeError,
@@ -290,7 +279,6 @@ export function CampoFecha(props: CampoFechaProps) {
   } = props
   return (
     <div className="w-100 campo">
-      {etiqueta ? <label className="form-label" htmlFor={props.id}>{props.etiqueta}</label> : null}
       <input
         {...inputProps}
         type="date"

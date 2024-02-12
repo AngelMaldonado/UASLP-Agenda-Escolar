@@ -5,3 +5,5 @@ export enum TemaComponente {
   Danger = "danger", DangerInverso = "danger-inverse",
   Success = "success", SuccessInverso = "success-inverse",
 }
+
+export type ErrorsObject = { [key: string]: Array<string> }

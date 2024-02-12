@@ -1,5 +1,9 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioUsuario from "../services/ServicioUsuario.ts";
+import {AxiosError} from "axios"
+import {ErrorsObject} from "../utils/Utils.ts";
+import Usuario from "../models/Usuario.ts";
+import {SetStateAction} from "react";
 
 export const useObtenUsuarios = () => {
   const {
@@ -12,45 +16,47 @@ export const useObtenUsuarios = () => {
   return {usuarios, isLoading}
 }
 
-export const useAgregaUsuario = (onSuccess: () => void) => {
+export const useAgregaUsuario = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: agregaUsuario
+    mutate: agregaUsuario,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioUsuario.nuevo,
-    onSuccess: () => {
-      queryClient.invalidateQueries("usuarios")
-      onSuccess()
-    }
+    onSuccess: () => queryClient.invalidateQueries("usuarios"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {agregaUsuario}
+  return {agregaUsuario, registroExitoso: isSuccess, reset}
 }
 
-export const useModificaUsuario = (onSuccess: () => void) => {
+export const useModificaUsuario = (
+  onError: ({}) => void,
+  setUsuario?: (state: SetStateAction<Usuario>) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: modificaUsuario
+    mutate: modificaUsuario,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioUsuario.modifica,
-    onSuccess: () => {
-      queryClient.invalidateQueries("usuarios")
-      onSuccess()
-    }
+    onSuccess: (data: Usuario) =>
+      queryClient.invalidateQueries("usuarios").then(() => setUsuario ? (data) : null),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {modificaUsuario}
+  return {modificaUsuario, modificacionExitosa: isSuccess, reset}
 }
-///Agregar funcion deeliminar   /checar funcion del QueryClient
 
-export const useEliminaUsuario = (onSuccess: () => void) => {
+export const useEliminaUsuario = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: eliminaUsuario
+    mutate: eliminaUsuario,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioUsuario.elimina,
-    onSuccess: () => {
-      queryClient.invalidateQueries("usuarios")
-      onSuccess()
-    }
+    onSuccess: () => queryClient.invalidateQueries("usuarios"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {eliminaUsuario}
+  return {eliminaUsuario: eliminaUsuario, eliminacionExitosa: isSuccess, reset}
 }

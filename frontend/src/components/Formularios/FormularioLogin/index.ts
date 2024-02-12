@@ -1,3 +1,3 @@
-import FormularioLogin from "./FormularioLogin.tsx"
+import CardLogin from "./CardLogin.tsx"
 
-export default FormularioLogin
+export default CardLogin

@@ -1,34 +1,49 @@
+// TODO: hacer que el modal se oculte cuando reciba el timeout
+
 import "./_modal.scss"
 import Boton from "../../Inputs/Boton";
 import {Modal} from "react-bootstrap";
 import {FaTimes} from "react-icons/fa";
-import React, {ReactComponentElement} from "react";
+import React, {ReactComponentElement, useState} from "react";
 import {TemaComponente} from "../../../utils/Utils.ts";
 
-type ModalProps = {
+export type ModalProps = {
   trigger?: React.ReactElement,
+  triggers?: React.ReactElement[],
   titulo?: React.ReactElement,
   contenido: React.ReactElement,
   botones?: ReactComponentElement<typeof Boton>[],
   mostrar?: boolean,
   sinFondo?: boolean,
-  muestraModal: (() => void)
-  ocultaModal: (() => void)
+  cancelar?: boolean,
+  onShow?: (() => void),
+  onClose?: (() => void),
+  timeout?: number
 }
 
 function Dialog(props: ModalProps) {
+  const [mostrar, setMostrar] = useState(props.mostrar ?? false)
+
+  if (props.timeout) timeoutClose()
+
   return (
     <>
       {props.trigger ? (
-        <div onClick={props.muestraModal}>
+        <div onClick={() => setMostrar(true)}>
           {props.trigger}
         </div>
       ) : null}
 
-      <Modal show={props.mostrar} onHide={props.ocultaModal} centered>
+      {props.triggers?.map((trigger, index) => (
+        <div key={`modal-trigger-${index}`} onClick={() => setMostrar(true)}>
+          {trigger}
+        </div>
+      ))}
+
+      <Modal show={mostrar} onShow={props.onShow} onHide={handleClose} centered>
         <Modal.Header className={props.sinFondo ? "bg-white border-0" : undefined}>
-          {props.titulo}
-          <div className="btn-cerrar" onClick={props.ocultaModal}>
+          {props.sinFondo ? null : props.titulo}
+          <div className="btn-cerrar" onClick={handleClose}>
             <Boton icono={<FaTimes/>} variant={props.sinFondo ? TemaComponente.Secundario : TemaComponente.Primario}/>
           </div>
         </Modal.Header>
@@ -37,10 +52,35 @@ function Dialog(props: ModalProps) {
         </Modal.Body>
         <Modal.Footer
           className={"py-2 " + (props.botones ? "visible" : "invisible") + (props.sinFondo ? " bg-white border-0" : "")}>
+          {props.cancelar === false ? null : botonCancelar()}
           {props.botones ? props.botones.map((boton) => boton) : null}
         </Modal.Footer>
       </Modal>
-    </>)
+    </>
+  )
+
+  function botonCancelar() {
+    return (
+      <Boton key={"boton-cancelar"}
+             variant={TemaComponente.DangerInverso}
+             etiqueta="Cancelar"
+             icono={<FaTimes/>}
+             onClick={handleClose}
+      />
+    )
+  }
+
+  function handleClose() {
+    setMostrar(false)
+    if (props.onClose) props.onClose()
+  }
+
+  function timeoutClose() {
+    if (props.timeout)
+      setTimeout(() => {
+        handleClose()
+      }, props.timeout)
+  }
 }
 
 export default Dialog

@@ -1,73 +1,84 @@
 import "./_formulario-filtro.scss"
-import Campo, {CampoArchivo, CampoDesplegable, TipoCampoTexto} from "../../Inputs/Campo";
 import Filtro from "../../../models/Filtro.ts";
-import {Image} from "react-bootstrap";
+import {Form, Image} from "react-bootstrap";
 import Configuraciones from "../../../utils/Configuraciones.ts";
+import {ErrorsObject} from "../../../utils/Utils.ts";
+import {useState} from "react";
+import Formal from "react-formal";
+import Select from "react-select";
+import {FiltrosCategoriaOptions, FiltrosCategoriaOptionsType} from "../../../enums/FiltroCategoriaEnum.ts";
 
 type FormularioFiltroProps = {
   filtro: Filtro,
-  onSingleChange: ((field: string, value: string | File) => void),
+  setFiltro: ((field: string, value: any) => void),
+  errores: ErrorsObject,
 }
 
-const formFiltro = "form-filtro"
-
 function FormularioFiltro(props: FormularioFiltroProps) {
+  const [errores, setErrores] = useState({})
+
   return (
-    <form id={formFiltro} className="FormularioFiltro d-flex flex-column gap-2 text-start">
-      <Campo id="nombre"
-             value={props.filtro.nombre}
-             type={TipoCampoTexto.Texto}
-             placeholder="Nombre"
-             etiqueta="Nombre del filtro"
-             required={true}
-             pattern={"^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"}
-             maxLength={60}
-             mensajeError="Ingrese nombre(s) válido (A-Z, a-z, máx 250)"
-             onChange={props.onSingleChange}
-      />
-      <CampoDesplegable id="categoria"
-                        value={props.filtro.categoria ? {
-                          value: props.filtro.categoria,
-                          label: props.filtro.categoria[0].toUpperCase() + props.filtro.categoria.substring(1)
-                        } : null}
-                        etiqueta="Categoría"
-                        placeholder="Eliga la categoría"
-                        required={true}
-                        options={[
-                          {value: "área", label: "Área"},
-                          {value: "comunidad", label: "Comunidad"}
-                        ]}
-                        onChange={props.onSingleChange}
-      />
-      <div className="d-flex align-items-end gap-2">
-        <CampoArchivo id="icono"
-                      value={props.filtro.icono as File}
-                      etiqueta="Ícono"
-                      placeholder="*.svg"
-                      required={props.filtro.id === null}
-                      mensajeError="Agregue un ícono"
-                      onChange={props.onSingleChange}
-                      accept={".svg"}
+    <Formal schema={Filtro.schema}
+            defaultValue={props.filtro}
+            errors={{...errores, ...props.errores}}
+            onError={errors => setErrores(errors)}>
+      <span className="text-muted fst-italic">Campos requeridos *</span>
+      <Form.Group>
+        <Form.Label htmlFor="nombre">Nombre*</Form.Label>
+        <Formal.Field name="nombre"
+                      className="form-control"
+                      placeholder="Nombre del filtro"
+                      onChange={e => props.setFiltro("nombre", e.target.value)}
         />
-        {icono()}
-      </div>
-    </form>
+        <Formal.Message for="nombre" className="d-flex text-danger"/>
+        <Form.Label htmlFor="categoria">Categoría*</Form.Label>
+        <Formal.Field name="categoria"
+                      as={Select}
+                      className="form-control"
+                      classNamePrefix="select"
+                      unstyled
+                      placeholder="Eliga la categoría del filtro"
+                      options={FiltrosCategoriaOptions}
+                      mapFromValue={{"categoria": option => (option as FiltrosCategoriaOptionsType).value}}
+                      mapToValue={props.filtro.categoria ?
+                        v =>
+                          FiltrosCategoriaOptions.find(o => o.value === v.categoria)
+                        : undefined
+                      }
+                      onChange={(o: FiltrosCategoriaOptionsType) => props.setFiltro("categoria", o.value)}
+        />
+        <Formal.Message for="categoria" className="d-flex text-danger"/>
+        <Form.Label htmlFor="icono">Ícono*</Form.Label>
+        <div className="d-flex align-items-end gap-2">
+          <label className="form-control d-flex justify-content-between">
+            {props.filtro.icono && props.filtro.icono instanceof File ?
+              props.filtro.icono.name : "Ícono en formato .svg"
+            }
+            <Formal.Field name="icono"
+                          type="file"
+                          accept=".svg"
+                          className="visually-hidden"
+                          onChange={e => props.setFiltro("icono", e.target.files[0])}
+            />
+          </label>
+          {icono()}
+        </div>
+        <Formal.Message for="icono" className="d-flex text-danger"/>
+      </Form.Group>
+    </Formal>
   );
 
   function icono() {
     let url = ""
-    if (typeof props.filtro.icono === "string" && props.filtro.icono !== "")
-      url = Configuraciones.apiURL + props.filtro.icono
-    else if (props.filtro.icono instanceof File) {
+    if (props.filtro.icono instanceof File)
       url = URL.createObjectURL(props.filtro.icono)
-    } else url = "/img-placeholder.svg"
+    else if (props.filtro.icono && typeof props.filtro.icono == "string")
+      url = Configuraciones.publicURL + props.filtro.icono
+    else
+      url = "/img-placeholder.svg"
 
-    return <Image thumbnail src={url}/>
+    return <Image thumbnail width={40} src={url}/>
   }
-}
-
-FormularioFiltro.valida = () => {
-  return (document.getElementById(formFiltro) as HTMLFormElement).reportValidity()
 }
 
 export default FormularioFiltro

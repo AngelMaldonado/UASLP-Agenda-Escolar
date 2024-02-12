@@ -2,11 +2,13 @@
 
 .CardAgenda {
   max-height: 10rem;
+  box-shadow: u.$card-sm-box-shadow;
+
 
   .card-body {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: u.$spacer;
     padding-left: 0;
     overflow: hidden;
 
@@ -20,6 +22,7 @@
 
       .card-img {
         max-width: 10rem;
+        border-radius: u.$card-border-radius 0 0 u.$card-border-radius;
       }
     }
 
@@ -69,9 +72,14 @@
       flex-direction: column;
 
       .btn {
-        border-radius: 0.34rem !important;
+        border-radius: 0.34rem;
       }
     }
+  }
+
+  &:hover {
+    box-shadow: u.$card-sm-box-shadow-hover;
+    cursor: pointer;
   }
 }
 
@@ -97,6 +105,18 @@
 
 @media screen and (max-width: 992px) {
   .CardAgenda {
+    .card-body {
+      justify-content: space-between;
+
+      .Modificacion {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .CardAgenda {
     max-height: fit-content;
 
     .card-body {
@@ -105,9 +125,6 @@
       padding-left: 1rem;
 
       .card-title {
-        width: 100%;
-        min-width: 100%;
-
         .card-img {
           width: 20%;
         }
@@ -117,15 +134,12 @@
         display: none;
       }
 
-      .Modificacion {
-        display: none;
-      }
-
       .vstack {
-        min-width: 6.8rem;
+        min-width: 100%;
+        max-width: 100%;
         flex-direction: row;
         justify-content: start;
-        gap: 1rem;
+        gap: u.$spacer * 3;
       }
 
       .btn-group {

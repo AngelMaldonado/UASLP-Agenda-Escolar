@@ -1,10 +1,14 @@
 @use "../../utils" as u;
 
 .calendar-container {
+  display: flex;
   width: 100%;
   height: 100vh;
 
   .fc {
+    z-index: 0;
+    width: 100%;
+
     .fc-col-header-cell-cushion,
     .fc-toolbar.fc-header-toolbar {
       text-transform: capitalize;
@@ -16,8 +20,7 @@
     .fc-toolbar.fc-header-toolbar {
       color: u.$primary;
       margin: 0;
-      padding: u.$spacer * 0.5 u.$spacer * 3;
-      padding-left: u.$spacer * 6.5; /* <- mejorar cálculo */
+      padding: 1.5rem * 0.5;
     }
 
     .fc-day.fc-daygrid-day {
@@ -36,8 +39,6 @@
       }
     }
   }
-
-
 }
 
 .evento-calendario {

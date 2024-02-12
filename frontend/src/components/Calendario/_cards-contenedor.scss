@@ -1,0 +1,17 @@
+@use "../../utils" as u;
+
+.calendar-container {
+  .vstack {
+    padding: u.$spacer * 1.5;
+    width: 35%;
+    background-color: u.$primary-80;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .calendar-container {
+    .vstack {
+      display: none;
+    }
+  }
+}

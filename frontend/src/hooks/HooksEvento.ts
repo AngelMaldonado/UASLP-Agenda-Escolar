@@ -1,5 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioEvento from "../services/ServicioEvento.ts";
+import {AxiosError} from "axios";
+import {ErrorsObject} from "../utils/Utils.ts";
 
 export const useObtenEventos = (mes: number) => {
   const {
@@ -12,36 +14,44 @@ export const useObtenEventos = (mes: number) => {
   return {eventos: eventos, isLoading}
 }
 
-export const useAgregaEvento = () => {
+export const useAgregaEvento = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: agregaEvento
+    mutate: agregaEvento,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioEvento.nuevo,
-    onSuccess: () => queryClient.invalidateQueries("eventos")
+    onSuccess: () => queryClient.invalidateQueries("eventos"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {agregaEvento}
+  return {agregaEvento, registroExitoso: isSuccess, reset}
 }
 
-export const useModificaEvento = () => {
+export const useModificaEvento = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: modificaEvento
+    mutate: modificaEvento,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioEvento.modifica,
-    onSuccess: () => queryClient.invalidateQueries("eventos")
+    onSuccess: () => queryClient.invalidateQueries("eventos"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {modificaEvento}
+  return {modificaEvento, modificacionExitosa: isSuccess, reset}
 }
-///Agregar funcion deeliminar   /checar funcion del QueryClient
 
-export const useEliminaEvento = () => {
+export const useEliminaEvento = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: eliminaEvento
+    mutate: eliminaEvento,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioEvento.elimina,
-    onSuccess: () => queryClient.invalidateQueries("eventos")
+    onSuccess: () => queryClient.invalidateQueries("eventos"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {eliminaEvento}
+  return {eliminaEvento, eliminacionExitosa: isSuccess, reset}
 }

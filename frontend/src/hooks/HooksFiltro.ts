@@ -1,5 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioFiltros from "../services/ServicioFiltros.ts";
+import {AxiosError} from "axios";
+import {ErrorsObject} from "../utils/Utils.ts";
 
 export const useObtenFiltros = () => {
   const {
@@ -12,35 +14,44 @@ export const useObtenFiltros = () => {
   return {filtros: filtros, isLoading}
 }
 
-export const useAgregaFiltro = () => {
+export const useAgregaFiltro = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: agregaFiltro
+    mutate: agregaFiltro,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioFiltros.nuevo,
-    onSuccess: () => queryClient.invalidateQueries("filtros")
+    onSuccess: () => queryClient.invalidateQueries("filtros"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {agregaSimbolo: agregaFiltro}
+  return {agregaFiltro, registroExitoso: isSuccess, reset}
 }
 
-export const useModificaFiltro = () => {
+export const useModificaFiltro = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: modificaFiltro
+    mutate: modificaFiltro,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioFiltros.modifica,
-    onSuccess: () => queryClient.invalidateQueries("filtros")
+    onSuccess: () => queryClient.invalidateQueries("filtros"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {modificaFiltro: modificaFiltro}
+  return {modificaFiltro, modificacionExitosa: isSuccess, reset}
 }
 
-export const useEliminaFiltro = () => {
+export const useEliminaFiltro = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
-    mutate: eliminaFiltro
+    mutate: eliminaFiltro,
+    isSuccess,
+    reset
   } = useMutation({
     mutationFn: ServicioFiltros.elimina,
-    onSuccess: () => queryClient.invalidateQueries("filtros")
+    onSuccess: () => queryClient.invalidateQueries("filtros"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {eliminaFiltro: eliminaFiltro}
+  return {eliminaFiltro, eliminacionExitosa: isSuccess, reset}
 }

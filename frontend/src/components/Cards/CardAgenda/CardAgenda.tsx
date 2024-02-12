@@ -5,13 +5,22 @@ import Card from "react-bootstrap/Card";
 import {ButtonGroup, Stack} from "react-bootstrap";
 import Boton from "../../Inputs/Boton";
 import {TemaComponente} from "../../../utils/Utils.ts";
+import Configuraciones from "../../../utils/Configuraciones.ts";
+import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
+import Filtro from "../../../models/Filtro.ts";
 
-function CardAgenda(props: { evento: Evento }) {
+type CardAgendaProps = {
+  evento: Evento,
+  onClick: (() => void),
+  filtros?: Filtro[]
+}
+
+function CardAgenda(props: CardAgendaProps) {
   return (
-    <Card className="CardAgenda flex-row">
+    <Card className="CardAgenda flex-row" onClick={props.onClick}>
       <Card.Body>
         <Card.Title className="fs-6">
-          <Card.Img src={props.evento?.simbolo} alt={"Símbolo " + props.evento?.nombre}/>
+          <Card.Img src={Configuraciones.publicURL + props.evento?.simbolo} alt={"Símbolo " + props.evento?.nombre}/>
           {props.evento?.nombre}
         </Card.Title>
         <Stack>
@@ -48,10 +57,7 @@ function CardAgenda(props: { evento: Evento }) {
           <Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>
         </ButtonGroup>
       </Card.Body>
-      <div className="pills">
-        <span className="fs-6">Estudiantes</span>
-        <span className="fs-6">Ingenieria</span>
-      </div>
+      <ChipsEvento filtros={props.filtros} filtros_evento={props.evento.filtros}/>
     </Card>
   );
 }

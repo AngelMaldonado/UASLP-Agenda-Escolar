@@ -4,8 +4,10 @@ export enum TipoUsuarioEnum {
   BECARIO = "Becario"
 }
 
+export type TipoUsuarioOptionsType = { value: TipoUsuarioEnum, label: TipoUsuarioEnum }
+
 export const TipoUsuarioOptions = (Object.values(TipoUsuarioEnum) as Array<TipoUsuarioEnum>)
-  .map((value) => ({
+  .map(value => ({
     value: value,
     label: value
   }))

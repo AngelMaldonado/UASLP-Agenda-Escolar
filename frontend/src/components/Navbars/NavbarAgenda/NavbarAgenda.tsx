@@ -14,7 +14,6 @@ import Button from 'react-bootstrap/Button';
 import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
 import {Stack} from "react-bootstrap";
-import Usuario from "../../../models/Usuario.ts";
 import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
 import {components, OptionProps} from "react-select";
 import Configuraciones from "../../../utils/Configuraciones.ts";
@@ -38,7 +37,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
       <div className="d-flex align-items-center">
         <p className="flex-fill m-0">{props.label}</p>
         <img width={25} height={25}
-             src={Configuraciones.apiURL + props.data.value.icono}
+             src={Configuraciones.publicURL + props.data.value.icono}
              alt={"Simbología " + props.label}/>
       </div>
     }/>
@@ -72,11 +71,11 @@ function NavbarAgenda(props: NavbarAgendaProps) {
             ))}
             {props.sesionAdmi ? (
               <Stack direction="horizontal" className="UsuariosActivos" gap={1}>
-                <ChipUsuario usuarios={[new Usuario()]}/>
-                <ChipUsuario usuarios={[new Usuario()]}/>
-                <ChipUsuario usuarios={[new Usuario()]}/>
-                <ChipUsuario usuarios={[new Usuario()]}/>
-                <ChipUsuario usuarios={[new Usuario(), new Usuario()]}/>
+                <ChipUsuario usuarios={[]}/>
+                <ChipUsuario usuarios={[]}/>
+                <ChipUsuario usuarios={[]}/>
+                <ChipUsuario usuarios={[]}/>
+                <ChipUsuario usuarios={[]}/>
               </Stack>
             ) : (
               <Boton
@@ -99,14 +98,14 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         <CampoDesplegable id="comunidad"
                           placeholder="Comunidades"
                           options={filtros?.filter(f => f.categoria === "comunidad")
-                            .map(f => ({value: f, label: f.nombre}))
+                            .map(f => ({value: f, label: f.nombre!}))
                           }
                           components={{Option, SingleValue}}
         />
         <CampoDesplegable id="area"
                           placeholder="Áreas"
                           options={filtros?.filter(f => f.categoria === "área")
-                            .map(f => ({value: f, label: f.nombre}))
+                            .map(f => ({value: f, label: f.nombre!}))
                           }
                           components={{Option, SingleValue}}
         />

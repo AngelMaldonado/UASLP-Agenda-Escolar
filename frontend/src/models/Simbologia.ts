@@ -1,19 +1,27 @@
-class Simbologia {
-  public id: number | null
-  public simbolo: string | File
+import {mixed, number, object, ObjectSchema} from "yup"
+import {es} from "yup-locales"
+import {setLocale} from "yup"
 
-  constructor()
-  constructor(
-    id: number,
-    simbolo: string,
-  )
+setLocale(es)
+
+class Simbologia {
+  public readonly id: number | undefined
+  public simbolo: string | Object | undefined
+
   constructor(
     id?: number,
     simbolo?: string,
   ) {
-    this.id = id ?? null
-    this.simbolo = simbolo ?? ""
+    this.id = id
+    this.simbolo = simbolo
   }
+
+  public static schema: ObjectSchema<Simbologia> = object({
+    id: number(),
+    simbolo: mixed().test("simbolo", "el archivo debe ser .webp", value =>
+      value instanceof File ? value.type == "image/webp" : true
+    ),
+  })
 }
 
 export default Simbologia

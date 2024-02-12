@@ -7,28 +7,17 @@ class ServicioUsuario {
     try {
       return (await axios.get<Usuario[]>(Configuraciones.apiURL + "usuarios")).data
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       return []
     }
   }
 
   public static async nuevo(usuario: Usuario) {
-    try {
-      const response = await axios.post(Configuraciones.apiURL + "usuarios", usuario)
-      return response.status == 200
-    } catch (err) {
-      return err
-    }
+    return (await axios.post(Configuraciones.apiURL + "usuarios", usuario)).data
   }
 
   public static async modifica(usuario: Usuario) {
-    try {
-      await axios.put(Configuraciones.apiURL + "usuarios", usuario)
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return (await axios.put(Configuraciones.apiURL + "usuarios", usuario)).data
   }
 
 

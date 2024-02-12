@@ -7,7 +7,7 @@ class ServicioSimbolos {
     try {
       return (await axios.get<Simbologia[]>(Configuraciones.apiURL + "simbolos")).data
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       return []
     }
   }

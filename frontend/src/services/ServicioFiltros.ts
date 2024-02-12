@@ -7,12 +7,13 @@ class ServicioFiltros {
     try {
       return (await axios.get<Filtro[]>(Configuraciones.apiURL + "filtros")).data
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       return []
     }
   }
 
   public static async nuevo(filtro: Filtro) {
+    console.log(filtro)
     try {
       await axios.post(Configuraciones.apiURL + "filtros",
         filtro,

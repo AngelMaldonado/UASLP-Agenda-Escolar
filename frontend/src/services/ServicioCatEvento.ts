@@ -7,7 +7,7 @@ export default class ServicioCatEvento {
     try {
       return (await axios.get<CatEvento[]>(Configuraciones.apiURL + "cat_eventos")).data
     } catch (err) {
-      console.log(err)
+      //console.log(err)
       return []
     }
   }

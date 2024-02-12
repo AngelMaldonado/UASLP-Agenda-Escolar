@@ -198,7 +198,7 @@ function botonEdicion(events: Evento) {
       contenido={<FormularioEvento evento={evento} {...cambiaEvento}/>}
       mostrar={muestraModalModifEvento}
       muestraModal={muestraModalModificar}
-      ocultaModal={ocultaModalModificar}
+      onClose={ocultaModalModificar}
       botones={[
         <Boton key={"boton-caneclar"}
                variant={TemaComponente.PrimarioInverso}
@@ -247,7 +247,7 @@ function botonEliminar(evento: Evento) {
         usuario <strong> [{evento.nombre}]</strong>?</p>}
       mostrar={muestraModalEliminarEvento}
       muestraModal={muestraModalEliminar}
-      ocultaModal={ocultaModalEliminar}
+      onClose={ocultaModalEliminar}
       botones={[
         <Boton key={"boton-caneclar"}
                variant={TemaComponente.DangerInverso}

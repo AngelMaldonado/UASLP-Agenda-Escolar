@@ -14,6 +14,7 @@ import {useObtenEventos} from "../../hooks/HooksEvento.ts";
 import Tab from "react-bootstrap/Tab";
 import Simbolos from "../../components/Paneles/Simbolos";
 import Agenda from "../../components/Paneles/Agenda";
+import {TipoEventoEnum} from "../../enums";
 
 const idVistaAdministrador = "vista-administrador";
 
@@ -26,7 +27,7 @@ function Administrador() {
   const eventKeysAgenda = ["calendario", "agenda"];
   const eventKeysAdmin = ["tabla-eventos", "usuarios", "filtros", "simbolos"];
 
-  eventos?.sort((a, b) => a.fecha_inicio.getTime() - b.fecha_inicio.getTime())
+  eventos?.sort((a, b) => a.fecha_inicio!.getTime() - b.fecha_inicio!.getTime())
 
   return (
     <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
@@ -41,19 +42,14 @@ function Administrador() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className='flex'>
-          <Calendario eventos={eventos} setMes={setMes}/>
-          <div className='contenedorTarjetas admin'>
-            {eventos?.map((evento) => (
-              <CardCalendario key={"Card calendario" + evento.nombre} admin={true} evento={evento}/>
-            ))}
-          </div> 
+          <Calendario eventos={eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO)} setMes={setMes}/>
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
-        <Agenda eventos={eventos}/>
+        <Agenda eventos={eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO)}/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
-        <TablaEventos eventos={eventos}/>
+        <TablaEventos eventos={eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO)}/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>
