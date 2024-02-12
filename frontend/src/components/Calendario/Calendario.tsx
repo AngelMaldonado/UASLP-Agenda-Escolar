@@ -41,7 +41,6 @@ function Calendario(props: CalendarioProps) {
                     datesSet={(info) => {
                       const titulo = info.view.title.split(' ')
                       props.setMes(meses.get(titulo[0].toLowerCase())!)
-                      console.log(parseInt(titulo[1]))
                     }}
                     titleFormat={{year: "numeric", month: "short"}}
                     dayHeaderFormat={{weekday: "long"}}
