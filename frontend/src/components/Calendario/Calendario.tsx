@@ -5,11 +5,12 @@ import Evento from "../../models/Evento.ts";
 import esLocale from "@fullcalendar/core/locales/es"
 import Configuraciones from "../../utils/Configuraciones.ts";
 
+
 export type CalendarioProps = {
   eventos: Evento[] | undefined,
   setMes: (mes: number) => void
 }
-
+ 
 const meses: Map<string, number> = new Map([
   ['ene', 0],
   ['feb', 1],
@@ -55,17 +56,19 @@ function Calendario(props: CalendarioProps) {
   function cardEvento(arg) {
     const evento = arg.event.extendedProps
     return (
-      <div className="px-2 py-1 w-100 text-light rounded-4"
+      <div className="px-2 py-1 w-100 text-center text-dark rounded-4 "
            style={{backgroundImage: `url(${Configuraciones.apiURL + evento.simbolo})`}}
       >
-        <p className="px-2 m-0 bg-dark bg-opacity-75 rounded-4 titulo-evento-calendario"
+        <p className="px-2 m-0 bg-light bg-opacity-75 rounded-4 titulo-evento-calendario w-100"
            style={{
-             width: evento.fecha_fin > evento.fecha_inicio ? "fit-content" : "100%"
-           }}
+            width: evento.fecha_fin > evento.fecha_inicio ? "fit-content" : "100%"
+          }}
         >
           {arg.event.extendedProps.nombre}
         </p>
       </div>
+
+      
     )
   }
 }
