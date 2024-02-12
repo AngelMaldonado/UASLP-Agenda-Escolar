@@ -35,8 +35,10 @@ class EventoController extends Controller
         /* Cuando se consulte para agenda y calendario agregar al json 'simbolo' para poder mostrar el símbolo */
         /* Agregar también 'filtros' */
         foreach ($eventos as $evento) {
-            $evento->simbolo = Simbologia::find($evento->simbolo_id)->simbolo;
-            $evento->filtros = $evento->filtros()->allRelatedIds();
+            if ($evento->tipo !== TipoEventoEnum::ALUMNADO) {
+                $evento->simbolo = Simbologia::find($evento->simbolo_id)->simbolo;
+                $evento->filtros = $evento->filtros()->allRelatedIds();
+            }
             if ($evento->imagen === null)
                 unset($evento->imagen);
         }

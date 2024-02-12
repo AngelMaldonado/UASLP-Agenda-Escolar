@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PermisosEnum;
 use App\Enums\TipoUsuarioEnum;
+use App\Models\Usuario;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Psy\Util\Json;
 
 class UsuarioSeeder extends Seeder
 {
@@ -15,19 +14,21 @@ class UsuarioSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('usuario')->insert([
-            'tipo' => TipoUsuarioEnum::BECARIO,
-            'nombre' => 'Angel de Jesús',
-            'apellido' => 'Maldonado Juárez',
-            'email' => 'a292363@alumnos.uaslp.mx',
-            'permisos' => Json::encode(['Crear Eventos', 'Modificar Eventos', 'Eliminar Eventos']),
+        // Crea el usuario administrador principal
+        $admin = Usuario::create([
+            'nombre' => 'Administración',
+            'apellido' => 'UASLP Ingeniería',
+            'tipo' => TipoUsuarioEnum::ADMINISTRADOR,
+            'email' => 'secretaria.general@uaslp.mx',
+            'permisos' => PermisosEnum::values(),
+            'contraseña' => '123456'
         ]);
-        DB::table('usuario')->insert([
-            'tipo' => TipoUsuarioEnum::BECARIO,
-            'nombre' => 'Erika Guadalupe',
-            'apellido' => 'Granados Grifaldo',
-            'email' => 'a284665@alumnos.uaslp.mx',
-            'permisos' => Json::encode(['Crear Usuarios', 'Modificar Usuarios', 'Eliminar Usuarios']),
-        ]);
+
+        // Crea el token para el usuario administrador
+        $admin->createToken('API Token de ' . $admin->nombre);
+
+        // Crea 5 usuarios tipo becario aleatorios
+        $usuarios = Usuario::factory(5)->create();
+        foreach ($usuarios as $usuario) $usuario->createToken('API Token de ' . $usuario->nombre);
     }
 }
