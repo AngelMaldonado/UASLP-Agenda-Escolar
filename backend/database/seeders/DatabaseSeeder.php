@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
             UsuarioSeeder::class,
             SimboloSeeder::class,
             CatEventoSeeder::class,
-            FiltroSeeder::class
+            FiltroSeeder::class,
+            EventoSeeder::class,
+            EventosFiltrosSeeder::class
         ]);
     }
 }

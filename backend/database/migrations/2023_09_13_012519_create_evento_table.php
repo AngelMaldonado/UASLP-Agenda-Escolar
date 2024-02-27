@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('nombre', 100);
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
-            $table->json('hipervinculos');
+            $table->json('hipervinculos')->nullable();
             $table->string('imagen', 64)->nullable();
             $table->string('descripcion', 350);
             $table->enum('tipo', ['facultad', 'alumnado', 'catalogo']);
