@@ -1,5 +1,5 @@
 import {GrFormSearch} from 'react-icons/gr';
-import Dropdown from '../../Navbars/NavbarAgenda/DropDrown.tsx';
+import Desplegables from '../../Navbars/NavbarAgenda/Desplegables.tsx';
 import {BsBook} from 'react-icons/bs';
 
 interface Datos {
@@ -21,7 +21,7 @@ interface DropdownProps {
 
 const MyDropdown = (props: DropdownProps) => {
   return (
-    <Dropdown
+    <Desplegables
       placeholder={props.data.placeholder}
       styleClass={props.data.styleClass}
       data={props.data.data}

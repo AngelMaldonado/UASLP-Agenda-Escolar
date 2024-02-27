@@ -38,8 +38,8 @@ function NavbarAdmin(props: NavbarAdminProps) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
         <Navbar.Collapse id="basic-navbar-nav" className=''>
           <Nav className="w-100 ">
-            <div className='NavbarCollapse'>
-              <ul className="navbar-nav gap-2">
+            <div className='NavbarCollapse w-100'>
+              <ul className="navbar-nav gap-2 justify-content-between">
                 {opciones().map((opcion, index) => (
                   <li key={index}>
                     <Nav.Item>

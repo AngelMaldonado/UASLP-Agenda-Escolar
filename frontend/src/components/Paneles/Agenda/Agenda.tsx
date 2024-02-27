@@ -11,8 +11,9 @@ import Boton from "../../Inputs/Boton";
 import {TemaComponente} from "../../../utils/Utils.ts";
 
 export type AgendaProps = {
-  eventos?: Evento[]
-  filtros?: Filtro[]
+  eventos?: Evento[],
+  filtros?: Filtro[],
+  admin?: boolean
 }
 
 export function Agenda(props: AgendaProps) {
@@ -20,6 +21,7 @@ export function Agenda(props: AgendaProps) {
 
   const cards = props.eventos?.map((evento) => (
     <CardAgenda key={"card-agenda-" + evento.nombre}
+                admin={props.admin}
                 evento={evento}
                 onClick={() => setEventoActual(evento)}
                 filtros={props.filtros}

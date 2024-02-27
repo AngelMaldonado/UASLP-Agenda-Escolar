@@ -25,7 +25,7 @@ function CardCalendario(props: CardCalendarioProps) {
   const {modificaEvento, modificacionExitosa, reset} = useModificaEvento(setErrores)
   const {eliminaEvento, eliminacionExitosa} = useEliminaEvento(setErrores)
   const {filtros} = useObtenFiltros()
-  const cambiaEvento = useModelChange(setErrores as Dispatch<SetStateAction<Object>>)
+  const cambiaEvento = useModelChange(setEvento as Dispatch<SetStateAction<Object>>)
 
   return (
     <div className="card card-evento">

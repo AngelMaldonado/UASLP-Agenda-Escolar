@@ -32,10 +32,19 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
   const {simbolos} = useObtenSimbolos()
   const {filtros} = useObtenFiltros()
 
+  const defaultValue = {
+    ...props.evento,
+    hipervinculos: props.evento.hipervinculos ?
+      ["", ...props.evento.hipervinculos.filter(h => h != "" && h != " ")]
+      : [],
+    filtros: filtros?.filter(f =>
+      props.evento.filtros?.includes(f.id!)).map(f =>
+      ({value: f.id, label: f.nombre}))
+  }
 
   return (
     <Formal schema={Evento.schema}
-            defaultValue={props.evento}
+            defaultValue={defaultValue}
             errors={{...errores, ...props.errores}}
             onError={errors => setErrores(errors)}>
       <span className="text-muted fst-italic">Campos requeridos *</span>
@@ -51,37 +60,6 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
       </Form.Group>
     </Formal>
   );
-
-  function obtenSimbolo() {
-    if (props.evento.tipo == 'catalogo') {
-      // Busca el evento del catálogo
-      const cat_evento = cat_eventos?.find(c => c.id === props.evento.cat_evento_id)
-      // Busca el símbolo correspondiente al catálogo
-      const simbolo = simbolos?.find(s => s.id === cat_evento?.simbolo_id)
-      if (simbolo)
-        return {value: simbolo.id, label: simbolo.simbolo as string}
-    } else if (props.evento.tipo == 'facultad') {
-      // Busca el símbolo
-      const simbolo = props.evento.simbolo_id ?
-        simbolos?.find(s => s.id === (props.evento.simbolo_id as number)) : undefined
-      if (simbolo)
-        return {value: simbolo.id, label: simbolo.simbolo as string}
-    }
-    return null
-  }
-
-  function obtenFiltros() {
-    let filtrosOpciones: { value: number, label: string }[] = []
-    if (props.evento.filtros && filtros) {
-      props.evento.filtros.forEach(filtro => {
-        filtros.find(f => {
-          if (f.id == filtro)
-            filtrosOpciones.push({value: filtro, label: f.nombre})
-        })
-      })
-    }
-    return filtrosOpciones
-  }
 }
 
 export default FormularioEvento

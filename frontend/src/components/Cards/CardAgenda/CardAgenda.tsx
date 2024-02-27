@@ -12,7 +12,8 @@ import Filtro from "../../../models/Filtro.ts";
 type CardAgendaProps = {
   evento: Evento,
   onClick: (() => void),
-  filtros?: Filtro[]
+  filtros?: Filtro[],
+  admin?: boolean
 }
 
 function CardAgenda(props: CardAgendaProps) {
@@ -45,17 +46,21 @@ function CardAgenda(props: CardAgendaProps) {
           <Boton href="#" etiqueta="www.google.com" variant={TemaComponente.PrimarioInverso}/>
           <Boton href="#" etiqueta="www.google.com" variant={TemaComponente.PrimarioInverso}/>
         </div>
-        <div className="Modificacion h-100 w-100 fs-6">
-          <p className="m-0">Última modificación</p>
-          <img className="w-25 h-auto rounded-circle" src="https://ui-avatars.com/api/?name=John+Doe"
-               alt="Foto usuario..."/>
-          <p className="m-0">John Doe</p>
-          <p className="m-0">14 ene 2023, 14:00</p>
-        </div>
-        <ButtonGroup>
-          <Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>
-          <Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>
-        </ButtonGroup>
+        {props.admin ? (
+          <>
+            <div className="Modificacion h-100 w-100 fs-6">
+              <p className="m-0">Última modificación</p>
+              <img className="w-25 h-auto rounded-circle" src="https://ui-avatars.com/api/?name=John+Doe"
+                   alt="Foto usuario..."/>
+              <p className="m-0">John Doe</p>
+              <p className="m-0">14 ene 2023, 14:00</p>
+            </div>
+            <ButtonGroup>
+              <Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>
+              <Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>
+            </ButtonGroup>
+          </>
+        ) : null}
       </Card.Body>
       <ChipsEvento filtros={props.filtros} filtros_evento={props.evento.filtros}/>
     </Card>

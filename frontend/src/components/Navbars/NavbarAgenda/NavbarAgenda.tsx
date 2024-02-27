@@ -1,12 +1,11 @@
 import "./_navbar-agenda.scss"
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import Boton from "../../Inputs/Boton";
 import ChipUsuario from "../../Chips/ChipUsuario";
 import {FaRegListAlt} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {CgCalendarToday} from 'react-icons/cg'
 import CardMasEventos from "../../Cards/CardMasEventos";
-import Campo, {CampoDesplegable} from "../../Inputs/Campo";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Nav from "react-bootstrap/Nav";
 import Modal from 'react-bootstrap/Modal';
@@ -14,15 +13,16 @@ import Button from 'react-bootstrap/Button';
 import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
 import {Stack} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
-import {components, OptionProps} from "react-select";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import Desplegables from "./Desplegables.tsx";
 import Filtro from "../../../models/Filtro.ts";
 
 type NavbarAgendaProps = {
-  setKey: (k: string) => void;
-  eventKeys: string[];
-  sesionAdmi?: boolean;
+  setKey: (k: string) => void,
+  setFiltros: Dispatch<SetStateAction<Filtro[]>>,
+  eventKeys: string[],
+  sesionAdmi?: boolean,
 };
 
 function NavbarAgenda(props: NavbarAgendaProps) {
@@ -32,38 +32,14 @@ function NavbarAgenda(props: NavbarAgendaProps) {
 
   const {filtros} = useObtenFiltros()
 
-  const Option = (props: OptionProps<{ value: Filtro, label: string }>) => (
-    <components.Option {...props} children={
-      <div className="d-flex align-items-center">
-        <p className="flex-fill m-0">{props.label}</p>
-        <img width={25} height={25}
-             src={Configuraciones.publicURL + props.data.value.icono}
-             alt={"Simbología " + props.label}/>
-      </div>
-    }/>
-  )
-
-  const SingleValue = (props: OptionProps<{ value: Filtro, label: string }>) => (
-    <components.SingleValue {...props} children={
-      <div className="d-flex">
-        <p className="flex-fill m-0 text-truncate">{props.data.label}</p>
-        <img width={25} height={25}
-             src={Configuraciones.apiURL + props.data.value.icono}
-             alt={"Simbología " + props.label}/>
-      </div>
-    }/>
-  )
 
   return (
-    <Navbar expand="lg" className="NavbarAgenda bg-tertiary">
+    <Navbar expand="xxl" className="NavbarAgenda bg-tertiary">
       <Container>
-        <Campo id="buscar-evento" placeholder="Buscar evento"/>
-        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+        <Form.Control className="w-50" placeholder="Buscar evento"/>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="w-100 pt-2 pt-lg-0">
-            <div className="flex-grow-1 d-flex gap-2">
-              {desplegables()}
-            </div>
+          <Nav className="w-100 pt-2 pt-lg-0 align-items-center">
+            <Desplegables filtros={filtros} setFiltros={props.setFiltros}/>
             {opciones().map((opcion, index) => (
               <Nav.Item key={`navbar-agenda-item${index}`}>
                 {opcion}
@@ -91,27 +67,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
       {modalMasEventos()}
     </Navbar>
   );
-
-  function desplegables() {
-    return (
-      <>
-        <CampoDesplegable id="comunidad"
-                          placeholder="Comunidades"
-                          options={filtros?.filter(f => f.categoria === "comunidad")
-                            .map(f => ({value: f, label: f.nombre!}))
-                          }
-                          components={{Option, SingleValue}}
-        />
-        <CampoDesplegable id="area"
-                          placeholder="Áreas"
-                          options={filtros?.filter(f => f.categoria === "área")
-                            .map(f => ({value: f, label: f.nombre!}))
-                          }
-                          components={{Option, SingleValue}}
-        />
-      </>
-    )
-  }
 
   function opciones() {
     return [

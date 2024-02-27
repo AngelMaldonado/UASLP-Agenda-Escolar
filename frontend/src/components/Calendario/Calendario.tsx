@@ -9,7 +9,8 @@ import {CardsContenedor} from "./CardsContenedor.tsx";
 
 export type CalendarioProps = {
   eventos: Evento[] | undefined,
-  setMes: (mes: number) => void
+  setMes: (mes: number) => void,
+  admin?: boolean
 }
 
 const meses: Map<string, number> = new Map([
@@ -50,7 +51,7 @@ function Calendario(props: CalendarioProps) {
                     eventClassNames={"evento-calendario my-1"}
                     eventBackgroundColor={"transparent"}
       />
-      <CardsContenedor eventos={props.eventos}/>
+      <CardsContenedor eventos={props.eventos} admin={props.admin}/>
     </div>
   );
 

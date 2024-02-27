@@ -3,7 +3,7 @@
 .card-evento {
   border-radius: 100px;
   box-shadow: u.$card-sm-box-shadow;
-  height: 5.5rem;
+  min-height: 5.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;

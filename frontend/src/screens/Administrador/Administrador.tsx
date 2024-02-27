@@ -8,19 +8,20 @@ import NavbarAdmin from "../../components/Navbars/NavbarAdmin";
 import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 import Calendario from "../../components/Calendario/Calendario";
 import NavbarAgenda from "../../components/Navbars/NavbarAgenda";
-import CardCalendario from "../../components/Cards/CardCalendario";
 import {useState} from "react";
 import {useObtenEventos} from "../../hooks/HooksEvento.ts";
 import Tab from "react-bootstrap/Tab";
 import Simbolos from "../../components/Paneles/Simbolos";
 import Agenda from "../../components/Paneles/Agenda";
 import {TipoEventoEnum} from "../../enums";
+import Filtro from "../../models/Filtro.ts";
 
 const idVistaAdministrador = "vista-administrador";
 
 function Administrador() {
   const [mes, setMes] = useState(new Date().getMonth());
   const [key, setKey] = useState("calendario")
+  const [filtros, setFiltros] = useState<Filtro[]>([])
 
   const {eventos} = useObtenEventos(mes);
 
@@ -32,24 +33,37 @@ function Administrador() {
   return (
     <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
       <NavbarUASLP/>
-      <NavbarAgenda setKey={setKey} eventKeys={eventKeysAgenda} sesionAdmi/>
+      <NavbarAgenda setKey={setKey} eventKeys={eventKeysAgenda} setFiltros={setFiltros} sesionAdmi/>
       <NavbarAdmin setKey={setKey} eventKeys={eventKeysAdmin}/>
       <Tab.Content>{...tabContent()}</Tab.Content>
     </Tab.Container>
   );
 
   function tabContent() {
+    let eventosFiltrados = eventos?.filter(e => {
+      if (e.tipo != TipoEventoEnum.ALUMNADO) {
+        if (filtros.length > 0)
+          return filtros.some(f => e.filtros?.includes(f.id!))
+        else if (filtros.length == 0)
+          return true
+      } else return false
+    })
+
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
         <div className='flex'>
-          <Calendario eventos={eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO)} setMes={setMes}/>
+          <Calendario
+            admin
+            eventos={eventosFiltrados}
+            setMes={setMes}
+          />
         </div>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
-        <Agenda eventos={eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO)}/>
+        <Agenda admin eventos={eventosFiltrados}/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
-        <TablaEventos eventos={eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO)}/>
+        {/*<TablaEventos eventos={eventosFiltrados}/>*/}
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>

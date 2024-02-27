@@ -26,7 +26,7 @@ class Evento {
               nombre?: string,
               fecha_inicio?: Date,
               fecha_fin?: Date,
-              hipervinculos: string[] = [""],
+              hipervinculos?: string[],
               imagen?: string,
               descripcion?: string,
               simbolo?: string,
