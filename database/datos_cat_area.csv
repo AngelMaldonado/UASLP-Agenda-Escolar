@@ -1,10 +1,15 @@
-id,descripcion 
-1,Ciencias de la Computación
-2,Agroindustrial
-3,Ciencias de la Tierra
-4,Formación Humanística
-5,Civil
-6, Mecánica Eléctrica
-7,Metalurgia y Materiales
-8,Centro de investigación y Estudios de Posgrado
-9,Centro de Capacitacion en Ingenieria y Materiales
+id,nombre,icono,categoria
+1,Ciencias de la Computación,/iconos/área/cicomp.svg,área
+2,Agroindustrial,/iconos/área/agroind.svg,área
+3,Ciencias de la Tierra,/iconos/área/cienciastierra.svg,área
+4,Formación Humanística,/iconos/área/formhum.svg,área
+5,Civil,/iconos/área/civil.svg,área
+6, Mecánica Eléctrica,/iconos/área/mecanicael.svg,área
+7,Metalurgia y Materiales,/iconos/área/metalmat.svg,área
+8,Centro de investigación y Estudios de Posgrado,/iconos/área/ceninvestpos.svg,área
+9,Centro de Capacitacion en Ingenieria y Materiales,/iconos/área/cencapingmat.svg,área
+10,Aspirantes,/iconos/comunidad/cencapingmat.svg,comunidad
+11,Estudiantes,/iconos/comunidad/cencapingmat.svg,comunidad
+12,Académicos ,/iconos/comunidad/cencapingmat.svg,comunidad
+13,Administrativos,/iconos/comunidad/cencapingmat.svg,comunidad
+14,Egresados,/iconos/comunidad/cencapingmat.svg,comunidad
