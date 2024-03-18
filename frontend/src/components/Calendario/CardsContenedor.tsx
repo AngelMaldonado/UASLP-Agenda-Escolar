@@ -1,17 +1,16 @@
-import {TipoEventoEnum} from "../../enums";
 import CardCalendario from "../Cards/CardCalendario";
-import Evento from "../../models/Evento.ts";
 import {Stack} from "react-bootstrap";
+import {useContext} from "react";
+import {PublicContext} from "../../providers/AgendaProvider.tsx";
 
-type CardsContenedorProps = {
-  eventos?: Evento[],
-  admin?: boolean
-}
+type CardsContenedorProps = { admin?: boolean }
 
 export function CardsContenedor(props: CardsContenedorProps) {
+  const eventos = useContext(PublicContext).data.eventos
+
   return (
     <Stack gap={5}>
-      {props.eventos?.filter(e => e.tipo != TipoEventoEnum.ALUMNADO).map((evento) => (
+      {eventos?.map((evento) => (
         <CardCalendario key={"Card calendario" + evento.nombre} admin={props.admin} evento={evento}/>
       ))}
     </Stack>

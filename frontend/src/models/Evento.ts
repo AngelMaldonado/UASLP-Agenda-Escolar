@@ -1,6 +1,7 @@
 import {es} from "yup-locales"
 import {array, date, mixed, number, object, ObjectSchema, setLocale, string} from "yup"
 import {TipoEventoEnum} from "../enums";
+import Filtro from "./Filtro.ts";
 
 setLocale(es)
 
@@ -52,6 +53,12 @@ class Evento {
     cat_evento_id: number().when("tipo", {
       is: TipoEventoEnum.CATALOGO,
       then: schema => schema.required("evento de catálogo es un campo obligatorio"),
+    }).when("tipo", {
+      is: TipoEventoEnum.FACULTAD,
+      then: schema => schema.notRequired()
+    }).when("tipo", {
+      is: TipoEventoEnum.ALUMNADO,
+      then: schema => schema.notRequired()
     }),
     filtros: array().when("tipo", {
       is: (value: string) => value == TipoEventoEnum.FACULTAD || value == TipoEventoEnum.CATALOGO,
@@ -82,11 +89,28 @@ class Evento {
       const {id, ...atributos} = evento
       return {
         id: evento.id?.toString() ?? "",
-        start: evento.fecha_inicio.toISOString(),
-        end: evento.fecha_fin.toISOString(),
+        start: evento.fecha_inicio?.toISOString(),
+        end: evento.fecha_fin?.toISOString(),
         title: evento.nombre,
         ...atributos,
       }
+    })
+  }
+
+  static FiltraEventos(filtros?: Filtro[], texto?: string, eventos?: Evento[]) {
+    eventos?.sort((a, b) => a.fecha_inicio!.getTime() - b.fecha_inicio!.getTime())
+    return eventos?.filter(e => {
+      let retorno = true
+      if (e.tipo != TipoEventoEnum.ALUMNADO) {
+        if (filtros && filtros.length > 0)
+          retorno = filtros.some(f => e.filtros?.includes(f.id!))
+        else if (filtros?.length == 0)
+          retorno = true
+        if (texto != "")
+          retorno = e.nombre?.includes(texto!) ?? false
+        console.log(texto)
+      } else retorno = false
+      return retorno
     })
   }
 }

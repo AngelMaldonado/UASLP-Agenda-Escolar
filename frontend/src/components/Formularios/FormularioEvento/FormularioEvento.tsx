@@ -36,7 +36,7 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
     ...props.evento,
     hipervinculos: props.evento.hipervinculos ?
       ["", ...props.evento.hipervinculos.filter(h => h != "" && h != " ")]
-      : [],
+      : [""],
     filtros: filtros?.filter(f =>
       props.evento.filtros?.includes(f.id!)).map(f =>
       ({value: f.id, label: f.nombre}))

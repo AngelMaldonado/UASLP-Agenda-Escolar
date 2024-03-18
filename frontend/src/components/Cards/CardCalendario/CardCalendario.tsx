@@ -5,12 +5,13 @@ import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt} from "react
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Modal from "../../Modales/Modal";
 import FormularioEvento from "../../Formularios/FormularioEvento";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useContext, useState} from "react";
 import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts";
 import useModelChange from "../../../hooks/HookModelChange.ts";
 import Configuraciones from "../../../utils/Configuraciones.ts";
-import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
+import {PublicContext} from "../../../providers/AgendaProvider.tsx";
+import {Button} from "react-bootstrap";
 
 type CardCalendarioProps = {
   evento: Evento
@@ -24,18 +25,20 @@ function CardCalendario(props: CardCalendarioProps) {
 
   const {modificaEvento, modificacionExitosa, reset} = useModificaEvento(setErrores)
   const {eliminaEvento, eliminacionExitosa} = useEliminaEvento(setErrores)
-  const {filtros} = useObtenFiltros()
   const cambiaEvento = useModelChange(setEvento as Dispatch<SetStateAction<Object>>)
+  const setData = useContext(PublicContext).setData
 
   return (
-    <div className="card card-evento">
+    <div className="card card-evento" onClick={() =>
+      setData(prevState => ({...prevState, eventoActual: props.evento}))
+    }>
       <div className="simbologia flex-grow-0">
         <div className="circle rounded-circle"
              style={{backgroundImage: `url(${Configuraciones.publicURL + evento.simbolo})`}}>
           5-6
         </div>
       </div>
-      <div className="titulo-evento">
+      <div className="titulo-evento flex-grow-1">
         {props.evento.nombre}
       </div>
       {props.admin ? (
@@ -43,7 +46,7 @@ function CardCalendario(props: CardCalendarioProps) {
           {modalEvento()}
         </div>
       ) : null}
-      <ChipsEvento filtros={filtros} filtros_evento={props.evento.filtros}/>
+      <ChipsEvento filtros_evento={props.evento.filtros}/>
     </div>
   );
 
@@ -64,12 +67,14 @@ function CardCalendario(props: CardCalendarioProps) {
 
   function triggers() {
     return ([
-      <Boton key={"boton-modificar-evento-" + props.evento.id}
-             rounded
-             variant={TemaComponente.PrimarioInverso}
-             icono={<FaRegEdit/>}
-             onClick={() => setEliminando(false)}
-      />,
+      <Button variant="primary-inverse"
+              className="rounded-circle"
+              onClick={(e) => {
+                setEliminando(false)
+              }}
+      >
+        <FaRegEdit/>
+      </Button>,
       <Boton key={"eliminar-evento-" + props.evento.id}
              rounded
              variant={TemaComponente.DangerInverso}
@@ -114,7 +119,11 @@ function CardCalendario(props: CardCalendarioProps) {
     // Valida el nuevoUsuario antes de enviar a back
     Evento.schema.validate(evento)
       // Si se validó correctamente, enviar a back
-      .then(_ => modificaEvento(evento))
+      .then(_ => {
+        modificaEvento(
+          Object.fromEntries(Object.entries(evento).filter(([_, v]) => v !== null)) as Evento
+        )
+      })
       // Si no coincide con el esquema, mostrar errores
       .catch(r => console.log(r))
   }

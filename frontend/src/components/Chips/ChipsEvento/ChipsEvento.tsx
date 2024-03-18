@@ -2,20 +2,22 @@ import {FiltrosCategoriaEnum} from "../../../enums/FiltroCategoriaEnum.ts";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {Badge, Stack} from "react-bootstrap";
-import Filtro from "../../../models/Filtro.ts";
+import {useContext} from "react";
+import {PublicContext} from "../../../providers/AgendaProvider.tsx";
 
 type ChipsEventoProps = {
   noFloat?: boolean,
-  filtros?: Filtro[],
   filtros_evento?: number[]
 }
 
 export function ChipsEvento(props: ChipsEventoProps) {
-  const areas = props.filtros?.filter(f =>
+  const filtros = useContext(PublicContext).data.filtros
+
+  const areas = filtros?.filter(f =>
     props.filtros_evento?.includes(f.id!) && f.categoria == FiltrosCategoriaEnum.AREA
   )
 
-  const comunidades = props.filtros?.filter(f =>
+  const comunidades = filtros?.filter(f =>
     props.filtros_evento?.includes(f.id!) && f.categoria == FiltrosCategoriaEnum.COMUNIDAD
   )
 

@@ -2,23 +2,28 @@ import './_card_agenda.scss'
 import Evento from '../../../models/Evento.ts';
 import {FaRegCalendar, FaRegEdit, FaRegTrashAlt} from "react-icons/fa";
 import Card from "react-bootstrap/Card";
-import {ButtonGroup, Stack} from "react-bootstrap";
+import {Button, ButtonGroup, Stack} from "react-bootstrap";
 import Boton from "../../Inputs/Boton";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Configuraciones from "../../../utils/Configuraciones.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
-import Filtro from "../../../models/Filtro.ts";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import {useContext} from "react";
+import {PublicContext} from "../../../providers/AgendaProvider.tsx";
 
 type CardAgendaProps = {
   evento: Evento,
-  onClick: (() => void),
-  filtros?: Filtro[],
   admin?: boolean
 }
 
 function CardAgenda(props: CardAgendaProps) {
+  const setData = useContext(PublicContext).setData
+
   return (
-    <Card className="CardAgenda flex-row" onClick={props.onClick}>
+    <Card className="CardAgenda flex-row" onClick={() =>
+      setData(prevState => ({...prevState, eventoActual: props.evento}))
+    }>
       <Card.Body>
         <Card.Title className="fs-6">
           <Card.Img src={Configuraciones.publicURL + props.evento?.simbolo} alt={"Símbolo " + props.evento?.nombre}/>
@@ -38,14 +43,11 @@ function CardAgenda(props: CardAgendaProps) {
             </span>
           </h6>
         </Stack>
-        <Card.Text
-          className="fs-6 fw-lighter w-100">{props.evento?.descripcion}</Card.Text>
-        <img src="https://picsum.photos/500" alt={"Imagen " + props.evento?.nombre}/>
-        <div className="Hipervinculos h-100">
-          <Boton href="#" etiqueta="www.google.com" variant={TemaComponente.PrimarioInverso}/>
-          <Boton href="#" etiqueta="www.google.com" variant={TemaComponente.PrimarioInverso}/>
-          <Boton href="#" etiqueta="www.google.com" variant={TemaComponente.PrimarioInverso}/>
-        </div>
+        <Card.Text className="fs-6 fw-lighter w-100">{props.evento?.descripcion}</Card.Text>
+        {props.evento.imagen ?
+          <img src={Configuraciones.publicURL + props.evento.imagen} alt={"Imagen " + props.evento?.nombre}/>
+          : null}
+        {hipervinculos()}
         {props.admin ? (
           <>
             <div className="Modificacion h-100 w-100 fs-6">
@@ -62,9 +64,30 @@ function CardAgenda(props: CardAgendaProps) {
           </>
         ) : null}
       </Card.Body>
-      <ChipsEvento filtros={props.filtros} filtros_evento={props.evento.filtros}/>
+      <ChipsEvento filtros_evento={props.evento.filtros}/>
     </Card>
   );
+
+  function hipervinculos() {
+    if (props.evento.hipervinculos)
+      return (
+        <div className="Hipervinculos h-100 z-1">
+          {props.evento.hipervinculos.map((hipervinculo) => (
+            <OverlayTrigger overlay={<Tooltip>{hipervinculo}</Tooltip>}>
+              <Button variant="primary-inverse"
+                      className="nav-link p-0 d-inline-block text-truncate"
+                      href={hipervinculo}
+                      target="_blank"
+                      onClick={e => e.stopPropagation()}
+              >
+                {hipervinculo?.replace(/(^\w+:|^)\/\//, '')}
+              </Button>
+            </OverlayTrigger>
+          ))}
+        </div>
+      )
+    else return null
+  }
 }
 
 export default CardAgenda;

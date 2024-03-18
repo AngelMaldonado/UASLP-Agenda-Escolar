@@ -1,16 +1,12 @@
 import Filtro from "../../../models/Filtro.ts";
-import Select, {components, OptionProps, ValueContainerProps} from "react-select";
+import Select, {components, MultiValueProps, OptionProps} from "react-select";
 import Configuraciones from "../../../utils/Configuraciones.ts";
-import {Dispatch, SetStateAction} from "react";
+import {useContext} from "react";
 import {FiltrosCategoriaEnum} from "../../../enums/FiltroCategoriaEnum.ts";
+import {PublicContext} from "../../../providers/AgendaProvider.tsx";
 
-type DesplegablesProps = {
-  filtros?: Filtro[],
-  setFiltros: Dispatch<SetStateAction<Filtro[]>>,
-}
-
-function Desplegables(props: DesplegablesProps) {
-  let filtros: Filtro[] = []
+function Desplegables() {
+  const {data, setData} = useContext(PublicContext)
 
   const Option = (props: OptionProps<{ value: Filtro, label: string }>) => (
     <components.Option {...props} children={
@@ -24,15 +20,13 @@ function Desplegables(props: DesplegablesProps) {
     }/>
   )
 
-  const ValueContainer = ({children, ...props}: ValueContainerProps<{ value: Filtro, label: string }[]>) => {
-    let length = props.getValue().length;
-    return (
-      <components.ValueContainer {...props}>
-        {length > 0 ? `${props.selectProps.placeholder} (${length})` : children[0]}
-        {children[1]!}
-      </components.ValueContainer>
-    );
-  };
+  const MultiValue = ({...props}: MultiValueProps<{ value: Filtro, label: string }>) => {
+    if (props.index > 0) return null
+    const {length} = props.getValue()
+    return (length > 0) ?
+      <div className="option-label">{`${props.selectProps.placeholder} (${length})`}</div>
+      : <components.MultiValue {...props} children={props.children}/>
+  }
 
   return (
     <div className="d-flex flex-grow-1 gap-2 align-items-lg-center">
@@ -42,17 +36,19 @@ function Desplegables(props: DesplegablesProps) {
               isMulti
               isSearchable={false}
               closeMenuOnSelect={false}
-              hideSelectedOptions={false}
               placeholder="Comunidades"
-              components={{Option, ValueContainer}}
-              options={props.filtros?.filter(f => f.categoria === "comunidad")
+              components={{Option, MultiValue}}
+              noOptionsMessage={() => <>Sin opciones</>}
+              options={data.filtros?.filter(f => f.categoria == FiltrosCategoriaEnum.COMUNIDAD)
                 .map(f => ({value: f, label: f.nombre!}))
               }
               onChange={value => {
                 const comunidades = value.map(v => (v.value as Filtro))
-                props.setFiltros(prevState =>
-                  prevState.filter(f => f.categoria === FiltrosCategoriaEnum.AREA).concat(comunidades)
-                )
+                setData(prevState => ({
+                  ...prevState,
+                  filtrosUsuario: prevState.filtrosUsuario?.filter(f =>
+                    f.categoria === FiltrosCategoriaEnum.AREA).concat(comunidades)
+                }))
               }}
       />
       <Select className="form-control"
@@ -61,17 +57,19 @@ function Desplegables(props: DesplegablesProps) {
               isMulti
               isSearchable={false}
               closeMenuOnSelect={false}
-              hideSelectedOptions={false}
               placeholder="Áreas"
-              components={{Option, ValueContainer}}
-              options={props.filtros?.filter(f => f.categoria === "área")
+              components={{Option, MultiValue}}
+              noOptionsMessage={() => <>Sin opciones</>}
+              options={data.filtros?.filter(f => f.categoria === "área")
                 .map(f => ({value: f, label: f.nombre!}))
               }
               onChange={value => {
                 const areas = value.map(v => (v.value as Filtro))
-                props.setFiltros(prevState =>
-                  prevState.filter(f => f.categoria === FiltrosCategoriaEnum.COMUNIDAD).concat(areas)
-                )
+                setData(prevState => ({
+                  ...prevState,
+                  filtrosUsuario: prevState.filtrosUsuario?.filter(f =>
+                    f.categoria === FiltrosCategoriaEnum.COMUNIDAD).concat(areas)
+                }))
               }}
       />
     </div>

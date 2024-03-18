@@ -1,15 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Evento from "../../models/Evento.ts";
 import esLocale from "@fullcalendar/core/locales/es"
 import Configuraciones from "../../utils/Configuraciones.ts";
 import {CardsContenedor} from "./CardsContenedor.tsx";
+import {PublicContext} from "../../providers/AgendaProvider.tsx";
 
 
 export type CalendarioProps = {
-  eventos: Evento[] | undefined,
-  setMes: (mes: number) => void,
   admin?: boolean
 }
 
@@ -29,11 +28,12 @@ const meses: Map<string, number> = new Map([
 ])
 
 function Calendario(props: CalendarioProps) {
-  const [events, setEvents] = useState(Evento.ParseEventosCalendario(props.eventos ?? []));
+  const {data, setData} = useContext(PublicContext)
+  const [events, setEvents] = useState(Evento.ParseEventosCalendario(data.eventos ?? []));
 
   useEffect(() => {
-    setEvents(Evento.ParseEventosCalendario(props.eventos ?? []))
-  }, [props.eventos]);
+    setEvents(Evento.ParseEventosCalendario(data.eventos ?? []))
+  }, [data.eventos]);
 
   return (
     <div className="calendar-container">
@@ -42,7 +42,9 @@ function Calendario(props: CalendarioProps) {
                     firstDay={1}
                     datesSet={(info) => {
                       const titulo = info.view.title.split(' ')
-                      props.setMes(meses.get(titulo[0].toLowerCase())!)
+                      setData(prevState =>
+                        ({...prevState, mes: meses.get(titulo[0].toLowerCase())!})
+                      )
                     }}
                     titleFormat={{year: "numeric", month: "short"}}
                     dayHeaderFormat={{weekday: "long"}}
@@ -51,7 +53,7 @@ function Calendario(props: CalendarioProps) {
                     eventClassNames={"evento-calendario my-1"}
                     eventBackgroundColor={"transparent"}
       />
-      <CardsContenedor eventos={props.eventos} admin={props.admin}/>
+      <CardsContenedor admin={props.admin}/>
     </div>
   );
 

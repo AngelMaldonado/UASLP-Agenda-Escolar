@@ -17,6 +17,7 @@ import useModelChange from "../../../hooks/HookModelChange.ts";
 import {ValidationError} from "yup";
 
 export type NavbarAdminProps = {
+  currentKey: string,
   setKey: (k: string) => void,
   eventKeys: string[]
 }
@@ -32,12 +33,15 @@ function NavbarAdmin(props: NavbarAdminProps) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary bg-blanco-80">
       <Container className='gap-2'>
-        <div className="flex-grow-1 NavBusqueda">
+        <div className={
+          `flex-grow-1 NavBusqueda
+          ${(props.currentKey == "calendario" || props.currentKey == "agenda") ? "visually-hidden" : ""}`
+        }>
           <Campo id="busqueda" placeholder="Buscar"/>
         </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
-        <Navbar.Collapse id="basic-navbar-nav" className=''>
-          <Nav className="w-100 ">
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav>
             <div className='NavbarCollapse w-100'>
               <ul className="navbar-nav gap-2 justify-content-between">
                 {opciones().map((opcion, index) => (

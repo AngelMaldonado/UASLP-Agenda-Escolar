@@ -40,7 +40,7 @@ function Dialog(props: ModalProps) {
         </div>
       ))}
 
-      <Modal show={mostrar} onShow={props.onShow} onHide={handleClose} centered>
+      <Modal show={mostrar} onShow={props.onShow} onHide={handleClose} backdrop="static" centered>
         <Modal.Header className={props.sinFondo ? "bg-white border-0" : undefined}>
           {props.sinFondo ? null : props.titulo}
           <div className="btn-cerrar" onClick={handleClose}>
@@ -51,7 +51,7 @@ function Dialog(props: ModalProps) {
           {props.contenido}
         </Modal.Body>
         <Modal.Footer
-          className={"py-2 " + (props.botones ? "visible" : "invisible") + (props.sinFondo ? " bg-white border-0" : "")}>
+          className={"py-2 " + (props.botones ? "visible" : "visually-hidden") + (props.sinFondo ? " bg-white border-0" : "")}>
           {props.cancelar === false ? null : botonCancelar()}
           {props.botones ? props.botones.map((boton) => boton) : null}
         </Modal.Footer>

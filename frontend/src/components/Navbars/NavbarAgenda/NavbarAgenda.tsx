@@ -1,5 +1,5 @@
 import "./_navbar-agenda.scss"
-import {Dispatch, SetStateAction, useState} from 'react';
+import {useContext, useState} from 'react';
 import Boton from "../../Inputs/Boton";
 import ChipUsuario from "../../Chips/ChipUsuario";
 import {FaRegListAlt} from "react-icons/fa";
@@ -14,32 +14,35 @@ import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
 import {Stack} from "react-bootstrap";
 import {Form} from "react-bootstrap";
-import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
 import Desplegables from "./Desplegables.tsx";
-import Filtro from "../../../models/Filtro.ts";
+import {PublicContext} from "../../../providers/AgendaProvider.tsx";
 
 type NavbarAgendaProps = {
+  currentKey: string,
   setKey: (k: string) => void,
-  setFiltros: Dispatch<SetStateAction<Filtro[]>>,
   eventKeys: string[],
   sesionAdmi?: boolean,
 };
 
 function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate();
-
   const [showModal, setShowModal] = useState(false)
-
-  const {filtros} = useObtenFiltros()
-
+  const setData = useContext(PublicContext).setData
+  const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda"
 
   return (
     <Navbar expand="xxl" className="NavbarAgenda bg-tertiary">
       <Container>
-        <Form.Control className="w-50" placeholder="Buscar evento"/>
+        <Form.Control
+          className={`w-50 ${ocultaControles ? "visually-hidden" : ""}`}
+          placeholder="Buscar evento"
+          onChange={(e) =>
+            setData(prevState => ({...prevState, textoBusqueda: e.target.value}))
+          }
+        />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="w-100 pt-2 pt-lg-0 align-items-center">
-            <Desplegables filtros={filtros} setFiltros={props.setFiltros}/>
+          <Nav className="w-100 pt-2 pt-lg-0 align-items-center justify-content-end">
+            {!ocultaControles ? <Desplegables/> : null}
             {opciones().map((opcion, index) => (
               <Nav.Item key={`navbar-agenda-item${index}`}>
                 {opcion}
