@@ -20,47 +20,46 @@ use App\Http\Controllers\EventoController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+// Rutas públicas
+Route::post('/login', [AutenticacionController::class, 'login']);
+Route::get('/eventos', [EventoController::class, 'index']);
+Route::get('/filtros', [FiltroController::class, 'index']);
+Route::get('/simbolos', [SimbologiaController::class, 'index']);
+
+// Rutas protegidas
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [AutenticacionController::class, 'logout']);
+
+    Route::controller(UsuarioController::class)->group(function () {
+        Route::get('/usuarios', 'index');
+        Route::post('/usuarios', 'store');
+        Route::put('/usuarios', 'update');
+        Route::delete('/usuarios', 'destroy');
+    });
+
+    Route::controller(EventoController::class)->group(function () {
+        Route::post('/eventos', 'store');
+        Route::put('/eventos', 'update');
+        Route::delete('/eventos', 'destroy');
+    });
+
+    Route::controller(CatEvento::class)->group(function () {
+        Route::get('/cat_eventos', 'index');
+    });
+
+    Route::controller(FiltroController::class)->group(function () {
+        Route::post('/filtros', 'store');
+        Route::put('/filtros', 'update');
+        Route::delete('/filtros', 'destroy');
+    });
+
+    Route::controller(SimbologiaController::class)->group(function () {
+        Route::post('/simbolos', 'store');
+        Route::put('/simbolos', 'update');
+        Route::delete('/simbolos', 'destroy');
+    });
 });
-
-Route::controller(AutenticacionController::class)->group(function (){
-    Route::post('/login', 'login');
-    Route::post('/logout', 'logout');
-});
-
-Route::controller(UsuarioController::class)->group(function (){
-  Route::get('/usuarios', 'index');
-  Route::post('/usuarios', 'store');
-  Route::put('/usuarios', 'update');
-  Route::delete('/usuarios', 'destroy');
-});
-
-//Ruta para mostrar eventos en FullCalendar
-//Route::get('/eventos/{fecha}', [EventoController::class, 'showEventsByDay']);
-
-Route::controller(EventoController::class)->group(function(){
-  Route::get('/eventos', 'index');
-  Route::post('/eventos', 'store');
-  Route::put('/eventos', 'update');
-  Route::delete('/eventos', 'destroy');
-});
-
-Route::controller(CatEvento::class)->group(function(){
-  Route::get('/cat_eventos', 'index');
-});
-
-Route::controller(FiltroController::class)->group(function(){
-  Route::get('/filtros', 'index');
-  Route::post('/filtros', 'store');
-  Route::put('/filtros', 'update');
-  Route::delete('/filtros', 'destroy');
-});
-
-Route::controller(SimbologiaController::class)->group(function (){
-  Route::get('/simbolos', 'index');
-  Route::post('/simbolos', 'store');
-  Route::put('/simbolos', 'update');
-  Route::delete('/simbolos', 'destroy');
-});
-

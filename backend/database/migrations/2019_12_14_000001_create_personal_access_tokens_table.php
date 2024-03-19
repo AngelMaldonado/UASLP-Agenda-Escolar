@@ -9,7 +9,6 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    //create personal access tokens table
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
