@@ -10,7 +10,7 @@ export function CardsContenedor(props: CardsContenedorProps) {
 
   return (
     <Stack gap={5}>
-      {eventos?.map((evento) => (
+      {eventos?.filter((evento) => evento.tipo !== 'alumnado').map((evento) => (
         <CardCalendario key={"Card calendario" + evento.nombre} admin={props.admin} evento={evento}/>
       ))}
     </Stack>

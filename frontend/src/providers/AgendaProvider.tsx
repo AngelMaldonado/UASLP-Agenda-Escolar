@@ -30,15 +30,18 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
     eventos: [],
     eventoActual: undefined
   })
-
+ 
   const {eventos} = useObtenEventos(contexto.mes ?? new Date().getMonth())
   const {filtros} = useObtenFiltros()
+
+
+
 
   useEffect(() => setContexto(prevState =>
     ({
       ...prevState,
       filtros: filtros,
-      eventos: Evento.FiltraEventos(contexto.filtrosUsuario, contexto.textoBusqueda, eventos)
+      eventos: Evento.FiltraEventos(contexto.filtrosUsuario, contexto.textoBusqueda, eventos),
     })
   ), [eventos, filtros, contexto.filtrosUsuario, contexto.textoBusqueda, contexto.mes]);
 

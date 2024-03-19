@@ -7,7 +7,7 @@ export type AgendaProps = { admin?: boolean }
 export function Agenda(props: AgendaProps) {
   const eventos = useContext(PublicContext).data.eventos
 
-  const cards = eventos?.map((evento) => (
+  const cards = eventos?.filter((evento) => evento.tipo !== 'alumnado').map((evento) => (
     <CardAgenda key={"card-agenda-" + evento.nombre}
                 admin={props.admin}
                 evento={evento}

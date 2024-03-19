@@ -32,7 +32,7 @@ function Calendario(props: CalendarioProps) {
   const [events, setEvents] = useState(Evento.ParseEventosCalendario(data.eventos ?? []));
 
   useEffect(() => {
-    setEvents(Evento.ParseEventosCalendario(data.eventos ?? []))
+    setEvents(Evento.ParseEventosCalendario(data.eventos ?? []).filter(evento => evento.tipo !== 'alumnado'))
   }, [data.eventos]);
 
   return (

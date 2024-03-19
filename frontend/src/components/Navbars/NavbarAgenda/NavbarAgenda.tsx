@@ -17,6 +17,7 @@ import {Form} from "react-bootstrap";
 import Desplegables from "./Desplegables.tsx";
 import {PublicContext} from "../../../providers/AgendaProvider.tsx";
 
+
 type NavbarAgendaProps = {
   currentKey: string,
   setKey: (k: string) => void,
@@ -24,7 +25,9 @@ type NavbarAgendaProps = {
   sesionAdmi?: boolean,
 };
 
-function NavbarAgenda(props: NavbarAgendaProps) {
+
+function NavbarAgenda(props: NavbarAgendaProps ) {
+
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false)
   const setData = useContext(PublicContext).setData
@@ -90,18 +93,30 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     ]
   }
 
+
   function modalMasEventos() {
+
+    const eventos = useContext(PublicContext).data.eventos;
+
+    const nuevoEvento = eventos?.filter((e) => e.tipo === "alumnado").map((e) => (
+          <CardMasEventos key={e.nombre} evento={e} />
+        ))
+
+        // const nuevoEvento = eventos.map((e) => (
+        //   <CardMasEventos key={e.nombre} evento={e} />
+        // ))
     return (
       <Modal size="lg" show={showModal} onHide={ocultaModal}>
         <Modal.Header closeButton>
           <Modal.Title>Modal Eventos</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {/* <CardMasEventos/>
           <CardMasEventos/>
           <CardMasEventos/>
           <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/>
+          <CardMasEventos/> */}
+          {nuevoEvento?.flat()}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary">Agregar Evento</Button>

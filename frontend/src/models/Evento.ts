@@ -101,7 +101,7 @@ class Evento {
     eventos?.sort((a, b) => a.fecha_inicio!.getTime() - b.fecha_inicio!.getTime())
     return eventos?.filter(e => {
       let retorno = true
-      if (e.tipo != TipoEventoEnum.ALUMNADO) {
+      // if (e.tipo == TipoEventoEnum.ALUMNADO) {
         if (filtros && filtros.length > 0)
           retorno = filtros.some(f => e.filtros?.includes(f.id!))
         else if (filtros?.length == 0)
@@ -109,10 +109,14 @@ class Evento {
         if (texto != "")
           retorno = e.nombre?.includes(texto!) ?? false
         console.log(texto)
-      } else retorno = false
+      // } else retorno = false
       return retorno
     })
   }
+ 
+  
 }
+
+
 
 export default Evento

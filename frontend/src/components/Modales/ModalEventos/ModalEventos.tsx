@@ -1,12 +1,16 @@
 import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import CardAgenda from "../../Cards/CardAgenda/CardAgenda.tsx";
+// import CardAgenda from "../../Cards/CardAgenda/CardAgenda.tsx";
 import Evento from "../../../models/Evento.ts";
 import CardMasEventos from "../../Cards/CardMasEventos/CardMasEventos.tsx";
 
-function ModalEventos() {
-  let evento = new Evento();
+export type MasEventosProps = {
+  eventos: Evento[] | undefined
+}
+
+function ModalEventos(props: MasEventosProps) {
+  // let evento = new Evento();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -22,9 +26,10 @@ function ModalEventos() {
         </Modal.Header>
 
         <Modal.Body>
-          <CardMasEventos/>
+        {props.eventos?.map((evento) => (
+        <CardMasEventos key={"Card Mas Eventos " + evento.nombre} evento={evento}/>
+      ))}
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="primary">Agregar Evento</Button>
         </Modal.Footer>
