@@ -28,7 +28,7 @@ class AutenticacionController extends Controller
 
             if ($validator->fails()) return response($validator->errors(), 400);
             if (!Auth::attempt(['email' => $request->email, 'password' => $request->contraseña]))
-                return response('credenciales erróneas', 401);
+                return response()->json(['auth' => 'credenciales erróneas'], 401);
 
             $usuario = Usuario::where('email', $request->email)->first();
         } else if ($request->input('tipo') === TipoUsuarioEnum::SECUNDARIO->value) {
@@ -36,17 +36,15 @@ class AutenticacionController extends Controller
 
             // Modificar el método de ValidaUsuarioServicio para que valide rpe con contraseña
             if (!Usuario::ValidaUsuarioServicio($request->rpe, $request->contraseña))
-                return response('credenciales erróneas', 401);
+                return response()->json(['auth' => 'credenciales erróneas'], 401);
 
             if ($validator->fails()) return response($validator->errors(), 400);
 
             $usuario = Usuario::where('rpe', $request->rpe)->first();
         }
 
-        return response([
-            'usuario' => $usuario,
-            'token' => $usuario->createToken('API Token de ' . $usuario->nombre)->plainTextToken
-        ], 200);
+        $usuario->token = $usuario->createToken('API Token de ' . $usuario->nombre)->plainTextToken;
+        return response($usuario, 200);
     }
 
     function logout()
