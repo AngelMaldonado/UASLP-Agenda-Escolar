@@ -15,7 +15,7 @@ import Container from "react-bootstrap/Container";
 import {Stack} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import Desplegables from "./Desplegables.tsx";
-import {PublicContext} from "../../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 
 type NavbarAgendaProps = {
@@ -26,11 +26,10 @@ type NavbarAgendaProps = {
 };
 
 
-function NavbarAgenda(props: NavbarAgendaProps ) {
-
+function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false)
-  const setData = useContext(PublicContext).setData
+  const setData = useContext(AgendaContext).setData
   const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda"
 
   return (
@@ -43,6 +42,7 @@ function NavbarAgenda(props: NavbarAgendaProps ) {
             setData(prevState => ({...prevState, textoBusqueda: e.target.value}))
           }
         />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="w-100 pt-2 pt-lg-0 align-items-center justify-content-end">
             {!ocultaControles ? <Desplegables/> : null}
@@ -96,15 +96,15 @@ function NavbarAgenda(props: NavbarAgendaProps ) {
 
   function modalMasEventos() {
 
-    const eventos = useContext(PublicContext).data.eventos;
+    const eventos = useContext(AgendaContext).data.eventos;
 
     const nuevoEvento = eventos?.filter((e) => e.tipo === "alumnado").map((e) => (
-          <CardMasEventos key={e.nombre} evento={e} />
-        ))
+      <CardMasEventos key={e.nombre} evento={e}/>
+    ))
 
-        // const nuevoEvento = eventos.map((e) => (
-        //   <CardMasEventos key={e.nombre} evento={e} />
-        // ))
+    // const nuevoEvento = eventos.map((e) => (
+    //   <CardMasEventos key={e.nombre} evento={e} />
+    // ))
     return (
       <Modal size="lg" show={showModal} onHide={ocultaModal}>
         <Modal.Header closeButton>

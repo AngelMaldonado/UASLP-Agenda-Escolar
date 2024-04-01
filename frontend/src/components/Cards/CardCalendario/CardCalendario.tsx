@@ -10,7 +10,7 @@ import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts
 import useModelChange from "../../../hooks/HookModelChange.ts";
 import Configuraciones from "../../../utils/Configuraciones.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
-import {PublicContext} from "../../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 import {Button} from "react-bootstrap";
 
 type CardCalendarioProps = {
@@ -26,7 +26,7 @@ function CardCalendario(props: CardCalendarioProps) {
   const {modificaEvento, modificacionExitosa, reset} = useModificaEvento(setErrores)
   const {eliminaEvento, eliminacionExitosa} = useEliminaEvento(setErrores)
   const cambiaEvento = useModelChange(setEvento as Dispatch<SetStateAction<Object>>)
-  const setData = useContext(PublicContext).setData
+  const setData = useContext(AgendaContext).setData
 
   return (
     <div className="card card-evento" onClick={() =>

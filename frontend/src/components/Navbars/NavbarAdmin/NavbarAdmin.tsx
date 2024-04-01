@@ -39,7 +39,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
         }>
           <Campo id="busqueda" placeholder="Buscar"/>
         </div>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle ms-auto"/>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
             <div className='NavbarCollapse w-100'>

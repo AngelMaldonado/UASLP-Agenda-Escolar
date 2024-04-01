@@ -10,7 +10,7 @@ import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {useContext} from "react";
-import {PublicContext} from "../../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 type CardAgendaProps = {
   evento: Evento,
@@ -18,7 +18,7 @@ type CardAgendaProps = {
 }
 
 function CardAgenda(props: CardAgendaProps) {
-  const setData = useContext(PublicContext).setData
+  const setData = useContext(AgendaContext).setData
 
   return (
     <Card className="CardAgenda flex-row" onClick={() =>
@@ -72,8 +72,8 @@ function CardAgenda(props: CardAgendaProps) {
     if (props.evento.hipervinculos)
       return (
         <div className="Hipervinculos h-100 z-1">
-          {props.evento.hipervinculos.map((hipervinculo) => (
-            <OverlayTrigger overlay={<Tooltip>{hipervinculo}</Tooltip>}>
+          {props.evento.hipervinculos.map((hipervinculo, index) => (
+            <OverlayTrigger key={`hipervinculo-${index}`} overlay={<Tooltip>{hipervinculo}</Tooltip>}>
               <Button variant="primary-inverse"
                       className="nav-link p-0 d-inline-block text-truncate"
                       href={hipervinculo}

@@ -6,7 +6,7 @@ import {useState} from "react";
 import Usuario from "../../../models/Usuario.ts";
 import {Form} from "react-bootstrap";
 import Formal from "react-formal";
-import Select, {components} from "react-select";
+import Select from "react-select";
 import {ErrorsObject} from "../../../utils/Utils.ts";
 
 type FormularioLoginProps = {
@@ -18,20 +18,20 @@ type FormularioLoginProps = {
 function FormularioLogin(props: FormularioLoginProps) {
   const [errores, setErrores] = useState({})
 
-  const Input = (inputProps: any) => <components.Input {...inputProps} autoComplete="off"/>
-
   return (
     <Formal schema={Usuario.login_schema}
             errors={{...errores, ...props.errores}}
             onError={errors => setErrores(errors)}>
       <Form.Group>
         {tipo()}
-        {props.usuario.tipo == TipoUsuarioEnum.BECARIO ? correo() : null}
-        {props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR || props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ?
-          rpe() : null
+        {props.usuario.tipo == TipoUsuarioEnum.BECARIO || props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ?
+          correo() : null
         }
+        {props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ? rpe() : null}
         {contraseña()}
       </Form.Group>
+      <Form.Control type="hidden" name="auth"/>
+      <Formal.Message for="auth" className="d-flex text-danger"/>
     </Formal>
   )
 
@@ -43,8 +43,9 @@ function FormularioLogin(props: FormularioLoginProps) {
                     className="form-control"
                     classNamePrefix="select"
                     unstyled
-                    components={{Input}}
+                    isSearchable={false}
                     placeholder="Eliga el tipo de usuario"
+                    noOptionsMessage={() => <>Sin opciones</>}
                     options={TipoUsuarioOptions}
                     mapFromValue={{"tipo": option => (option as TipoUsuarioOptionsType).value}}
                     mapToValue={props.usuario.tipo ?

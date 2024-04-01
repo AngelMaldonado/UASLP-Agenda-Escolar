@@ -3,7 +3,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {Badge, Stack} from "react-bootstrap";
 import {useContext} from "react";
-import {PublicContext} from "../../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 type ChipsEventoProps = {
   noFloat?: boolean,
@@ -11,7 +11,7 @@ type ChipsEventoProps = {
 }
 
 export function ChipsEvento(props: ChipsEventoProps) {
-  const filtros = useContext(PublicContext).data.filtros
+  const filtros = useContext(AgendaContext).data.filtros
 
   const areas = filtros?.filter(f =>
     props.filtros_evento?.includes(f.id!) && f.categoria == FiltrosCategoriaEnum.AREA

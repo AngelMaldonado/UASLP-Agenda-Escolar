@@ -6,10 +6,10 @@ import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {useContext} from "react";
-import {PublicContext} from "../../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 export default function ModalEvento() {
-  const {data, setData} = useContext(PublicContext)
+  const {data, setData} = useContext(AgendaContext)
   const evento = data.eventoActual
 
   if (evento)

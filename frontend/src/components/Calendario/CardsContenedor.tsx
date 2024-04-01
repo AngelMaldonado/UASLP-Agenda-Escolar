@@ -1,12 +1,12 @@
 import CardCalendario from "../Cards/CardCalendario";
 import {Stack} from "react-bootstrap";
 import {useContext} from "react";
-import {PublicContext} from "../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../providers/AgendaProvider.tsx";
 
 type CardsContenedorProps = { admin?: boolean }
 
 export function CardsContenedor(props: CardsContenedorProps) {
-  const eventos = useContext(PublicContext).data.eventos
+  const eventos = useContext(AgendaContext).data.eventos
 
   return (
     <Stack gap={5}>

@@ -34,7 +34,7 @@
         }
       }
 
-      &:hover {
+      &:hover > :not(:has(.fc-daygrid-day-events:hover)) {
         box-shadow: u.$calendar-event-box-inner-shadow;
       }
     }

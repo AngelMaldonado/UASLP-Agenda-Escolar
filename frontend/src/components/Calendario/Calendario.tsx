@@ -5,7 +5,7 @@ import Evento from "../../models/Evento.ts";
 import esLocale from "@fullcalendar/core/locales/es"
 import Configuraciones from "../../utils/Configuraciones.ts";
 import {CardsContenedor} from "./CardsContenedor.tsx";
-import {PublicContext} from "../../providers/AgendaProvider.tsx";
+import {AgendaContext} from "../../providers/AgendaProvider.tsx";
 
 
 export type CalendarioProps = {
@@ -28,7 +28,7 @@ const meses: Map<string, number> = new Map([
 ])
 
 function Calendario(props: CalendarioProps) {
-  const {data, setData} = useContext(PublicContext)
+  const {data, setData} = useContext(AgendaContext)
   const [events, setEvents] = useState(Evento.ParseEventosCalendario(data.eventos ?? []));
 
   useEffect(() => {
@@ -60,7 +60,7 @@ function Calendario(props: CalendarioProps) {
   function cardEvento(arg: any) {
     const evento = arg.event.extendedProps
     return (
-      <div className="px-2 py-1 w-100 text-center text-dark rounded-4 "
+      <div className="px-2 py-1 w-100 text-center text-dark rounded-4"
            style={{backgroundImage: `url(${Configuraciones.publicURL + evento.simbolo})`}}
       >
         <p className="px-2 m-0 bg-light bg-opacity-75 rounded-4 titulo-evento-calendario w-100"

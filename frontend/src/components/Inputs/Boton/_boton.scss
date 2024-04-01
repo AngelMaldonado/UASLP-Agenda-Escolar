@@ -72,6 +72,8 @@
   }
 
   &.btn-danger {
+    color: u.$blanco;
+
     &:hover {
       background-color: u.$tertiary-20;
     }

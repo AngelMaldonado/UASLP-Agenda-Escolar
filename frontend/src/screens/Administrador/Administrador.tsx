@@ -20,14 +20,12 @@ function Administrador() {
   const eventKeysAdmin = ["tabla-eventos", "usuarios", "filtros", "simbolos"];
 
   return (
-    <AgendaProvider>
-      <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
-        <NavbarUASLP/>
-        <NavbarAgenda currentKey={key} setKey={setKey} eventKeys={eventKeysAgenda} sesionAdmi/>
-        <NavbarAdmin currentKey={key} setKey={setKey} eventKeys={eventKeysAdmin}/>
-        <Tab.Content>{...tabContent()}</Tab.Content>
-      </Tab.Container>
-    </AgendaProvider>
+    <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
+      <NavbarUASLP/>
+      <NavbarAgenda currentKey={key} setKey={setKey} eventKeys={eventKeysAgenda} sesionAdmi/>
+      <NavbarAdmin currentKey={key} setKey={setKey} eventKeys={eventKeysAdmin}/>
+      <Tab.Content>{...tabContent()}</Tab.Content>
+    </Tab.Container>
   );
 
   function tabContent() {

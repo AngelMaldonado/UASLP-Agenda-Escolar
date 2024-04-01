@@ -4,8 +4,10 @@ import Filtro from "../models/Filtro.ts";
 import {useObtenEventos} from "../hooks/HooksEvento.ts";
 import {useObtenFiltros} from "../hooks/HooksFiltro.ts";
 import ModalEvento from "../components/Modales/ModalEvento/ModalEvento.tsx";
+import Usuario from "../models/Usuario.ts";
 
 type DataContextType = {
+  usuario?: Usuario,
   filtros?: Filtro[],
   filtrosUsuario?: Filtro[],
   textoBusqueda?: string,
@@ -14,15 +16,16 @@ type DataContextType = {
   eventoActual?: Evento
 }
 
-type PublicContextType = { data: DataContextType, setData: Dispatch<SetStateAction<DataContextType>> }
+type AgendaContextType = { data: DataContextType, setData: Dispatch<SetStateAction<DataContextType>> }
 
-export const PublicContext = createContext<PublicContextType>({
+export const AgendaContext = createContext<AgendaContextType>({
   data: {},
   setData: () => undefined,
 })
 
 export default function AgendaProvider({children}: { children: React.ReactNode }) {
   const [contexto, setContexto] = useState<DataContextType>({
+    usuario: new Usuario(),
     filtros: [],
     filtrosUsuario: [],
     textoBusqueda: "",
@@ -30,12 +33,9 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
     eventos: [],
     eventoActual: undefined
   })
- 
+
   const {eventos} = useObtenEventos(contexto.mes ?? new Date().getMonth())
   const {filtros} = useObtenFiltros()
-
-
-
 
   useEffect(() => setContexto(prevState =>
     ({
@@ -46,9 +46,9 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
   ), [eventos, filtros, contexto.filtrosUsuario, contexto.textoBusqueda, contexto.mes]);
 
   return (
-    <PublicContext.Provider value={{data: contexto, setData: setContexto}}>
+    <AgendaContext.Provider value={{data: contexto, setData: setContexto}}>
       {children}
       <ModalEvento/>
-    </PublicContext.Provider>
+    </AgendaContext.Provider>
   )
 }

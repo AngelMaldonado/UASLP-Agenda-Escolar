@@ -33,5 +33,11 @@
     .container {
       justify-content: center;
     }
+
+    .Usuario {
+      > h5 {
+        display: none;
+      }
+    }
   }
 }
