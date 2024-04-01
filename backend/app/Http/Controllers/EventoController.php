@@ -19,18 +19,7 @@ class EventoController extends Controller
     // Obtener eventos para un mes específico o todos los meses
     public function index(Request $request)
     {
-        // Verificar si se proporciona un mes en la solicitud
-        $month = (int)$request->input('mes');
-
-        if ($month === 'all') {
-            // Obtener todos los eventos
-            $eventos = Evento::all();
-        } elseif (is_numeric($month) && $month >= 1 && $month <= 12) {
-            // Obtener eventos para un mes específico
-            $eventos = Evento::whereMonth('fecha_inicio', $month)->get();
-        } else {
-            return response()->json(['message' => 'Mes no válido'], 400);
-        }
+        $eventos = Evento::all();
 
         /* Cuando se consulte para agenda y calendario agregar al json 'simbolo' para poder mostrar el símbolo */
         /* Agregar también 'filtros' */
