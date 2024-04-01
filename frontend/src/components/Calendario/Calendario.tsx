@@ -12,19 +12,19 @@ export type CalendarioProps = {
   admin?: boolean
 }
 
-const meses: Map<string, number> = new Map([
-  ['ene', 0],
-  ['feb', 1],
-  ['mar', 2],
-  ['abr', 3],
-  ['may', 4],
-  ['jun', 5],
-  ['jul', 6],
-  ['ago', 7],
-  ['sept', 8],
-  ['oct', 9],
-  ['nov', 10],
-  ['dic', 11],
+export const meses: Map<string, number> = new Map([
+  ['enero', 0],
+  ['febrero', 1],
+  ['marzo', 2],
+  ['abril', 3],
+  ['mayo', 4],
+  ['junio', 5],
+  ['julio', 6],
+  ['agosto', 7],
+  ['septiembre', 8],
+  ['octubre', 9],
+  ['noviembre', 10],
+  ['diciembre', 11],
 ])
 
 function Calendario(props: CalendarioProps) {
@@ -43,11 +43,12 @@ function Calendario(props: CalendarioProps) {
                     datesSet={(info) => {
                       const titulo = info.view.title.split(' ')
                       setData(prevState =>
-                        ({...prevState, mes: meses.get(titulo[0].toLowerCase())!})
+                        ({...prevState, mes: meses.get(titulo[0])})
                       )
                     }}
                     dayMaxEventRows
                     titleFormat={{year: "numeric", month: "long"}}
+                    headerToolbar={{start: "title", center: "", end: "prevYear,prev,today,next,nextYear"}}
                     dayHeaderFormat={{weekday: "long"}}
                     events={events}
                     eventContent={cardEvento}
@@ -67,12 +68,14 @@ function Calendario(props: CalendarioProps) {
              fontSize: "0.8rem"
            }}
       >
+        <div className="Filter position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-10"></div>
         <p
           className={
             `px-1 m-0 rounded-4 titulo-evento-calendario ${arg.isStart ? "bg-light bg-opacity-75" : "opacity-0"}`
           }
           style={{
-            width: evento.fecha_fin > evento.fecha_inicio ? "fit-content" : "100%"
+            width: evento.fecha_fin > evento.fecha_inicio ? "fit-content" : "100%",
+            maxWidth: "100%"
           }}
         >
           {arg.event.extendedProps.nombre}

@@ -1,26 +1,21 @@
-// TODO: en elimina ver que se pasará para identificar el evento a eliminar
-
 import axios from "axios"
 import Configuraciones from "../utils/Configuraciones.ts"
 import Evento from "../models/Evento.ts";
 
 class ServicioEvento {
-  public static async obtenEventos(mes: number) {
+  public static async obtenEventos() {
     try {
       return (await axios.get<Evento[]>(
         Configuraciones.apiURL + "eventos",
         {
-          params: {mes: mes + 1},
           transformResponse: [data => JSON.parse(data, (key, value) => {
-            if (key == "fecha_inicio" || key == "fecha_fin") {
+            if (key == "fecha_inicio" || key == "fecha_fin")
               return new Date(value)
-            }
             return value
           })]
         }
       )).data
     } catch (err) {
-      //console.log(err)
       return []
     }
   }

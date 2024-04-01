@@ -44,6 +44,14 @@
       }
     }
   }
+
+  .fc-daygrid-more-link {
+    width: 80%;
+    padding: u.$spacer * 0.5;
+    border-radius: u.$spacer * 1.5;
+    text-align: center;
+    background-color: u.$blanco-80;
+  }
 }
 
 .fc-daygrid-event {
@@ -58,6 +66,10 @@
 
   &:hover {
     background: initial;
+
+    .Filter {
+      display: none;
+    }
   }
 }
 

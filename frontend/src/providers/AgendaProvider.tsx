@@ -34,7 +34,7 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
     eventoActual: undefined
   })
 
-  const {eventos} = useObtenEventos(contexto.mes ?? new Date().getMonth())
+  const {eventos} = useObtenEventos()
   const {filtros} = useObtenFiltros()
 
   useEffect(() => setContexto(prevState =>

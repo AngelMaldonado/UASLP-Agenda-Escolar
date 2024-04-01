@@ -6,11 +6,14 @@ import {AgendaContext} from "../../providers/AgendaProvider.tsx";
 type CardsContenedorProps = { admin?: boolean }
 
 export function CardsContenedor(props: CardsContenedorProps) {
-  const eventos = useContext(AgendaContext).data.eventos
+  const mes = useContext(AgendaContext).data.mes
+  const eventos = useContext(AgendaContext).data.eventos?.filter(e =>
+    e.fecha_inicio?.getMonth() == mes
+  )
 
   return (
     <Stack gap={5}>
-      {eventos?.filter((evento) => evento.tipo !== 'alumnado').map((evento) => (
+      {eventos?.map((evento) => (
         <CardCalendario key={"Card calendario" + evento.nombre} admin={props.admin} evento={evento}/>
       ))}
     </Stack>

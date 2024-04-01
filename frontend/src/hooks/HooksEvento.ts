@@ -3,13 +3,13 @@ import ServicioEvento from "../services/ServicioEvento.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Utils.ts";
 
-export const useObtenEventos = (mes: number) => {
+export const useObtenEventos = () => {
   const {
     data: eventos,
     isLoading
   } = useQuery({
-    queryKey: ["eventos", {mes: mes}],
-    queryFn: () => ServicioEvento.obtenEventos(mes)
+    queryKey: ["eventos"],
+    queryFn: () => ServicioEvento.obtenEventos()
   })
   return {eventos: eventos, isLoading}
 }

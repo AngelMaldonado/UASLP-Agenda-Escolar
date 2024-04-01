@@ -25,7 +25,7 @@ export function ChipsEvento(props: ChipsEventoProps) {
     <div className={`pills ${props.noFloat ? "noFloat" : ""}`}>
       <OverlayTrigger
         key="pills-areas"
-        placement="bottom"
+        placement="top"
         overlay={
           <Tooltip>
             <Stack>
@@ -40,7 +40,7 @@ export function ChipsEvento(props: ChipsEventoProps) {
       </OverlayTrigger>
       <OverlayTrigger
         key="pills-comunidades"
-        placement="bottom"
+        placement="top"
         overlay={
           <Tooltip>
             <Stack>
