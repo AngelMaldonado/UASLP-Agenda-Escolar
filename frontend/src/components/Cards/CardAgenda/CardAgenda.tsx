@@ -1,16 +1,15 @@
 import './_card_agenda.scss'
 import Evento from '../../../models/Evento.ts';
-import {FaRegCalendar, FaRegEdit, FaRegTrashAlt} from "react-icons/fa";
 import Card from "react-bootstrap/Card";
-import {Button, ButtonGroup, Stack} from "react-bootstrap";
-import Boton from "../../Inputs/Boton";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {Button, Stack} from "react-bootstrap";
 import Configuraciones from "../../../utils/Configuraciones.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {useContext} from "react";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {modalEvento} from '../../Modales/ModalEliminarEditarEvento/ModalEliminarEditar.tsx';
+import {FaRegCalendar} from "react-icons/fa";
 
 type CardAgendaProps = {
   evento: Evento,
@@ -18,12 +17,23 @@ type CardAgendaProps = {
 }
 
 function CardAgenda(props: CardAgendaProps) {
+
+
   const setData = useContext(AgendaContext).setData
+  // const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  //   const target = event.target as HTMLElement; // Realizar un casting a HTMLElement
+  //   if (target.tagName != 'BUTTON'&& !target.classList.contains('Boton')) {
+  //       return  setData(prevState => ({...prevState, eventoActual: props.evento}));
+
+  //   }
+  // };
 
   return (
-    <Card className="CardAgenda flex-row" onClick={() =>
-      setData(prevState => ({...prevState, eventoActual: props.evento}))
-    }>
+    
+    <Card className="CardAgenda flex-row"onClick={() =>
+   
+    setData(prevState => ({...prevState, eventoActual: props.evento}))
+    }>  
       <Card.Body>
         <Card.Title className="fs-6">
           <Card.Img src={Configuraciones.publicURL + props.evento?.simbolo} alt={"Símbolo " + props.evento?.nombre}/>
@@ -47,7 +57,7 @@ function CardAgenda(props: CardAgendaProps) {
         {props.evento.imagen ?
           <img src={Configuraciones.publicURL + props.evento.imagen} alt={"Imagen " + props.evento?.nombre}/>
           : null}
-        {hipervinculos()}
+        {/* {hipervinculos()} */}
         {props.admin ? (
           <>
             <div className="Modificacion h-100 w-100 fs-6">
@@ -57,12 +67,12 @@ function CardAgenda(props: CardAgendaProps) {
               <p className="m-0">John Doe</p>
               <p className="m-0">14 ene 2023, 14:00</p>
             </div>
-            <ButtonGroup>
-              <Boton variant={TemaComponente.DangerInverso} icono={<FaRegTrashAlt/>}/>
-              <Boton variant={TemaComponente.PrimarioInverso} icono={<FaRegEdit/>}/>
-            </ButtonGroup>
+         
           </>
         ) : null}
+            <div className="d-flex flex-column justify-content-center align-items-center gap-1 me-3 " onClick={(e) => e.stopPropagation() }>
+          {modalEvento(props)}
+      </div>
       </Card.Body>
       <ChipsEvento filtros_evento={props.evento.filtros}/>
     </Card>

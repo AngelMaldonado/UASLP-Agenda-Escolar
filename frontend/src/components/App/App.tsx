@@ -10,7 +10,7 @@ import RutaPrivada from "../../providers/RutaPrivada.tsx";
 import AgendaProvider from "../../providers/AgendaProvider.tsx";
 import Configuraciones from "../../utils/Configuraciones.ts";
 
-const queryClient = new QueryClient()
+ const queryClient = new QueryClient()
 try {
   axios.defaults.withCredentials = true
   await axios.get(Configuraciones.sanctumURL + "csrf-cookie")
@@ -31,7 +31,16 @@ function App() {
           <Route path="/login" element={<Login/>}/>
         </Routes>
       </AgendaProvider>
-    </QueryClientProvider>
+     </QueryClientProvider>
+  //   <>
+  //   <QueryClientProvider client={queryClient}>
+  //     <Routes>
+  //       <Route path="/" element={<Publico/>}/>
+  //       <Route path="/administracion" element={<Administrador/>}/>
+  //       <Route path="/login" element={<Login/>}/>
+  //     </Routes>
+  //   </QueryClientProvider>
+  // </>
   )
 }
 

@@ -1,12 +1,12 @@
 import "./_cardmaseventos.scss";
 import Evento from '../../../models/Evento.ts';
-import {GoPencil} from "react-icons/go";
-import {BsFillTrash3Fill} from "react-icons/bs";
 import Boton from "../../Inputs/Boton";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import {AiOutlineExport} from "react-icons/ai";
+import { modalEvento } from "../../Modales/ModalEliminarEditarEvento/ModalEliminarEditar.tsx";
 
 function CardMasEventos(props: { evento: Evento }) {
+
   return (
     
     <div className="cardMasEventos  ">
@@ -21,22 +21,13 @@ function CardMasEventos(props: { evento: Evento }) {
             variant={TemaComponente.PrimarioInverso}
           />
         </div>
-        <div className="bottons">
-          <Boton 
-            icono={<GoPencil/>}
-            rounded="true"
-            variant={TemaComponente.PrimarioInverso}
-          />
-
-          <Boton
-            icono={<BsFillTrash3Fill/>}
-            rounded="true"
-            variant={TemaComponente.DangerInverso}
-          />
-        </div>
+         <div className="bottons">
+            {modalEvento(props)}
+         </div>
       </div>
     </div>
   );
+  
 }
 
 export default CardMasEventos;

@@ -1,5 +1,4 @@
 import "./_navbar-agenda.scss"
-import {useContext, useState} from 'react';
 import Boton from "../../Inputs/Boton";
 import ChipUsuario from "../../Chips/ChipUsuario";
 import {FaChevronLeft, FaChevronRight, FaRegListAlt} from "react-icons/fa";
@@ -17,7 +16,7 @@ import {Form} from "react-bootstrap";
 import Desplegables from "./Desplegables.tsx";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 import {meses} from "../../Calendario/Calendario.tsx";
-
+import {useState,useContext} from "react";
 
 type NavbarAgendaProps = {
   currentKey: string,
@@ -33,6 +32,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
   const mes = useContext(AgendaContext).data.mes
   const setData = useContext(AgendaContext).setData
   const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda"
+
 
   return (
     <Navbar sticky="top" expand="xxl" className="NavbarAgenda bg-tertiary">
@@ -131,21 +131,18 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     // ))
     return (
       <Modal size="lg" show={showModal} onHide={ocultaModal}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton 
+>
           <Modal.Title>Modal Eventos</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/> */}
           {nuevoEvento?.flat()}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary">Agregar Evento</Button>
+          <Button variant="primary">Agregar Evento </Button>
         </Modal.Footer>
       </Modal>
+
     );
   }
 
