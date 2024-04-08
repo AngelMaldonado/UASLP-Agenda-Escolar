@@ -1,4 +1,4 @@
-@use "../../utils" as u;
+@use '../../utils' as u;
 
 .calendar-container {
   display: flex;
@@ -52,4 +52,28 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+@media (max-width:390px) {
+  .calendar-container {
+    width:100vw;
+    /* height: 30vh !important; */
+  }
+  .fc-scrollgrid-sync-table{
+    width: 100vw;
+    /* height: 30vh !important; */
+  }
+}
+
+
+@media (max-width: 1024px )
+{
+  .calendar-container {
+    width:100vw;
+    height: 60vh !important;
+  }
+  .fc-scrollgrid-sync-table{
+    width: 100vw;
+    height: 60vh !important;
+  }
 }
