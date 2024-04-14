@@ -5,7 +5,7 @@ import Boton from "../../Inputs/Boton";
 import Campo from "../../Inputs/Campo";
 import Modal from "../../Modales/Modal";
 import FormularioEvento from "../../Formularios/FormularioEvento/FormularioEvento.tsx";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useState, useContext} from "react";
 import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream} from 'react-icons/fa'
 import {useAgregaEvento} from "../../../hooks/HooksEvento.ts";
 import Evento from "../../../models/Evento.ts";
@@ -15,6 +15,8 @@ import Container from "react-bootstrap/Container";
 import {Navbar} from 'react-bootstrap';
 import useModelChange from "../../../hooks/HookModelChange.ts";
 import {ValidationError} from "yup";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 export type NavbarAdminProps = {
   currentKey: string,
@@ -25,6 +27,8 @@ export type NavbarAdminProps = {
 function NavbarAdmin(props: NavbarAdminProps) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
   const [errores, setErrores] = useState({})
+  const usuarios = useContext(AgendaContext).data.usuario;
+
 
   const {agregaEvento, registroExitoso, reset} = useAgregaEvento(setErrores)
   const onEventoChange = useModelChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
@@ -78,8 +82,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Símbolos" icono={<FaRegFileImage/>}
              onClick={() => props.setKey(props.eventKeys[3])}/>,
-
-      modalNuevoEvento(),
+      usuarios?.permisos?.includes(PermisosEnum.CREAR_EVENTO) ?  modalNuevoEvento() : undefined,
     ]
   }
 

@@ -32,15 +32,6 @@ function App() {
         </Routes>
       </AgendaProvider>
      </QueryClientProvider>
-  //   <>
-  //   <QueryClientProvider client={queryClient}>
-  //     <Routes>
-  //       <Route path="/" element={<Publico/>}/>
-  //       <Route path="/administracion" element={<Administrador/>}/>
-  //       <Route path="/login" element={<Login/>}/>
-  //     </Routes>
-  //   </QueryClientProvider>
-  // </>
   )
 }
 

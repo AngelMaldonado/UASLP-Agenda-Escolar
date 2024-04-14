@@ -6,9 +6,11 @@ import FormularioEvento from "../../Formularios/FormularioEvento";
 import Modal from '../../Modales/Modal/index.ts';
 import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt} from "react-icons/fa";
 import {Button} from "react-bootstrap";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useState, useContext} from "react";
 import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts";
 import useModelChange from "../../../hooks/HookModelChange.ts";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 
 
@@ -16,6 +18,8 @@ export function modalEvento(props: { evento: Evento }) {
   const [evento, setEvento] = useState(props.evento)
   const [errores, setErrores] = useState({});
   const [eliminando, setEliminando] = useState(false);
+  const usuarios = useContext(AgendaContext).data.usuario;
+
 
   const {modificaEvento, modificacionExitosa, reset} = useModificaEvento(setErrores);
   const {eliminaEvento, eliminacionExitosa} = useEliminaEvento(setErrores);
@@ -35,7 +39,10 @@ export function modalEvento(props: { evento: Evento }) {
     )
 
     function triggers() {
+      const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_EVENTO);
+      const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
       return ([
+        tienePermisoModificar && (
         <Button variant="primary-inverse"
                 className="rounded-circle"
                 onClick={(e) => {
@@ -43,13 +50,16 @@ export function modalEvento(props: { evento: Evento }) {
                 }}
         >
           <FaRegEdit/>
-        </Button>,
+        </Button>
+        ),
+        tienePermisoEliminar && (
         <Boton key={"eliminar-evento-" + props.evento.id}
                rounded
                variant={TemaComponente.DangerInverso}
                icono={<FaRegTrashAlt/>}
                onClick={() => setEliminando(true)}
         />
+        )
       ])
     }
   
