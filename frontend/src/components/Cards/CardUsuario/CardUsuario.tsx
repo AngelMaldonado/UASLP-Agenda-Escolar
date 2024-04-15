@@ -10,6 +10,7 @@ import {useModificaUsuario, useEliminaUsuario} from "../../../hooks/HooksUsuario
 import useModelChange from "../../../hooks/HookModelChange.ts";
 import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
 import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
+import {TipoUsuarioEnum } from "../../../enums/TipoUsuarioEnum.ts"
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuario, setUsuario] = useState(props.usuario)
@@ -69,68 +70,47 @@ function CardUsuario(props: { usuario: Usuario }) {
   }
 
   function triggers() {
-    return usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO) &&
-    usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO) ? ( [
-      <Boton key={"boton-modificar-usuario-" + props.usuario.id}
-      rounded
-      variant={TemaComponente.PrimarioInverso}
-      icono={<FaRegEdit/>}
-      onClick={() => setEliminando(false)}
-      />,
-      <Boton key={"eliminar-usuario" + props.usuario.id}
-            rounded
-            variant={TemaComponente.DangerInverso}
-            icono={<FaRegTrashAlt/>}
-            onClick={() => setEliminando(true)}
-      />
-      ]
-    ) : usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO) ? (
-      [
+    const esAdministrador = usuario?.tipo?.includes(TipoUsuarioEnum.ADMINISTRADOR);
+    const esBEcario = usuarios?.tipo?.includes(TipoUsuarioEnum.BECARIO);
+    const esSecundario = usuarios?.tipo?.includes(TipoUsuarioEnum.SECUNDARIO);
+    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO);
+    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
+  
+    return ( [
+      tienePermisoModificar && (
+        esBEcario || esSecundario ?
+          !esAdministrador ?
         <Boton
           key={"boton-modificar-usuario-" + props.usuario.id}
           rounded
           variant={TemaComponente.PrimarioInverso}
           icono={<FaRegEdit />}
           onClick={() => setEliminando(false)}
-        />,
-      ]
-    ) : (
-      [
+        />: undefined
+        :
+          <Boton
+            key={"boton-modificar-usuario-" + props.usuario.id}
+            rounded
+            variant={TemaComponente.PrimarioInverso}
+            icono={<FaRegEdit />}
+            onClick={() => setEliminando(false)}
+          />
+        
+      ),
+      tienePermisoEliminar && (
+        !esAdministrador ?
         <Boton
           key={"eliminar-usuario" + props.usuario.id}
           rounded
           variant={TemaComponente.DangerInverso}
           icono={<FaRegTrashAlt />}
           onClick={() => setEliminando(true)}
-        />,
-      ]
-    ) 
+        />
+        :undefined
+      )
+    ]);
   }
 
-  // function triggers() {
-  //   return usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO) ? (
-  //     [
-  //       <Boton
-  //         key={"boton-modificar-usuario-" + props.usuario.id}
-  //         rounded
-  //         variant={TemaComponente.PrimarioInverso}
-  //         icono={<FaRegEdit />}
-  //         onClick={() => setEliminando(false)}
-  //       />,
-  //     ]
-  //   ) : (
-  //     [
-  //       <Boton
-  //         key={"eliminar-usuario" + props.usuario.id}
-  //         rounded
-  //         variant={TemaComponente.DangerInverso}
-  //         icono={<FaRegTrashAlt />}
-  //         onClick={() => setEliminando(true)}
-  //       />,
-  //     ]
-  //   );
-
-  // }
 
   function contenidoModal() {
     if (modificacionExitosa) {
