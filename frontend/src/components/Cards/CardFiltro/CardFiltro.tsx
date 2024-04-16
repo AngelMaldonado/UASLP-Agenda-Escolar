@@ -1,7 +1,7 @@
 import './CardFiltro.scss'
 import Boton from "../../Inputs/Boton"
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useState, useContext} from "react";
 import {TemaComponente} from "../../../utils/Utils.ts"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
 import {Badge, Image} from "react-bootstrap";
@@ -11,6 +11,8 @@ import Card from "react-bootstrap/Card";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import {useEliminaFiltro, useModificaFiltro} from "../../../hooks/HooksFiltro.ts";
 import useModelChange from "../../../hooks/HookModelChange.ts";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 type CardFiltroProps = {
   filtro: Filtro
@@ -20,6 +22,8 @@ function CardFiltro(props: CardFiltroProps) {
   const [filtro, setFiltro] = useState(props.filtro)
   const [errores, setErrores] = useState({})
   const [eliminando, setEliminando] = useState(false)
+  const usuarios = useContext(AgendaContext).data.usuario;
+
 
   const {
     modificaFiltro,
@@ -56,7 +60,7 @@ function CardFiltro(props: CardFiltroProps) {
         timeout={modificacionExitosa ? 2000 : undefined}
         triggers={triggers()}
         onClose={onClose}
-        titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
+        titulo={<div><FaRegUser/> <p className="fs-5">Modificar Filtro</p></div>}
         contenido={contenidoModal()}
         botones={modificacionExitosa || eliminacionExitosa ? [] : botonesModal()}
       />
@@ -64,20 +68,27 @@ function CardFiltro(props: CardFiltroProps) {
   }
 
   function triggers() {
-    return ([
-      <Boton key={"boton-modificar-filtro-" + props.filtro.id}
-             rounded
-             variant={TemaComponente.PrimarioInverso}
-             icono={<FaRegEdit/>}
-             onClick={() => setEliminando(false)}
-      />,
-      <Boton key={"eliminar-filtro-" + props.filtro.id}
-             rounded
-             variant={TemaComponente.DangerInverso}
-             icono={<FaRegTrashAlt/>}
-             onClick={() => setEliminando(true)}
-      />
-    ])
+    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_FILTRO);
+    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
+  
+    return ( [
+      tienePermisoModificar && (
+        <Boton key={"boton-modificar-filtro-" + props.filtro.id}
+          rounded
+          variant={TemaComponente.PrimarioInverso}
+          icono={<FaRegEdit/>}
+          onClick={() => setEliminando(false)}
+        />
+      ),
+      tienePermisoEliminar && (
+        <Boton key={"eliminar-filtro-" + props.filtro.id}
+          rounded
+          variant={TemaComponente.DangerInverso}
+          icono={<FaRegTrashAlt/>}
+          onClick={() => setEliminando(true)}
+         />
+      ),
+    ]);
   }
 
   function contenidoModal() {

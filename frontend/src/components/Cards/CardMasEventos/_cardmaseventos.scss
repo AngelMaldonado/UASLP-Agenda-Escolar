@@ -1,17 +1,32 @@
+@use "../../../utils" as u;
+
 .cardMasEventos{
     height: 140px;
-    padding:0px;
+    padding:0px; 
+    margin-bottom: 30px;
+    background-color: u.$blanco;
+    box-shadow: u.$card-box-shadow;
+    border-radius: u.$card-border-radius;
+    border-width: u.$card-border-width;
+    transition: all 0.3s;
+
     .content{
-        display: flex;
+        display: grid;
+        grid-template-columns: 2fr 4fr 1fr 2fr 1fr; /* Define el tamaño de cada columna */
+        grid-gap: 10px;
         justify-content: space-between;
         align-items: center;
         font-weight: bold;
+
         img{
             max-width: 140px;
+            margin-right: 3%;
         }
 
         .bottons{
             padding:10px;
         }
     }
+
+  
 }

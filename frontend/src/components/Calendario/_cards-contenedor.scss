@@ -5,6 +5,8 @@
     padding: u.$spacer * 1.5;
     width: 35%;
     background-color: u.$primary-80;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 

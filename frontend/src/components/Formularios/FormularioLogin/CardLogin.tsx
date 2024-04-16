@@ -7,12 +7,17 @@ import {Dispatch, SetStateAction, useState} from "react";
 import Usuario from "../../../models/Usuario.ts";
 import useModelChange from "../../../hooks/HookModelChange.ts";
 import {ValidationError} from "yup";
+import {useLogin} from "../../../hooks/HookAutenticacion.ts";
 
 function CardLogin() {
   const [usuario, setUsuario] = useState(new Usuario())
   const [errores, setErrores] = useState({})
 
   const onUsuarioChange = useModelChange(setUsuario as Dispatch<SetStateAction<Object>>)
+  const {login} = useLogin((data: {}) => {
+    setErrores(data)
+    setTimeout(() => setErrores({}), 5000)
+  })
 
   return (
     <Container className="mt-5">
@@ -36,7 +41,7 @@ function CardLogin() {
 
   function iniciaSesion() {
     Usuario.login_schema.validate(usuario)
-      .then(_ => console.log("login desde hook"))
+      .then(_ => login(usuario))
       .catch((r: ValidationError) => {
         setErrores({[r.path!]: r.errors})
         setTimeout(() => setErrores({}), 5000)

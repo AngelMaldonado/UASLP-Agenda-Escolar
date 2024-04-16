@@ -1,69 +1,53 @@
 import "./_navbar-agenda.scss"
-import {useState} from 'react';
 import Boton from "../../Inputs/Boton";
 import ChipUsuario from "../../Chips/ChipUsuario";
-import {FaRegListAlt} from "react-icons/fa";
+import {FaChevronLeft, FaChevronRight, FaRegListAlt} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {CgCalendarToday} from 'react-icons/cg'
 import CardMasEventos from "../../Cards/CardMasEventos";
-import Campo, {CampoDesplegable} from "../../Inputs/Campo";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Nav from "react-bootstrap/Nav";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
-import {Stack} from "react-bootstrap";
-import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
-import {components, OptionProps} from "react-select";
-import Configuraciones from "../../../utils/Configuraciones.ts";
-import Filtro from "../../../models/Filtro.ts";
+import {ButtonGroup, Stack} from "react-bootstrap";
+import {Form} from "react-bootstrap";
+import Desplegables from "./Desplegables.tsx";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {meses} from "../../Calendario/Calendario.tsx";
+import {useState,useContext} from "react";
 
 type NavbarAgendaProps = {
-  setKey: (k: string) => void;
-  eventKeys: string[];
-  sesionAdmi?: boolean;
+  currentKey: string,
+  setKey: (k: string) => void,
+  eventKeys: string[],
+  sesionAdmi?: boolean,
 };
+
 
 function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate();
-
   const [showModal, setShowModal] = useState(false)
+  const mes = useContext(AgendaContext).data.mes
+  const setData = useContext(AgendaContext).setData
+  const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda"
 
-  const {filtros} = useObtenFiltros()
-
-  const Option = (props: OptionProps<{ value: Filtro, label: string }>) => (
-    <components.Option {...props} children={
-      <div className="d-flex align-items-center">
-        <p className="flex-fill m-0">{props.label}</p>
-        <img width={25} height={25}
-             src={Configuraciones.publicURL + props.data.value.icono}
-             alt={"Simbología " + props.label}/>
-      </div>
-    }/>
-  )
-
-  const SingleValue = (props: OptionProps<{ value: Filtro, label: string }>) => (
-    <components.SingleValue {...props} children={
-      <div className="d-flex">
-        <p className="flex-fill m-0 text-truncate">{props.data.label}</p>
-        <img width={25} height={25}
-             src={Configuraciones.apiURL + props.data.value.icono}
-             alt={"Simbología " + props.label}/>
-      </div>
-    }/>
-  )
 
   return (
-    <Navbar expand="lg" className="NavbarAgenda bg-tertiary">
+    <Navbar sticky="top" expand="xxl" className="NavbarAgenda bg-tertiary">
       <Container>
-        <Campo id="buscar-evento" placeholder="Buscar evento"/>
-        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+        <Form.Control
+          className={`w-50 ${ocultaControles ? "visually-hidden" : ""}`}
+          placeholder="Buscar evento"
+          onChange={(e) =>
+            setData(prevState => ({...prevState, textoBusqueda: e.target.value}))
+          }
+        />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle"/>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="w-100 pt-2 pt-lg-0">
-            <div className="flex-grow-1 d-flex gap-2">
-              {desplegables()}
-            </div>
+          <Nav className="w-100 pt-2 pt-xxl-0 align-items-center justify-content-end">
+            {!ocultaControles ? <Desplegables/> : null}
             {opciones().map((opcion, index) => (
               <Nav.Item key={`navbar-agenda-item${index}`}>
                 {opcion}
@@ -88,30 +72,10 @@ function NavbarAgenda(props: NavbarAgendaProps) {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {navegacionEventos()}
       {modalMasEventos()}
     </Navbar>
   );
-
-  function desplegables() {
-    return (
-      <>
-        <CampoDesplegable id="comunidad"
-                          placeholder="Comunidades"
-                          options={filtros?.filter(f => f.categoria === "comunidad")
-                            .map(f => ({value: f, label: f.nombre!}))
-                          }
-                          components={{Option, SingleValue}}
-        />
-        <CampoDesplegable id="area"
-                          placeholder="Áreas"
-                          options={filtros?.filter(f => f.categoria === "área")
-                            .map(f => ({value: f, label: f.nombre!}))
-                          }
-                          components={{Option, SingleValue}}
-        />
-      </>
-    )
-  }
 
   function opciones() {
     return [
@@ -132,23 +96,53 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     ]
   }
 
+  function navegacionEventos() {
+    if (props.currentKey == "agenda")
+      return (
+        <Navbar className="position-absolute start-50 top-100 translate-middle-x w-100 bg-body-tertiary">
+          <Container className="justify-content-start">
+            <ButtonGroup aria-label="Botones de navegación" className="bg-body-secondary">
+              <Button variant="primary-inverse">
+                <FaChevronLeft/>
+              </Button>
+              <Button variant="primary-inverse">
+                {[...meses.entries()].filter(([_, v]) => v == mes)[0][0]}
+              </Button>
+              <Button variant="primary-inverse">
+                <FaChevronRight/>
+              </Button>
+            </ButtonGroup>
+          </Container>
+        </Navbar>
+      )
+    else return null
+  }
+
   function modalMasEventos() {
+
+    const eventos = useContext(AgendaContext).data.eventos;
+
+    const nuevoEvento = eventos?.filter((e) => e.tipo === "alumnado").map((e) => (
+      <CardMasEventos key={e.nombre} evento={e}/>
+    ))
+
+    // const nuevoEvento = eventos.map((e) => (
+    //   <CardMasEventos key={e.nombre} evento={e} />
+    // ))
     return (
       <Modal size="lg" show={showModal} onHide={ocultaModal}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton 
+>
           <Modal.Title>Modal Eventos</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/>
-          <CardMasEventos/>
+          {nuevoEvento?.flat()}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary">Agregar Evento</Button>
+          <Button variant="primary">Agregar Evento </Button>
         </Modal.Footer>
       </Modal>
+
     );
   }
 

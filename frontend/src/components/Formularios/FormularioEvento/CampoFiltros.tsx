@@ -23,10 +23,14 @@ export function CampoFiltros(props: CampoFiltrosProps) {
                     isMulti
                     closeMenuOnSelect={false}
                     placeholder="Eliga los filtros para el evento"
-                    options={props.filtros?.map(value => ({value: value.id, label: value.nombre}))}
-                    onChange={(e: { value: number, label: string }[]) =>
+                    value={props.evento.filtros ?
+                      props.filtros?.filter(f => props.evento.filtros?.includes(f.id!))
+                        .map(f => ({value: f.id, label: f.nombre}))
+                      : undefined}
+                    options={props.filtros?.map(o => ({value: o.id!, label: o.nombre!}))}
+                    onChange={(e: { value: number, label: string }[]) => {
                       props.setEvento("filtros", e.map(p => p.value))
-                    }
+                    }}
       />
       <Formal.Message for="filtros" className="d-flex text-danger"/>
     </>)

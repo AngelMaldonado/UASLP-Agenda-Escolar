@@ -6,10 +6,12 @@ import {TemaComponente} from '../../../utils/Utils.ts';
 import Simbologia from "../../../models/Simbologia.ts";
 import Modal from "../../Modales/Modal";
 import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useState, useContext} from "react";
 import {useEliminaSimbolo, useModificaSimbolo} from "../../../hooks/HooksSimbolo.ts";
 import Configuraciones from "../../../utils/Configuraciones.ts";
 import useModelChange from "../../../hooks/HookModelChange.ts";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 type CardSimboloProps = {
   simbologia: Simbologia
@@ -19,6 +21,8 @@ function CardSimbolo(props: CardSimboloProps) {
   const [simbologia, setSimbologia] = useState(props.simbologia)
   const [errores, setErrores] = useState({})
   const [eliminando, setEliminando] = useState(false)
+  const usuarios = useContext(AgendaContext).data.usuario;
+
 
   const {
     modificaSimbolo,
@@ -50,7 +54,7 @@ function CardSimbolo(props: CardSimboloProps) {
         timeout={modificacionExitosa ? 2000 : undefined}
         triggers={triggers()}
         onClose={onClose}
-        titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
+        titulo={<div><FaRegUser/> <p className="fs-5">Modificar Simbolo</p></div>}
         contenido={contenidoModal()}
         botones={modificacionExitosa || eliminacionExitosa ? [] : botonesModal()}
       />
@@ -58,19 +62,26 @@ function CardSimbolo(props: CardSimboloProps) {
   }
 
   function triggers() {
+    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_SIMBOLO);
+    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_SIMBOLO);
+
     return ([
-      <Boton key={"boton-modificar-simbolo-" + props.simbologia.id}
-             rounded
-             variant={TemaComponente.PrimarioInverso}
-             icono={<FaRegEdit/>}
-             onClick={() => setEliminando(false)}
-      />,
-      <Boton key={"eliminar-simbolo-" + props.simbologia.id}
-             rounded
-             variant={TemaComponente.DangerInverso}
-             icono={<FaRegTrashAlt/>}
-             onClick={() => setEliminando(true)}
-      />
+      tienePermisoModificar && (
+        <Boton key={"boton-modificar-simbolo-" + props.simbologia.id}
+              rounded
+              variant={TemaComponente.PrimarioInverso}
+              icono={<FaRegEdit/>}
+              onClick={() => setEliminando(false)}
+        />
+      ),
+      tienePermisoEliminar && (
+        <Boton key={"eliminar-simbolo-" + props.simbologia.id}
+              rounded
+              variant={TemaComponente.DangerInverso}
+              icono={<FaRegTrashAlt/>}
+              onClick={() => setEliminando(true)}
+        />
+      )
     ])
   }
 

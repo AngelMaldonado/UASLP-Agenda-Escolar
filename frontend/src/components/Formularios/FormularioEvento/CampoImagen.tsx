@@ -19,7 +19,6 @@ export function CampoImagen(props: CampoImagenProps) {
           }
           <Formal.Field name="imagen"
                         type="file"
-            /*accept="image/png, image/jpg, image/jpeg, image/webp"*/
                         accept=".webp"
                         className="visually-hidden"
                         onChange={e => props.setEvento("imagen", e.target.files[0])}
