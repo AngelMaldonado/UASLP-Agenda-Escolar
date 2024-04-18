@@ -65,9 +65,9 @@ export function modalEvento(props: { evento: Evento }) {
   
     function contenidoModal() {
       if (modificacionExitosa) {
-        return <p>El evento se modificó correctamente</p>
+        return <p className="text-center">El evento se modificó correctamente</p>
       } else if (eliminacionExitosa) {
-        return <p>El evento se eliminó correctamente</p>
+        return <p className="text-center">El evento se eliminó correctamente</p>
       } else if (eliminando) {
         return <p className="fs-5 text-center">
           ¿Esta seguro que desea eliminar el

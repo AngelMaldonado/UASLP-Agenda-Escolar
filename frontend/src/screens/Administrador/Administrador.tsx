@@ -10,6 +10,7 @@ import Tab from "react-bootstrap/Tab";
 import Simbolos from "../../components/Paneles/Simbolos";
 import Agenda from "../../components/Paneles/Agenda";
 import AgendaProvider from "../../providers/AgendaProvider.tsx";
+import TablaEventos from "../../components/TablaEventos/TablaEventos.tsx";
 
 const idVistaAdministrador = "vista-administrador";
 
@@ -37,7 +38,7 @@ function Administrador() {
         <Agenda admin/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
-        {/*<TablaEventos eventos={eventosFiltrados}/>*/}
+        <TablaEventos admin/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[1]}>
         <Usuarios/>

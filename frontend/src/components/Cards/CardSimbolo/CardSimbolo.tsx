@@ -87,9 +87,9 @@ function CardSimbolo(props: CardSimboloProps) {
 
   function contenidoModal() {
     if (modificacionExitosa) {
-      return <p key="texto-modificacion">El símbolo se modificó correctamente</p>
+      return <p key="texto-modificacion"  className="text-center">El símbolo se modificó correctamente</p>
     } else if (eliminacionExitosa) {
-      return <p key="texto-eliminacion">El símbolo se eliminó correctamente</p>
+      return <p key="texto-eliminacion"  className="text-center">El símbolo se eliminó correctamente</p>
     } else if (eliminando) {
       return <p className="fs-5 text-center" key="texto-eliminando">
         ¿Esta seguro que desea eliminar el símbolo?
