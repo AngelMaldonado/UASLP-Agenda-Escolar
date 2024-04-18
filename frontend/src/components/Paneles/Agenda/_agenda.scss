@@ -3,6 +3,10 @@
 .Agenda {
   margin-top: u.$spacer;
   margin-bottom: u.$spacer * 2.5;
+
+  .TituloMes:first-letter {
+    text-transform: capitalize;
+  }
 }
 
 .modalEvento {

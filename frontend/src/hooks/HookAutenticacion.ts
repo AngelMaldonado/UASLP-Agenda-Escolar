@@ -19,8 +19,8 @@ export const useLogin = (onError: ({}) => void) => {
     mutationFn: ServicioAutenticacion.login,
     onSuccess: (data) => {
       if (data) {
-        context.setData(prevState => ({...prevState, usuario: {...data, autenticado: true}}))
-        axios.defaults.headers.common = {"Authorization": `Bearer ${data.token}`}
+        context.setData(prevState => ({...prevState, usuario: {...data.data.usuario, autenticado: true}}))
+        axios.defaults.headers.common = {"Authorization": `Bearer ${data.data.usuario.token}`}
         navigate("/administracion")
       }
     },

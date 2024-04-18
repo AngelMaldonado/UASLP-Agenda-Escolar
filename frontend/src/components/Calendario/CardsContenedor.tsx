@@ -7,8 +7,9 @@ type CardsContenedorProps = { admin?: boolean }
 
 export function CardsContenedor(props: CardsContenedorProps) {
   const mes = useContext(AgendaContext).data.mes
+  const año = useContext(AgendaContext).data.año
   const eventos = useContext(AgendaContext).data.eventos?.filter(e =>
-    e.fecha_inicio?.getMonth() == mes
+    e.fecha_inicio?.getMonth() == mes && e.fecha_inicio?.getFullYear() == año
   )
 
   return (

@@ -1,22 +1,22 @@
 import "./_navbar-agenda.scss"
 import Boton from "../../Inputs/Boton";
 import ChipUsuario from "../../Chips/ChipUsuario";
-import {FaRegListAlt} from "react-icons/fa";
+import {FaChevronLeft, FaChevronRight, FaRegListAlt} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {CgCalendarToday} from 'react-icons/cg'
 import CardMasEventos from "../../Cards/CardMasEventos";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import Nav from "react-bootstrap/Nav";
 import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
-import {Stack} from "react-bootstrap";
+import {ButtonGroup, Stack} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import Desplegables from "./Desplegables.tsx";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {meses} from "../../Calendario/Calendario.tsx";
 import {useState,useContext} from "react";
-import {FaTimes} from "react-icons/fa";
-
 
 type NavbarAgendaProps = {
   currentKey: string,
@@ -29,9 +29,9 @@ type NavbarAgendaProps = {
 function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false)
+  const mes = useContext(AgendaContext).data.mes
   const setData = useContext(AgendaContext).setData
   const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda"
-
 
 
   return (
@@ -72,6 +72,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {navegacionEventos()}
       {modalMasEventos()}
     </Navbar>
   );
@@ -95,6 +96,28 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     ]
   }
 
+  function navegacionEventos() {
+    if (props.currentKey == "agenda")
+      return (
+        <Navbar className="position-absolute start-50 top-100 translate-middle-x w-100 bg-body-tertiary">
+          <Container className="justify-content-start">
+            <ButtonGroup aria-label="Botones de navegación">
+              <Button variant="primary-inverse">
+                <FaChevronLeft/>
+              </Button>
+              <Button variant="primary-inverse">
+                {[...meses.entries()].filter(([_, v]) => v == mes)[0][0]}
+              </Button>
+              <Button variant="primary-inverse">
+                <FaChevronRight/>
+              </Button>
+            </ButtonGroup>
+          </Container>
+        </Navbar>
+      )
+    else return null
+  }
+
   function modalMasEventos() {
 
     const eventos = useContext(AgendaContext).data.eventos;
@@ -102,18 +125,22 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     const nuevoEvento = eventos?.filter((e) => e.tipo === "alumnado").map((e) => (
       <CardMasEventos key={e.nombre} evento={e}/>
     ))
+
+    // const nuevoEvento = eventos.map((e) => (
+    //   <CardMasEventos key={e.nombre} evento={e} />
+    // ))
     return (
-      <Modal size="lg" show={showModal} onHide={ocultaModal} >
-        <Modal.Header>
-          <Modal.Title>Eventos alumnado</Modal.Title>
-          <div className="btn-cerrar" onClick={ocultaModal}>
-            <Boton icono={<FaTimes/>} variant={TemaComponente.Primario}/>
-          </div>
+      <Modal size="lg" show={showModal} onHide={ocultaModal}>
+        <Modal.Header closeButton 
+>
+          <Modal.Title>Modal Eventos</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {nuevoEvento?.flat()}
         </Modal.Body>
-        <Modal.Footer/>
+        <Modal.Footer>
+          <Button variant="primary">Agregar Evento </Button>
+        </Modal.Footer>
       </Modal>
 
     );
@@ -126,7 +153,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
   function ocultaModal() {
     setShowModal(false);
   }
-
 }
 
 export default NavbarAgenda;
