@@ -14,7 +14,9 @@ return new class extends Migration
     {
         Schema::create('evento', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cat_evento_id')->nullable()
+            $table->foreignId('cat_evento_id')
+                ->nullable()
+                ->unique()
                 ->constrained('cat_evento')
                 ->onUpdate('cascade')
                 ->nullOnDelete();
@@ -26,7 +28,7 @@ return new class extends Migration
                 ->constrained('simbologia')
                 ->onUpdate('cascade')
                 ->OnDelete('cascade');
-            $table->string('nombre', 100);
+            $table->string('nombre', 100)->unique();
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
             $table->json('hipervinculos')->nullable();

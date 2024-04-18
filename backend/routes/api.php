@@ -3,6 +3,7 @@
 use App\Http\Controllers\AutenticacionController;
 use App\Http\Controllers\CatEvento;
 use App\Http\Controllers\FiltroController;
+use App\Http\Controllers\SesionController;
 use App\Http\Controllers\SimbologiaController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ Route::get('/simbolos', [SimbologiaController::class, 'index']);
 
 // Rutas protegidas
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/sesion', [SesionController::class, 'index']);
     Route::post('/logout', [AutenticacionController::class, 'logout']);
 
     Route::controller(UsuarioController::class)->group(function () {

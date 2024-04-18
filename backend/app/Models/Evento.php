@@ -52,4 +52,13 @@ class Evento extends Model
     {
         return $this->belongsToMany(Filtro::class, 'eventos_filtros', 'evento_id', 'filtro_id');
     }
+
+    public static function EventoDesdeCatalogo(int $cat_evento_id, Evento $evento): void
+    {
+        $cat_evento = CatEvento::find($cat_evento_id);
+        // Atributos asignados por catálogo
+        $evento->cat_evento_id = $cat_evento->id;
+        $evento->nombre = $cat_evento->nombre;
+        $evento->simbolo_id = $cat_evento->simbolo_id;
+    }
 }

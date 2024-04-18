@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 class CatEvento extends Controller
 {
     //
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): \Illuminate\Database\Eloquent\Collection
     {
-        $cat_eventos = \App\Models\CatEvento::all();
-        return response()->json($cat_eventos);
+        return \App\Models\CatEvento::all();
     }
 }

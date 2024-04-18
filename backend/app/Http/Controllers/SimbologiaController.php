@@ -2,80 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ActualizaSimboloRequest;
+use App\Http\Requests\NuevoSimboloRequest;
 use App\Models\Simbologia;
+use App\Traits\RespuestasHttp;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rules\File;
-use Illuminate\Support\Facades\Validator;
 
 class SimbologiaController extends Controller
 {
-    public function index(): \Illuminate\Http\JsonResponse
+    use RespuestasHttp;
+
+    public function index(): \Illuminate\Database\Eloquent\Collection
     {
-        return(response()->json(Simbologia::all()));
+        return Simbologia::all();
     }
 
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(NuevoSimboloRequest $request): \Illuminate\Http\JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'simbolo' => ['required', File::types('webp')]
-        ]);
-
-        if ($validator->fails())
-            return response()->json(['errors' => $validator->errors(), 400]);
+        $request->validated($request->all());
 
         $simbologia = new Simbologia();
         $simbologia->simbolo = $request->file('simbolo')->store('/imagenes/simbolos');
         $simbologia->save();
 
-        return response()->json($simbologia, 200);
+        return $this->exito($simbologia, 'Símbolo guardado con éxito');
     }
 
-    public function update(Request $request)
+    public function update(ActualizaSimboloRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|int|exists:simbologia,id',
-            'simbolo' => [
-                function ($attribute, $value, $fail) {
-                    if (!is_string($value) && !($value instanceof UploadedFile))
-                        $fail('The '.$attribute.' must either be a string or file.');
-                    else if ($value instanceof UploadedFile)
-                        if($value->getClientOriginalExtension() !== 'webp')
-                            $fail('El '. $attribute . ' debe ser un archivo .webp.');
-                }
-            ],
-        ]);
-
-        if ($validator->fails())
-            return response()->json(['errors' => $validator->errors(), 400]);
+        $request->validated($request->all());
 
         $simbologia = Simbologia::find($request->input('id'));
 
-        if ($simbologia !== null)
-        {
-            if (Storage::exists($simbologia->simbolo))
-                Storage::delete($simbologia->simbolo);
-            $simbologia->simbolo = $request->file('simbolo')->store('/imagenes/simbolos');
-            $simbologia->save();
-        }
+        if (Storage::exists($simbologia->simbolo))
+            Storage::delete($simbologia->simbolo);
 
-        else return response()->json(['errors' => 'No se encontró el filtro'], 400);
-        return response()->json($simbologia, 200);
+        $simbologia->simbolo = $request->file('simbolo')->store('/imagenes/simbolos');
+        $simbologia->save();
+
+        return $this->exito($simbologia, 'Símbolo actualizado con éxito');
     }
 
     public function destroy(Request $request)
     {
-        $validator = Validator::make($request->all(), ['id' => 'required|int|exists:simbologia,id']);
+        $request->validate(['id' => 'required|exists:simbologia,id']);
 
-        if ($validator->fails())
-            return response()->json(['errors' => $validator->errors(), 400]);
+        $simbolo = Simbologia::find($request->input('id'));
 
-        $filtro = Simbologia::find($request->input('id'));
-        if (Storage::exists($filtro->simbolo))
-            Storage::delete($filtro->simbolo);
-        $filtro->delete();
+        if (Storage::exists($simbolo->simbolo))
+            Storage::delete($simbolo->simbolo);
 
-        return response()->json(['message' => 'Símbolo eliminado'], 200);
+        $simbolo->delete();
+
+        return $this->exito(null, 'Símbolo eliminado con éxito');
     }
 }
