@@ -6,6 +6,7 @@ use App\Enums\TipoUsuarioEnum;
 use App\Http\Requests\LoginRequest;
 use App\Models\Usuario;
 use App\Traits\RespuestasHttp;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AutenticacionController extends Controller

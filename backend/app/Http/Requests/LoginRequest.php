@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'tipo' => ['required', Rule::enum(TipoUsuarioEnum::class)],
-            utf8_encode('contraseña') => 'required|string|max:60|min:6',
+            'contraseña' => 'required|string|max:60|min:6',
             'email' => [
                 'required_if:tipo,' . TipoUsuarioEnum::ADMINISTRADOR->value . ',' . TipoUsuarioEnum::BECARIO->value,
                 'email',
