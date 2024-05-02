@@ -28,7 +28,7 @@ function TablaFilas(props: TablaFilasProps) {
     return (
       <tr className=''>
         {/* <td>{evento.cat_evento_id}</td> */}
-        <td>{evento.nombre}</td>
+        <td><div className="w-50">{evento.nombre}</div></td>
         <td>
           <div className='image-container'>
             <span className='w-75'>
@@ -48,7 +48,11 @@ function TablaFilas(props: TablaFilasProps) {
             {TooltipFiltro(areas)}
           </div>
         </td>
-        <td>{evento.descripcion}</td>
+        <td > <div className="description-container" style={{
+     overflow: 'hidden',
+     textOverflow: 'ellipsis',
+     whiteSpace: 'nowrap'
+  }}>{evento.descripcion}</div></td>
         <td>
           <div className='image-container'>
             <span className='w-75'>
