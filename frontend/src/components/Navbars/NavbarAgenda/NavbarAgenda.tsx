@@ -1,7 +1,6 @@
 import "./_navbar-agenda.scss"
 import Boton from "../../Inputs/Boton";
 import ChipUsuario from "../../Chips/ChipUsuario";
-import {FaRegListAlt} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {CgCalendarToday} from 'react-icons/cg'
 import CardMasEventos from "../../Cards/CardMasEventos";
@@ -10,13 +9,13 @@ import Nav from "react-bootstrap/Nav";
 import Modal from 'react-bootstrap/Modal';
 import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
-import {Stack} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import Desplegables from "./Desplegables.tsx";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 import {useState,useContext} from "react";
 import {FaTimes} from "react-icons/fa";
-
+import {FaRegListAlt} from "react-icons/fa";
+import {Stack} from "react-bootstrap";
 
 type NavbarAgendaProps = {
   currentKey: string,
@@ -31,7 +30,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
   const [showModal, setShowModal] = useState(false)
   const setData = useContext(AgendaContext).setData
   const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda"
-
 
 
   return (
@@ -115,7 +113,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         </Modal.Body>
         <Modal.Footer/>
       </Modal>
-
     );
   }
 
@@ -126,7 +123,6 @@ function NavbarAgenda(props: NavbarAgendaProps) {
   function ocultaModal() {
     setShowModal(false);
   }
-
 }
 
 export default NavbarAgenda;

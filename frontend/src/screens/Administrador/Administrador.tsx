@@ -9,7 +9,6 @@ import {useState} from "react";
 import Tab from "react-bootstrap/Tab";
 import Simbolos from "../../components/Paneles/Simbolos";
 import Agenda from "../../components/Paneles/Agenda";
-import AgendaProvider from "../../providers/AgendaProvider.tsx";
 import TablaEventos from "../../components/TablaEventos/TablaEventos.tsx";
 
 const idVistaAdministrador = "vista-administrador";
