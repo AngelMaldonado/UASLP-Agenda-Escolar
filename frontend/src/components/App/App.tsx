@@ -13,7 +13,6 @@ import Configuraciones from "../../utils/Configuraciones.ts";
  const queryClient = new QueryClient()
 try {
   axios.defaults.withCredentials = true
-  axios.defaults.headers["Accept"] = "applicacion/json"
   await axios.get(Configuraciones.sanctumURL + "csrf-cookie")
 } catch (_) {
 }

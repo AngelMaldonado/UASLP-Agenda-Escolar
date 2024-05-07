@@ -9,9 +9,9 @@ import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
 import {Dispatch, SetStateAction, useState, useContext} from "react";
 import {useEliminaSimbolo, useModificaSimbolo} from "../../../hooks/HooksSimbolo.ts";
 import Configuraciones from "../../../utils/Configuraciones.ts";
-import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import useModelChange from "../../../hooks/HookModelChange.ts";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 type CardSimboloProps = {
   simbologia: Simbologia
@@ -31,7 +31,7 @@ function CardSimbolo(props: CardSimboloProps) {
   } = useModificaSimbolo(setErrores)
   const {eliminaSimbolo, eliminacionExitosa} = useEliminaSimbolo(setErrores)
 
-  const cambiaSimbolo = useObjectAttributeChange(setSimbologia as Dispatch<SetStateAction<Object>>)
+  const cambiaSimbolo = useModelChange(setSimbologia as Dispatch<SetStateAction<Object>>)
 
   return (
     <Card className="CardSimbolo">
@@ -68,18 +68,18 @@ function CardSimbolo(props: CardSimboloProps) {
     return ([
       tienePermisoModificar && (
         <Boton key={"boton-modificar-simbolo-" + props.simbologia.id}
-               rounded
-               variant={TemaComponente.PrimarioInverso}
-               icono={<FaRegEdit/>}
-               onClick={() => setEliminando(false)}
+              rounded
+              variant={TemaComponente.PrimarioInverso}
+              icono={<FaRegEdit/>}
+              onClick={() => setEliminando(false)}
         />
       ),
       tienePermisoEliminar && (
         <Boton key={"eliminar-simbolo-" + props.simbologia.id}
-               rounded
-               variant={TemaComponente.DangerInverso}
-               icono={<FaRegTrashAlt/>}
-               onClick={() => setEliminando(true)}
+              rounded
+              variant={TemaComponente.DangerInverso}
+              icono={<FaRegTrashAlt/>}
+              onClick={() => setEliminando(true)}
         />
       )
     ])
@@ -87,9 +87,9 @@ function CardSimbolo(props: CardSimboloProps) {
 
   function contenidoModal() {
     if (modificacionExitosa) {
-      return <p key="texto-modificacion" className="text-center">El símbolo se modificó correctamente</p>
+      return <p key="texto-modificacion"  className="text-center">El símbolo se modificó correctamente</p>
     } else if (eliminacionExitosa) {
-      return <p key="texto-eliminacion" className="text-center">El símbolo se eliminó correctamente</p>
+      return <p key="texto-eliminacion"  className="text-center">El símbolo se eliminó correctamente</p>
     } else if (eliminando) {
       return <p className="fs-5 text-center" key="texto-eliminando">
         ¿Esta seguro que desea eliminar el símbolo?

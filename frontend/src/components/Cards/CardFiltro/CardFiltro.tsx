@@ -10,9 +10,9 @@ import Filtro from "../../../models/Filtro.ts";
 import Card from "react-bootstrap/Card";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import {useEliminaFiltro, useModificaFiltro} from "../../../hooks/HooksFiltro.ts";
-import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import useModelChange from "../../../hooks/HookModelChange.ts";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 type CardFiltroProps = {
   filtro: Filtro
@@ -31,7 +31,7 @@ function CardFiltro(props: CardFiltroProps) {
     reset
   } = useModificaFiltro(setErrores)
   const {eliminaFiltro, eliminacionExitosa} = useEliminaFiltro(setErrores)
-  const cambiaFiltro = useObjectAttributeChange(setFiltro as Dispatch<SetStateAction<Object>>)
+  const cambiaFiltro = useModelChange(setFiltro as Dispatch<SetStateAction<Object>>)
 
   return (
     <Card text="primary" className="CardFiltro">
@@ -70,32 +70,32 @@ function CardFiltro(props: CardFiltroProps) {
   function triggers() {
     const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_FILTRO);
     const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
-
-    return ([
+  
+    return ( [
       tienePermisoModificar && (
         <Boton key={"boton-modificar-filtro-" + props.filtro.id}
-               rounded
-               variant={TemaComponente.PrimarioInverso}
-               icono={<FaRegEdit/>}
-               onClick={() => setEliminando(false)}
+          rounded
+          variant={TemaComponente.PrimarioInverso}
+          icono={<FaRegEdit/>}
+          onClick={() => setEliminando(false)}
         />
       ),
       tienePermisoEliminar && (
         <Boton key={"eliminar-filtro-" + props.filtro.id}
-               rounded
-               variant={TemaComponente.DangerInverso}
-               icono={<FaRegTrashAlt/>}
-               onClick={() => setEliminando(true)}
-        />
+          rounded
+          variant={TemaComponente.DangerInverso}
+          icono={<FaRegTrashAlt/>}
+          onClick={() => setEliminando(true)}
+         />
       ),
     ]);
   }
 
   function contenidoModal() {
     if (modificacionExitosa) {
-      return <p key="texto-modificacion" className="text-center">El filtro se modificó correctamente</p>
+      return <p key="texto-modificacion"  className="text-center" >El filtro se modificó correctamente</p>
     } else if (eliminacionExitosa) {
-      return <p key="texto-eliminacion" className="text-center">El filtro se eliminó correctamente</p>
+      return <p key="texto-eliminacion"  className="text-center" >El filtro se eliminó correctamente</p>
     } else if (eliminando) {
       return <p className="fs-5 text-center" key="texto-eliminando">
         ¿Esta seguro que desea eliminar el

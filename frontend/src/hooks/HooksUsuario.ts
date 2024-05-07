@@ -3,8 +3,7 @@ import ServicioUsuario from "../services/ServicioUsuario.ts";
 import {AxiosError} from "axios"
 import {ErrorsObject} from "../utils/Utils.ts";
 import Usuario from "../models/Usuario.ts";
-import {Dispatch, SetStateAction} from "react";
-import {useObjectChangeTimeout} from "./HookObjectChange.ts";
+import {SetStateAction} from "react";
 
 export const useObtenUsuarios = () => {
   const {
@@ -17,21 +16,16 @@ export const useObtenUsuarios = () => {
   return {usuarios, isLoading}
 }
 
-export const useAgregaUsuario = (setErrors: (field: string, value: string) => void) => {
+export const useAgregaUsuario = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
-  const onBackendErrors = useObjectChangeTimeout(setErrors as Dispatch<SetStateAction<Object>>)
-
   const {
     mutate: agregaUsuario,
     isSuccess,
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.nuevo,
-    onSuccess: (respuesta) => {
-      if (respuesta.status == 200)
-        queryClient.invalidateQueries("usuarios")
-    },
-    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors((error.response!.data.errors))
+    onSuccess: () => queryClient.invalidateQueries("usuarios"),
+    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {agregaUsuario, registroExitoso: isSuccess, reset}
 }
