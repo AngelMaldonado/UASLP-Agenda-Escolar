@@ -2,7 +2,7 @@
 import "./_usuarios.scss"
 import Boton from "../../Inputs/Boton";
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useContext, useState} from "react"
+import {Dispatch, SetStateAction, useCallback, useContext, useState} from "react"
 import CardUsuario from "../../Cards/CardUsuario";
 import Usuario from "../../../models/Usuario.ts"
 import FormularioUsuario from "../../Formularios/FormularioUsuario";
@@ -11,8 +11,8 @@ import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
 import {useAgregaUsuario, useObtenUsuarios} from "../../../hooks/HooksUsuario.ts";
 import useModelChange from "../../../hooks/HookModelChange.ts";
 import {ValidationError} from "yup";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
+import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario())
@@ -25,7 +25,7 @@ function Usuarios() {
 
   return (
     <div className="cards-usuarios py-4 container">
-      {usuario?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? modalNuevoUsuario() : null}
+       {usuario?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? modalNuevoUsuario() :null } 
       {usuarios?.map(usuario => {
         return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>
       })}

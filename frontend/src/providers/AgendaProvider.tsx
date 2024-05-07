@@ -12,7 +12,6 @@ type DataContextType = {
   filtrosUsuario?: Filtro[],
   textoBusqueda?: string,
   mes?: number,
-  año?: number,
   eventos?: Evento[],
   eventoActual?: Evento
 }
@@ -31,7 +30,6 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
     filtrosUsuario: [],
     textoBusqueda: "",
     mes: new Date().getMonth(),
-    año: new Date().getFullYear(),
     eventos: [],
     eventoActual: undefined
   })

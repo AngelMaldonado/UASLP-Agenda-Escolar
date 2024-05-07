@@ -43,11 +43,7 @@ function Calendario(props: CalendarioProps) {
                     datesSet={(info) => {
                       const titulo = info.view.title.split(' ')
                       setData(prevState =>
-                        ({
-                          ...prevState,
-                          mes: meses.get(titulo[0]),
-                          año: parseInt(titulo[2])
-                        })
+                        ({...prevState, mes: meses.get(titulo[0])})
                       )
                     }}
                     dayMaxEventRows
