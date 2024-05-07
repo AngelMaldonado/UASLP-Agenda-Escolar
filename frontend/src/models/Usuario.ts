@@ -1,7 +1,6 @@
 import {PermisosEnum, TipoUsuarioEnum} from "../enums";
-import {array, boolean, number, object, ObjectSchema, ref, string} from "yup";
+import {array, boolean, number, object, ObjectSchema, ref, setLocale, string} from "yup";
 import {es} from "yup-locales"
-import {setLocale} from "yup"
 
 setLocale(es)
 
@@ -89,6 +88,10 @@ class Usuario {
       is: TipoUsuarioEnum.BECARIO,
       then: schema => schema.email().max(320).required(),
       otherwise: schema => schema.nullable()
+    }).when("tipo", {
+      is: TipoUsuarioEnum.ADMINISTRADOR,
+      then: schema => schema.email().max(320).required(),
+      otherwise: schema => schema.nullable()
     }),
     rpe: number().when("tipo", {
       is: TipoUsuarioEnum.SECUNDARIO,
@@ -96,11 +99,7 @@ class Usuario {
         .test("rpe", "Deben ser 6 dígitos", v => v.toString().length == 6),
       otherwise: schema => schema.nullable()
     }),
-    contraseña: string().when("tipo", {
-      is: TipoUsuarioEnum.BECARIO,
-      then: schema => schema.max(60).required(),
-      otherwise: schema => schema.nullable()
-    }),
+    contraseña: string().required().max(60),
   })
 }
 

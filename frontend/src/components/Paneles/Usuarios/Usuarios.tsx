@@ -9,7 +9,7 @@ import FormularioUsuario from "../../Formularios/FormularioUsuario";
 import {TemaComponente} from "../../../utils/Utils.ts";
 import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
 import {useAgregaUsuario, useObtenUsuarios} from "../../../hooks/HooksUsuario.ts";
-import useModelChange from "../../../hooks/HookModelChange.ts";
+import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
 import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
 import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
@@ -21,11 +21,12 @@ function Usuarios() {
 
   const {usuarios} = useObtenUsuarios()
   const {agregaUsuario, registroExitoso, reset} = useAgregaUsuario(setErrores)
-  const onUsuarioChange = useModelChange(setNuevoUsuario as Dispatch<SetStateAction<Object>>)
+  const onUsuarioChange = useObjectAttributeChange(setNuevoUsuario as Dispatch<SetStateAction<Object>>)
+  const onValidationError = useObjectChangeTimeout(setErrores)
 
   return (
     <div className="cards-usuarios py-4 container">
-       {usuario?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? modalNuevoUsuario() :null } 
+       {usuario?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? modalNuevoUsuario() :null }
       {usuarios?.map(usuario => {
         return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>
       })}
@@ -67,10 +68,7 @@ function Usuarios() {
       // Si se validó correctamente, enviar a back
       .then(_ => agregaUsuario(nuevoUsuario))
       // Si no coincide con el esquema, mostrar errores en formulario
-      .catch((r: ValidationError) => {
-        setErrores({[r.path!]: r.errors})
-        setTimeout(() => setErrores({}), 5000)
-      })
+      .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }
 
   function onClose() {

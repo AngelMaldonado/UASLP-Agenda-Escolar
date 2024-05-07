@@ -8,10 +8,10 @@ import Simbologia from "../../../models/Simbologia.ts";
 import CardSimbolo from "../../Cards/CardSimbolo";
 import {useAgregaSimbolo, useObtenSimbolos} from "../../../hooks/HooksSimbolo.ts";
 import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
-import useModelChange from "../../../hooks/HookModelChange.ts";
+import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
-import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
-import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
 
 function Simbolos() {
   const [nuevoSimbolo, setNuevoSimbolo] = useState(new Simbologia())
@@ -20,14 +20,14 @@ function Simbolos() {
   const {simbolos} = useObtenSimbolos()
   const {agregaSimbolo, registroExitoso, reset} = useAgregaSimbolo(setErrores)
 
-  const onSimboloChange = useModelChange(setNuevoSimbolo as Dispatch<SetStateAction<Object>>)
+  const onSimboloChange = useObjectAttributeChange(setNuevoSimbolo as Dispatch<SetStateAction<Object>>)
 
   const usuarios = useContext(AgendaContext).data.usuario;
 
 
   return (
     <div className="cards-filtros py-4 container">
-      {usuarios?.permisos?.includes(PermisosEnum.CREAR_SIMBOLO) ? modalNuevoSimbolo() : undefined }
+      {usuarios?.permisos?.includes(PermisosEnum.CREAR_SIMBOLO) ? modalNuevoSimbolo() : undefined}
       {simbolos?.map(simbolo => {
         return <CardSimbolo key={"simbolo-" + simbolo.id} simbologia={simbolo}/>
       })}

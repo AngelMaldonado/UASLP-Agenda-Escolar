@@ -4,13 +4,13 @@ import Boton from "../../Inputs/Boton"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
 import {TemaComponente} from "../../../utils/Utils.ts"
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useContext,useState} from "react";
+import {Dispatch, SetStateAction, useContext, useState} from "react";
 import FormularioUsuario from "../../Formularios/FormularioUsuario";
 import {useModificaUsuario, useEliminaUsuario} from "../../../hooks/HooksUsuario.ts";
-import useModelChange from "../../../hooks/HookModelChange.ts";
-import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
-import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
-import {TipoUsuarioEnum } from "../../../enums/TipoUsuarioEnum.ts"
+import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {TipoUsuarioEnum} from "../../../enums/TipoUsuarioEnum.ts"
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuario, setUsuario] = useState(props.usuario)
@@ -25,15 +25,15 @@ function CardUsuario(props: { usuario: Usuario }) {
     reset
   } = useModificaUsuario(setErrores, setUsuario)
   const {eliminaUsuario, eliminacionExitosa} = useEliminaUsuario(setErrores)
-  const cambiaUsuario = useModelChange(setUsuario as Dispatch<SetStateAction<Object>>)
+  const cambiaUsuario = useObjectAttributeChange(setUsuario as Dispatch<SetStateAction<Object>>)
 
   return (
     <div className="card card-usuario text-center">
       <div className="card-header d-flex justify-content-between align-items-center bg-transparent border-0">
         <p className="m-0">#{props.usuario.id}</p>
         <div className="d-inline-flex gap-1">
-            {/* {usuarios?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? null : modalUsuario()} */}
-           { modalUsuario()}
+          {/* {usuarios?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? null : modalUsuario()} */}
+          {modalUsuario()}
         </div>
       </div>
       <div className="card-body">
@@ -75,38 +75,38 @@ function CardUsuario(props: { usuario: Usuario }) {
     const esSecundario = usuarios?.tipo?.includes(TipoUsuarioEnum.SECUNDARIO);
     const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO);
     const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
-  
-    return ( [
+
+    return ([
       tienePermisoModificar && (
         esBEcario || esSecundario ?
           !esAdministrador ?
-        <Boton
-          key={"boton-modificar-usuario-" + props.usuario.id}
-          rounded
-          variant={TemaComponente.PrimarioInverso}
-          icono={<FaRegEdit />}
-          onClick={() => setEliminando(false)}
-        />: undefined
-        :
+            <Boton
+              key={"boton-modificar-usuario-" + props.usuario.id}
+              rounded
+              variant={TemaComponente.PrimarioInverso}
+              icono={<FaRegEdit/>}
+              onClick={() => setEliminando(false)}
+            /> : undefined
+          :
           <Boton
             key={"boton-modificar-usuario-" + props.usuario.id}
             rounded
             variant={TemaComponente.PrimarioInverso}
-            icono={<FaRegEdit />}
+            icono={<FaRegEdit/>}
             onClick={() => setEliminando(false)}
           />
-        
+
       ),
       tienePermisoEliminar && (
         !esAdministrador ?
-        <Boton
-          key={"eliminar-usuario" + props.usuario.id}
-          rounded
-          variant={TemaComponente.DangerInverso}
-          icono={<FaRegTrashAlt />}
-          onClick={() => setEliminando(true)}
-        />
-        :undefined
+          <Boton
+            key={"eliminar-usuario" + props.usuario.id}
+            rounded
+            variant={TemaComponente.DangerInverso}
+            icono={<FaRegTrashAlt/>}
+            onClick={() => setEliminando(true)}
+          />
+          : undefined
       )
     ]);
   }

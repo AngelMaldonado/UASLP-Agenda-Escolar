@@ -3,13 +3,15 @@ import axios, {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Utils.ts";
 import ServicioAutenticacion from "../services/ServicioAutenticacion.ts";
 import {useNavigate} from "react-router-dom";
-import {useContext} from "react";
+import {Dispatch, SetStateAction, useContext} from "react";
 import {AgendaContext} from "../providers/AgendaProvider.tsx";
 import Usuario from "../models/Usuario.ts";
+import {useObjectChangeTimeout} from "./HookObjectChange.ts";
 
-export const useLogin = (onError: ({}) => void) => {
+export const useLogin = (setErrors: (field: string, value: string) => void) => {
   const navigate = useNavigate()
   const context = useContext(AgendaContext)
+  const onBackendErrors = useObjectChangeTimeout(setErrors as Dispatch<SetStateAction<Object>>)
 
   const {
     mutate: login,
@@ -17,14 +19,16 @@ export const useLogin = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioAutenticacion.login,
-    onSuccess: (data) => {
-      if (data) {
-        context.setData(prevState => ({...prevState, usuario: {...data, autenticado: true}}))
-        axios.defaults.headers.common = {"Authorization": `Bearer ${data.token}`}
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200) {
+        context.setData(prevState =>
+          ({...prevState, usuario: {...<Usuario>respuesta.data, autenticado: true}})
+        )
+        axios.defaults.headers.common = {"Authorization": `Bearer ${(<Usuario>respuesta.data).token}`}
         navigate("/administracion")
-      }
+      } else onBackendErrors((<ErrorsObject>respuesta.data).errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors((error.response!.data.errors))
   })
   return {login, autenticacionExitosa: isSuccess, reset}
 }

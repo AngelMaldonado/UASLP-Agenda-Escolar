@@ -8,10 +8,10 @@ import Boton from "../../Inputs/Boton";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import Filtro from "../../../models/Filtro.ts";
 import {useAgregaFiltro, useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
-import useModelChange from "../../../hooks/HookModelChange.ts";
+import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
-import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
-import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
 
 function Filtros() {
   const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
@@ -25,12 +25,12 @@ function Filtros() {
     registroExitoso,
     reset
   } = useAgregaFiltro(setErrores)
-  const onFiltroChange = useModelChange(setNuevoFiltro as Dispatch<SetStateAction<Object>>)
+  const onFiltroChange = useObjectAttributeChange(setNuevoFiltro as Dispatch<SetStateAction<Object>>)
 
   return (
     <div className="cards-filtros py-4 container">
       {usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO) ? modalNuevoFiltro() : undefined}
-    
+
       {filtros?.map(filtro => {
         return <CardFiltros key={"filtro-" + filtro.id} filtro={filtro}/>
       })}

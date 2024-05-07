@@ -1,5 +1,3 @@
-// TODO: apagar autocompletado de tipo de usuario y contraseña
-
 import "./_formularioLogin.scss"
 import {TipoUsuarioEnum, TipoUsuarioOptions, TipoUsuarioOptionsType} from "../../../enums";
 import {useState} from "react";
@@ -7,12 +5,11 @@ import Usuario from "../../../models/Usuario.ts";
 import {Form} from "react-bootstrap";
 import Formal from "react-formal";
 import Select from "react-select";
-import {ErrorsObject} from "../../../utils/Utils.ts";
 
 type FormularioLoginProps = {
   usuario: Usuario,
   setUsuario: ((field: string, value: string | number) => void),
-  errores: ErrorsObject,
+  errores: {},
 }
 
 function FormularioLogin(props: FormularioLoginProps) {
@@ -30,8 +27,8 @@ function FormularioLogin(props: FormularioLoginProps) {
         {props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ? rpe() : null}
         {contraseña()}
       </Form.Group>
-      <Form.Control type="hidden" name="auth"/>
-      <Formal.Message for="auth" className="d-flex text-danger"/>
+      <Form.Control type="hidden" name="backend"/>
+      <Formal.Message for="backend" className="d-flex text-danger"/>
     </Formal>
   )
 

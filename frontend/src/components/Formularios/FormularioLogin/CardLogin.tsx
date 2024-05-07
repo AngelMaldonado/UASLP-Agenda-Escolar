@@ -5,7 +5,7 @@ import {TemaComponente} from "../../../utils/Utils.ts";
 import FormularioLogin from "./FormularioLogin.tsx";
 import {Dispatch, SetStateAction, useState} from "react";
 import Usuario from "../../../models/Usuario.ts";
-import useModelChange from "../../../hooks/HookModelChange.ts";
+import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
 import {useLogin} from "../../../hooks/HookAutenticacion.ts";
 
@@ -13,11 +13,9 @@ function CardLogin() {
   const [usuario, setUsuario] = useState(new Usuario())
   const [errores, setErrores] = useState({})
 
-  const onUsuarioChange = useModelChange(setUsuario as Dispatch<SetStateAction<Object>>)
-  const {login} = useLogin((data: {}) => {
-    setErrores(data)
-    setTimeout(() => setErrores({}), 5000)
-  })
+  const onUsuarioChange = useObjectAttributeChange(setUsuario as Dispatch<SetStateAction<Object>>)
+  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
+  const {login} = useLogin(setErrores)
 
   return (
     <Container className="mt-5">
@@ -42,10 +40,7 @@ function CardLogin() {
   function iniciaSesion() {
     Usuario.login_schema.validate(usuario)
       .then(_ => login(usuario))
-      .catch((r: ValidationError) => {
-        setErrores({[r.path!]: r.errors})
-        setTimeout(() => setErrores({}), 5000)
-      })
+      .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }
 }
 

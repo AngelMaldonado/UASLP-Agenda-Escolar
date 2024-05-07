@@ -13,7 +13,7 @@ class ServicioUsuario {
   }
 
   public static async nuevo(usuario: Usuario) {
-    return (await axios.post(Configuraciones.apiURL + "usuarios", usuario)).data
+    return (await axios.post(Configuraciones.apiURL + "usuarios", usuario))
   }
 
   public static async modifica(usuario: Usuario) {

@@ -13,10 +13,10 @@ import {TemaComponente} from "../../../utils/Utils.ts";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import {Navbar} from 'react-bootstrap';
-import useModelChange from "../../../hooks/HookModelChange.ts";
+import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
-import { AgendaContext } from "../../../providers/AgendaProvider.tsx";
-import { PermisosEnum } from "../../../enums/PermisosEnum.ts";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
 
 export type NavbarAdminProps = {
   currentKey: string,
@@ -31,7 +31,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
 
 
   const {agregaEvento, registroExitoso, reset} = useAgregaEvento(setErrores)
-  const onEventoChange = useModelChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
+  const onEventoChange = useObjectAttributeChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
   nuevoEvento.usuario_id = 1
 
   return (
@@ -82,7 +82,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Símbolos" icono={<FaRegFileImage/>}
              onClick={() => props.setKey(props.eventKeys[3])}/>,
-      usuarios?.permisos?.includes(PermisosEnum.CREAR_EVENTO) ?  modalNuevoEvento() : undefined,
+      usuarios?.permisos?.includes(PermisosEnum.CREAR_EVENTO) ? modalNuevoEvento() : undefined,
     ]
   }
 

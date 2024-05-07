@@ -6,4 +6,4 @@ export enum TemaComponente {
   Success = "success", SuccessInverso = "success-inverse",
 }
 
-export type ErrorsObject = { [key: string]: Array<string> }
+export type ErrorsObject = { message: string, errors: Array<{ [key: string]: Array<string> }> }

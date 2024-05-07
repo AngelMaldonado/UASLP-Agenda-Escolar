@@ -18,20 +18,18 @@ import {
   TipoUsuarioOptions,
   TipoUsuarioOptionsType,
 } from "../../../enums"
-import {ErrorsObject} from "../../../utils/Utils.ts"
 import {useState} from "react";
 
 type FormularioUsuarioProps = {
   usuario: Usuario,
   setUsuario: ((field: string, value: string | PermisosEnum[]) => void),
-  errores: ErrorsObject,
+  errores: {},
 }
 
 function FormularioUsuario(props: FormularioUsuarioProps) {
   const [errores, setErrores] = useState({})
 
-  // Deshabilitar autocompletado del seleccionable de Tipo
-  const Input = (inputProps: any) => <components.Input {...inputProps} autoComplete="off"/>
+  const Input = (inputProps: any) => <components.Input {...inputProps} autoComplete="off" aria-autocomplete="none"/>
   const MultiValueLabel = (props: MultiValueGenericProps) => {
     return (
       <components.MultiValueLabel {...props}>
