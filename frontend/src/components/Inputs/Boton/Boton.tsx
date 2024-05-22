@@ -2,11 +2,12 @@ import "./_boton.scss"
 import Nav from "react-bootstrap/Nav";
 import React, {Ref} from "react"
 import {Button} from "react-bootstrap";
-import {TemaComponente} from "../../../utils/Utils.ts"
+import {TemaComponente} from "../../../utils/Tipos.ts"
 
 type BotonProps = {
   ref?: Ref<HTMLButtonElement>
   active?: boolean,
+  disabled?: boolean,
   variant?: TemaComponente,
   etiqueta?: string,
   icono?: React.ReactElement,

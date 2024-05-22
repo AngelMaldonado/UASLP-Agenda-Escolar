@@ -3,16 +3,9 @@
 .ChipUsuario {
   height: 2.4rem;
   width: 2.4rem;
-
-  img {
-    width: 100%;
-  }
+  padding-top: c.$spacer * 0.35;
 
   span {
     padding: c.$spacer * 0.5;
   }
-}
-
-#usuarios-conectados-tooltip {
-  width: 9rem;
 }

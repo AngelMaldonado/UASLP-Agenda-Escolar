@@ -1,7 +1,7 @@
 import axios from "axios"
 import Usuario from "../models/Usuario.ts";
-import Configuraciones from "../utils/Configuraciones.ts";
-import {ErrorsObject} from "../utils/Utils.ts";
+import {Configuraciones} from "../utils/Constantes.ts";
+import {ErrorsObject} from "../utils/Tipos.ts";
 
 class ServicioAutenticacion {
   public static async login(usuario: Usuario) {

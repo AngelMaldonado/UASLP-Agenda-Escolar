@@ -2,16 +2,16 @@ import Card from 'react-bootstrap/Card';
 import Boton from "../../Inputs/Boton";
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa";
 import './_card-simbolo.scss';
-import {TemaComponente} from '../../../utils/Utils.ts';
+import {TemaComponente} from '../../../utils/Tipos.ts';
 import Simbologia from "../../../models/Simbologia.ts";
 import Modal from "../../Modales/Modal";
 import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
-import {Dispatch, SetStateAction, useState, useContext} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {useEliminaSimbolo, useModificaSimbolo} from "../../../hooks/HooksSimbolo.ts";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {PermisosEnum} from "../../../enums";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 type CardSimboloProps = {
   simbologia: Simbologia
@@ -21,8 +21,7 @@ function CardSimbolo(props: CardSimboloProps) {
   const [simbologia, setSimbologia] = useState(props.simbologia)
   const [errores, setErrores] = useState({})
   const [eliminando, setEliminando] = useState(false)
-  const usuarios = useContext(AgendaContext).data.usuario;
-
+  const usuario = useObtenSesion().sesion?.usuario;
 
   const {
     modificaSimbolo,
@@ -61,9 +60,9 @@ function CardSimbolo(props: CardSimboloProps) {
     )
   }
 
-  function triggers() {
-    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_SIMBOLO);
-    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_SIMBOLO);
+  function triggers(): React.ReactElement[] {
+    const tienePermisoModificar = usuario?.permisos?.includes(PermisosEnum.MODIFICAR_SIMBOLO);
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_SIMBOLO);
 
     return ([
       tienePermisoModificar && (
@@ -82,7 +81,7 @@ function CardSimbolo(props: CardSimboloProps) {
                onClick={() => setEliminando(true)}
         />
       )
-    ])
+    ] as React.ReactElement[])
   }
 
   function contenidoModal() {

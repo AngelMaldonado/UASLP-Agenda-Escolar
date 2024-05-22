@@ -1,12 +1,13 @@
 import Modal from "../Modal";
-import {FaRegCalendar, FaRegCalendarAlt} from "react-icons/fa";
+import {FaRegCalendar} from "react-icons/fa";
 import {Button, Image, Stack} from "react-bootstrap";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {useContext} from "react";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {CgCalendarToday} from "react-icons/cg";
 
 export default function ModalEvento() {
   const {data, setData} = useContext(AgendaContext)
@@ -17,7 +18,7 @@ export default function ModalEvento() {
       <Modal
         mostrar
         onClose={onClose}
-        titulo={<FaRegCalendarAlt/>}
+        titulo={<CgCalendarToday/>}
         contenido={contenidoModal()}
       />
     )
@@ -25,7 +26,7 @@ export default function ModalEvento() {
 
   function contenidoModal() {
     return (
-      <Stack className="modalEvento" gap={3}>
+      <Stack className="ModalEvento" gap={3}>
         <Stack direction="horizontal" gap={2}>
           <Image className="img-fluid rounded-2" width={60} src={Configuraciones.publicURL + evento?.simbolo}/>
           <h5>{evento?.nombre}</h5>
@@ -49,8 +50,10 @@ export default function ModalEvento() {
         <p>{evento?.descripcion}</p>
         {evento?.hipervinculos?.length! > 0 ?
           <Stack className="text-center">
-            {evento?.hipervinculos?.map(hipervinculo =>
-              <OverlayTrigger overlay={<Tooltip className="w-auto">{hipervinculo}</Tooltip>}>
+            {evento?.hipervinculos?.map((hipervinculo, index) =>
+              <OverlayTrigger key={`hipervinculo-${index}`}
+                              overlay={<Tooltip className="w-auto">{hipervinculo}</Tooltip>}
+              >
                 <Button variant="primary-inverse"
                         className="nav-link d-inline-block text-truncate"
                         href={hipervinculo}

@@ -1,8 +1,8 @@
 import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 import Modal from '../../Modales/Modal/Modal.tsx'
 import './_simbolos.scss'
-import {Dispatch, SetStateAction, useState, useContext} from "react"
+import {Dispatch, SetStateAction, useState} from "react"
 import Boton from "../../Inputs/Boton";
 import Simbologia from "../../../models/Simbologia.ts";
 import CardSimbolo from "../../Cards/CardSimbolo";
@@ -10,8 +10,8 @@ import {useAgregaSimbolo, useObtenSimbolos} from "../../../hooks/HooksSimbolo.ts
 import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {PermisosEnum} from "../../../enums";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 function Simbolos() {
   const [nuevoSimbolo, setNuevoSimbolo] = useState(new Simbologia())
@@ -22,12 +22,11 @@ function Simbolos() {
 
   const onSimboloChange = useObjectAttributeChange(setNuevoSimbolo as Dispatch<SetStateAction<Object>>)
 
-  const usuarios = useContext(AgendaContext).data.usuario;
-
+  const usuario = useObtenSesion().sesion?.usuario;
 
   return (
     <div className="cards-filtros py-4 container">
-      {usuarios?.permisos?.includes(PermisosEnum.CREAR_SIMBOLO) ? modalNuevoSimbolo() : undefined}
+      {usuario?.permisos?.includes(PermisosEnum.CREAR_SIMBOLO) ? modalNuevoSimbolo() : undefined}
       {simbolos?.map(simbolo => {
         return <CardSimbolo key={"simbolo-" + simbolo.id} simbologia={simbolo}/>
       })}

@@ -1,22 +1,20 @@
-// TODO: establecer el id del usuario en nuevoEvento con la sesión
-
 import './_navbar-admin.scss'
 import Boton from "../../Inputs/Boton";
-import Campo from "../../Inputs/Campo";
 import Modal from "../../Modales/Modal";
 import FormularioEvento from "../../Formularios/FormularioEvento/FormularioEvento.tsx";
-import {Dispatch, SetStateAction, useState, useContext} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {FaRegCalendarAlt, FaRegFileImage, FaRegPlusSquare, FaRegUser, FaStream} from 'react-icons/fa'
 import {useAgregaEvento} from "../../../hooks/HooksEvento.ts";
 import Evento from "../../../models/Evento.ts";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import {Navbar} from 'react-bootstrap';
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {PermisosEnum} from "../../../enums";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {Temporizador} from "./Temporizador.tsx";
 
 export type NavbarAdminProps = {
   currentKey: string,
@@ -27,25 +25,18 @@ export type NavbarAdminProps = {
 function NavbarAdmin(props: NavbarAdminProps) {
   const [nuevoEvento, setNuevoEvento] = useState(new Evento())
   const [errores, setErrores] = useState({})
-  const usuarios = useContext(AgendaContext).data.usuario;
-
+  const usuario = useObtenSesion().sesion?.usuario;
 
   const {agregaEvento, registroExitoso, reset} = useAgregaEvento(setErrores)
   const onEventoChange = useObjectAttributeChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
   nuevoEvento.usuario_id = 1
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary bg-blanco-80">
-      <Container className='gap-2'>
-        <div className={
-          `flex-grow-1 NavBusqueda
-          ${(props.currentKey == "calendario" || props.currentKey == "agenda") ? "visually-hidden" : ""}`
-        }>
-          <Campo id="busqueda" placeholder="Buscar"/>
-        </div>
+    <Navbar expand="xl" className="bg-blanco-80 NavbarAdmin">
+      <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="NavToggle ms-auto"/>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav>
+          <Nav className="pt-2 pt-xl-0">
             <div className='NavbarCollapse w-100'>
               <ul className="navbar-nav gap-2 justify-content-between">
                 {opciones().map((opcion, index) => (
@@ -57,12 +48,10 @@ function NavbarAdmin(props: NavbarAdminProps) {
                 ))}
               </ul>
             </div>
-
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-
   )
 
   function opciones() {
@@ -82,7 +71,8 @@ function NavbarAdmin(props: NavbarAdminProps) {
       <Boton variant={TemaComponente.PrimarioInverso}
              etiqueta="Símbolos" icono={<FaRegFileImage/>}
              onClick={() => props.setKey(props.eventKeys[3])}/>,
-      usuarios?.permisos?.includes(PermisosEnum.CREAR_EVENTO) ? modalNuevoEvento() : undefined,
+      usuario?.permisos?.includes(PermisosEnum.CREAR_EVENTO) ? modalNuevoEvento() : undefined,
+      <Temporizador/>
     ]
   }
 

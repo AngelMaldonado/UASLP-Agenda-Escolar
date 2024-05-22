@@ -1,22 +1,22 @@
 import Evento from '../../../models/Evento.ts';
 import Boton from "../../Inputs/Boton";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 import FormularioEvento from "../../Formularios/FormularioEvento";
 import Modal from '../../Modales/Modal/index.ts';
 import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt} from "react-icons/fa";
 import {Button} from "react-bootstrap";
-import {Dispatch, SetStateAction, useState, useContext} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {PermisosEnum} from "../../../enums";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 
 export function modalEvento(props: { evento: Evento }) {
   const [evento, setEvento] = useState(props.evento)
   const [errores, setErrores] = useState({});
   const [eliminando, setEliminando] = useState(false);
-  const usuarios = useContext(AgendaContext).data.usuario;
+  const usuario = useObtenSesion().sesion?.usuario;
 
 
   const {modificaEvento, modificacionExitosa, reset} = useModificaEvento(setErrores);
@@ -36,14 +36,14 @@ export function modalEvento(props: { evento: Evento }) {
     />
   )
 
-  function triggers() {
-    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_EVENTO);
-    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
+  function triggers(): React.ReactElement[] {
+    const tienePermisoModificar = usuario?.permisos?.includes(PermisosEnum.MODIFICAR_EVENTO);
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
     return ([
       tienePermisoModificar && (
         <Button variant="primary-inverse"
                 className="rounded-circle"
-                onClick={(e) => {
+                onClick={(_) => {
                   setEliminando(false)
                 }}
         >
@@ -58,7 +58,7 @@ export function modalEvento(props: { evento: Evento }) {
                onClick={() => setEliminando(true)}
         />
       )
-    ])
+    ] as React.ReactElement[])
   }
 
   function contenidoModal() {

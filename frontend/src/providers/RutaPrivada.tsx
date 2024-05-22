@@ -1,8 +1,10 @@
-import {useContext} from "react";
-import {AgendaContext} from "./AgendaProvider.tsx";
+import {useObtenSesion} from "../hooks/HookSesion.ts";
+import React from "react";
 import {Navigate} from "react-router-dom";
 
 export default function RutaPrivada({children}: { children: React.ReactNode }) {
-  const autenticado = useContext(AgendaContext).data.usuario?.autenticado
-  return autenticado ? children : <Navigate to="/login"/>
+  const {sesion, isLoading} = useObtenSesion()
+
+  if (!isLoading)
+    return sesion?.usuario ? children : <Navigate to="/login"/>
 }

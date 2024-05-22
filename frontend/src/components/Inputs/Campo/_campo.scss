@@ -44,6 +44,10 @@
         &:hover {
           color: u.$blanco;
           background-color: u.$primary;
+
+          img {
+            filter: brightness(0) invert(1);
+          }
         }
       }
     }

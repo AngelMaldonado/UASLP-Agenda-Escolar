@@ -1,13 +1,22 @@
 import axios from "axios"
-import Configuraciones from "../utils/Configuraciones.ts"
+import {Configuraciones} from "../utils/Constantes.ts"
 import Usuario from "../models/Usuario.ts";
 
 class ServicioUsuario {
   public static async obtenUsuarios() {
     try {
-      return (await axios.get<Usuario[]>(Configuraciones.apiURL + "usuarios")).data
+      return (await axios.get<Usuario[]>(
+        Configuraciones.apiURL + "usuarios",
+        {
+          transformResponse: [data => JSON.parse(data, (key, value) => {
+            if (key != "rpe")
+              return value
+            else if (key == null)
+              return undefined
+          })]
+        }
+      )).data
     } catch (err) {
-      //console.log(err)
       return []
     }
   }
@@ -26,11 +35,9 @@ class ServicioUsuario {
       await axios.delete(Configuraciones.apiURL + "usuarios", {data: {id: usuario.id}});
       return true
     } catch (err) {
-      console.log(err)
       return false
     }
   }
-
 }
 
 export default ServicioUsuario

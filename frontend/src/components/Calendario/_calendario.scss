@@ -2,12 +2,14 @@
 
 .calendar-container {
   display: flex;
-  width: 100%;
+  max-width: 100%;
   height: 100vh;
 
   .fc {
-    z-index: 0;
+    z-index: 1;
     width: 100%;
+    position: relative;
+    overflow: visible;
 
     .fc-header-toolbar {
       color: u.$primary;
@@ -26,79 +28,5 @@
         text-transform: capitalize;
       }
     }
-
-    .fc-daygrid-day {
-      cursor: pointer;
-
-      .fc-daygrid-day-top {
-        justify-content: center;
-
-        .fc-daygrid-day-number {
-          color: u.$negro;
-          text-decoration: none;
-        }
-      }
-
-      &:hover > :not(:has(.fc-daygrid-day-events:hover)) {
-        box-shadow: u.$calendar-event-box-inner-shadow;
-      }
-    }
-  }
-
-  .fc-daygrid-more-link {
-    width: 80%;
-    padding: u.$spacer * 0.5;
-    border-radius: u.$spacer * 1.5;
-    text-align: center;
-    background-color: u.$blanco-80;
-  }
-}
-
-.fc-daygrid-event {
-  padding: 0;
-  overflow: hidden;
-  border-radius: u.$spacer * 1.5;
-}
-
-.evento-calendario {
-  position: relative;
-  border: none;
-
-  &:hover {
-    background: initial;
-
-    .Filter {
-      display: none;
-    }
-  }
-}
-
-.titulo-evento-calendario {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-@media (max-width:390px) {
-  .calendar-container {
-    width:100vw;
-    /* height: 30vh !important; */
-  }
-  .fc-scrollgrid-sync-table{
-    width: 100vw;
-    /* height: 30vh !important; */
-  }
-}
-
-
-@media (max-width: 1024px )
-{
-  .calendar-container {
-    width:100vw;
-    height: 60vh !important;
-  }
-  .fc-scrollgrid-sync-table{
-    width: 100vw;
-    height: 60vh !important;
   }
 }

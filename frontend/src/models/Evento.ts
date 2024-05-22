@@ -13,6 +13,7 @@ class Evento {
   public nombre: string | undefined
   public fecha_inicio: Date | undefined
   public fecha_fin: Date | undefined
+  public hipervinculo: string | undefined
   public hipervinculos: (string | undefined)[] | undefined
   public imagen: string | Object | undefined
   public descripcion: string | undefined
@@ -22,12 +23,13 @@ class Evento {
 
   constructor(id?: number,
               cat_evento?: number,
-              filtros?: number[],
+              filtros: number[] = [],
               usuario_id?: number,
               nombre?: string,
               fecha_inicio?: Date,
               fecha_fin?: Date,
-              hipervinculos?: string[],
+              hipervinculo: string = "",
+              hipervinculos: string[] = [],
               imagen?: string,
               descripcion?: string,
               simbolo?: string,
@@ -40,6 +42,7 @@ class Evento {
     this.nombre = nombre
     this.fecha_inicio = fecha_inicio
     this.fecha_fin = fecha_fin
+    this.hipervinculo = hipervinculo
     this.hipervinculos = hipervinculos
     this.imagen = imagen
     this.descripcion = descripcion
@@ -62,7 +65,7 @@ class Evento {
     }),
     filtros: array().when("tipo", {
       is: (value: string) => value == TipoEventoEnum.FACULTAD || value == TipoEventoEnum.CATALOGO,
-      then: schema => schema.required(),
+      then: schema => schema.required().min(1),
     }),
     usuario_id: number().required(),
     nombre: string().when("tipo", {
@@ -72,8 +75,9 @@ class Evento {
     }),
     fecha_inicio: date().required("fecha de inicio es un campo requerido"),
     fecha_fin: date().required("fecha de fin es un campo requerido"),
+    hipervinculo: string().url("ingrese una url válida (https://dominio.com)"),
     hipervinculos: array().of(string().url("ingrese una url válida (https://dominio.com)"))
-      .max(6, "solo se permiten 5 hipervínculos por evento"),
+      .max(4, "solo se permiten 5 hipervínculos por evento"),
     imagen: mixed(),
     descripcion: string().required(),
     simbolo: string(),
@@ -97,23 +101,24 @@ class Evento {
     })
   }
 
-  static FiltraEventos(filtros?: Filtro[], texto?: string, eventos?: Evento[]) {
+  static FiltraEventos(mes: number, año: number, filtros?: Filtro[], texto?: string, eventos?: Evento[]) {
     eventos?.sort((a, b) => a.fecha_inicio!.getTime() - b.fecha_inicio!.getTime())
-    return eventos?.filter(e => {
-      let retorno = true
-      // if (e.tipo == TipoEventoEnum.ALUMNADO) {
+
+    return eventos?.filter(evento => {
+      let incluir = true
+
       if (filtros && filtros.length > 0)
-        retorno = filtros.some(f => e.filtros?.includes(f.id!))
-      else if (filtros?.length == 0)
-        retorno = true
+        incluir = filtros.some(f => evento.filtros?.includes(f.id!))
+
       if (texto != "")
-        retorno = e.nombre?.includes(texto!) ?? false
-      // } else retorno = false
-      return retorno
+        incluir = evento.nombre?.toLowerCase().includes(texto!.toLowerCase()) ?? false
+
+      if (evento.fecha_inicio?.getMonth() != mes || evento.fecha_inicio?.getFullYear() != año)
+        incluir = false
+
+      return incluir
     })
   }
-
-
 }
 
 

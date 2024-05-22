@@ -3,9 +3,17 @@
 .Agenda {
   margin-top: u.$spacer;
   margin-bottom: u.$spacer * 2.5;
+
+  .TituloMes {
+    cursor: text;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
 }
 
-.modalEvento {
+.ModalEvento {
   > img {
     width: 100%;
     object-fit: cover;

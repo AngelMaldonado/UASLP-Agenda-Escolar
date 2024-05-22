@@ -4,14 +4,20 @@ import Formal from "react-formal"
 import Select from "react-select"
 import Evento from "../../../models/Evento.ts"
 import Filtro from "../../../models/Filtro.ts"
+import {FiltroOptionsType} from "../../../enums/FiltrosEnum.ts";
 
 export type CampoFiltrosProps = {
   evento: Evento,
   setEvento: ((field: string, value: any) => void),
-  filtros?: Filtro[]
+  filtros: Filtro[]
 }
 
 export function CampoFiltros(props: CampoFiltrosProps) {
+  const options = props.filtros.map(f => ({
+    value: f,
+    label: f.nombre
+  } as FiltroOptionsType))
+
   if (props.evento.tipo == TipoEventoEnum.CATALOGO || props.evento.tipo == TipoEventoEnum.FACULTAD)
     return (<>
       <Form.Label htmlFor="filtros">Filtros*</Form.Label>
@@ -23,14 +29,14 @@ export function CampoFiltros(props: CampoFiltrosProps) {
                     isMulti
                     closeMenuOnSelect={false}
                     placeholder="Eliga los filtros para el evento"
-                    value={props.evento.filtros ?
-                      props.filtros?.filter(f => props.evento.filtros?.includes(f.id!))
-                        .map(f => ({value: f.id, label: f.nombre}))
+                    noOptionsMessage={() => <>Sin opciones</>}
+                    options={options}
+                    mapToValue={props.evento.filtros?.length! > 0 ?
+                      v => options?.filter(f => v.filtros?.includes(f.value.id))
                       : undefined}
-                    options={props.filtros?.map(o => ({value: o.id!, label: o.nombre!}))}
-                    onChange={(e: { value: number, label: string }[]) => {
-                      props.setEvento("filtros", e.map(p => p.value))
-                    }}
+                    onChange={(e: FiltroOptionsType[]) =>
+                      props.setEvento("filtros", e.map(f => f.value.id))
+                    }
       />
       <Formal.Message for="filtros" className="d-flex text-danger"/>
     </>)

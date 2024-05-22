@@ -1,9 +1,115 @@
 @use '../../../utils/index' as u;
 
 .CardAgenda {
-  max-height: 10rem;
+  height: 10rem;
   box-shadow: u.$card-sm-box-shadow;
 
+  .card-body {
+    .card-title {
+      .card-img {
+        width: 4.5rem;
+        height: 4.5rem;
+      }
+
+      h6 {
+        min-width: 0;
+      }
+    }
+
+    .card-text {
+      display: none;
+    }
+
+    > img {
+      display: none;
+    }
+
+    .Hipervinculos {
+      display: none;
+    }
+  }
+
+  .hstack {
+    span {
+      :first-child {
+        color: u.$primary;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .CardAgenda {
+    .card-body {
+      display: flex;
+      gap: u.$spacer;
+      align-items: center;
+      padding-left: 22.5rem + u.$spacer * 0.5;
+
+      * {
+        margin: 0;
+      }
+
+      .card-title {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 22.5rem;
+
+        .card-img {
+          min-width: 44.4445%;
+          height: 100%;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      .hstack {
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .card-text {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .CardAgenda {
+    .card-body {
+      .Hipervinculos {
+        min-width: 30%;
+        max-width: 30%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .CardAgenda {
+    .card-body {
+      overflow: hidden;
+
+      img {
+        display: initial;
+        width: 20%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+/*
 
   .card-body {
     display: flex;
@@ -56,7 +162,7 @@
       display: flex;
       flex-direction: column;
       max-width: 10rem;
-      justify-content: space-between;
+      justify-content: center;
     }
 
     .Modificacion {
@@ -150,3 +256,4 @@
     }
   }
 }
+ */

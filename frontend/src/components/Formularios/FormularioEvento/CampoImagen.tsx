@@ -1,7 +1,7 @@
 import {Form, Image} from "react-bootstrap";
 import Formal from "react-formal";
 import Evento from "../../../models/Evento.ts";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 
 export type CampoImagenProps = {
   evento: Evento,

@@ -2,76 +2,27 @@
 import "./_usuarios.scss";
 import Boton from "../../Inputs/Boton";
 import Modal from "../../Modales/Modal";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import CardUsuario from "../../Cards/CardUsuario";
 import Usuario from "../../../models/Usuario.ts";
 import FormularioUsuario from "../../Formularios/FormularioUsuario";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
-import {
-  useAgregaUsuario,
-  useObtenUsuarios,
-} from "../../../hooks/HooksUsuario.ts";
+import {useAgregaUsuario, useObtenUsuarios} from "../../../hooks/HooksUsuario.ts";
 import {ValidationError} from "yup";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 import {PermisosEnum} from "../../../enums";
 import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario());
   const [errores, setErrores] = useState({});
-  const usuario = useContext(AgendaContext).data.usuario;
-  const [files, setFiles] = useState();
-  const [avatar, setAvatar] = useState("");
+  const usuario = useObtenSesion().sesion?.usuario;
 
   const {usuarios} = useObtenUsuarios()
   const {agregaUsuario, registroExitoso, reset} = useAgregaUsuario(setErrores)
   const onUsuarioChange = useObjectAttributeChange(setNuevoUsuario as Dispatch<SetStateAction<Object>>)
   const onValidationError = useObjectChangeTimeout(setErrores)
-  const uploadImage = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("files", files[0]);
-    fetch("http://localhost:1337/api/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((datos) => {
-        const imageId = datos[0].id;
-        console.log(imageId);
-        // const dat = new FormData();
-        // dat.append("image", imageId);
-        fetch("http://localhost:1337/api/usuarios/3", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            data: {
-              image: imageId.toString(),
-            },
-          }),
-        })
-          .then((resp) => resp.json())
-          .then((datos) => {
-            console.log(datos);
-
-            fetch(`http://localhost:1337/api/upload/files/${imageId}`)
-              .then((res) => res.json())
-              .then((img) => {
-                const url = `http://localhost:1337${img.url}`;
-                setAvatar(url);
-                console.log(img.url);
-              });
-          });
-      });
-  };
 
   return (
     <div className="cards-usuarios py-4 container">
@@ -81,18 +32,6 @@ function Usuarios() {
       {usuarios?.map((usuario) => {
         return <CardUsuario key={"usuario-" + usuario.id} usuario={usuario}/>;
       })}
-
-      <div className="form">
-        <form action="" method="post" id="frmAvatar" onSubmit={uploadImage}>
-          <input
-            type="file"
-            onChange={(e) => setFiles(e.target.files)}
-            placeholder="Selecciona una imagen"
-          />
-          <button type="submit">Cargar</button>
-        </form>
-      </div>
-      <img src={avatar} alt=""/>
     </div>
   );
 

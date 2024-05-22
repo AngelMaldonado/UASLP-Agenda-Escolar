@@ -6,10 +6,21 @@
   box-shadow: u.$card-box-shadow;
   border-width: u.$card-border-width;
   border-radius: u.$card-border-radius;
+  transition: background-color 0.3s;
 
   > .card-body {
     display: flex;
     flex-direction: column;
+
+    .ChipUsuario {
+      height: 6.5rem;
+      width: 6.5rem;
+      padding-top: u.$spacer * 1.5;
+
+      span {
+        padding: u.$spacer;
+      }
+    }
 
     .card-title {
       display: flex;
@@ -23,6 +34,10 @@
         background-color: u.$secondary;
       }
     }
+  }
+
+  &:hover {
+    background-color: u.$blanco-80;
   }
 }
 
@@ -48,6 +63,14 @@
         height: 100%;
         color: u.$blanco;
       }
+    }
+  }
+
+  &:hover {
+    background-color: u.$secondary-80;
+
+    > .new-icon {
+      filter: brightness(100%);
     }
   }
 }

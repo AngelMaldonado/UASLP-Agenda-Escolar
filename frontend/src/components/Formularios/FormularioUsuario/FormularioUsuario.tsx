@@ -1,7 +1,3 @@
-// TODO: castear o mapear correctamente <Select multiValue/> en el modelo del <Formal/>
-// TODO: arreglar el warning del ValueContainer2 en el componente inyectado al MultiSelect
-// TODO: deshabilitar autocomplete en correo y contraseña
-
 import "./_formulario-usuario.scss"
 import Usuario from "../../../models/Usuario.ts"
 import {Form} from "react-bootstrap"
@@ -40,7 +36,7 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
 
   return (
     <Formal schema={Usuario.schema}
-            defaultValue={props.usuario}
+            value={props.usuario}
             errors={{...errores, ...props.errores}}
             onError={errors => setErrores(errors)}>
       <span className="text-muted fst-italic">Campos requeridos *</span>
@@ -53,8 +49,8 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
                       unstyled
                       components={{Input}}
                       placeholder="Eliga el tipo de usuario"
+                      noOptionsMessage={() => <>Sin opciones</>}
                       options={TipoUsuarioOptions.slice(1)}
-                      mapFromValue={{"tipo": option => (option as TipoUsuarioOptionsType).value}}
                       mapToValue={props.usuario.tipo ?
                         v =>
                           TipoUsuarioOptions.slice(1).find(o => o.value === v.tipo)
@@ -74,8 +70,14 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
                       components={{MultiValueLabel}}
                       closeMenuOnSelect={false}
                       placeholder="Eliga los permisos que tendrá el usuario"
+                      noOptionsMessage={() => <>Sin opciones</>}
                       options={PermisosOptions}
-                      onChange={(e: PermisosOptionsType[]) => props.setUsuario("permisos", e.map(p => p.value))}
+                      mapToValue={props.usuario.permisos!.length > 0 ?
+                        v => PermisosOptions.filter(p => v.permisos?.includes(p.value))
+                        : undefined}
+                      onChange={(e: PermisosOptionsType[]) => {
+                        props.setUsuario("permisos", e.map(p => p.value))
+                      }}
         />
         <Formal.Message for="permisos" className="d-flex text-danger"/>
       </Form.Group>

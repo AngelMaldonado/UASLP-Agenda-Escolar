@@ -1,7 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioEvento from "../services/ServicioEvento.ts";
 import {AxiosError} from "axios";
-import {ErrorsObject} from "../utils/Utils.ts";
+import {ErrorsObject} from "../utils/Tipos.ts";
 
 export const useObtenEventos = () => {
   const {

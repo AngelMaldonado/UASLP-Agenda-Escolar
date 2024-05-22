@@ -1,72 +1,64 @@
-import {useContext, useEffect, useState} from 'react';
+// TODO: evitar el clipping en el moreLink del calendario
+
+import {useContext, useEffect, useRef} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Evento from "../../models/Evento.ts";
 import esLocale from "@fullcalendar/core/locales/es"
-import Configuraciones from "../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../utils/Constantes.ts";
 import {CardsContenedor} from "./CardsContenedor.tsx";
 import {AgendaContext} from "../../providers/AgendaProvider.tsx";
+import {TipoEventoEnum} from "../../enums";
 
-
-export type CalendarioProps = {
-  admin?: boolean
-}
-
-export const meses: Map<string, number> = new Map([
-  ['enero', 0],
-  ['febrero', 1],
-  ['marzo', 2],
-  ['abril', 3],
-  ['mayo', 4],
-  ['junio', 5],
-  ['julio', 6],
-  ['agosto', 7],
-  ['septiembre', 8],
-  ['octubre', 9],
-  ['noviembre', 10],
-  ['diciembre', 11],
-])
-
-function Calendario(props: CalendarioProps) {
+function Calendario() {
   const {data, setData} = useContext(AgendaContext)
-  const [events, setEvents] = useState(Evento.ParseEventosCalendario(data.eventos ?? []));
+  const calendarioRef = useRef<FullCalendar>(null)
 
   useEffect(() => {
-    setEvents(Evento.ParseEventosCalendario(data.eventos ?? []).filter(evento => evento.tipo !== 'alumnado'))
-  }, [data.eventos]);
+  }, [data.textoBusqueda])
 
   return (
     <div className="calendar-container">
-      <FullCalendar plugins={[dayGridPlugin]}
+      <FullCalendar ref={calendarioRef}
+                    plugins={[dayGridPlugin]}
                     locale={esLocale}
                     firstDay={1}
                     datesSet={(info) => {
-                      const titulo = info.view.title.split(' ')
+                      const date = info.view.calendar.getDate()
                       setData(prevState =>
-                        ({...prevState, mes: meses.get(titulo[0])})
+                        ({...prevState, mes: date.getMonth(), año: date.getFullYear()})
                       )
                     }}
-                    dayMaxEventRows
+                    dayMaxEvents={3}
+                    dayPopoverFormat={{weekday: "long", day: "numeric"}}
                     titleFormat={{year: "numeric", month: "long"}}
                     headerToolbar={{start: "title", center: "", end: "prevYear,prev,today,next,nextYear"}}
-                    dayHeaderFormat={{weekday: "long"}}
-                    events={events}
+                    dayHeaderFormat={{weekday: (window.innerWidth > 768 ? "long" : "short")}}
+                    events={Evento.ParseEventosCalendario(data.eventos?.filter(e =>
+                      e.tipo !== TipoEventoEnum.ALUMNADO) ?? [])
+                    }
+                    eventDidMount={(_) =>
+                      setTimeout(() => calendarioRef?.current?.getApi().updateSize(), 1)
+                    }
+                    eventOverlap={false}
                     eventContent={cardEvento}
                     eventClassNames={"evento-calendario"}
                     eventBackgroundColor={"transparent"}
       />
-      <CardsContenedor admin={props.admin}/>
+      <CardsContenedor/>
     </div>
   );
 
   function cardEvento(arg: any) {
     const evento = arg.event.extendedProps
+
     return (
-      <div className="px-1 py-1 w-100 text-center text-dark"
+      <div className="px-1 py-1 w-100 text-center text-dark overflow-hidden"
            style={{
              backgroundImage: `url(${Configuraciones.publicURL + evento.simbolo})`,
              fontSize: "0.8rem"
            }}
+           onClick={() => setData(prevState => ({...prevState, eventoActual: evento}))}
       >
         <div className="Filter position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-10"></div>
         <p

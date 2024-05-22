@@ -1,5 +1,5 @@
 import axios from "axios"
-import Configuraciones from "../utils/Configuraciones.ts"
+import {Configuraciones} from "../utils/Constantes.ts"
 import Evento from "../models/Evento.ts";
 
 class ServicioEvento {

@@ -1,7 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioFiltros from "../services/ServicioFiltros.ts";
 import {AxiosError} from "axios";
-import {ErrorsObject} from "../utils/Utils.ts";
+import {ErrorsObject} from "../utils/Tipos.ts";
 
 export const useObtenFiltros = () => {
   const {

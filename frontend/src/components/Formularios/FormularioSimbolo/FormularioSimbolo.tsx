@@ -1,14 +1,14 @@
 import Simbologia from "../../../models/Simbologia.ts";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 import {Form, Image} from "react-bootstrap";
-import {ErrorsObject} from "../../../utils/Utils.ts";
+import {ErrorsObject} from "../../../utils/Tipos.ts";
 import {useState} from "react";
 import Formal from "react-formal";
 
 type FormularioSimboloProps = {
   simbologia: Simbologia,
   setSimbolo: ((field: string, value: string | File) => void),
-  errores: ErrorsObject,
+  errores: {},
 }
 
 function FormularioSimbolo(props: FormularioSimboloProps) {

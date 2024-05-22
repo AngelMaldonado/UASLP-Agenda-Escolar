@@ -1,5 +1,5 @@
 import axios from "axios"
-import Configuraciones from "../utils/Configuraciones.ts"
+import {Configuraciones} from "../utils/Constantes.ts"
 import Simbologia from "../models/Simbologia.ts";
 
 class ServicioSimbolos {

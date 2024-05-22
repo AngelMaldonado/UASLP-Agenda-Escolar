@@ -1,8 +1,8 @@
 import Filtro from "../../../models/Filtro.ts";
 import Select, {components, MultiValueProps, OptionProps} from "react-select";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 import {useContext} from "react";
-import {FiltrosCategoriaEnum} from "../../../enums/FiltroCategoriaEnum.ts";
+import {FiltrosCategoriaEnum} from "../../../enums/FiltrosEnum.ts";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 function Desplegables() {
@@ -11,7 +11,7 @@ function Desplegables() {
   const areas = data.filtros?.filter(f => f.categoria == FiltrosCategoriaEnum.AREA)
 
   return (
-    <div className="d-flex flex-grow-1 gap-2 align-items-lg-center">
+    <div className="d-flex flex-column gap-2 flex-xl-row flex-grow-1">
       {desplegable(comunidades, "Comunidades", FiltrosCategoriaEnum.COMUNIDAD)}
       {desplegable(areas, "Áreas", FiltrosCategoriaEnum.AREA)}
     </div>
@@ -34,7 +34,7 @@ function Desplegables() {
       if (props.index > 0) return null
       const {length} = props.getValue()
       return (length > 0) ?
-        <div className="option-label">{`${props.selectProps.placeholder} (${length})`}</div>
+        <div>{`${props.selectProps.placeholder} (${length})`}</div>
         : <components.MultiValue {...props} children={props.children}/>
     }
 

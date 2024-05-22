@@ -1,7 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioUsuario from "../services/ServicioUsuario.ts";
 import {AxiosError} from "axios"
-import {ErrorsObject} from "../utils/Utils.ts";
+import {ErrorsObject} from "../utils/Tipos.ts";
 import Usuario from "../models/Usuario.ts";
 import {Dispatch, SetStateAction} from "react";
 import {useObjectChangeTimeout} from "./HookObjectChange.ts";

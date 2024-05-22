@@ -1,6 +1,6 @@
 import CatEvento from "../models/CatEvento.ts";
 import axios from "axios";
-import Configuraciones from "../utils/Configuraciones.ts";
+import {Configuraciones} from "../utils/Constantes.ts";
 
 export default class ServicioCatEvento {
   public static async obten() {

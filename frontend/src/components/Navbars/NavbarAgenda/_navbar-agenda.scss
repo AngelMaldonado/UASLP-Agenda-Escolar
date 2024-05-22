@@ -1,55 +1,15 @@
 @use "../../../utils/constants" as c;
 
 .NavbarAgenda {
-  .container {
-    > .form-control {
-      flex: 1;
-      margin-right: c.$spacer * 0.5;
-    }
-  }
-
-  .navbar-nav {
-    align-items: center;
-    gap: c.$spacer;
-
-    .UsuariosActivos {
-      > :last-child {
-        display: none;
-      }
-    }
+  .Busqueda {
+    width: 50%;
   }
 }
 
-@media screen and (max-width: 1200px) and (min-width: 992px) {
+@media screen and (min-width: 1200px) {
   .NavbarAgenda {
-    .navbar-nav {
-      .UsuariosActivos {
-        > :nth-child(1), :nth-child(2), :nth-child(3), :nth-child(4) {
-          display: none;
-        }
-
-        :last-child {
-          display: block;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .NavbarAgenda {
-    .navbar-nav {
-      > * {
-        width: 100%;
-      }
-
-      > :first-child {
-        flex-direction: column;
-      }
-
-      .UsuariosActivos {
-        justify-content: center;
-      }
+    .Busqueda {
+      width: 5%;
     }
   }
 }

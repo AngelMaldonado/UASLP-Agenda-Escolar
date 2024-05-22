@@ -4,7 +4,7 @@ import Formal from "react-formal"
 import Select, {components, OptionProps, SingleValueProps} from "react-select"
 import Evento from "../../../models/Evento.ts"
 import Simbologia from "../../../models/Simbologia.ts"
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 
 export type CampoSimbologiaProps = {
   evento: Evento,

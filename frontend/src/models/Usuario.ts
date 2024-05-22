@@ -1,5 +1,5 @@
 import {PermisosEnum, TipoUsuarioEnum} from "../enums";
-import {array, boolean, number, object, ObjectSchema, ref, setLocale, string} from "yup";
+import {array, number, object, ObjectSchema, ref, setLocale, string} from "yup";
 import {es} from "yup-locales"
 
 setLocale(es)
@@ -14,8 +14,8 @@ class Usuario {
   public permisos: string[] | undefined
   public contraseña: string | undefined
   public contraseña_confirmation: string | undefined
-  public autenticado: boolean | undefined
   public token: string | undefined
+  public color: number | undefined
 
   constructor(
     id?: number,
@@ -27,8 +27,8 @@ class Usuario {
     permisos = <string[]>[],
     contraseña?: string,
     contraseña_confirmation?: string,
-    autenticado: boolean = false,
-    token: string = "") {
+    token: string = "",
+    color?: number) {
     this.id = id
     this.rpe = rpe
     this.nombre = nombre
@@ -38,8 +38,8 @@ class Usuario {
     this.permisos = permisos
     this.contraseña = contraseña
     this.contraseña_confirmation = contraseña_confirmation
-    this.autenticado = autenticado
     this.token = token
+    this.color = color
   }
 
   public static schema: ObjectSchema<Usuario> = object({
@@ -78,12 +78,13 @@ class Usuario {
         .oneOf([ref("contraseña")], "Las contraseñas deben coincidir"),
       otherwise: schema => schema.nullable()
     }),
-    autenticado: boolean(),
     token: string(),
+    color: number(),
   })
 
   public static login_schema: ObjectSchema<any> = object({
-    tipo: string().required().test(v => Object.values(TipoUsuarioEnum).includes(v as TipoUsuarioEnum)),
+    tipo: string().required()
+      .test(v => Object.values(TipoUsuarioEnum).includes(v as TipoUsuarioEnum)),
     email: string().when("tipo", {
       is: TipoUsuarioEnum.BECARIO,
       then: schema => schema.email().max(320).required(),

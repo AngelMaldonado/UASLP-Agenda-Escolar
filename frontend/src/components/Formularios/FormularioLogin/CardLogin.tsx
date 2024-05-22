@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Boton from "../../Inputs/Boton";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 import FormularioLogin from "./FormularioLogin.tsx";
 import {Dispatch, SetStateAction, useState} from "react";
 import Usuario from "../../../models/Usuario.ts";
@@ -24,7 +24,10 @@ function CardLogin() {
           Administración Agenda | Calendario
         </Card.Header>
         <Card.Body>
-          <FormularioLogin usuario={usuario} setUsuario={onUsuarioChange} errores={errores}/>
+          <FormularioLogin usuario={usuario}
+                           setUsuarioProp={onUsuarioChange}
+                           setUsuario={setUsuario}
+                           errores={errores}/>
         </Card.Body>
         <Card.Footer className="d-flex gap-2 py-3">
           <Boton key={"iniciar-sesion"}

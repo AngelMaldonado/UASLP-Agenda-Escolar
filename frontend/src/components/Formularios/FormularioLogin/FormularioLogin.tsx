@@ -1,6 +1,6 @@
 import "./_formularioLogin.scss"
 import {TipoUsuarioEnum, TipoUsuarioOptions, TipoUsuarioOptionsType} from "../../../enums";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import Usuario from "../../../models/Usuario.ts";
 import {Form} from "react-bootstrap";
 import Formal from "react-formal";
@@ -8,7 +8,8 @@ import Select from "react-select";
 
 type FormularioLoginProps = {
   usuario: Usuario,
-  setUsuario: ((field: string, value: string | number) => void),
+  setUsuarioProp: ((field: string, value: string | number) => void),
+  setUsuario: Dispatch<SetStateAction<Usuario>>,
   errores: {},
 }
 
@@ -17,14 +18,14 @@ function FormularioLogin(props: FormularioLoginProps) {
 
   return (
     <Formal schema={Usuario.login_schema}
+            value={props.usuario}
             errors={{...errores, ...props.errores}}
             onError={errors => setErrores(errors)}>
       <Form.Group>
         {tipo()}
         {props.usuario.tipo == TipoUsuarioEnum.BECARIO || props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ?
-          correo() : null
+          correo() : props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ? rpe() : null
         }
-        {props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ? rpe() : null}
         {contraseña()}
       </Form.Group>
       <Form.Control type="hidden" name="backend"/>
@@ -50,7 +51,10 @@ function FormularioLogin(props: FormularioLoginProps) {
                         TipoUsuarioOptions.slice(1).find(o => o.value === v.tipo)
                       : undefined
                     }
-                    onChange={(o: TipoUsuarioOptionsType) => props.setUsuario("tipo", o.value)}
+                    onChange={(o: TipoUsuarioOptionsType) => {
+                      props.setUsuario(new Usuario())
+                      props.setUsuarioProp("tipo", o.value)
+                    }}
       />
       <Formal.Message for="tipo" className="d-flex text-danger"/>
     </>)
@@ -62,7 +66,7 @@ function FormularioLogin(props: FormularioLoginProps) {
       <Formal.Field name="email"
                     className="form-control"
                     placeholder="Escriba el correo del usuario (ejemplo@dominio.com)"
-                    onChange={e => props.setUsuario("email", e.target.value)}
+                    onChange={e => props.setUsuarioProp("email", e.target.value)}
       />
       <Formal.Message for="email" className="d-flex text-danger"/>
     </>)
@@ -75,7 +79,7 @@ function FormularioLogin(props: FormularioLoginProps) {
         name="rpe"
         className="form-control"
         placeholder="RPE Ej. 123456"
-        onChange={e => props.setUsuario("rpe", e.target.value)}
+        onChange={e => props.setUsuarioProp("rpe", e.target.value)}
       />
       <Formal.Message for="rpe" className="d-flex text-danger"/>
     </>)
@@ -88,7 +92,7 @@ function FormularioLogin(props: FormularioLoginProps) {
                     type="password"
                     className="form-control"
                     placeholder="Escriba una contraseña para el usuario"
-                    onChange={e => props.setUsuario("contraseña", e.target.value)}
+                    onChange={e => props.setUsuarioProp("contraseña", e.target.value)}
       />
       <Formal.Message for="contraseña" className="d-flex text-danger"/>
     </>)

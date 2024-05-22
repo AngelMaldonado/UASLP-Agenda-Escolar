@@ -1,18 +1,18 @@
 import './CardFiltro.scss'
 import Boton from "../../Inputs/Boton"
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useState, useContext} from "react";
-import {TemaComponente} from "../../../utils/Utils.ts"
+import {Dispatch, SetStateAction, useState} from "react";
+import {TemaComponente} from "../../../utils/Tipos.ts"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
 import {Badge, Image} from "react-bootstrap";
-import Configuraciones from "../../../utils/Configuraciones.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 import Filtro from "../../../models/Filtro.ts";
 import Card from "react-bootstrap/Card";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import {useEliminaFiltro, useModificaFiltro} from "../../../hooks/HooksFiltro.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {PermisosEnum} from "../../../enums";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 type CardFiltroProps = {
   filtro: Filtro
@@ -22,8 +22,7 @@ function CardFiltro(props: CardFiltroProps) {
   const [filtro, setFiltro] = useState(props.filtro)
   const [errores, setErrores] = useState({})
   const [eliminando, setEliminando] = useState(false)
-  const usuarios = useContext(AgendaContext).data.usuario;
-
+  const usuario = useObtenSesion().sesion?.usuario;
 
   const {
     modificaFiltro,
@@ -67,9 +66,9 @@ function CardFiltro(props: CardFiltroProps) {
     )
   }
 
-  function triggers() {
-    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_FILTRO);
-    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
+  function triggers(): React.ReactElement[] {
+    const tienePermisoModificar = usuario?.permisos?.includes(PermisosEnum.MODIFICAR_FILTRO);
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
 
     return ([
       tienePermisoModificar && (
@@ -88,7 +87,7 @@ function CardFiltro(props: CardFiltroProps) {
                onClick={() => setEliminando(true)}
         />
       ),
-    ]);
+    ] as React.ReactElement[]);
   }
 
   function contenidoModal() {

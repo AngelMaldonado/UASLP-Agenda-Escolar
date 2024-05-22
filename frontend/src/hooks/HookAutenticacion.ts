@@ -1,48 +1,45 @@
 import {useMutation} from "react-query";
 import axios, {AxiosError} from "axios";
-import {ErrorsObject} from "../utils/Utils.ts";
+import {ErrorsObject} from "../utils/Tipos.ts";
 import ServicioAutenticacion from "../services/ServicioAutenticacion.ts";
 import {useNavigate} from "react-router-dom";
-import {Dispatch, SetStateAction, useContext} from "react";
-import {AgendaContext} from "../providers/AgendaProvider.tsx";
+import {Dispatch, SetStateAction} from "react";
 import Usuario from "../models/Usuario.ts";
 import {useObjectChangeTimeout} from "./HookObjectChange.ts";
+import {useObtenSesion} from "./HookSesion.ts";
 
 export const useLogin = (setErrors: (field: string, value: string) => void) => {
-  const navigate = useNavigate()
-  const context = useContext(AgendaContext)
   const onBackendErrors = useObjectChangeTimeout(setErrors as Dispatch<SetStateAction<Object>>)
+  const navigate = useNavigate()
+  const {refetch} = useObtenSesion()
 
   const {
     mutate: login,
     isSuccess,
-    reset
   } = useMutation({
     mutationFn: ServicioAutenticacion.login,
     onSuccess: (respuesta) => {
       if (respuesta.status == 200) {
-        context.setData(prevState =>
-          ({...prevState, usuario: {...<Usuario>respuesta.data, autenticado: true}})
-        )
-        axios.defaults.headers.common = {"Authorization": `Bearer ${(<Usuario>respuesta.data).token}`}
-        navigate("/administracion")
+        localStorage.setItem("token", `Bearer ${(<Usuario>respuesta.data).token}`)
+        axios.defaults.headers.common = {"Authorization": localStorage.getItem("token")}
+        refetch().then(() => navigate("/administracion"))
       } else onBackendErrors((<ErrorsObject>respuesta.data).errors)
     },
     onError: (error: AxiosError<ErrorsObject>) => onBackendErrors((error.response!.data.errors))
   })
-  return {login, autenticacionExitosa: isSuccess, reset}
+
+  return {login, autenticacionExitosa: isSuccess}
 }
 
 export const useLogout = () => {
   const navigate = useNavigate()
-  const setData = useContext(AgendaContext).setData
+
   const {
     mutate: logout,
   } = useMutation({
     mutationFn: ServicioAutenticacion.logout,
     onSuccess: () => {
-      setData(prevState => ({...prevState, usuario: new Usuario()}))
-      delete axios.defaults.headers.common["Authorization"]
+      localStorage.removeItem("token")
       navigate("/")
     },
   })

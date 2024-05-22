@@ -1,11 +1,9 @@
-// TODO: hacer que el modal se oculte cuando reciba el timeout
-
 import "./_modal.scss"
 import Boton from "../../Inputs/Boton";
 import {Modal} from "react-bootstrap";
 import {FaTimes} from "react-icons/fa";
 import React, {ReactComponentElement, useState} from "react";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 
 export type ModalProps = {
   trigger?: React.ReactElement,

@@ -7,7 +7,7 @@
   box-shadow: u.$card-box-shadow;
   border-radius: u.$card-border-radius;
   border-width: u.$card-border-width;
-  transition: all 0.3s;
+  transition: background-color 0.3s;
 
   > .card-body {
     display: flex;
@@ -98,11 +98,10 @@
 }
 
 .card-filtro-nuevo:hover {
+  cursor: pointer;
   background-color: u.$secondary-80;
 
   > .filtro-icon {
     filter: brightness(100%);
   }
 }
-
-

@@ -8,7 +8,6 @@ import {useState} from "react";
 import {useObtenCatEventos} from "../../../hooks/HookCatEvento.ts";
 import {useObtenSimbolos} from "../../../hooks/HooksSimbolo.ts";
 import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
-import {ErrorsObject} from "../../../utils/Utils.ts";
 import Formal from "react-formal";
 import {CampoTipoEvento} from "./CampoTipoEvento.tsx";
 import {CampoNombreEvento} from "./CampoNombreEvento.tsx";
@@ -21,8 +20,8 @@ import {CampoDescripcion} from "./CampoDescripcion.tsx";
 
 type FormularioNuevoEventoProps = {
   evento: Evento,
-  setEvento: ((field: string, value: string | Date | number | string[] | number[]) => void),
-  errores: ErrorsObject
+  setEvento: ((field: string, value: any) => void),
+  errores: {}
 }
 
 function FormularioEvento(props: FormularioNuevoEventoProps) {
@@ -32,30 +31,21 @@ function FormularioEvento(props: FormularioNuevoEventoProps) {
   const {simbolos} = useObtenSimbolos()
   const {filtros} = useObtenFiltros()
 
-  const defaultValue = {
-    ...props.evento,
-    hipervinculos: props.evento.hipervinculos ?
-      ["", ...props.evento.hipervinculos.filter(h => h != "" && h != " ")]
-      : [""],
-    filtros: filtros?.filter(f =>
-      props.evento.filtros?.includes(f.id!)).map(f =>
-      ({value: f.id, label: f.nombre}))
-  }
-
   return (
     <Formal schema={Evento.schema}
-            defaultValue={defaultValue}
+            value={props.evento}
             errors={{...errores, ...props.errores}}
-            onError={errors => setErrores(errors)}>
+            onError={errors => setErrores(errors)}
+            className="FormularioEvento">
       <span className="text-muted fst-italic">Campos requeridos *</span>
       <Form.Group>
         <CampoTipoEvento evento={props.evento} setEvento={props.setEvento}/>
         <CampoNombreEvento evento={props.evento} setEvento={props.setEvento} cat_eventos={cat_eventos}/>
         <CampoSimbologia evento={props.evento} setEvento={props.setEvento} simbolos={simbolos}/>
         <CampoImagen evento={props.evento} setEvento={props.setEvento}/>
-        <CampoFiltros evento={props.evento} setEvento={props.setEvento} filtros={filtros}/>
+        <CampoFiltros evento={props.evento} setEvento={props.setEvento} filtros={filtros!}/>
         <CampoFechas evento={props.evento} setEvento={props.setEvento}/>
-        <CampoHipervinculos evento={props.evento} setEvento={props.setEvento}/>
+        <CampoHipervinculos evento={props.evento} setEvento={props.setEvento} setErrores={setErrores}/>
         <CampoDescripcion evento={props.evento} setEvento={props.setEvento}/>
       </Form.Group>
     </Formal>

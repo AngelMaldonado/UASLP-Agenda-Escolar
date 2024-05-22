@@ -1,5 +1,5 @@
 import {mixed, number, object, ObjectSchema, string} from "yup"
-import {FiltrosCategoriaEnum} from "../enums/FiltroCategoriaEnum.ts"
+import {FiltrosCategoriaEnum} from "../enums/FiltrosEnum.ts"
 import {es} from "yup-locales"
 import {setLocale} from "yup"
 

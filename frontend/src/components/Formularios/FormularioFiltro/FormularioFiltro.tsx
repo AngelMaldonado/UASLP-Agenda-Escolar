@@ -1,17 +1,16 @@
 import "./_formulario-filtro.scss"
 import Filtro from "../../../models/Filtro.ts";
 import {Form, Image} from "react-bootstrap";
-import Configuraciones from "../../../utils/Configuraciones.ts";
-import {ErrorsObject} from "../../../utils/Utils.ts";
+import {Configuraciones} from "../../../utils/Constantes.ts";
 import {useState} from "react";
 import Formal from "react-formal";
 import Select from "react-select";
-import {FiltrosCategoriaOptions, FiltrosCategoriaOptionsType} from "../../../enums/FiltroCategoriaEnum.ts";
+import {FiltrosCategoriaOptions, FiltrosCategoriaOptionsType} from "../../../enums/FiltrosEnum.ts";
 
 type FormularioFiltroProps = {
   filtro: Filtro,
   setFiltro: ((field: string, value: any) => void),
-  errores: ErrorsObject,
+  errores: {},
 }
 
 function FormularioFiltro(props: FormularioFiltroProps) {

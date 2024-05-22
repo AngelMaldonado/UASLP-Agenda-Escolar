@@ -1,22 +1,22 @@
 import {FaRegPlusSquare, FaRegUser} from "react-icons/fa";
-import {TemaComponente} from "../../../utils/Utils.ts";
+import {TemaComponente} from "../../../utils/Tipos.ts";
 import CardFiltros from '../../Cards/CardFiltro/CardFiltro.tsx'
 import Modal from '../../Modales/Modal/Modal.tsx'
 import './Filtros.scss'
-import {Dispatch, SetStateAction, useState, useContext} from "react"
+import {Dispatch, SetStateAction, useState} from "react"
 import Boton from "../../Inputs/Boton";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import Filtro from "../../../models/Filtro.ts";
 import {useAgregaFiltro, useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
+import {PermisosEnum} from "../../../enums";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 function Filtros() {
   const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
   const [errores, setErrores] = useState({})
-  const usuarios = useContext(AgendaContext).data.usuario;
+  const usuario = useObtenSesion().sesion?.usuario;
 
 
   const {filtros} = useObtenFiltros()
@@ -29,7 +29,7 @@ function Filtros() {
 
   return (
     <div className="cards-filtros py-4 container">
-      {usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO) ? modalNuevoFiltro() : undefined}
+      {usuario?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO) ? modalNuevoFiltro() : undefined}
 
       {filtros?.map(filtro => {
         return <CardFiltros key={"filtro-" + filtro.id} filtro={filtro}/>

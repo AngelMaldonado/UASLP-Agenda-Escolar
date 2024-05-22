@@ -1,6 +1,7 @@
-@media screen and (min-width: 992px) {
-  .NavBusqueda {
-    width: 30em;
-    padding-right: 10px;
+@media screen and (min-width: 1200px) {
+  .NavbarAdmin {
+    .Temporizador {
+      flex-direction: row;
+    }
   }
 }

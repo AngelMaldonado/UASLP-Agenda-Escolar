@@ -2,30 +2,29 @@ import "./_card-usuario.scss"
 import Usuario from "../../../models/Usuario.ts"
 import Boton from "../../Inputs/Boton"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
-import {TemaComponente} from "../../../utils/Utils.ts"
+import {TemaComponente} from "../../../utils/Tipos.ts"
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useContext, useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import FormularioUsuario from "../../Formularios/FormularioUsuario";
 import {useModificaUsuario, useEliminaUsuario} from "../../../hooks/HooksUsuario.ts";
-import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {PermisosEnum} from "../../../enums/PermisosEnum.ts";
-import {TipoUsuarioEnum} from "../../../enums/TipoUsuarioEnum.ts"
+import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
+import {PermisosEnum, TipoUsuarioEnum} from "../../../enums";
+import {ValidationError} from "yup";
+import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 
 function CardUsuario(props: { usuario: Usuario }) {
-  const [usuario, setUsuario] = useState(props.usuario)
+  const [usuarioActual, setUsuarioActual] = useState(props.usuario)
   const [errores, setErrores] = useState({})
   const [eliminando, setEliminando] = useState(false)
-  const usuarios = useContext(AgendaContext).data.usuario;
 
-
-  const {
-    modificaUsuario,
-    modificacionExitosa,
-    reset
-  } = useModificaUsuario(setErrores, setUsuario)
+  const usuario = useObtenSesion().sesion?.usuario;
+  const {modificaUsuario, modificacionExitosa, reset} = useModificaUsuario(setErrores, setUsuarioActual)
   const {eliminaUsuario, eliminacionExitosa} = useEliminaUsuario(setErrores)
-  const cambiaUsuario = useObjectAttributeChange(setUsuario as Dispatch<SetStateAction<Object>>)
+  const onUsuarioChange = useObjectAttributeChange(setUsuarioActual as Dispatch<SetStateAction<Object>>)
+  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
+
+  const nombres = props.usuario.nombre?.split(" ")
+  const siglas = nombres![0][0] + (nombres && nombres.length > 1 ? nombres[1][0] : "")
 
   return (
     <div className="card card-usuario text-center">
@@ -37,9 +36,8 @@ function CardUsuario(props: { usuario: Usuario }) {
         </div>
       </div>
       <div className="card-body">
-        <div className="w-50 mx-auto my-2 position-relative">
-          <img className="w-100 rounded-circle" src="https://i.pravatar.cc/300" alt="example"/>
-          <span className="position-absolute bottom-0 end-0 p-3 bg-success rounded-circle"></span>
+        <div className="ChipUsuario mx-auto bg-dark-subtle position-relative rounded-circle text-center fs-2">
+          {siglas}
         </div>
         <h3 className="card-title flex-fill">{props.usuario.nombre + " " + props.usuario.apellido}</h3>
         <p className="card-text">{props.usuario.email}</p>
@@ -69,12 +67,12 @@ function CardUsuario(props: { usuario: Usuario }) {
     )
   }
 
-  function triggers() {
-    const esAdministrador = usuario?.tipo?.includes(TipoUsuarioEnum.ADMINISTRADOR);
-    const esBEcario = usuarios?.tipo?.includes(TipoUsuarioEnum.BECARIO);
-    const esSecundario = usuarios?.tipo?.includes(TipoUsuarioEnum.SECUNDARIO);
-    const tienePermisoModificar = usuarios?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO);
-    const tienePermisoEliminar = usuarios?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
+  function triggers(): React.ReactElement[] {
+    const esAdministrador = usuarioActual?.tipo?.includes(TipoUsuarioEnum.ADMINISTRADOR);
+    const esBEcario = usuario?.tipo?.includes(TipoUsuarioEnum.BECARIO);
+    const esSecundario = usuario?.tipo?.includes(TipoUsuarioEnum.SECUNDARIO);
+    const tienePermisoModificar = usuario?.permisos?.includes(PermisosEnum.MODIFICAR_USUARIO);
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
 
     return ([
       tienePermisoModificar && (
@@ -108,7 +106,7 @@ function CardUsuario(props: { usuario: Usuario }) {
           />
           : undefined
       )
-    ]);
+    ] as React.ReactElement[]);
   }
 
 
@@ -122,7 +120,7 @@ function CardUsuario(props: { usuario: Usuario }) {
         ¿Esta seguro que desea eliminar el
         usuario <strong> [{props.usuario.nombre + " " + props.usuario.apellido}] </strong> ?
       </p>
-    } else return <FormularioUsuario usuario={usuario} setUsuario={cambiaUsuario} errores={errores}/>
+    } else return <FormularioUsuario usuario={usuarioActual} setUsuario={onUsuarioChange} errores={errores}/>
   }
 
   function botonesModal() {
@@ -131,7 +129,7 @@ function CardUsuario(props: { usuario: Usuario }) {
              variant={TemaComponente.PrimarioInverso}
              etiqueta="Eliminar"
              icono={<FaRegTrashAlt/>}
-             onClick={() => eliminando ? eliminaUsuario(usuario) : setEliminando(true)}
+             onClick={() => eliminando ? eliminaUsuario(usuarioActual) : setEliminando(true)}
       />,
       !eliminando ?
         <Boton key={"boton-guardar"}
@@ -145,16 +143,16 @@ function CardUsuario(props: { usuario: Usuario }) {
 
   function modificaUsuarioExistente() {
     // Valida el nuevoUsuario antes de enviar a back
-    Usuario.schema.validate(usuario)
+    Usuario.schema.validate(usuarioActual)
       // Si se validó correctamente, enviar a back
-      .then(_ => modificaUsuario(usuario))
+      .then(_ => modificaUsuario(usuarioActual))
       // Si no coincide con el esquema, mostrar errores
-      .catch(r => console.log(r))
+      .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }
 
   function onClose() {
     reset()
-    setUsuario(props.usuario)
+    setUsuarioActual(props.usuario)
     setErrores({})
     setEliminando(false)
   }

@@ -1,4 +1,4 @@
-import {FiltrosCategoriaEnum} from "../../../enums/FiltroCategoriaEnum.ts";
+import {FiltrosCategoriaEnum} from "../../../enums/FiltrosEnum.ts";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {Badge, Stack} from "react-bootstrap";
