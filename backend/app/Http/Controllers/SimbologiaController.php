@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ActualizaSimboloRequest;
-use App\Http\Requests\NuevoSimboloRequest;
 use App\Models\Simbologia;
 use App\Traits\RespuestasHttp;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 
 class SimbologiaController extends Controller
 {
@@ -18,9 +19,9 @@ class SimbologiaController extends Controller
         return Simbologia::all();
     }
 
-    public function store(NuevoSimboloRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
-        $request->validated($request->all());
+        $request->validate(['simbolo' => 'required|mimes:webp']);
 
         $simbologia = new Simbologia();
         $simbologia->simbolo = $request->file('simbolo')->store('/imagenes/simbolos');

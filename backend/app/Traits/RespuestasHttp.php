@@ -4,21 +4,13 @@ namespace App\Traits;
 
 trait RespuestasHttp
 {
-    protected function exito($datos, $mensaje = null, $codigo = 200): \Illuminate\Http\JsonResponse
+    protected function exito($datos, $mensaje = null, $codigo = 200): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
-        return response()->json([
-            'status' => 'Petición realizada con éxito.',
-            'message' => $mensaje,
-            'data' => $datos
-        ], $codigo);
+        return response($datos, $codigo);
     }
 
-    protected function error($datos, $mensaje = null, $codigo): \Illuminate\Http\JsonResponse
+    protected function error($datos, $codigo, $mensaje = null): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
-        return response()->json([
-            'status' => 'Error con la petición.',
-            'message' => $mensaje,
-            'data' => $datos
-        ], $codigo);
+        return response(['errors' => $datos, 'message' => $mensaje], $codigo);
     }
 }

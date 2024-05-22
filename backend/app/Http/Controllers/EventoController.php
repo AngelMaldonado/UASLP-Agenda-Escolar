@@ -33,7 +33,7 @@ class EventoController extends Controller
         return $eventos;
     }
 
-    public function store(NuevoEventoRequest $request): \Illuminate\Http\JsonResponse
+    public function store(NuevoEventoRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $request->validated($request->all());
 
@@ -57,7 +57,7 @@ class EventoController extends Controller
     }
 
     // Actualizar un evento existente
-    public function update(ActualizaEventoRequest $request): \Illuminate\Http\JsonResponse
+    public function update(ActualizaEventoRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $request->validated($request->all());
 
@@ -89,7 +89,7 @@ class EventoController extends Controller
     }
 
     // Eliminar un evento
-    public function destroy(Request $request): \Illuminate\Http\JsonResponse
+    public function destroy(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $request->validate(['id' => 'required|exists:evento,id']);
 

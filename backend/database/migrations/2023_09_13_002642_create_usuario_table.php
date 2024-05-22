@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre',50);
             $table->string('apellido',50);
-            $table->enum('tipo', TipoUsuarioEnum::values());
+            $table->string('tipo');
             $table->string('email', 320)->unique();
             $table->json('permisos');
             $table->integer('rpe')->unique()->nullable();

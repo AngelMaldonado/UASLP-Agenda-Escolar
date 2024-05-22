@@ -21,7 +21,7 @@ class UsuarioController extends Controller
         return Usuario::all();
     }
 
-    public function store(NuevoUsuarioRequest $request): \Illuminate\Http\JsonResponse
+    public function store(NuevoUsuarioRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $request->validated($request->all());
 
@@ -39,17 +39,17 @@ class UsuarioController extends Controller
 
             // Si encontró un usuario en el servicio con el rpe y el email que tiene aún no está en el sistema de agenda
             if ($usuario_servicio) {
-                Validator::validate($usuario_servicio->email, ['email' => 'email,unique:usuario,email']);
-                $usuario->fill([$usuario_servicio->only('rpe', 'nombre', 'apellido', 'email')]);
+                Validator::validate([$usuario_servicio->email], ['email' => 'email,unique:usuario,email']);
+                $usuario->fill($usuario_servicio->only('rpe', 'nombre', 'apellido', 'email'));
             } else
-                return $this->error($request->input('rpe'), 'El rpe no existe', 400);
+                return $this->error(['rpe' => 'el rpe no existe'], 400);
         }
 
         $usuario->save();
         return $this->exito($usuario, 'Usuario guardado con éxito');
     }
 
-    public function update(ActualizaUsuarioRequest $request): \Illuminate\Http\JsonResponse
+    public function update(ActualizaUsuarioRequest $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validated($request->all());
 
@@ -64,7 +64,7 @@ class UsuarioController extends Controller
                 $usuario_sistema->rpe !== $request->input('rpe')
             ))
                 // Valida que el rpe PETICIÓN no esté en el sistema de agenda
-                Validator::validate($request->input('rpe'), ['rpe' => 'unique:usuario,rpe']);
+                Validator::validate($request->only('rpe'), ['rpe' => 'unique:usuario,rpe']);
 
             // Busca al usuario en el servicio con el rpe PETICIÓN
             $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'));
@@ -79,11 +79,10 @@ class UsuarioController extends Controller
         } else if ($request->input('tipo') === TipoUsuarioEnum::BECARIO->value) {
             // Si el email es distinto
             if ($request->input('email') !== $usuario_sistema->email)
-                Validator::validate($request->input('email'), ['email' => 'unique:usuario,email']);
+                Validator::validate($request->only('email'), ['email' => 'unique:usuario,email']);
 
             $usuario_sistema->fill($request->only('nombre', 'apellido', 'email'));
             $usuario_sistema->contraseña = Hash::make($request->input('contraseña'));
-            $usuario_sistema->rpe = null;
         }
 
         $usuario_sistema->fill($request->only('tipo', 'permisos'));
@@ -92,7 +91,7 @@ class UsuarioController extends Controller
     }
 
 
-    public function destroy(Request $request): \Illuminate\Http\JsonResponse
+    public function destroy(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $request->validate(['id' => 'required|exists:usuario,id']);
 
@@ -102,7 +101,6 @@ class UsuarioController extends Controller
         // Eliminar el usuario de la base de datos
         $usuario->delete();
 
-        // Respuesta exitosa con un mensaje en formato JSON y código de estado 200 (OK).
-        return $this->exito(null, 'Usuario eliminado con éxito');
+        return $this->exito('Usuario eliminado con éxito');
     }
 }

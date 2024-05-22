@@ -13,7 +13,7 @@ class SimboloSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < 127; $i++)
+        for($i = 0; $i < 78; $i++)
             DB::table('simbologia')->insert([
                 'simbolo' => 'imagenes/simbolos/' . $i + 1 . '.webp'
             ]);

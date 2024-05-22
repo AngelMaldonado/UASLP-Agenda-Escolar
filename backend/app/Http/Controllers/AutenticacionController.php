@@ -8,12 +8,13 @@ use App\Models\Usuario;
 use App\Traits\RespuestasHttp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AutenticacionController extends Controller
 {
     use RespuestasHttp;
 
-    function login(LoginRequest $request)
+    function login(LoginRequest $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $request->validated($request->all());
 
@@ -23,25 +24,36 @@ class AutenticacionController extends Controller
             $request->input('tipo') === TipoUsuarioEnum::ADMINISTRADOR->value) {
 
             if (!Auth::attempt(['email' => $request->email, 'password' => $request->contraseña]))
-                return $this->error('', 'credenciales erróneas', 401);
+                return $this->error(['backend' => 'credenciales erróneas'], 401);
 
             $usuario = Usuario::where('email', $request->email)->first();
         } else if ($request->input('tipo') === TipoUsuarioEnum::SECUNDARIO->value) {
 
             // Modificar el método de ValidaUsuarioServicio para que valide rpe con contraseña
             if (!Usuario::ValidaUsuarioServicio($request->rpe, $request->contraseña))
-                return $this->error('', 'credenciales erróneas', 401);
+                return $this->error(['backend' => 'credenciales erróneas'], 401);
 
             $usuario = Usuario::where('rpe', $request->rpe)->first();
         }
 
-        $usuario->token = $usuario->createToken('API Token de ' . $usuario->nombre)->plainTextToken;
-        return $this->exito(['usuario' => $usuario]);
+        if (PersonalAccessToken::all()
+            ->where('tokenable_id', '=', $usuario->id)
+            ->where('expires_at', '>', now())
+            ->count()
+        )
+            return $this->error(['backend' => 'este usuario ya tiene una sesión activa'], 400);
+
+        $usuario->token = $usuario->createToken(
+            'Token de ' . $usuario->nombre,
+            ['*'], now()->addMinutes(20)
+        )->plainTextToken;
+
+        return $this->exito($usuario);
     }
 
-    function logout()
+    function logout(Request $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        Auth::user()->currentAccessToken()->delete();
-        return $this->exito('', 'Se cerró sesión con éxito');
+        $request->user()->currentAccessToken()->delete();
+        return $this->exito('Se cerró sesión con éxito');
     }
 }

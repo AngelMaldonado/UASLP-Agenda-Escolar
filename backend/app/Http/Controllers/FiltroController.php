@@ -18,7 +18,7 @@ class FiltroController extends Controller
         return Filtro::all();
     }
 
-    public function store(NuevoFiltroRequest $request): \Illuminate\Http\JsonResponse
+    public function store(NuevoFiltroRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
         $request->validated($request->all());
 
