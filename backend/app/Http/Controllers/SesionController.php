@@ -12,6 +12,10 @@ class SesionController extends Controller
 
     function index(Request $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
+        $token_usuario = PersonalAccessToken::all()->where('tokenable_id', '=', $request->user()->id);
+        if ($token_usuario->where('expires_at', '<=', now())->count())
+            PersonalAccessToken::destroy($token_usuario);
+
         $users = PersonalAccessToken::all()
             ->where('expires_at' , '>', now())
             ->map(function ($token) {

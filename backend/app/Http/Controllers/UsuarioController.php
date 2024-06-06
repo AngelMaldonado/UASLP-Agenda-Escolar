@@ -26,20 +26,22 @@ class UsuarioController extends Controller
         $request->validated($request->all());
 
         // Inicializa un nuevo usuario con el tipo y los permisos
-        $usuario = new Usuario($request->only('tipo', 'permisos'));
+        $usuario = new Usuario($request->only('tipo', 'permisos', 'contraseña'));
 
         // Si es becario
         if ($usuario->tipo === TipoUsuarioEnum::BECARIO) {
             $usuario->fill($request->only('nombre', 'apellido', 'email'));
             $usuario->contraseña = Hash::make($request->input('contraseña'));
-        // Si es administrador secundario
+            // Si es administrador secundario
         } else if ($usuario->tipo === TipoUsuarioEnum::SECUNDARIO) {
             // Busca al usuario en el servicio con el rpe PETICIÓN
-            $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'));
+            $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'), $request->input('contraseña'));
 
             // Si encontró un usuario en el servicio con el rpe y el email que tiene aún no está en el sistema de agenda
             if ($usuario_servicio) {
-                Validator::validate([$usuario_servicio->email], ['email' => 'email,unique:usuario,email']);
+                $validator = Validator::make($usuario_servicio->only('email'), ['email' => 'email|unique:usuario,email']);
+                if ($validator->fails())
+                    return $this->error($validator->errors(), 400);
                 $usuario->fill($usuario_servicio->only('rpe', 'nombre', 'apellido', 'email'));
             } else
                 return $this->error(['rpe' => 'el rpe no existe'], 400);
@@ -60,14 +62,14 @@ class UsuarioController extends Controller
         if ($request->input('tipo') === TipoUsuarioEnum::SECUNDARIO->value) {
             // Si el USUARIO SISTEMA antes era becario o el rpe PETICIÓN es distinto al que actualmente tiene
             if ($usuario_sistema->tipo === TipoUsuarioEnum::BECARIO->value || (
-                $usuario_sistema->tipo === TipoUsuarioEnum::SECUNDARIO->value &&
-                $usuario_sistema->rpe !== $request->input('rpe')
-            ))
+                    $usuario_sistema->tipo === TipoUsuarioEnum::SECUNDARIO->value &&
+                    $usuario_sistema->rpe !== $request->input('rpe')
+                ))
                 // Valida que el rpe PETICIÓN no esté en el sistema de agenda
                 Validator::validate($request->only('rpe'), ['rpe' => 'unique:usuario,rpe']);
 
             // Busca al usuario en el servicio con el rpe PETICIÓN
-            $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'));
+            $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'), $request->input('contraseña'));
             if ($usuario_servicio) {
                 // Si el email cambió desde el servicio
                 if ($usuario_servicio->email !== $usuario_sistema->email)

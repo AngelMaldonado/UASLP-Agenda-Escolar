@@ -31,7 +31,11 @@ class NuevoUsuarioRequest extends FormRequest
             'nombre' => 'required_if:tipo,' . TipoUsuarioEnum::BECARIO->value . '|string|max:50',
             'apellido' => 'required_if:tipo,' . TipoUsuarioEnum::BECARIO->value . '|string|max:50',
             'email' => 'required_if:tipo,' . TipoUsuarioEnum::BECARIO->value . '|email|unique:usuario,email',
-            utf8_encode("contraseña") => 'required_if:tipo,' . TipoUsuarioEnum::BECARIO->value . '|string|max:60|min:6|confirmed',
+            utf8_encode("contraseña") => [
+                'required_if:tipo,' . TipoUsuarioEnum::BECARIO->value . ',' . TipoUsuarioEnum::SECUNDARIO->value,
+                'string', 'max:60', 'min:6',
+                $this->input('tipo') == TipoUsuarioEnum::BECARIO->value ? 'confirmed' : ''
+            ],
             'rpe' => 'required_if:tipo,' . TipoUsuarioEnum::SECUNDARIO->value . '|digits:6|unique:usuario,rpe'
         ];
     }

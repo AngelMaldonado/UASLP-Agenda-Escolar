@@ -36,12 +36,11 @@ class AutenticacionController extends Controller
             $usuario = Usuario::where('rpe', $request->rpe)->first();
         }
 
-        if (PersonalAccessToken::all()
-            ->where('tokenable_id', '=', $usuario->id)
-            ->where('expires_at', '>', now())
-            ->count()
-        )
+        $tokens_usuario = PersonalAccessToken::all()->where('tokenable_id', '=', $usuario->id);
+        if ($tokens_usuario->where('expires_at', '>', now())->count())
             return $this->error(['backend' => 'este usuario ya tiene una sesión activa'], 400);
+        else if ($tokens_usuario->count())
+            PersonalAccessToken::destroy($tokens_usuario);
 
         $usuario->token = $usuario->createToken(
             'Token de ' . $usuario->nombre,
