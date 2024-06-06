@@ -47,6 +47,10 @@
 
           img {
             filter: brightness(0) invert(1);
+
+            &.no-filter {
+              filter: initial;
+            }
           }
         }
       }

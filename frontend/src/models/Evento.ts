@@ -53,9 +53,9 @@ class Evento {
 
   public static schema: ObjectSchema<Evento> = object({
     id: number(),
-    cat_evento_id: number().when("tipo", {
+    cat_evento_id: number().label('evento de catálogo').when("tipo", {
       is: TipoEventoEnum.CATALOGO,
-      then: schema => schema.required("evento de catálogo es un campo obligatorio"),
+      then: schema => schema.required(),
     }).when("tipo", {
       is: TipoEventoEnum.FACULTAD,
       then: schema => schema.notRequired()
@@ -73,19 +73,19 @@ class Evento {
       then: schema => schema.max(100).required(),
       otherwise: schema => schema.nullable()
     }),
-    fecha_inicio: date().required("fecha de inicio es un campo requerido"),
-    fecha_fin: date().required("fecha de fin es un campo requerido"),
+    fecha_inicio: date().label('fecha de inicio').required(),
+    fecha_fin: date().label('fecha de fin').required(),
     hipervinculo: string().url("ingrese una url válida (https://dominio.com)"),
     hipervinculos: array().of(string().url("ingrese una url válida (https://dominio.com)"))
       .max(4, "solo se permiten 5 hipervínculos por evento"),
     imagen: mixed(),
-    descripcion: string().required(),
+    descripcion: string().label('descripción').required(),
     simbolo: string(),
-    simbolo_id: number().when("tipo", {
+    simbolo_id: number().label('símbolo').when("tipo", {
       is: (value: string) => value == TipoEventoEnum.FACULTAD || value == TipoEventoEnum.CATALOGO,
-      then: schema => schema.required("símbolo es un campo requerido")
+      then: schema => schema.required()
     }),
-    tipo: string().required().test(v => Object.values(TipoEventoEnum).includes(v as TipoEventoEnum))
+    tipo: string().label('tipo de evento').required().test(v => Object.values(TipoEventoEnum).includes(v as TipoEventoEnum))
   })
 
   static ParseEventosCalendario(eventos: Evento[]) {

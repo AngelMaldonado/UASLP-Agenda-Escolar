@@ -18,7 +18,6 @@ function TablaEventos(props: TablaEventosProps) {
       <Table responsive="sm" className='table-hover tablaContenido'>
         <thead className='text-center tableHead shadow '>
         <tr>
-          {/* <th>#</th> */}
           <th>Evento</th>
           <th>Simbologia</th>
           <th>Inicio</th>

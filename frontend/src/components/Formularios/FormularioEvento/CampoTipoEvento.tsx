@@ -19,6 +19,7 @@ export function CampoTipoEvento(props: CampoTipoEventoProps) {
                     classNamePrefix="select"
                     unstyled
                     placeholder="Eliga el tipo de evento"
+                    noOptionsMessage={() => <>Sin opciones</>}
                     options={TipoEventoOptions}
                     mapFromValue={{"tipo": option => (option as TipoEventoOptionsType).value}}
                     mapToValue={props.evento.tipo ?

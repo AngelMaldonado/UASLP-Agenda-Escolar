@@ -27,7 +27,7 @@ class Usuario {
     permisos = <string[]>[],
     contraseña?: string,
     contraseña_confirmation?: string,
-    token: string = "",
+    token?: string,
     color?: number) {
     this.id = id
     this.rpe = rpe
@@ -83,9 +83,9 @@ class Usuario {
   })
 
   public static login_schema: ObjectSchema<any> = object({
-    tipo: string().required()
+    tipo: string().label('tipo de usuario').required()
       .test(v => Object.values(TipoUsuarioEnum).includes(v as TipoUsuarioEnum)),
-    email: string().when("tipo", {
+    email: string().label('correo').when("tipo", {
       is: TipoUsuarioEnum.BECARIO,
       then: schema => schema.email().max(320).required(),
       otherwise: schema => schema.nullable()

@@ -16,7 +16,7 @@ export function CampoSimbologia(props: CampoSimbologiaProps) {
   const Option = (props: OptionProps) => (
     <components.Option {...props} children={
       <img height={30}
-           className="w-100 rounded"
+           className="w-100 rounded no-filter"
            src={Configuraciones.publicURL + props.label}
            alt={"Simbología " + props.label}/>
     }/>

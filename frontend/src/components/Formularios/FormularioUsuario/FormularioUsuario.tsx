@@ -150,6 +150,14 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
           onChange={e => props.setUsuario("rpe", e.target.value)}
         />
         <Formal.Message for="rpe" className="d-flex text-danger"/>
+        <Form.Label htmlFor="contraseña">Contraseña*</Form.Label>
+        <Formal.Field name="contraseña"
+                      type="password"
+                      className="form-control"
+                      placeholder="Escriba una contraseña para el usuario"
+                      onChange={e => props.setUsuario("contraseña", e.target.value)}
+        />
+        <Formal.Message for="contraseña" className="d-flex text-danger"/>
       </>
     )
   }

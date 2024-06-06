@@ -14,6 +14,7 @@ export function CampoFechas(props: CampoFechasProps) {
         <Form.Label htmlFor="fecha_inicio">Fecha de inicio*</Form.Label>
         <Formal.Field name="fecha_inicio"
                       type="date"
+                      lang="es-MX"
                       className="form-control"
                       placeholder="Fecha de inicio del evento"
                       mapToValue={_ => props.evento.fecha_inicio?.toISOString().split("T")[0]}
@@ -26,6 +27,7 @@ export function CampoFechas(props: CampoFechasProps) {
         <Form.Label htmlFor="fecha_fin">Fecha de fin*</Form.Label>
         <Formal.Field name="fecha_fin"
                       type="date"
+                      lang="es-MX"
                       className="form-control"
                       placeholder="Fecha de fin del evento"
                       min={props.evento.fecha_inicio?.toISOString().split("T")[0]}
