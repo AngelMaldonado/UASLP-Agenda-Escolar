@@ -5,7 +5,7 @@ import {Dispatch, SetStateAction, useState} from "react";
 import {TemaComponente} from "../../../utils/Tipos.ts"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
 import {Badge, Image} from "react-bootstrap";
-import {Configuraciones} from "../../../utils/Constantes.ts";
+import {Configuraciones, modalTimeout} from "../../../utils/Constantes.ts";
 import Filtro from "../../../models/Filtro.ts";
 import Card from "react-bootstrap/Card";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
@@ -56,7 +56,7 @@ function CardFiltro(props: CardFiltroProps) {
       <Modal
         sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
         cancelar={!modificacionExitosa}
-        timeout={modificacionExitosa ? 2000 : undefined}
+        timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
         titulo={<div><FaRegUser/> <p className="fs-5">Modificar Filtro</p></div>}

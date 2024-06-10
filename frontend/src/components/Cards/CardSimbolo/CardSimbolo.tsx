@@ -8,7 +8,7 @@ import Modal from "../../Modales/Modal";
 import FormularioSimbolo from "../../Formularios/FormularioSimbolo";
 import {Dispatch, SetStateAction, useState} from "react";
 import {useEliminaSimbolo, useModificaSimbolo} from "../../../hooks/HooksSimbolo.ts";
-import {Configuraciones} from "../../../utils/Constantes.ts";
+import {Configuraciones, modalTimeout} from "../../../utils/Constantes.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
@@ -50,7 +50,7 @@ function CardSimbolo(props: CardSimboloProps) {
       <Modal
         sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
         cancelar={!modificacionExitosa}
-        timeout={modificacionExitosa ? 2000 : undefined}
+        timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
         titulo={<div><FaRegUser/> <p className="fs-5">Modificar Simbolo</p></div>}

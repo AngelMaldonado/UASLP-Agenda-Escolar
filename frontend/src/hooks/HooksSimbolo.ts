@@ -2,6 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioSimbolos from "../services/ServicioSimbolos.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Tipos.ts";
+import {modalTimeout} from "../utils/Constantes.ts";
 
 export const useObtenSimbolos = () => {
   const {
@@ -36,7 +37,11 @@ export const useModificaSimbolo = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.modifica,
-    onSuccess: () => queryClient.invalidateQueries("simbolos"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("simbolos")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {modificaSimbolo, modificacionExitosa: isSuccess, reset}
@@ -50,7 +55,11 @@ export const useEliminaSimbolo = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.elimina,
-    onSuccess: () => queryClient.invalidateQueries("simbolos"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("simbolos")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {eliminaSimbolo, eliminacionExitosa: isSuccess, reset}

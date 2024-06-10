@@ -11,6 +11,7 @@ import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/H
 import {PermisosEnum, TipoUsuarioEnum} from "../../../enums";
 import {ValidationError} from "yup";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {modalTimeout} from "../../../utils/Constantes.ts";
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioActual, setUsuarioActual] = useState(props.usuario)
@@ -18,7 +19,7 @@ function CardUsuario(props: { usuario: Usuario }) {
   const [eliminando, setEliminando] = useState(false)
 
   const usuario = useObtenSesion().sesion?.usuario;
-  const {modificaUsuario, modificacionExitosa, reset} = useModificaUsuario(setErrores, setUsuarioActual)
+  const {modificaUsuario, modificacionExitosa, reset} = useModificaUsuario(setErrores)
   const {eliminaUsuario, eliminacionExitosa} = useEliminaUsuario(setErrores)
   const onUsuarioChange = useObjectAttributeChange(setUsuarioActual as Dispatch<SetStateAction<Object>>)
   const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
@@ -31,7 +32,6 @@ function CardUsuario(props: { usuario: Usuario }) {
       <div className="card-header d-flex justify-content-between align-items-center bg-transparent border-0">
         <p className="m-0">#{props.usuario.id}</p>
         <div className="d-inline-flex gap-1">
-          {/* {usuarios?.permisos?.includes(PermisosEnum.CREAR_USUARIO) ? null : modalUsuario()} */}
           {modalUsuario()}
         </div>
       </div>
@@ -57,7 +57,7 @@ function CardUsuario(props: { usuario: Usuario }) {
       <Modal
         sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
         cancelar={!modificacionExitosa}
-        timeout={modificacionExitosa ? 2000 : undefined}
+        timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
         titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}

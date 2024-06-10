@@ -22,7 +22,7 @@ function Administrador() {
   return (
     <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
       <NavbarUASLP/>
-      <NavbarAgenda currentKey={key} setKey={setKey} eventKeys={eventKeysAgenda} sesionAdmi/>
+      <NavbarAgenda currentKey={key} setKey={setKey} eventKeys={eventKeysAgenda}/>
       <NavbarAdmin currentKey={key} setKey={setKey} eventKeys={eventKeysAdmin}/>
       <Tab.Content>{...tabContent()}</Tab.Content>
     </Tab.Container>
@@ -31,10 +31,10 @@ function Administrador() {
   function tabContent() {
     return [
       <Tab.Pane eventKey={eventKeysAgenda[0]}>
-        <Calendario admin/>
+        <Calendario/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAgenda[1]}>
-        <Agenda admin/>
+        <Agenda/>
       </Tab.Pane>,
       <Tab.Pane eventKey={eventKeysAdmin[0]}>
         <TablaEventos admin/>

@@ -12,6 +12,7 @@ import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {modalTimeout} from "../../../utils/Constantes.ts";
 
 function Simbolos() {
   const [nuevoSimbolo, setNuevoSimbolo] = useState(new Simbologia())
@@ -40,7 +41,7 @@ function Simbolos() {
         trigger={CardSimbolo.CardNuevoSimbolo}
         titulo={<div><FaRegUser/><p className="fs-5">Símbolo nuevo</p></div>}
         contenido={contenidoModal()}
-        timeout={registroExitoso ? 2000 : undefined}
+        timeout={registroExitoso ? modalTimeout : undefined}
         sinFondo={registroExitoso}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}

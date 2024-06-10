@@ -2,9 +2,9 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioUsuario from "../services/ServicioUsuario.ts";
 import {AxiosError} from "axios"
 import {ErrorsObject} from "../utils/Tipos.ts";
-import Usuario from "../models/Usuario.ts";
 import {Dispatch, SetStateAction} from "react";
 import {useObjectChangeTimeout} from "./HookObjectChange.ts";
+import {modalTimeout} from "../utils/Constantes.ts";
 
 export const useObtenUsuarios = () => {
   const {
@@ -36,9 +36,7 @@ export const useAgregaUsuario = (setErrors: (field: string, value: string) => vo
   return {agregaUsuario, registroExitoso: isSuccess, reset}
 }
 
-export const useModificaUsuario = (
-  onError: ({}) => void,
-  setUsuario?: (state: SetStateAction<Usuario>) => void) => {
+export const useModificaUsuario = (onError: ({}) => void) => {
   const queryClient = useQueryClient()
   const {
     mutate: modificaUsuario,
@@ -46,8 +44,11 @@ export const useModificaUsuario = (
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.modifica,
-    onSuccess: (data: Usuario) =>
-      queryClient.invalidateQueries("usuarios").then(() => setUsuario ? (data) : null),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("usuarios")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {modificaUsuario, modificacionExitosa: isSuccess, reset}
@@ -61,7 +62,11 @@ export const useEliminaUsuario = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.elimina,
-    onSuccess: () => queryClient.invalidateQueries("usuarios"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("usuarios")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {eliminaUsuario: eliminaUsuario, eliminacionExitosa: isSuccess, reset}

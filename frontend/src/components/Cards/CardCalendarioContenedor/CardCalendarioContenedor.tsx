@@ -3,7 +3,7 @@ import {useContext, useState} from "react";
 import Evento from "../../../models/Evento.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
-import {modalEvento} from '../../Modales/ModalEliminarEditarEvento/ModalEliminarEditar.tsx';
+import ModalCRUDEvento from "../../Modales/ModalCRUDEvento"
 import ChipSimbolo from "../../Chips/ChipSimbolo/ChipSimbolo.tsx";
 import {useLocation} from "react-router-dom";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
@@ -30,7 +30,7 @@ function CardCalendarioContenedor(props: CardCalendarioProps) {
       </div>
       {location.pathname == "/administracion" && usuario ? (
         <div className="d-flex flex-column gap-1 me-3" onClick={(e) => e.stopPropagation()}>
-          {modalEvento(props)}
+          {ModalCRUDEvento(props)}
         </div>
       ) : null}
       <ChipsEvento filtros_evento={props.evento.filtros}/>

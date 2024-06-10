@@ -18,3 +18,5 @@ export const meses: Map<string, number> = new Map([
   ['noviembre', 10],
   ['diciembre', 11],
 ])
+
+export const modalTimeout = 2000

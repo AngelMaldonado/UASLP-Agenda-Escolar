@@ -10,9 +10,9 @@ import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {modalTimeout} from "../../../utils/Constantes.ts";
 
-
-export function modalEvento(props: { evento: Evento }) {
+export default function ModalCRUDEvento(props: { evento: Evento }) {
   const [evento, setEvento] = useState(props.evento)
   const [errores, setErrores] = useState({});
   const [eliminando, setEliminando] = useState(false);
@@ -27,7 +27,7 @@ export function modalEvento(props: { evento: Evento }) {
     <Modal
       sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
       cancelar={!modificacionExitosa}
-      timeout={modificacionExitosa ? 2000 : undefined}
+      timeout={modificacionExitosa ? modalTimeout : undefined}
       triggers={triggers()}
       onClose={onClose}
       titulo={<div><FaRegCalendarAlt/> <p className="fs-5">Modificar Evento</p></div>}

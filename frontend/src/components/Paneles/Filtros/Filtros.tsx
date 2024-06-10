@@ -12,12 +12,12 @@ import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {modalTimeout} from "../../../utils/Constantes.ts";
 
 function Filtros() {
   const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
   const [errores, setErrores] = useState({})
   const usuario = useObtenSesion().sesion?.usuario;
-
 
   const {filtros} = useObtenFiltros()
   const {
@@ -44,7 +44,7 @@ function Filtros() {
         trigger={CardFiltros.CardNuevoFiltro}
         titulo={<div><FaRegUser/><p className="fs-5">Filtro nuevo</p></div>}
         contenido={contenidoModal()}
-        timeout={registroExitoso ? 2000 : undefined}
+        timeout={registroExitoso ? modalTimeout : undefined}
         sinFondo={registroExitoso}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}

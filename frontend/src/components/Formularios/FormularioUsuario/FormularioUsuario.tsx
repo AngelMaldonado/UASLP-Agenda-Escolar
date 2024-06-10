@@ -60,6 +60,22 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
         />
         <Formal.Message for="tipo" className="d-flex text-danger"/>
         {camposTipoUsuario()}
+        <Form.Label htmlFor="contraseña">Contraseña*</Form.Label>
+        <Formal.Field name="contraseña"
+                      type="password"
+                      className="form-control"
+                      placeholder="Escriba una contraseña para el usuario"
+                      onChange={e => props.setUsuario("contraseña", e.target.value)}
+        />
+        <Formal.Message for="contraseña" className="d-flex text-danger"/>
+        <Form.Label htmlFor="contraseña_confirmation">Confirmar contraseña*</Form.Label>
+        <Formal.Field name="contraseña_confirmation"
+                      type="password"
+                      className="form-control"
+                      placeholder="Confirme la contraseña del usuario"
+                      onChange={e => props.setUsuario("contraseña_confirmation", e.target.value)}
+        />
+        <Formal.Message for="contraseña_confirmation" className="d-flex text-danger"/>
         <Form.Label>Permisos*</Form.Label>
         <Formal.Field name="permisos"
                       as={Select}
@@ -119,22 +135,6 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
                       onChange={e => props.setUsuario("email", e.target.value)}
         />
         <Formal.Message for="email" className="d-flex text-danger"/>
-        <Form.Label htmlFor="contraseña">Contraseña*</Form.Label>
-        <Formal.Field name="contraseña"
-                      type="password"
-                      className="form-control"
-                      placeholder="Escriba una contraseña para el usuario"
-                      onChange={e => props.setUsuario("contraseña", e.target.value)}
-        />
-        <Formal.Message for="contraseña" className="d-flex text-danger"/>
-        <Form.Label htmlFor="contraseña_confirmation">Confirmar contraseña*</Form.Label>
-        <Formal.Field name="contraseña_confirmation"
-                      type="password"
-                      className="form-control"
-                      placeholder="Confirme la contraseña del usuario"
-                      onChange={e => props.setUsuario("contraseña_confirmation", e.target.value)}
-        />
-        <Formal.Message for="contraseña_confirmation" className="d-flex text-danger"/>
       </>
     )
   }
@@ -150,14 +150,6 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
           onChange={e => props.setUsuario("rpe", e.target.value)}
         />
         <Formal.Message for="rpe" className="d-flex text-danger"/>
-        <Form.Label htmlFor="contraseña">Contraseña*</Form.Label>
-        <Formal.Field name="contraseña"
-                      type="password"
-                      className="form-control"
-                      placeholder="Escriba una contraseña para el usuario"
-                      onChange={e => props.setUsuario("contraseña", e.target.value)}
-        />
-        <Formal.Message for="contraseña" className="d-flex text-danger"/>
       </>
     )
   }

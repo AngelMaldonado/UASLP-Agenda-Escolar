@@ -33,7 +33,7 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
     filtrosUsuario: [],
     textoBusqueda: "",
     mes: new Date().getMonth(),
-    año: new Date().getFullYear()
+    año: new Date().getFullYear(),
   })
 
   useEffect(() => setContexto(prevState =>

@@ -2,6 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioFiltros from "../services/ServicioFiltros.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Tipos.ts";
+import {modalTimeout} from "../utils/Constantes.ts";
 
 export const useObtenFiltros = () => {
   const {
@@ -36,7 +37,11 @@ export const useModificaFiltro = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioFiltros.modifica,
-    onSuccess: () => queryClient.invalidateQueries("filtros"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("filtros")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {modificaFiltro, modificacionExitosa: isSuccess, reset}
@@ -50,7 +55,11 @@ export const useEliminaFiltro = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioFiltros.elimina,
-    onSuccess: () => queryClient.invalidateQueries("filtros"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("filtros")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {eliminaFiltro, eliminacionExitosa: isSuccess, reset}

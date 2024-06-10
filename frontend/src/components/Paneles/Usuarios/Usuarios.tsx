@@ -13,6 +13,7 @@ import {ValidationError} from "yup";
 import {PermisosEnum} from "../../../enums";
 import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {modalTimeout} from "../../../utils/Constantes.ts";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario());
@@ -42,7 +43,7 @@ function Usuarios() {
         trigger={CardUsuario.CardNuevoUsuario}
         titulo={<div><FaRegUser/><p className="fs-5">Nuevo Usuario</p></div>}
         contenido={contenidoModal()}
-        timeout={registroExitoso ? 2000 : undefined}
+        timeout={registroExitoso ? modalTimeout : undefined}
         sinFondo={registroExitoso}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}

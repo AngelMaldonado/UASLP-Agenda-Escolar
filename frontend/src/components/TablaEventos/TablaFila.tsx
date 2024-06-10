@@ -1,4 +1,4 @@
-import {modalEvento} from "../Modales/ModalEliminarEditarEvento/ModalEliminarEditar";
+import ModalCRUDEvento from "../Modales/ModalCRUDEvento"
 import {useState, useContext} from "react";
 import Evento from "../../models/Evento";
 import {AgendaContext} from "../../providers/AgendaProvider.tsx";
@@ -76,7 +76,7 @@ function TablaFilas(props: TablaFilasProps) {
 
       <td>
         <div className='d-flex-column'>
-          {modalEvento(props)}
+          {ModalCRUDEvento(props)}
         </div>
       </td>
     </tr>

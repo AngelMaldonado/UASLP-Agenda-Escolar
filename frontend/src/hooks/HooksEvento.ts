@@ -2,6 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioEvento from "../services/ServicioEvento.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Tipos.ts";
+import {modalTimeout} from "../utils/Constantes.ts";
 
 export const useObtenEventos = () => {
   const {
@@ -36,7 +37,11 @@ export const useModificaEvento = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioEvento.modifica,
-    onSuccess: () => queryClient.invalidateQueries("eventos"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("eventos")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {modificaEvento, modificacionExitosa: isSuccess, reset}
@@ -50,7 +55,11 @@ export const useEliminaEvento = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioEvento.elimina,
-    onSuccess: () => queryClient.invalidateQueries("eventos"),
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries("eventos")
+      }, modalTimeout)
+    },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
   return {eliminaEvento, eliminacionExitosa: isSuccess, reset}

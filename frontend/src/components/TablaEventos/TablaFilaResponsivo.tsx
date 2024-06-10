@@ -1,4 +1,4 @@
-import {modalEvento} from "../Modales/ModalEliminarEditarEvento/ModalEliminarEditar";
+import ModalCRUDEvento from "../Modales/ModalCRUDEvento"
 import TooltipFiltro from "./TooltipFiltros.tsx";
 import {useState, useContext} from "react";
 import Evento from "../../models/Evento";
@@ -79,7 +79,7 @@ function TablaFilaResponsivo(props: TablaFilaResponsivoProps) {
         <div className="column2"><p>{events.hipervinculos}</p></div>
       </li>
       <li className="row">
-        <div className='d-flex justify-content-end'>{modalEvento(props)}</div>
+        <div className='d-flex justify-content-end'>{ModalCRUDEvento(props)}</div>
       </li>
     </ul>
   )

@@ -3,7 +3,7 @@ import Evento from '../../../models/Evento.ts';
 import Boton from "../../Inputs/Boton";
 import {TemaComponente} from "../../../utils/Tipos.ts";
 import {AiOutlineExport} from "react-icons/ai";
-import {modalEvento} from "../../Modales/ModalEliminarEditarEvento/ModalEliminarEditar.tsx";
+import ModalCRUDEvento from "../../Modales/ModalCRUDEvento"
 import {Configuraciones} from "../../../utils/Constantes.ts";
 
 function CardMasEventos(props: { evento: Evento }) {
@@ -23,7 +23,7 @@ function CardMasEventos(props: { evento: Evento }) {
           />
         </div>
         <div className="bottons">
-          {modalEvento(props)}
+          {ModalCRUDEvento(props)}
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import {Configuraciones} from "../../../utils/Constantes.ts";
 import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import {modalEvento} from '../../Modales/ModalEliminarEditarEvento/ModalEliminarEditar.tsx';
+import ModalCRUDEvento from "../../Modales/ModalCRUDEvento"
 import {FaRegCalendar} from "react-icons/fa";
 import {useContext} from "react";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
@@ -39,7 +39,7 @@ function CardAgenda(props: CardAgendaProps) {
         {hipervinculos()}
         <div className="d-flex flex-column justify-content-center align-items-center gap-1 me-3 "
              onClick={(e) => e.stopPropagation()}>
-          {modalEvento(props)}
+          {ModalCRUDEvento(props)}
         </div>
       </Card.Body>
       <ChipsEvento filtros_evento={props.evento.filtros}/>
