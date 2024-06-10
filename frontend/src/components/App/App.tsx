@@ -33,7 +33,7 @@ axios.defaults.headers.common = {"Authorization": localStorage.getItem("token")}
  * con el servicio, si no se logra, arrojar un error y mostrarlo en consola
  **/
 try {
-  await axios.get(Configuraciones.sanctumURL + "csrf-cookie")
+  axios.get(Configuraciones.sanctumURL + "csrf-cookie")
 } catch (error) {
   console.log(error)
 }

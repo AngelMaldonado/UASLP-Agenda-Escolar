@@ -1,7 +1,6 @@
 import Simbologia from "../../../models/Simbologia.ts";
 import {Configuraciones} from "../../../utils/Constantes.ts";
 import {Form, Image} from "react-bootstrap";
-import {ErrorsObject} from "../../../utils/Tipos.ts";
 import {useState} from "react";
 import Formal from "react-formal";
 

@@ -14,8 +14,13 @@
 
   > .simbologia {
     > .circle {
+      overflow: hidden;
       width: 4.5rem;
       height: 4.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 
