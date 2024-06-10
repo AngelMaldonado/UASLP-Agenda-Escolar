@@ -95,17 +95,20 @@ function CardUsuario(props: { usuario: Usuario }) {
           />
 
       ),
-      tienePermisoEliminar && (
-        !esAdministrador ?
-          <Boton
-            key={"eliminar-usuario" + props.usuario.id}
-            rounded
-            variant={TemaComponente.DangerInverso}
-            icono={<FaRegTrashAlt/>}
-            onClick={() => setEliminando(true)}
-          />
-          : undefined
+       usuario?.id === props.usuario.id ? null : (
+        tienePermisoEliminar && (
+          !esAdministrador ?
+            <Boton
+              key={"eliminar-usuario" + props.usuario.id}
+              rounded
+              variant={TemaComponente.DangerInverso}
+              icono={<FaRegTrashAlt/>}
+              onClick={() => setEliminando(true)}
+            />
+            : undefined
+        )
       )
+      
     ] as React.ReactElement[]);
   }
 
