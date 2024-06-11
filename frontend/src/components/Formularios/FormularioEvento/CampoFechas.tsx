@@ -19,7 +19,7 @@ export function CampoFechas(props: CampoFechasProps) {
                       placeholder="Fecha de inicio del evento"
                       mapToValue={_ => props.evento.fecha_inicio?.toISOString().split("T")[0]}
                       mapFromValue={{"fecha_inicio": v => v}}
-                      onChange={e => props.setEvento("fecha_inicio", new Date(e.target.value))}
+                      onChange={e => props.setEvento("fecha_inicio", new Date(e.target.value + ' 00:00:00'))}
         />
         <Formal.Message for="fecha_inicio" className="d-flex text-danger"/>
       </div>
@@ -33,7 +33,7 @@ export function CampoFechas(props: CampoFechasProps) {
                       min={props.evento.fecha_inicio?.toISOString().split("T")[0]}
                       mapToValue={_ => props.evento.fecha_fin?.toISOString().split("T")[0]}
                       mapFromValue={{"fecha_fin": v => v}}
-                      onChange={e => props.setEvento("fecha_fin", new Date(e.target.value))}
+                      onChange={e => props.setEvento("fecha_fin", new Date(e.target.value + ' 00:00:00'))}
         />
         <Formal.Message for="fecha_fin" className="d-flex text-danger"/>
       </div>

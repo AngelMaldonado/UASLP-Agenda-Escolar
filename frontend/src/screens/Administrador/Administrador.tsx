@@ -10,6 +10,7 @@ import Tab from "react-bootstrap/Tab";
 import Simbolos from "../../components/Paneles/Simbolos";
 import Agenda from "../../components/Paneles/Agenda";
 import TablaEventos from "../../components/TablaEventos/TablaEventos.tsx";
+import NavbarInfo from "../../components/Navbars/NavbarInfo";
 
 const idVistaAdministrador = "vista-administrador";
 
@@ -22,6 +23,7 @@ function Administrador() {
   return (
     <Tab.Container id={idVistaAdministrador} activeKey={key} onSelect={(k) => setKey(k ?? "calendario")}>
       <NavbarUASLP/>
+      <NavbarInfo/>
       <NavbarAgenda currentKey={key} setKey={setKey} eventKeys={eventKeysAgenda}/>
       <NavbarAdmin currentKey={key} setKey={setKey} eventKeys={eventKeysAdmin}/>
       <Tab.Content>{...tabContent()}</Tab.Content>

@@ -2,10 +2,10 @@ import "./_publico.scss";
 import Calendario from "../../components/Calendario/Calendario.tsx";
 import NavbarAgenda from "../../components/Navbars/NavbarAgenda/NavbarAgenda.tsx";
 import Tab from "react-bootstrap/Tab";
-//import CardCalendarioNotificacion from "../../components/CardCalendarioNotificacion/CardCalendarioNotificacion.tsx";
 import {useState} from "react";
 import NavbarUASLP from "../../components/Navbars/NavbarUASLP";
 import Agenda from "../../components/Paneles/Agenda";
+import NavbarInfo from "../../components/Navbars/NavbarInfo";
 
 const idVistaPublico = "vista-publico";
 
@@ -16,6 +16,7 @@ function Publico() {
   return (
     <Tab.Container id={idVistaPublico} activeKey={key}>
       <NavbarUASLP/>
+      <NavbarInfo/>
       <NavbarAgenda
         currentKey={key}
         setKey={setKey}

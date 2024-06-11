@@ -27,6 +27,10 @@
     .Hipervinculos {
       display: none;
     }
+
+    .Botones {
+      transform: translateY(- u.$spacer * 2);
+    }
   }
 
   .hstack {

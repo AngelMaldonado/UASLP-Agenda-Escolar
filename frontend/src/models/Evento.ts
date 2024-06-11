@@ -91,10 +91,15 @@ class Evento {
   static ParseEventosCalendario(eventos: Evento[]) {
     return eventos.map(evento => {
       const {id, ...atributos} = evento
+      const fecha_inicio = new Date(evento.fecha_inicio!)
+      const fecha_fin = new Date(evento.fecha_fin!)
+      fecha_inicio?.setHours(0, 0, 0)
+      fecha_fin?.setHours(0, 0, 0)
+      fecha_fin?.setDate(fecha_fin?.getDate() + 1)
       return {
         id: evento.id?.toString() ?? "",
-        start: evento.fecha_inicio?.toISOString(),
-        end: evento.fecha_fin?.toISOString(),
+        start: fecha_inicio?.toISOString(),
+        end: fecha_fin?.toISOString(),
         title: evento.nombre,
         ...atributos,
       }

@@ -8,7 +8,7 @@ type BotonProps = {
   ref?: Ref<HTMLButtonElement>
   active?: boolean,
   disabled?: boolean,
-  variant?: TemaComponente,
+  variant?: TemaComponente | string,
   etiqueta?: string,
   icono?: React.ReactElement,
   eventKey?: string,

@@ -1,7 +1,6 @@
 @use "../../../utils" as u;
 
 .pills {
-  font-size: 1rem * 0.875;
   position: absolute;
   bottom: -1rem;
   left: 0;
@@ -13,6 +12,7 @@
   }
 
   span {
+    font-size: u.$spacer * 0.75;
     background-color: u.$secondary;
     color: #fff;
     margin-right: 4px;
