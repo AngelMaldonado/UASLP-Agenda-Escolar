@@ -85,6 +85,7 @@ class UsuarioController extends Controller
 
             $usuario_sistema->fill($request->only('nombre', 'apellido', 'email'));
             $usuario_sistema->contraseña = Hash::make($request->input('contraseña'));
+            $usuario_sistema->rpe = null;
         }
 
         $usuario_sistema->fill($request->only('tipo', 'permisos'));

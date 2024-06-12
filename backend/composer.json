@@ -1,15 +1,17 @@
 {
-    "name": "laravel/laravel",
+    "name": "agenda-escolar/backend",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "API REST para la Agenda Escolar de la UASLP, Facultad de Ingeniería",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "api",
+        "agenda",
+        "uaslp"
     ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
