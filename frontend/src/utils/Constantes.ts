@@ -2,6 +2,13 @@ export class Configuraciones {
   static readonly publicURL = "http://localhost:8000/"
   static readonly apiURL = "http://localhost:8000/api/"
   static readonly sanctumURL = "http://localhost:8000/sanctum/"
+
+  // rutas para despliegue:
+  /*
+  static readonly publicURL = "http://localhost/agenda-escolar/backend/public/"
+  static readonly apiURL = Configuraciones.publicURL + "api/"
+  static readonly sanctumURL = Configuraciones.publicURL + "sanctum/"
+   */
 }
 
 export const meses: Map<string, number> = new Map([

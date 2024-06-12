@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/agenda-escolar'>
       <App/>
     </BrowserRouter>
   </React.StrictMode>,
