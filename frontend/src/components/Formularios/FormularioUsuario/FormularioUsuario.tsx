@@ -50,10 +50,11 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
                       components={{Input}}
                       placeholder="Eliga el tipo de usuario"
                       noOptionsMessage={() => <>Sin opciones</>}
-                      options={TipoUsuarioOptions.slice(1)}
+                      isDisabled={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR}
+                      options={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ? TipoUsuarioOptions : TipoUsuarioOptions.slice(1)}
                       mapToValue={props.usuario.tipo ?
                         v =>
-                          TipoUsuarioOptions.slice(1).find(o => o.value === v.tipo)
+                          TipoUsuarioOptions.find(o => o.value === v.tipo)
                         : undefined
                       }
                       onChange={(o: TipoUsuarioOptionsType) => props.setUsuario("tipo", o.value)}
@@ -83,6 +84,7 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
                       classNamePrefix="select"
                       unstyled
                       isMulti
+                      isDisabled={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR}
                       components={{MultiValueLabel}}
                       closeMenuOnSelect={false}
                       placeholder="Eliga los permisos que tendrá el usuario"

@@ -108,7 +108,7 @@ function CardUsuario(props: { usuario: Usuario }) {
             : undefined
         )
       )
-      
+
     ] as React.ReactElement[]);
   }
 

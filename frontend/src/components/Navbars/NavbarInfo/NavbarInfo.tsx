@@ -11,7 +11,7 @@ export default function NavbarInfo() {
   return (
     <Navbar className="NavbarInfo text-white">
       <Container className='flex-column text-center flex-lg-row fw-bolder'>
-        Agenda y Calendario de Actividades (SEMESTRE II 2023-2024)**
+        Agenda y Calendario de Actividades
         <Modal
           titulo={<div><FaInfo/> <h6>Acerca de este sitio</h6></div>}
           trigger={
