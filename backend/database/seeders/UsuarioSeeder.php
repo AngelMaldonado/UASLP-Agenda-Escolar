@@ -25,6 +25,6 @@ class UsuarioSeeder extends Seeder
         ]);
 
         // Crea 5 usuarios tipo becario aleatorios
-        $usuarios = Usuario::factory(5)->create();
+        //$usuarios = Usuario::factory(5)->create();
     }
 }
