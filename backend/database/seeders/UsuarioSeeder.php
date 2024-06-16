@@ -21,7 +21,7 @@ class UsuarioSeeder extends Seeder
             'tipo' => TipoUsuarioEnum::ADMINISTRADOR,
             'email' => 'secretaria.general@uaslp.mx',
             'permisos' => PermisosEnum::values(),
-            'contraseña' => '123456'
+            'contraseña' => '@ingenieria2024AE'
         ]);
 
         // Crea 5 usuarios tipo becario aleatorios

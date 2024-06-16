@@ -3,6 +3,8 @@
 /public/build
 /public/hot
 /public/storage
+/public/iconos
+/public/imagenes
 /storage/*.key
 /vendor
 .env
@@ -17,5 +19,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/storage/app/iconos
-/storage/app/imagenes

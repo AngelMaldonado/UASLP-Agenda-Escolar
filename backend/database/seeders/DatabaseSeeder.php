@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
             SimboloSeeder::class,
             CatEventoSeeder::class,
             FiltroSeeder::class,
-            EventoSeeder::class,
-            EventosFiltrosSeeder::class
+            //EventoSeeder::class,
+            //EventosFiltrosSeeder::class
         ]);
     }
 }

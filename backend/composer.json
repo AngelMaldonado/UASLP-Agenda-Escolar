@@ -1,7 +1,7 @@
 {
     "name": "agenda-escolar/backend",
     "type": "project",
-    "description": "API REST para la Agenda Escolar de la UASLP, Facultad de Ingeniería",
+    "description": "API REST para la Agenda Escolar de la UASLP, Facultad de IngenierÃ­a",
     "keywords": [
         "laravel",
         "framework",
