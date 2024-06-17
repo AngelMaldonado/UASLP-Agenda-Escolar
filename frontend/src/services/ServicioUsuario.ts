@@ -26,13 +26,13 @@ class ServicioUsuario {
   }
 
   public static async modifica(usuario: Usuario) {
-    return (await axios.put(Configuraciones.apiURL + "usuarios", usuario)).data
+    return (await axios.post(Configuraciones.apiURL + "usuarios", {...usuario, _method: "put"})).data
   }
 
 
   public static async elimina(usuario: Usuario) {
     try {
-      await axios.delete(Configuraciones.apiURL + "usuarios", {data: {id: usuario.id}});
+      await axios.post(Configuraciones.apiURL + "usuarios", {id: usuario.id, _method: "delete"});
       return true
     } catch (err) {
       return false

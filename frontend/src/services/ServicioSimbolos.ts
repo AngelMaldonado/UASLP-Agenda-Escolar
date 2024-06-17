@@ -40,7 +40,7 @@ class ServicioSimbolos {
 
   public static async elimina(simbolo: Simbologia) {
     try {
-      await axios.delete(Configuraciones.apiURL + "simbolos", {data: {id: simbolo.id}});
+      await axios.post(Configuraciones.apiURL + "simbolos", {id: simbolo.id, _method: "delete"});
       return true
     } catch (err) {
       console.log(err)

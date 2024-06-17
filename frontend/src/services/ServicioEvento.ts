@@ -50,7 +50,7 @@ class ServicioEvento {
 
   public static async elimina(evento: Evento) {
     try {
-      await axios.delete(Configuraciones.apiURL + "eventos", {data: {id: evento.id}});
+      await axios.post(Configuraciones.apiURL + "eventos", {id: evento.id, _method: "delete"});
       return true
     } catch (err) {
       console.log(err)

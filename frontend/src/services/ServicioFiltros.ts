@@ -7,7 +7,7 @@ class ServicioFiltros {
     try {
       return (await axios.get<Filtro[]>(Configuraciones.apiURL + "filtros")).data
     } catch (err) {
-      //console.log(err)
+      console.log(err)
       return []
     }
   }
@@ -41,7 +41,7 @@ class ServicioFiltros {
 
   public static async elimina(filtro: Filtro) {
     try {
-      await axios.delete(Configuraciones.apiURL + "filtros", {data: {id: filtro.id}});
+      await axios.post(Configuraciones.apiURL + "filtros", {id: filtro.id, _method: "delete"});
       return true
     } catch (err) {
       console.log(err)

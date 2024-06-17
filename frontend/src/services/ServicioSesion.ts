@@ -26,7 +26,7 @@ class ServicioSesion {
 
   public static async extiendeSesion() {
     try {
-      return (await axios.put(Configuraciones.apiURL + "sesion"))
+      return (await axios.post(Configuraciones.apiURL + "sesion", {_method: "put"}))
     } catch (_) {
       sessionStorage.clear()
       return new Sesion()
