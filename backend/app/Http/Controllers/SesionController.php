@@ -25,7 +25,7 @@ class SesionController extends Controller
         if ($users->contains($request->user()))
             return $this->exito([
                 'usuario' => $request->user(),
-                'usuarios' => $users,
+                'usuarios' => $users->flatten(),
                 'expiracion' => $request->user()->currentAccessToken()->expires_at
             ]);
         else
