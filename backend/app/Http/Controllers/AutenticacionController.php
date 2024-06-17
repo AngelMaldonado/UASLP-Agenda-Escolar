@@ -28,9 +28,8 @@ class AutenticacionController extends Controller
 
             $usuario = Usuario::where('email', $request->email)->first();
         } else if ($request->input('tipo') === TipoUsuarioEnum::SECUNDARIO->value) {
-
             // Modificar el método de ValidaUsuarioServicio para que valide rpe con contraseña
-            if (!Usuario::ValidaUsuarioServicio($request->rpe, $request->contraseña))
+            if (!Usuario::UsuarioDesdeServicio($request->rpe, $request->contraseña))
                 return $this->error(['backend' => 'credenciales erróneas'], 401);
 
             $usuario = Usuario::where('rpe', $request->rpe)->first();
