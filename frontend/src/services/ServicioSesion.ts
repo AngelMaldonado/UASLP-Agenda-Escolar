@@ -17,7 +17,8 @@ class ServicioSesion {
         } as Usuario)
       })
       return sesion
-    } catch (_) {
+    } catch (error) {
+      console.log(error)
       sessionStorage.clear()
       return new Sesion()
     }
