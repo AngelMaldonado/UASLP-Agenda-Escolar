@@ -5,7 +5,7 @@ export class Configuraciones {
 
   // rutas para despliegue:
   /*
-  static readonly publicURL = "https://servicios.ing.uaslp.mx/agenda-escolar/backend/public/"
+  static readonly publicURL = "http://servicios.ing.uaslp.mx/agenda-escolar/backend/public/"
   static readonly apiURL = Configuraciones.publicURL + "api/"
   static readonly sanctumURL = Configuraciones.publicURL + "sanctum/"
    */

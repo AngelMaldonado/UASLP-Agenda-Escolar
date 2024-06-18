@@ -21,41 +21,23 @@ class ServicioEvento {
   }
 
   public static async nuevo(evento: Evento) {
-    try {
-      await axios.post(Configuraciones.apiURL + "eventos", {
-        ...evento,
-        usuario_id: 1,
-        fecha_inicio: evento.fecha_inicio?.toISOString().split("T")[0],
-        fecha_fin: evento.fecha_fin?.toISOString().split("T")[0]
-      }, {headers: {'Content-Type': 'multipart/form-data'}})
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return await axios.post(Configuraciones.apiURL + "eventos", {
+      ...evento,
+      usuario_id: 1,
+      fecha_inicio: evento.fecha_inicio?.toISOString().split("T")[0],
+      fecha_fin: evento.fecha_fin?.toISOString().split("T")[0]
+    }, {headers: {'Content-Type': 'multipart/form-data'}})
   }
 
   public static async modifica(evento: Evento) {
-    try {
-      await axios.post(Configuraciones.apiURL + "eventos",
-        {...evento, _method: "put"},
-        {headers: {'Content-Type': 'multipart/form-data'}}
-      )
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return (await axios.post(Configuraciones.apiURL + "eventos",
+      {...evento, _method: "put"},
+      {headers: {'Content-Type': 'multipart/form-data'}}
+    )).data
   }
 
   public static async elimina(evento: Evento) {
-    try {
-      await axios.post(Configuraciones.apiURL + "eventos", {id: evento.id, _method: "delete"});
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return await axios.post(Configuraciones.apiURL + "eventos", {id: evento.id, _method: "delete"});
   }
 
 }

@@ -7,45 +7,27 @@ class ServicioSimbolos {
     try {
       return (await axios.get<Simbologia[]>(Configuraciones.apiURL + "simbolos")).data
     } catch (err) {
-      //console.log(err)
+      console.log(err)
       return []
     }
   }
 
   public static async nuevo(simbolo: Simbologia) {
-    try {
-      await axios.post(Configuraciones.apiURL + "simbolos",
-        simbolo,
-        {headers: {'Content-Type': 'multipart/form-data'}}
-      );
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return await axios.post(Configuraciones.apiURL + "simbolos",
+      simbolo,
+      {headers: {'Content-Type': 'multipart/form-data'}}
+    );
   }
 
   public static async modifica(simbolo: Simbologia) {
-    try {
-      await axios.post(Configuraciones.apiURL + "simbolos",
-        {...simbolo, _method: "put"}, // <- activa put mediante post en Laravel
-        {headers: {'Content-Type': 'multipart/form-data'}}
-      );
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return await axios.post(Configuraciones.apiURL + "simbolos",
+      {...simbolo, _method: "put"}, // <- activa put mediante post en Laravel
+      {headers: {'Content-Type': 'multipart/form-data'}}
+    );
   }
 
   public static async elimina(simbolo: Simbologia) {
-    try {
-      await axios.post(Configuraciones.apiURL + "simbolos", {id: simbolo.id, _method: "delete"});
-      return true
-    } catch (err) {
-      console.log(err)
-      return false
-    }
+    return await axios.post(Configuraciones.apiURL + "simbolos", {id: simbolo.id, _method: "delete"});
   }
 }
 
