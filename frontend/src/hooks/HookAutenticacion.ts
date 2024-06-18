@@ -16,6 +16,7 @@ export const useLogin = (setErrors: (field: string, value: string) => void) => {
   const {
     mutate: login,
     isSuccess,
+    isLoading
   } = useMutation({
     mutationFn: ServicioAutenticacion.login,
     onSuccess: (respuesta) => {
@@ -28,7 +29,7 @@ export const useLogin = (setErrors: (field: string, value: string) => void) => {
     onError: (error: AxiosError<ErrorsObject>) => onBackendErrors((error.response!.data.errors))
   })
 
-  return {login, autenticacionExitosa: isSuccess}
+  return {login, autenticacionExitosa: isSuccess, isLoading}
 }
 
 export const useLogout = () => {
@@ -36,6 +37,7 @@ export const useLogout = () => {
 
   const {
     mutate: logout,
+    isLoading
   } = useMutation({
     mutationFn: ServicioAutenticacion.logout,
     onSuccess: () => {
@@ -43,5 +45,5 @@ export const useLogout = () => {
       navigate("/")
     },
   })
-  return {logout: logout}
+  return {logout: logout, saliendo: isLoading}
 }

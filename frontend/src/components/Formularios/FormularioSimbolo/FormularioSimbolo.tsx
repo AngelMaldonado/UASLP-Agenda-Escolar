@@ -35,7 +35,7 @@ function FormularioSimbolo(props: FormularioSimboloProps) {
           </label>
           {simbolo()}
         </div>
-        <Formal.Message for="icono" className="d-flex text-danger"/>
+        <Formal.Message for="simbolo" className="d-flex text-danger"/>
       </Form.Group>
     </Formal>
   );

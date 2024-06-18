@@ -12,15 +12,16 @@ import {PermisosEnum, TipoUsuarioEnum} from "../../../enums";
 import {ValidationError} from "yup";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
+import {Spinner} from "react-bootstrap";
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioActual, setUsuarioActual] = useState(props.usuario)
   const [errores, setErrores] = useState({})
-  const [eliminando, setEliminando] = useState(false)
+  const [eliminandoSt, setEliminandoSt] = useState(false)
 
   const usuario = useObtenSesion().sesion?.usuario;
-  const {modificaUsuario, modificacionExitosa, reset} = useModificaUsuario(setErrores)
-  const {eliminaUsuario, eliminacionExitosa} = useEliminaUsuario(setErrores)
+  const {modificaUsuario, modificacionExitosa, modificando, reset} = useModificaUsuario(setErrores)
+  const {eliminaUsuario, eliminacionExitosa, eliminando} = useEliminaUsuario(setErrores)
   const onUsuarioChange = useObjectAttributeChange(setUsuarioActual as Dispatch<SetStateAction<Object>>)
   const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
 
@@ -55,8 +56,8 @@ function CardUsuario(props: { usuario: Usuario }) {
   function modalUsuario() {
     return (
       <Modal
-        sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
-        cancelar={!modificacionExitosa}
+        sinFondo={eliminandoSt || eliminacionExitosa || modificacionExitosa}
+        cancelar={!modificacionExitosa && !eliminacionExitosa && !modificando && !eliminando}
         timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
@@ -83,7 +84,7 @@ function CardUsuario(props: { usuario: Usuario }) {
               rounded
               variant={TemaComponente.PrimarioInverso}
               icono={<FaRegEdit/>}
-              onClick={() => setEliminando(false)}
+              onClick={() => setEliminandoSt(false)}
             /> : undefined
           :
           <Boton
@@ -91,11 +92,11 @@ function CardUsuario(props: { usuario: Usuario }) {
             rounded
             variant={TemaComponente.PrimarioInverso}
             icono={<FaRegEdit/>}
-            onClick={() => setEliminando(false)}
+            onClick={() => setEliminandoSt(false)}
           />
 
       ),
-       usuario?.id === props.usuario.id ? null : (
+      usuario?.id === props.usuario.id ? null : (
         tienePermisoEliminar && (
           !esAdministrador ?
             <Boton
@@ -103,7 +104,7 @@ function CardUsuario(props: { usuario: Usuario }) {
               rounded
               variant={TemaComponente.DangerInverso}
               icono={<FaRegTrashAlt/>}
-              onClick={() => setEliminando(true)}
+              onClick={() => setEliminandoSt(true)}
             />
             : undefined
         )
@@ -115,10 +116,10 @@ function CardUsuario(props: { usuario: Usuario }) {
 
   function contenidoModal() {
     if (modificacionExitosa) {
-      return <p>El usuario se modificó correctamente</p>
+      return <p className="text-center">El usuario se modificó correctamente</p>
     } else if (eliminacionExitosa) {
-      return <p>El usuario se eliminó correctamente</p>
-    } else if (eliminando) {
+      return <p className="text-center">El usuario se eliminó correctamente</p>
+    } else if (eliminandoSt) {
       return <p className="fs-5 text-center">
         ¿Esta seguro que desea eliminar el
         usuario <strong> [{props.usuario.nombre + " " + props.usuario.apellido}] </strong> ?
@@ -130,15 +131,27 @@ function CardUsuario(props: { usuario: Usuario }) {
     return [
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
-             etiqueta="Eliminar"
-             icono={<FaRegTrashAlt/>}
-             onClick={() => eliminando ? eliminaUsuario(usuarioActual) : setEliminando(true)}
+             icono={eliminando ?
+               <Spinner animation="border" role="status" size="sm">
+                 <span className="visually-hidden">Loading...</span>
+               </Spinner>
+               : <FaRegTrashAlt/>
+             }
+             disabled={modificando || eliminando}
+             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+             onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
       />,
-      !eliminando ?
+      !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
-               etiqueta="Guardar"
-               icono={<FaRegPlusSquare/>}
+               icono={modificando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegPlusSquare/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaUsuarioExistente}
         /> : <></>
     ]
@@ -157,7 +170,7 @@ function CardUsuario(props: { usuario: Usuario }) {
     reset()
     setUsuarioActual(props.usuario)
     setErrores({})
-    setEliminando(false)
+    setEliminandoSt(false)
   }
 }
 

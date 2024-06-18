@@ -18,7 +18,7 @@ class Simbologia {
 
   public static schema: ObjectSchema<Simbologia> = object({
     id: number(),
-    simbolo: mixed().test("simbolo", "el archivo debe ser .webp", value =>
+    simbolo: mixed().label("símbolo").required().test("simbolo", "el archivo debe ser .webp", value =>
       value instanceof File ? value.type == "image/webp" : true
     ),
   })

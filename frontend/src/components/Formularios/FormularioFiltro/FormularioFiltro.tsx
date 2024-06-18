@@ -36,7 +36,7 @@ function FormularioFiltro(props: FormularioFiltroProps) {
                       className="form-control"
                       classNamePrefix="select"
                       unstyled
-                      placeholder="Eliga la categoría del filtro"
+                      placeholder="Elija la categoría del filtro"
                       options={FiltrosCategoriaOptions}
                       mapFromValue={{"categoria": option => (option as FiltrosCategoriaOptionsType).value}}
                       mapToValue={props.filtro.categoria ?
@@ -49,8 +49,8 @@ function FormularioFiltro(props: FormularioFiltroProps) {
         <Formal.Message for="categoria" className="d-flex text-danger"/>
         <Form.Label htmlFor="icono">Ícono*</Form.Label>
         <div className="d-flex gap-2 w-100">
-          <label className="form-control d-flex justify-content-between" style={{ maxWidth: '90%' }}>
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <label className="form-control d-flex justify-content-between" style={{maxWidth: '90%'}}>
+            <span style={{overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
               {props.filtro.icono && props.filtro.icono instanceof File ?
                 props.filtro.icono.name : "Ícono en formato .svg"
               }
@@ -62,7 +62,7 @@ function FormularioFiltro(props: FormularioFiltroProps) {
                           onChange={e => props.setFiltro("icono", e.target.files[0])}
             />
           </label>
-            <span>{icono()}</span>
+          <span>{icono()}</span>
         </div>
         <Formal.Message for="icono" className="d-flex text-danger"/>
       </Form.Group>

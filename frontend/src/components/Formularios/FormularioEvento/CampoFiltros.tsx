@@ -28,7 +28,7 @@ export function CampoFiltros(props: CampoFiltrosProps) {
                     unstyled
                     isMulti
                     closeMenuOnSelect={false}
-                    placeholder="Eliga los filtros para el evento"
+                    placeholder="Elija los filtros para el evento"
                     noOptionsMessage={() => <>Sin opciones</>}
                     options={options}
                     mapToValue={props.evento.filtros?.length! > 0 ?

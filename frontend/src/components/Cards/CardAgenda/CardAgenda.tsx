@@ -38,9 +38,9 @@ function CardAgenda(props: CardAgendaProps) {
           : null}
         {hipervinculos()}
         <div
-          className="Botones d-flex float-end float-lg-none flex-lg-column me-lg-3 justify-content-center align-items-center gap-1"
+          className="Botones d-flex float-end float-lg-none flex-md-column me-lg-3 justify-content-center align-items-center gap-1"
           onClick={(e) => e.stopPropagation()}>
-          {ModalCRUDEvento(props)}
+          <ModalCRUDEvento evento={props.evento}/>
         </div>
       </Card.Body>
       <ChipsEvento filtros_evento={props.evento.filtros}/>

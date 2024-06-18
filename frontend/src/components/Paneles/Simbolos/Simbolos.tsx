@@ -13,13 +13,14 @@ import {ValidationError} from "yup";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
+import {Spinner} from "react-bootstrap";
 
 function Simbolos() {
   const [nuevoSimbolo, setNuevoSimbolo] = useState(new Simbologia())
   const [errores, setErrores] = useState({})
 
   const {simbolos} = useObtenSimbolos()
-  const {agregaSimbolo, registroExitoso, reset} = useAgregaSimbolo(setErrores)
+  const {agregaSimbolo, registroExitoso, agregando, reset} = useAgregaSimbolo(setErrores)
 
   const onSimboloChange = useObjectAttributeChange(setNuevoSimbolo as Dispatch<SetStateAction<Object>>)
 
@@ -43,11 +44,18 @@ function Simbolos() {
         contenido={contenidoModal()}
         timeout={registroExitoso ? modalTimeout : undefined}
         sinFondo={registroExitoso}
+        cancelar={!registroExitoso && !agregando}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}
                  variant={TemaComponente.SuccessInverso}
-                 etiqueta="Guardar"
-                 icono={<FaRegPlusSquare/>}
+                 icono={agregando ?
+                   <Spinner animation="border" role="status" size="sm">
+                     <span className="visually-hidden">Loading...</span>
+                   </Spinner>
+                   : <FaRegPlusSquare/>
+                 }
+                 disabled={agregando}
+                 etiqueta={!agregando ? "Guardar" : "Guardando..."}
                  onClick={agregaNuevoSimbolo}
           />
         ] : []}
@@ -57,7 +65,7 @@ function Simbolos() {
 
   function contenidoModal() {
     if (registroExitoso)
-      return (<p>El símbolo se agregó con éxito</p>)
+      return (<p className="text-center">El símbolo se agregó con éxito</p>)
     else
       return (<FormularioSimbolo simbologia={nuevoSimbolo} setSimbolo={onSimboloChange} errores={errores}/>)
   }

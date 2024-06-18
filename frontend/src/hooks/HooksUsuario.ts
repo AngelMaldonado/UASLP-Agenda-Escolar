@@ -24,6 +24,7 @@ export const useAgregaUsuario = (setErrors: (field: string, value: string) => vo
   const {
     mutate: agregaUsuario,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.nuevo,
@@ -33,7 +34,7 @@ export const useAgregaUsuario = (setErrors: (field: string, value: string) => vo
     },
     onError: (error: AxiosError<ErrorsObject>) => onBackendErrors((error.response!.data.errors))
   })
-  return {agregaUsuario, registroExitoso: isSuccess, reset}
+  return {agregaUsuario, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
 export const useModificaUsuario = (onError: ({}) => void) => {
@@ -41,6 +42,7 @@ export const useModificaUsuario = (onError: ({}) => void) => {
   const {
     mutate: modificaUsuario,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.modifica,
@@ -51,7 +53,7 @@ export const useModificaUsuario = (onError: ({}) => void) => {
     },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {modificaUsuario, modificacionExitosa: isSuccess, reset}
+  return {modificaUsuario, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
 export const useEliminaUsuario = (onError: ({}) => void) => {
@@ -59,6 +61,7 @@ export const useEliminaUsuario = (onError: ({}) => void) => {
   const {
     mutate: eliminaUsuario,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.elimina,
@@ -69,5 +72,5 @@ export const useEliminaUsuario = (onError: ({}) => void) => {
     },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {eliminaUsuario: eliminaUsuario, eliminacionExitosa: isSuccess, reset}
+  return {eliminaUsuario: eliminaUsuario, eliminacionExitosa: isSuccess, eliminando: isLoading, reset}
 }

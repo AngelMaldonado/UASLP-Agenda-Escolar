@@ -7,7 +7,7 @@ import {modalTimeout} from "../utils/Constantes.ts";
 export const useObtenEventos = () => {
   const {
     data: eventos,
-    isLoading
+    isLoading,
   } = useQuery({
     queryKey: ["eventos"],
     queryFn: () => ServicioEvento.obtenEventos()
@@ -20,13 +20,14 @@ export const useAgregaEvento = (onError: ({}) => void) => {
   const {
     mutate: agregaEvento,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioEvento.nuevo,
     onSuccess: () => queryClient.invalidateQueries("eventos"),
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {agregaEvento, registroExitoso: isSuccess, reset}
+  return {agregaEvento, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
 export const useModificaEvento = (onError: ({}) => void) => {
@@ -34,6 +35,7 @@ export const useModificaEvento = (onError: ({}) => void) => {
   const {
     mutate: modificaEvento,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioEvento.modifica,
@@ -44,7 +46,7 @@ export const useModificaEvento = (onError: ({}) => void) => {
     },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {modificaEvento, modificacionExitosa: isSuccess, reset}
+  return {modificaEvento, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
 export const useEliminaEvento = (onError: ({}) => void) => {
@@ -52,6 +54,7 @@ export const useEliminaEvento = (onError: ({}) => void) => {
   const {
     mutate: eliminaEvento,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioEvento.elimina,
@@ -62,5 +65,5 @@ export const useEliminaEvento = (onError: ({}) => void) => {
     },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {eliminaEvento, eliminacionExitosa: isSuccess, reset}
+  return {eliminaEvento, eliminacionExitosa: isSuccess, eliminando: isLoading, reset}
 }

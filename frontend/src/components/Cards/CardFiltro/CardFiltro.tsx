@@ -4,7 +4,7 @@ import Modal from "../../Modales/Modal";
 import {Dispatch, SetStateAction, useState} from "react";
 import {TemaComponente} from "../../../utils/Tipos.ts"
 import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
-import {Badge, Image} from "react-bootstrap";
+import {Badge, Image, Spinner} from "react-bootstrap";
 import {Configuraciones, modalTimeout} from "../../../utils/Constantes.ts";
 import Filtro from "../../../models/Filtro.ts";
 import Card from "react-bootstrap/Card";
@@ -21,15 +21,11 @@ type CardFiltroProps = {
 function CardFiltro(props: CardFiltroProps) {
   const [filtro, setFiltro] = useState(props.filtro)
   const [errores, setErrores] = useState({})
-  const [eliminando, setEliminando] = useState(false)
+  const [eliminandoSt, setEliminandoSt] = useState(false)
   const usuario = useObtenSesion().sesion?.usuario;
 
-  const {
-    modificaFiltro,
-    modificacionExitosa,
-    reset
-  } = useModificaFiltro(setErrores)
-  const {eliminaFiltro, eliminacionExitosa} = useEliminaFiltro(setErrores)
+  const {modificaFiltro, modificacionExitosa, modificando, reset} = useModificaFiltro(setErrores)
+  const {eliminaFiltro, eliminacionExitosa, eliminando} = useEliminaFiltro(setErrores)
   const cambiaFiltro = useObjectAttributeChange(setFiltro as Dispatch<SetStateAction<Object>>)
 
   return (
@@ -54,8 +50,8 @@ function CardFiltro(props: CardFiltroProps) {
   function modalFiltro() {
     return (
       <Modal
-        sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
-        cancelar={!modificacionExitosa}
+        sinFondo={eliminandoSt || eliminacionExitosa || modificacionExitosa}
+        cancelar={!modificacionExitosa && !eliminacionExitosa && !modificando && !eliminando}
         timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
@@ -76,7 +72,7 @@ function CardFiltro(props: CardFiltroProps) {
                rounded
                variant={TemaComponente.PrimarioInverso}
                icono={<FaRegEdit/>}
-               onClick={() => setEliminando(false)}
+               onClick={() => setEliminandoSt(false)}
         />
       ),
       tienePermisoEliminar && (
@@ -84,7 +80,7 @@ function CardFiltro(props: CardFiltroProps) {
                rounded
                variant={TemaComponente.DangerInverso}
                icono={<FaRegTrashAlt/>}
-               onClick={() => setEliminando(true)}
+               onClick={() => setEliminandoSt(true)}
         />
       ),
     ] as React.ReactElement[]);
@@ -95,7 +91,7 @@ function CardFiltro(props: CardFiltroProps) {
       return <p key="texto-modificacion" className="text-center">El filtro se modificó correctamente</p>
     } else if (eliminacionExitosa) {
       return <p key="texto-eliminacion" className="text-center">El filtro se eliminó correctamente</p>
-    } else if (eliminando) {
+    } else if (eliminandoSt) {
       return <p className="fs-5 text-center" key="texto-eliminando">
         ¿Esta seguro que desea eliminar el
         filtro <strong> [{props.filtro.nombre}] </strong> ?
@@ -110,15 +106,27 @@ function CardFiltro(props: CardFiltroProps) {
     return [
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
-             etiqueta="Eliminar"
-             icono={<FaRegTrashAlt/>}
-             onClick={() => eliminando ? eliminaFiltro(filtro) : setEliminando(true)}
+             icono={eliminando ?
+               <Spinner animation="border" role="status" size="sm">
+                 <span className="visually-hidden">Loading...</span>
+               </Spinner>
+               : <FaRegTrashAlt/>
+             }
+             disabled={modificando || eliminando}
+             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+             onClick={() => eliminandoSt ? eliminaFiltro(filtro) : setEliminandoSt(true)}
       />,
-      !eliminando ?
+      !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
-               etiqueta="Guardar"
-               icono={<FaRegPlusSquare/>}
+               icono={modificando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegPlusSquare/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaFiltroExistente}
         /> : <></>
     ]
@@ -137,7 +145,7 @@ function CardFiltro(props: CardFiltroProps) {
     reset()
     setFiltro(props.filtro)
     setErrores({})
-    setEliminando(false)
+    setEliminandoSt(false)
   }
 }
 

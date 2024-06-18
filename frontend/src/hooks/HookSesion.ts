@@ -1,5 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import ServicioSesion from "../services/ServicioSesion.ts";
+import {modalTimeout} from "../utils/Constantes.ts";
 
 export const useObtenSesion = () => {
   const {
@@ -19,10 +20,16 @@ export const useExtiendeSesion = () => {
 
   const {
     mutate: extiendeSesion,
+    isSuccess,
+    isLoading,
+    reset
   } = useMutation({
     mutationFn: ServicioSesion.extiendeSesion,
-    onSuccess: () => queryClient.invalidateQueries("sesion"),
+    onSuccess: () => {
+      queryClient.invalidateQueries("sesion")
+      setTimeout(() => reset(), modalTimeout)
+    },
     onError: (_) => localStorage.removeItem("token"),
   })
-  return {extiendeSesion}
+  return {extiendeSesion, extensionExitosa: isSuccess, extendiendo: isLoading}
 }

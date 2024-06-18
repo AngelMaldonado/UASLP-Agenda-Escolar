@@ -43,7 +43,7 @@ export function CampoSimbologia(props: CampoSimbologiaProps) {
                       isSearchable={false}
                       isDisabled={props.evento.tipo == TipoEventoEnum.CATALOGO}
                       components={{SingleValue, Option}}
-                      placeholder={props.evento.tipo == TipoEventoEnum.CATALOGO ? "Eliga un evento del catálogo" : "Eliga el símbolo"}
+                      placeholder={props.evento.tipo == TipoEventoEnum.CATALOGO ? "Elija un evento del catálogo" : "Elija el símbolo"}
                       options={props.simbolos?.map(value =>
                         ({value: value.id, label: value.simbolo as string}))
                       }

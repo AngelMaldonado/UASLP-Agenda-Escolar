@@ -9,7 +9,7 @@ import Evento from "../../../models/Evento.ts";
 import {TemaComponente} from "../../../utils/Tipos.ts";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import {Navbar} from 'react-bootstrap';
+import {Navbar, Spinner} from 'react-bootstrap';
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
 import {PermisosEnum} from "../../../enums";
@@ -27,7 +27,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
   const [errores, setErrores] = useState({})
   const usuario = useObtenSesion().sesion?.usuario;
 
-  const {agregaEvento, registroExitoso, reset} = useAgregaEvento(setErrores)
+  const {agregaEvento, registroExitoso, agregando, reset} = useAgregaEvento(setErrores)
   const onEventoChange = useObjectAttributeChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
   nuevoEvento.usuario_id = 1
 
@@ -86,11 +86,18 @@ function NavbarAdmin(props: NavbarAdminProps) {
         contenido={contenidoModal()}
         timeout={registroExitoso ? 2000 : undefined}
         sinFondo={registroExitoso}
+        cancelar={!registroExitoso && !agregando}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}
                  variant={TemaComponente.SuccessInverso}
-                 etiqueta="Guardar"
-                 icono={<FaRegPlusSquare/>}
+                 icono={agregando ?
+                   <Spinner animation="border" role="status" size="sm">
+                     <span className="visually-hidden">Loading...</span>
+                   </Spinner>
+                   : <FaRegPlusSquare/>
+                 }
+                 disabled={agregando}
+                 etiqueta={!agregando ? "Guardar" : "Guardando..."}
                  onClick={agregaNuevoEvento}
           />
         ] : []}
@@ -100,7 +107,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
 
   function contenidoModal() {
     if (registroExitoso)
-      return (<p>El evento se agregó con éxito</p>)
+      return (<p className="text-center">El evento se agregó con éxito</p>)
     else
       return (<FormularioEvento evento={nuevoEvento} setEvento={onEventoChange} errores={errores}/>)
   }
@@ -118,9 +125,9 @@ function NavbarAdmin(props: NavbarAdminProps) {
   }
 
   function onClose() {
-    reset()
-    setErrores({})
     setNuevoEvento(new Evento())
+    setErrores({})
+    reset()
   }
 }
 

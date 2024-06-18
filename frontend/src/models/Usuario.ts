@@ -46,8 +46,9 @@ class Usuario {
     id: number(),
     rpe: number().when("tipo", {
       is: TipoUsuarioEnum.SECUNDARIO,
-      then: schema => schema.positive().integer().required()
-        .test("rpe", "Deben ser 6 dígitos", v => v.toString().length == 6),
+      then: schema => schema.required().integer().positive()
+        .test("rpe", "deben ser 6 dígitos", v => v.toString().length == 6)
+        .typeError("ingrese un número de 6 dígitos"),
       otherwise: schema => schema.nullable()
     }),
     nombre: string().when("tipo", {
@@ -60,24 +61,15 @@ class Usuario {
       then: schema => schema.max(50).required(),
       otherwise: schema => schema.nullable()
     }),
-    tipo: string().required().test(v => Object.values(TipoUsuarioEnum).includes(v as TipoUsuarioEnum)),
-    email: string().when("tipo", {
+    tipo: string().label('tipo de usuario').required().test(v => Object.values(TipoUsuarioEnum).includes(v as TipoUsuarioEnum)),
+    email: string().label('correo').when("tipo", {
       is: TipoUsuarioEnum.BECARIO,
       then: schema => schema.email().max(320).required(),
       otherwise: schema => schema.nullable()
     }),
-    permisos: array().min(1).max(Object.values(PermisosEnum).length).required(),
-    contraseña: string().when("tipo", {
-      is: TipoUsuarioEnum.BECARIO,
-      then: schema => schema.max(60).required(),
-      otherwise: schema => schema.nullable()
-    }),
-    contraseña_confirmation: string().label("re contraseña").when("tipo", {
-      is: TipoUsuarioEnum.BECARIO,
-      then: schema => schema.required()
-        .oneOf([ref("contraseña")], "Las contraseñas deben coincidir"),
-      otherwise: schema => schema.nullable()
-    }),
+    permisos: array().min(1, 'elija al menos 1 permiso').max(Object.values(PermisosEnum).length).required(),
+    contraseña: string().max(60).required(),
+    contraseña_confirmation: string().label("re contraseña").required().oneOf([ref("contraseña")], "las contraseñas deben coincidir"),
     token: string(),
     color: number(),
   })

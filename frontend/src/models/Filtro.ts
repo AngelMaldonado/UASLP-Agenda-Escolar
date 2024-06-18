@@ -26,10 +26,10 @@ class Filtro {
   public static schema: ObjectSchema<Filtro> = object({
     id: number(),
     nombre: string().required().max(60),
-    icono: mixed().test("icono", "el archivo debe ser .svg", value =>
+    icono: mixed().label("ícono").required().test("icono", "el archivo debe ser .svg", value =>
       value instanceof File ? value.type == "image/svg+xml" : true
     ),
-    categoria: string().required().test(value =>
+    categoria: string().label("categoría").required().test(value =>
       Object.values(FiltrosCategoriaEnum).includes(value as FiltrosCategoriaEnum)
     )
   })

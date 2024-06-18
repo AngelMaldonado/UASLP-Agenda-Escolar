@@ -12,6 +12,7 @@ import {Configuraciones, modalTimeout} from "../../../utils/Constantes.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {Spinner} from "react-bootstrap";
 
 type CardSimboloProps = {
   simbologia: Simbologia
@@ -20,15 +21,11 @@ type CardSimboloProps = {
 function CardSimbolo(props: CardSimboloProps) {
   const [simbologia, setSimbologia] = useState(props.simbologia)
   const [errores, setErrores] = useState({})
-  const [eliminando, setEliminando] = useState(false)
+  const [eliminandoSt, setEliminandoSt] = useState(false)
   const usuario = useObtenSesion().sesion?.usuario;
 
-  const {
-    modificaSimbolo,
-    modificacionExitosa,
-    reset
-  } = useModificaSimbolo(setErrores)
-  const {eliminaSimbolo, eliminacionExitosa} = useEliminaSimbolo(setErrores)
+  const {modificaSimbolo, modificacionExitosa, modificando, reset} = useModificaSimbolo(setErrores)
+  const {eliminaSimbolo, eliminacionExitosa, eliminando} = useEliminaSimbolo(setErrores)
 
   const cambiaSimbolo = useObjectAttributeChange(setSimbologia as Dispatch<SetStateAction<Object>>)
 
@@ -48,8 +45,8 @@ function CardSimbolo(props: CardSimboloProps) {
   function modalSimbolo() {
     return (
       <Modal
-        sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
-        cancelar={!modificacionExitosa}
+        sinFondo={eliminandoSt || eliminacionExitosa || modificacionExitosa}
+        cancelar={!modificacionExitosa && !eliminacionExitosa && !modificando && !eliminando}
         timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
@@ -70,7 +67,7 @@ function CardSimbolo(props: CardSimboloProps) {
                rounded
                variant={TemaComponente.PrimarioInverso}
                icono={<FaRegEdit/>}
-               onClick={() => setEliminando(false)}
+               onClick={() => setEliminandoSt(false)}
         />
       ),
       tienePermisoEliminar && (
@@ -78,7 +75,7 @@ function CardSimbolo(props: CardSimboloProps) {
                rounded
                variant={TemaComponente.DangerInverso}
                icono={<FaRegTrashAlt/>}
-               onClick={() => setEliminando(true)}
+               onClick={() => setEliminandoSt(true)}
         />
       )
     ] as React.ReactElement[])
@@ -89,7 +86,7 @@ function CardSimbolo(props: CardSimboloProps) {
       return <p key="texto-modificacion" className="text-center">El símbolo se modificó correctamente</p>
     } else if (eliminacionExitosa) {
       return <p key="texto-eliminacion" className="text-center">El símbolo se eliminó correctamente</p>
-    } else if (eliminando) {
+    } else if (eliminandoSt) {
       return <p className="fs-5 text-center" key="texto-eliminando">
         ¿Esta seguro que desea eliminar el símbolo?
       </p>
@@ -103,15 +100,27 @@ function CardSimbolo(props: CardSimboloProps) {
     return [
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
-             etiqueta="Eliminar"
-             icono={<FaRegTrashAlt/>}
-             onClick={() => eliminando ? eliminaSimbolo(simbologia) : setEliminando(true)}
+             icono={eliminando ?
+               <Spinner animation="border" role="status" size="sm">
+                 <span className="visually-hidden">Loading...</span>
+               </Spinner>
+               : <FaRegTrashAlt/>
+             }
+             disabled={modificando || eliminando}
+             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+             onClick={() => eliminandoSt ? eliminaSimbolo(simbologia) : setEliminandoSt(true)}
       />,
-      !eliminando ?
+      !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
-               etiqueta="Guardar"
-               icono={<FaRegPlusSquare/>}
+               icono={modificando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegPlusSquare/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaSimboloExistente}
         /> : <></>
     ]
@@ -130,7 +139,7 @@ function CardSimbolo(props: CardSimboloProps) {
     reset()
     setSimbologia(props.simbologia)
     setErrores({})
-    setEliminando(false)
+    setEliminandoSt(false)
   }
 }
 

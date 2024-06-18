@@ -20,13 +20,14 @@ export const useAgregaSimbolo = (onError: ({}) => void) => {
   const {
     mutate: agregaSimbolo,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.nuevo,
     onSuccess: () => queryClient.invalidateQueries("simbolos"),
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {agregaSimbolo, registroExitoso: isSuccess, reset}
+  return {agregaSimbolo, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
 export const useModificaSimbolo = (onError: ({}) => void) => {
@@ -34,6 +35,7 @@ export const useModificaSimbolo = (onError: ({}) => void) => {
   const {
     mutate: modificaSimbolo,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.modifica,
@@ -44,7 +46,7 @@ export const useModificaSimbolo = (onError: ({}) => void) => {
     },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {modificaSimbolo, modificacionExitosa: isSuccess, reset}
+  return {modificaSimbolo, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
 export const useEliminaSimbolo = (onError: ({}) => void) => {
@@ -52,6 +54,7 @@ export const useEliminaSimbolo = (onError: ({}) => void) => {
   const {
     mutate: eliminaSimbolo,
     isSuccess,
+    isLoading,
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.elimina,
@@ -62,5 +65,5 @@ export const useEliminaSimbolo = (onError: ({}) => void) => {
     },
     onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
   })
-  return {eliminaSimbolo, eliminacionExitosa: isSuccess, reset}
+  return {eliminaSimbolo, eliminacionExitosa: isSuccess, eliminando: isLoading, reset}
 }

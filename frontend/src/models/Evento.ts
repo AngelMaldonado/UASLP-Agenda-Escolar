@@ -65,7 +65,7 @@ class Evento {
     }),
     filtros: array().when("tipo", {
       is: (value: string) => value == TipoEventoEnum.FACULTAD || value == TipoEventoEnum.CATALOGO,
-      then: schema => schema.required().min(1),
+      then: schema => schema.required().min(1, "seleccione al menos 1 filtro"),
     }),
     usuario_id: number().required(),
     nombre: string().when("tipo", {

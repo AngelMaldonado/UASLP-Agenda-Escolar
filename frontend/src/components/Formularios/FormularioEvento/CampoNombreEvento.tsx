@@ -21,7 +21,7 @@ export function CampoNombreEvento(props: CampoNombreEventoProps) {
                       className="form-control"
                       classNamePrefix="select"
                       unstyled
-                      placeholder="Eliga un evento del catálogo"
+                      placeholder="Elija un evento del catálogo"
                       options={props.cat_eventos.map(e => ({value: e.id, label: e.nombre}))}
                       mapFromValue={{"cat_evento_id": o => (o as { value: number, label: string }).value}}
                       mapToValue={props.evento.cat_evento_id ?

@@ -13,6 +13,7 @@ import {ValidationError} from "yup";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
+import {Spinner} from "react-bootstrap";
 
 function Filtros() {
   const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
@@ -20,11 +21,7 @@ function Filtros() {
   const usuario = useObtenSesion().sesion?.usuario;
 
   const {filtros} = useObtenFiltros()
-  const {
-    agregaFiltro,
-    registroExitoso,
-    reset
-  } = useAgregaFiltro(setErrores)
+  const {agregaFiltro, registroExitoso, agregando, reset} = useAgregaFiltro(setErrores)
   const onFiltroChange = useObjectAttributeChange(setNuevoFiltro as Dispatch<SetStateAction<Object>>)
 
   return (
@@ -46,11 +43,18 @@ function Filtros() {
         contenido={contenidoModal()}
         timeout={registroExitoso ? modalTimeout : undefined}
         sinFondo={registroExitoso}
+        cancelar={!registroExitoso && !agregando}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}
                  variant={TemaComponente.SuccessInverso}
-                 etiqueta="Guardar"
-                 icono={<FaRegPlusSquare/>}
+                 icono={agregando ?
+                   <Spinner animation="border" role="status" size="sm">
+                     <span className="visually-hidden">Loading...</span>
+                   </Spinner>
+                   : <FaRegPlusSquare/>
+                 }
+                 disabled={agregando}
+                 etiqueta={!agregando ? "Guardar" : "Guardando..."}
                  onClick={agregaNuevoFiltro}
           />
         ] : []}
@@ -60,7 +64,7 @@ function Filtros() {
 
   function contenidoModal() {
     if (registroExitoso)
-      return (<p>El filtro se agregó con éxito</p>)
+      return (<p className="text-center">El filtro se agregó con éxito</p>)
     else
       return (<FormularioFiltro filtro={nuevoFiltro} setFiltro={onFiltroChange} errores={errores}/>)
   }

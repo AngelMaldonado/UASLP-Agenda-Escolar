@@ -4,7 +4,7 @@ import {TemaComponente} from "../../../utils/Tipos.ts";
 import FormularioEvento from "../../Formularios/FormularioEvento";
 import Modal from '../../Modales/Modal/index.ts';
 import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt} from "react-icons/fa";
-import {Button} from "react-bootstrap";
+import {Button, Spinner} from "react-bootstrap";
 import {Dispatch, SetStateAction, useState} from "react";
 import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
@@ -15,18 +15,17 @@ import {modalTimeout} from "../../../utils/Constantes.ts";
 export default function ModalCRUDEvento(props: { evento: Evento }) {
   const [evento, setEvento] = useState(props.evento)
   const [errores, setErrores] = useState({});
-  const [eliminando, setEliminando] = useState(false);
+  const [eliminandoSt, setEliminandoSt] = useState(false);
   const usuario = useObtenSesion().sesion?.usuario;
 
-
-  const {modificaEvento, modificacionExitosa, reset} = useModificaEvento(setErrores);
-  const {eliminaEvento, eliminacionExitosa} = useEliminaEvento(setErrores);
+  const {modificaEvento, modificacionExitosa, modificando, reset} = useModificaEvento(setErrores);
+  const {eliminaEvento, eliminacionExitosa, eliminando} = useEliminaEvento(setErrores);
   const cambiaEvento = useObjectAttributeChange(setEvento as Dispatch<SetStateAction<Object>>);
 
   return (
     <Modal
-      sinFondo={eliminando || eliminacionExitosa || modificacionExitosa}
-      cancelar={!modificacionExitosa}
+      sinFondo={eliminandoSt || eliminacionExitosa || modificacionExitosa}
+      cancelar={!modificacionExitosa && !eliminacionExitosa && !modificando && !eliminando}
       timeout={modificacionExitosa ? modalTimeout : undefined}
       triggers={triggers()}
       onClose={onClose}
@@ -44,7 +43,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
         <Button variant="primary-inverse"
                 className="rounded-circle"
                 onClick={(_) => {
-                  setEliminando(false)
+                  setEliminandoSt(false)
                 }}
         >
           <FaRegEdit/>
@@ -55,7 +54,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
                rounded
                variant={TemaComponente.DangerInverso}
                icono={<FaRegTrashAlt/>}
-               onClick={() => setEliminando(true)}
+               onClick={() => setEliminandoSt(true)}
         />
       )
     ] as React.ReactElement[])
@@ -66,7 +65,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
       return <p className="text-center">El evento se modificó correctamente</p>
     } else if (eliminacionExitosa) {
       return <p className="text-center">El evento se eliminó correctamente</p>
-    } else if (eliminando) {
+    } else if (eliminandoSt) {
       return <p className="fs-5 text-center">
         ¿Esta seguro que desea eliminar el
         evento <strong> [{props.evento.nombre}] </strong> ?
@@ -78,15 +77,27 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
     return [
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
-             etiqueta="Eliminar"
-             icono={<FaRegTrashAlt/>}
-             onClick={() => eliminando ? eliminaEvento(evento) : setEliminando(true)}
+             icono={eliminando ?
+               <Spinner animation="border" role="status" size="sm">
+                 <span className="visually-hidden">Loading...</span>
+               </Spinner>
+               : <FaRegTrashAlt/>
+             }
+             disabled={modificando || eliminando}
+             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+             onClick={() => eliminandoSt ? eliminaEvento(evento) : setEliminandoSt(true)}
       />,
-      !eliminando ?
+      !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
-               etiqueta="Guardar"
-               icono={<FaRegPlusSquare/>}
+               icono={modificando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegPlusSquare/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaEventoExistente}
         /> : <></>
     ]
@@ -109,6 +120,6 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
     reset()
     setEvento(props.evento)
     setErrores({})
-    setEliminando(false)
+    setEliminandoSt(false)
   }
 }

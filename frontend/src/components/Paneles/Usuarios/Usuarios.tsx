@@ -14,6 +14,7 @@ import {PermisosEnum} from "../../../enums";
 import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
+import {Spinner} from "react-bootstrap";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario());
@@ -21,7 +22,7 @@ function Usuarios() {
   const usuario = useObtenSesion().sesion?.usuario;
 
   const {usuarios} = useObtenUsuarios()
-  const {agregaUsuario, registroExitoso, reset} = useAgregaUsuario(setErrores)
+  const {agregaUsuario, registroExitoso, agregando, reset} = useAgregaUsuario(setErrores)
   const onUsuarioChange = useObjectAttributeChange(setNuevoUsuario as Dispatch<SetStateAction<Object>>)
   const onValidationError = useObjectChangeTimeout(setErrores)
 
@@ -45,11 +46,18 @@ function Usuarios() {
         contenido={contenidoModal()}
         timeout={registroExitoso ? modalTimeout : undefined}
         sinFondo={registroExitoso}
+        cancelar={!registroExitoso && !agregando}
         botones={!registroExitoso ? [
           <Boton key={"boton-guardar"}
                  variant={TemaComponente.SuccessInverso}
-                 etiqueta="Guardar"
-                 icono={<FaRegPlusSquare/>}
+                 icono={agregando ?
+                   <Spinner animation="border" role="status" size="sm">
+                     <span className="visually-hidden">Loading...</span>
+                   </Spinner>
+                   : <FaRegPlusSquare/>
+                 }
+                 disabled={agregando}
+                 etiqueta={!agregando ? "Guardar" : "Guardando..."}
                  onClick={agregaNuevoUsuario}
           />
         ] : []}
@@ -58,7 +66,7 @@ function Usuarios() {
   }
 
   function contenidoModal() {
-    if (registroExitoso) return <p>El usuario se agregó con éxito</p>;
+    if (registroExitoso) return <p className="text-center">El usuario se agregó con éxito</p>;
     else
       return (
         <FormularioUsuario

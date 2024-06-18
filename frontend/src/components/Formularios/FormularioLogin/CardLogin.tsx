@@ -8,6 +8,7 @@ import Usuario from "../../../models/Usuario.ts";
 import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {ValidationError} from "yup";
 import {useLogin} from "../../../hooks/HookAutenticacion.ts";
+import {Spinner} from "react-bootstrap";
 
 function CardLogin() {
   const [usuario, setUsuario] = useState(new Usuario())
@@ -15,7 +16,7 @@ function CardLogin() {
 
   const onUsuarioChange = useObjectAttributeChange(setUsuario as Dispatch<SetStateAction<Object>>)
   const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
-  const {login} = useLogin(setErrores)
+  const {login, isLoading} = useLogin(setErrores)
 
   return (
     <Container className="mt-5">
@@ -32,7 +33,14 @@ function CardLogin() {
         <Card.Footer className="d-flex gap-2 py-3">
           <Boton key={"iniciar-sesion"}
                  variant={TemaComponente.PrimarioInverso}
-                 etiqueta="Iniciar Sesión"
+                 icono={isLoading ?
+                   <Spinner animation="border" role="status" size="sm">
+                     <span className="visually-hidden">Loading...</span>
+                   </Spinner>
+                   : undefined
+                 }
+                 disabled={isLoading}
+                 etiqueta={!isLoading ? "Iniciar Sesión" : "Autenticando..."}
                  onClick={iniciaSesion}
           />
         </Card.Footer>
