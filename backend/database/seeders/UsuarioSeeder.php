@@ -19,7 +19,7 @@ class UsuarioSeeder extends Seeder
             'nombre' => 'Administración',
             'apellido' => 'UASLP Ingeniería',
             'tipo' => TipoUsuarioEnum::ADMINISTRADOR,
-            'email' => 'secretaria.general@uaslp.mx',
+            'email' => 'secretaria.escolar@uaslp.mx',
             'permisos' => PermisosEnum::values(),
             'contraseña' => '@ingenieria2024AE'
         ]);
