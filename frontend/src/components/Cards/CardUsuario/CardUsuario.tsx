@@ -128,7 +128,11 @@ function CardUsuario(props: { usuario: Usuario }) {
   }
 
   function botonesModal() {
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
+
     return [
+      usuario?.id === props.usuario.id ? null : (
+        tienePermisoEliminar && (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -140,7 +144,7 @@ function CardUsuario(props: { usuario: Usuario }) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
-      />,
+      />)),
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}

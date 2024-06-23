@@ -26,17 +26,27 @@ export function CampoHipervinculos(props: CampoHipervinculosProps) {
                       placeholder="https://www.dominio.com"
                       onChange={e => props.setEvento("hipervinculo", e.target.value)}
         />
-        <Boton icono={<FaPlus/>} onClick={() => {
-          string().url().validate(evento.hipervinculo)
+     <Boton
+  icono={<FaPlus />}
+  onClick={() => {
+    if (evento?.hipervinculos?.length < 6) {
+      string().url().validate(evento.hipervinculo)
+        .then(_ => {
+          Evento.schema.validateAt("hipervinculos", evento.hipervinculos)
             .then(_ => {
-              Evento.schema.validateAt("hipervinculos", evento.hipervinculos)
-                .then(_ => {
-                  setEvento("hipervinculos", evento.hipervinculos?.concat(evento.hipervinculo))
-                  setEvento("hipervinculo", "")
-                })
-                .catch((error: ValidationError) => setErrores({[error.path!]: error.errors}))
+              setEvento("hipervinculos", evento.hipervinculos?.concat(evento.hipervinculo))
+              setEvento("hipervinculo", "")
             })
-        }}/>
+            .catch((error: ValidationError) => setErrores({[error.path!]: error.errors}))
+        })
+    } else {
+      // Mostrar un mensaje o realizar alguna otra acción
+      //"Se ha alcanzado el límite de hipervínculos";
+    }
+  }}
+  disabled={evento?.hipervinculos?.length >= 5}
+/>
+
       </div>
       <Formal.Message for="hipervinculo" className="d-flex text-danger"/>
       <Formal.Message for="hipervinculos" className="d-flex text-danger"/>
@@ -49,14 +59,22 @@ export function CampoHipervinculos(props: CampoHipervinculosProps) {
       return (
         <div className="d-flex flex-wrap gap-2 mt-2">
           {props.evento.hipervinculos!.map((hipervinculo, index) => (
-            <Badge key={"link-" + index}
-                   className="hipervinculo"
-                   onClick={() => {
-                     setEvento("hipervinculos", evento.hipervinculos?.filter(h => h != hipervinculo))
-                   }}
+           <Badge key={"link-" + index}
+                  className="hipervinculo"
+                  onClick={() => {
+                    setEvento("hipervinculos", evento.hipervinculos?.filter(h => h != hipervinculo))
+                    }}
             >
-              {hipervinculo}
-              <FaTimes/>
+              <div className="d-flex align-items-center">
+                <div style={{ overflow: 'hidden', 
+                              textOverflow: 'ellipsis', 
+                              whiteSpace: 'nowrap', 
+                              maxWidth: '56vh'
+                }}>
+                  {hipervinculo}
+                </div>
+                <FaTimes/>
+              </div>
             </Badge>
           ))}
         </div>

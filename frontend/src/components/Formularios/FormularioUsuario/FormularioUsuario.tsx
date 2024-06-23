@@ -79,7 +79,7 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
                       placeholder="Confirme la contraseña del usuario"
                       onChange={e => props.setUsuario("contraseña_confirmation", e.target.value)}
         />
-        <Formal.Message for="contraseña_confirmation" className="d-flex text-danger"/>
+        <Formal.Message for="contraseña" className="d-flex text-danger"/>
         <Form.Label>Permisos*</Form.Label>
         <Formal.Field name="permisos"
                       as={Select}

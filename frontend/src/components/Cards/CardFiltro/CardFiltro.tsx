@@ -103,7 +103,10 @@ function CardFiltro(props: CardFiltroProps) {
   }
 
   function botonesModal() {
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
+
     return [
+      tienePermisoEliminar && (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -115,7 +118,7 @@ function CardFiltro(props: CardFiltroProps) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaFiltro(filtro) : setEliminandoSt(true)}
-      />,
+      />),
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}

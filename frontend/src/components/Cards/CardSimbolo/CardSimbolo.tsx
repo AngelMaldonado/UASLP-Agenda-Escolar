@@ -36,7 +36,7 @@ function CardSimbolo(props: CardSimboloProps) {
           {modalSimbolo()}
         </Card.Title>
       </Card.Body>
-      <Card.Img variant="bottom"
+      <Card.Img  variant="bottom"
                 src={Configuraciones.publicURL + simbologia.simbolo}
                 alt={`Imagen simbología ${simbologia.id}`}/>
     </Card>
@@ -97,7 +97,10 @@ function CardSimbolo(props: CardSimboloProps) {
   }
 
   function botonesModal() {
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_SIMBOLO);
+
     return [
+      tienePermisoEliminar && (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -109,7 +112,7 @@ function CardSimbolo(props: CardSimboloProps) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaSimbolo(simbologia) : setEliminandoSt(true)}
-      />,
+      />),
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}

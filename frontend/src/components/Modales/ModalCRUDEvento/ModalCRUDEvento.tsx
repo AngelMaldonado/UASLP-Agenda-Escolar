@@ -8,7 +8,7 @@ import {Button, Spinner} from "react-bootstrap";
 import {Dispatch, SetStateAction, useState} from "react";
 import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts";
 import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
-import {PermisosEnum} from "../../../enums";
+import {PermisosEnum, TipoEventoEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
 
@@ -39,6 +39,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
     const tienePermisoModificar = usuario?.permisos?.includes(PermisosEnum.MODIFICAR_EVENTO);
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
     return ([
+      
       tienePermisoModificar && (
         <Button variant="primary-inverse"
                 className="rounded-circle"
@@ -48,6 +49,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
         >
           <FaRegEdit/>
         </Button>
+  
       ),
       tienePermisoEliminar && (
         <Boton key={"eliminar-evento-" + props.evento.id}
@@ -74,7 +76,10 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
   }
 
   function botonesModal() {
+    const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
+
     return [
+      tienePermisoEliminar && (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -86,7 +91,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaEvento(evento) : setEliminandoSt(true)}
-      />,
+      />),
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}

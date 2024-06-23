@@ -48,23 +48,24 @@ export default function ModalEvento() {
         <ChipsEvento noFloat filtros_evento={evento?.filtros}/>
         {evento?.imagen ? <Image src={Configuraciones.publicURL + evento?.imagen}/> : null}
         <p>{evento?.descripcion}</p>
-        {evento?.hipervinculos?.length! > 0 ?
-          <Stack className="text-center">
-            {evento?.hipervinculos?.map((hipervinculo, index) =>
-              <OverlayTrigger key={`hipervinculo-${index}`}
-                              overlay={<Tooltip className="w-auto">{hipervinculo}</Tooltip>}
-              >
-                <Button variant="primary-inverse"
-                        className="nav-link d-inline-block text-truncate"
-                        href={hipervinculo}
-                        target="_blank"
-                >
-                  {hipervinculo?.replace(/(^\w+:|^)\/\//, '')}
-                </Button>
-              </OverlayTrigger>
-            )}
-          </Stack>
-          : null}
+        {evento?.hipervinculos?.length < 6 ?
+  <Stack className="text-center">
+    {evento?.hipervinculos?.map((hipervinculo, index) =>
+      <OverlayTrigger key={`hipervinculo-${index}`}
+                      overlay={<Tooltip className="w-auto">{hipervinculo}</Tooltip>}
+      >
+        <Button variant="primary-inverse"
+                className="nav-link d-inline-block text-truncate"
+                href={hipervinculo}
+                target="_blank"
+        >
+          {hipervinculo?.replace(/(^\w+:|^)\/\//, '')}
+        </Button>
+      </OverlayTrigger>
+    )}
+  </Stack>
+  : null}
+
       </Stack>
     )
   }

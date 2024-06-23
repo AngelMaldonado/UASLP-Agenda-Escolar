@@ -21,8 +21,11 @@
   }
 
   > .card-img-bottom {
-    height: 100%;
+    max-width: 100%;
+    object-fit:fill;
+    max-height: 100%;
     border-radius: u.$card-border-radius;
+    overflow: hidden;
   }
 
   &:hover {
