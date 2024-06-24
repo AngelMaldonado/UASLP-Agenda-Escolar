@@ -29,7 +29,6 @@ class NuevoEventoRequest extends FormRequest
             'cat_evento_id' => [
                 'required_if:tipo,' . TipoEventoEnum::CATALOGO->value ,
                 'exists:cat_evento,id',
-                'unique:evento,cat_evento_id'
             ],
             'usuario_id' => 'required|exists:usuario,id',
             'fecha_inicio' => 'required|date',
@@ -37,7 +36,6 @@ class NuevoEventoRequest extends FormRequest
             'descripcion' => 'required|string|max:270',
             'nombre' => [
                 'required_if:tipo,' . TipoEventoEnum::FACULTAD->value . ',' . TipoEventoEnum::ALUMNADO->value,
-                'unique:evento,nombre',
                 'string', 'max:100'
             ],
             'simbolo_id' => [
