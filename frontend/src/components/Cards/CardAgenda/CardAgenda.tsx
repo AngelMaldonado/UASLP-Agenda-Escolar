@@ -8,19 +8,19 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import ModalCRUDEvento from "../../Modales/ModalCRUDEvento"
 import {FaRegCalendar} from "react-icons/fa";
-import {useContext} from "react";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {useCambiaContexto} from "../../../hooks/HookObjectChange.ts";
+import {AgendaContextDataEnum} from "../../../providers/AgendaProvider.tsx";
 
 type CardAgendaProps = {
   evento: Evento,
 }
 
 function CardAgenda(props: CardAgendaProps) {
-  const {setData} = useContext(AgendaContext)
+  const {cambiaContexto} = useCambiaContexto()
 
   return (
     <Card className="CardAgenda"
-          onClick={() => setData(prevState => ({...prevState, eventoActual: props.evento}))}
+          onClick={() => cambiaContexto(AgendaContextDataEnum.EventoActual, props.evento)}
     >
       <Card.Body>
         <Card.Title className="d-flex gap-2 align-items-center">

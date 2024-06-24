@@ -1,8 +1,7 @@
-// TODO: mostrar mensaje de eliminación correcta
 import "./_usuarios.scss";
 import Boton from "../../Inputs/Boton";
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useContext, useState} from "react";
 import CardUsuario from "../../Cards/CardUsuario";
 import Usuario from "../../../models/Usuario.ts";
 import FormularioUsuario from "../../Formularios/FormularioUsuario";
@@ -15,15 +14,19 @@ import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/H
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
 import {Spinner} from "react-bootstrap";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 function Usuarios() {
   const [nuevoUsuario, setNuevoUsuario] = useState(new Usuario());
   const [errores, setErrores] = useState({});
   const usuario = useObtenSesion().sesion?.usuario;
+  const textoBusqueda = useContext(AgendaContext).data.textoBusqueda?.toLowerCase()
 
-  const {usuarios} = useObtenUsuarios()
+  const usuarios = useObtenUsuarios().usuarios?.filter(u =>
+    textoBusqueda && textoBusqueda != "" ? u.nombre!.toLowerCase().includes(textoBusqueda.toLowerCase()) : true
+  )
   const {agregaUsuario, registroExitoso, agregando, reset} = useAgregaUsuario(setErrores)
-  const onUsuarioChange = useObjectAttributeChange(setNuevoUsuario as Dispatch<SetStateAction<Object>>)
+  const onUsuarioChange = useObjectAttributeChange(setNuevoUsuario as Dispatch<SetStateAction<object>>)
   const onValidationError = useObjectChangeTimeout(setErrores)
 
   return (

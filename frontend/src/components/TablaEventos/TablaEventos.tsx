@@ -2,14 +2,18 @@ import "./TablaEventos.scss";
 import Table from "react-bootstrap/Table";
 import TablaFilaResponsivo from "./TablaFilaResponsivo.tsx";
 import TablaFilas from "./TablaFila.tsx";
-import { useObtenEventos } from "../../hooks/HooksEvento.ts";
+import {useContext} from "react";
+import {AgendaContext} from "../../providers/AgendaProvider.tsx";
 
 export type TablaEventosProps = {
   admin?: boolean;
 };
 
 function TablaEventos(props: TablaEventosProps) {
-  const { eventos } = useObtenEventos();
+  const textoBusqueda = useContext(AgendaContext).data.textoBusqueda?.toLowerCase()
+  const eventos = useContext(AgendaContext).data.eventos?.filter(e =>
+    textoBusqueda && textoBusqueda != "" ? e.nombre!.toLowerCase().includes(textoBusqueda) : true
+  )
 
   return (
     <div className="container table-responsive tableDesplaz-y">

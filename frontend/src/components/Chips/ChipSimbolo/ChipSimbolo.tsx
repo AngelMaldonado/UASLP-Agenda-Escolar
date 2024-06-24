@@ -19,11 +19,13 @@ export default function ChipSimbolo(props: ChipSimboloProps) {
   );
 
   function obtenRango() {
-    if (fecha_inicio.getDate() == fecha_fin.getDate())
-      return <span>{fecha_inicio.getDate()}</span>
-    else if (fecha_inicio.getMonth() == fecha_fin.getMonth()) {
-      return <span>{fecha_inicio.getDate()} - {fecha_fin.getDate()}</span>
-    } else {
+    if (fecha_inicio.getMonth() == fecha_fin.getMonth())
+    {
+      if (fecha_inicio.getDate() == fecha_fin.getDate())
+        return <span>{fecha_inicio.getDate()}</span>
+      else return <span>{fecha_inicio.getDate()} - {fecha_fin.getDate()}</span>
+    }
+    else {
       const formatter = Intl.DateTimeFormat("es-MX", {month: "short"})
       return (
         <>

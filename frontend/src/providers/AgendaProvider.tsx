@@ -5,9 +5,23 @@ import {useObtenEventos} from "../hooks/HooksEvento.ts";
 import {useObtenFiltros} from "../hooks/HooksFiltro.ts";
 import ModalEvento from "../components/Modales/ModalEvento/ModalEvento.tsx";
 
+export enum AgendaContextDataEnum {
+  Filtros = "filtros",
+  FiltrosUsuario = "filtrosUsuario",
+  AñosBusqueda = "añosBusqueda",
+  MesesBusqueda = "mesesBusqueda",
+  TextoBusqueda = "textoBusqueda",
+  Mes = "mes",
+  Año = "año",
+  Eventos = "eventos",
+  EventoActual = "eventoActual",
+}
+
 type DataContextType = {
   filtros?: Filtro[],
   filtrosUsuario?: Filtro[],
+  añosBusqueda?: number[],
+  mesesBusqueda?: number[],
   textoBusqueda?: string,
   mes?: number,
   año?: number,
@@ -40,9 +54,22 @@ export default function AgendaProvider({children}: { children: React.ReactNode }
     ({
       ...prevState,
       filtros: filtros,
-      eventos: Evento.FiltraEventos(contexto.mes!, contexto.año!, contexto.filtrosUsuario, contexto.textoBusqueda, eventos),
+      eventos: Evento.FiltraEventos(
+        contexto.filtrosUsuario,
+        contexto.textoBusqueda,
+        eventos
+      ),
     })
-  ), [eventos, filtros, contexto.filtrosUsuario, contexto.textoBusqueda, contexto.mes, contexto.año]);
+  ), [
+    eventos,
+    filtros,
+    contexto.filtrosUsuario,
+    contexto.textoBusqueda,
+    contexto.añosBusqueda,
+    contexto.mesesBusqueda,
+    contexto.mes,
+    contexto.año
+  ]);
 
   return (
     <AgendaContext.Provider value={{data: contexto, setData: setContexto}}>

@@ -26,7 +26,7 @@ function CardFiltro(props: CardFiltroProps) {
 
   const {modificaFiltro, modificacionExitosa, modificando, reset} = useModificaFiltro(setErrores)
   const {eliminaFiltro, eliminacionExitosa, eliminando} = useEliminaFiltro(setErrores)
-  const cambiaFiltro = useObjectAttributeChange(setFiltro as Dispatch<SetStateAction<Object>>)
+  const cambiaFiltro = useObjectAttributeChange(setFiltro as Dispatch<SetStateAction<object>>)
 
   return (
     <Card text="primary" className="CardFiltro">
@@ -106,7 +106,7 @@ function CardFiltro(props: CardFiltroProps) {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
 
     return [
-      tienePermisoEliminar && (
+      tienePermisoEliminar ? (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -118,7 +118,7 @@ function CardFiltro(props: CardFiltroProps) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaFiltro(filtro) : setEliminandoSt(true)}
-      />),
+      />) : <></>,
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}

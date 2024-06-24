@@ -1,22 +1,42 @@
 import CardAgenda from "../../Cards/CardAgenda";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 import {Stack} from "react-bootstrap";
 import {meses} from "../../../utils/Constantes.ts";
 import {TipoEventoEnum} from "../../../enums";
 
 export function Agenda() {
-  const eventos = useContext(AgendaContext).data.eventos?.filter(evento =>
-    evento.tipo !== TipoEventoEnum.ALUMNADO
-  )
+  const añosBusqueda = useContext(AgendaContext).data.añosBusqueda
+  const mesesBusqueda = useContext(AgendaContext).data.mesesBusqueda
+
+  const eventos = useContext(AgendaContext).data.eventos?.filter(evento => {
+    let incluir = true
+
+    incluir = evento.tipo !== TipoEventoEnum.ALUMNADO
+
+    if (añosBusqueda && añosBusqueda.length > 0 && !añosBusqueda.includes(evento.fecha_inicio!.getFullYear()) && !añosBusqueda.includes(evento.fecha_fin!.getFullYear()))
+      incluir = false
+
+    if (mesesBusqueda && mesesBusqueda.length > 0 && !mesesBusqueda.includes(evento.fecha_inicio!.getMonth()) && !mesesBusqueda.includes(evento.fecha_fin!.getMonth()))
+      incluir = false
+
+    return incluir
+  })
+
+
+  const mes = new Date().getMonth()
 
   const cards = eventos?.map((evento, index) => (
-    index == 0 || evento.fecha_inicio!.getMonth() > eventos[index - 1].fecha_inicio!.getMonth() ?
-      <div key={`card-agenda-container-${evento.nombre}`}>
+    index == 0 ||
+    evento.fecha_inicio!.getMonth() > eventos[index - 1].fecha_inicio!.getMonth() ||
+    evento.fecha_inicio!.getFullYear() > eventos[index - 1].fecha_inicio!.getFullYear() ?
+      <div key={`card-agenda-container-${evento.nombre}`}
+           id={evento.fecha_inicio!.getMonth() == mes ? "scrollTo" : undefined}
+      >
         <Stack direction="horizontal" className="w-100 mb-4">
           <hr className="border border-primary border-2 opacity-100 w-100 rounded-5"/>
           <h2 key={`titulo-mes-${index}`} className="TituloMes text-nowrap mx-4">
-            {`${[...meses.entries()][evento.fecha_inicio!.getMonth()][0]}`}
+            {`${[...meses.entries()][evento.fecha_inicio!.getMonth()][0]} ${evento.fecha_inicio!.getFullYear()}`}
           </h2>
           <hr className="border border-primary border-2 opacity-100 w-100 rounded-5"/>
         </Stack>
@@ -24,6 +44,8 @@ export function Agenda() {
       </div>
       : <CardAgenda key={"card-agenda-" + evento.nombre} evento={evento}/>
   ))
+
+  useEffect(() => {}, [añosBusqueda, mesesBusqueda]);
 
   return (
     <div className="Agenda container d-flex flex-column gap-5">

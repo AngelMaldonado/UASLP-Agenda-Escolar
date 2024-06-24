@@ -6,12 +6,13 @@ import {ChipsEvento} from "../../Chips/ChipsEvento/ChipsEvento.tsx";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import {useContext} from "react";
-import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
+import {AgendaContext, AgendaContextDataEnum} from "../../../providers/AgendaProvider.tsx";
 import {CgCalendarToday} from "react-icons/cg";
+import {useCambiaContexto} from "../../../hooks/HookObjectChange.ts";
 
 export default function ModalEvento() {
-  const {data, setData} = useContext(AgendaContext)
-  const evento = data.eventoActual
+  const evento = useContext(AgendaContext).data.eventoActual
+  const {cambiaContexto} = useCambiaContexto()
 
   if (evento)
     return (
@@ -48,7 +49,7 @@ export default function ModalEvento() {
         <ChipsEvento noFloat filtros_evento={evento?.filtros}/>
         {evento?.imagen ? <Image src={Configuraciones.publicURL + evento?.imagen}/> : null}
         <p>{evento?.descripcion}</p>
-        {evento?.hipervinculos?.length < 6 ?
+        {evento?.hipervinculos && evento?.hipervinculos.length < 6 ?
   <Stack className="text-center">
     {evento?.hipervinculos?.map((hipervinculo, index) =>
       <OverlayTrigger key={`hipervinculo-${index}`}
@@ -71,6 +72,6 @@ export default function ModalEvento() {
   }
 
   function onClose() {
-    setData(prevState => ({...prevState, eventoActual: undefined}))
+    cambiaContexto(AgendaContextDataEnum.EventoActual, undefined)
   }
 }

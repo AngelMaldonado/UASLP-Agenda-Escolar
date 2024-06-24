@@ -3,7 +3,7 @@ import {TemaComponente} from "../../../utils/Tipos.ts";
 import CardFiltros from '../../Cards/CardFiltro/CardFiltro.tsx'
 import Modal from '../../Modales/Modal/Modal.tsx'
 import './Filtros.scss'
-import {Dispatch, SetStateAction, useState} from "react"
+import {Dispatch, SetStateAction, useContext, useState} from "react"
 import Boton from "../../Inputs/Boton";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import Filtro from "../../../models/Filtro.ts";
@@ -14,15 +14,19 @@ import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
 import {Spinner} from "react-bootstrap";
+import {AgendaContext} from "../../../providers/AgendaProvider.tsx";
 
 function Filtros() {
   const [nuevoFiltro, setNuevoFiltro] = useState(new Filtro())
   const [errores, setErrores] = useState({})
   const usuario = useObtenSesion().sesion?.usuario;
+  const textoBusqueda = useContext(AgendaContext).data.textoBusqueda?.toLowerCase()
 
-  const {filtros} = useObtenFiltros()
+  const filtros = useObtenFiltros().filtros?.filter(f =>
+    textoBusqueda && textoBusqueda != "" ? f.nombre!.toLowerCase().includes(textoBusqueda.toLowerCase()) : true
+  )
   const {agregaFiltro, registroExitoso, agregando, reset} = useAgregaFiltro(setErrores)
-  const onFiltroChange = useObjectAttributeChange(setNuevoFiltro as Dispatch<SetStateAction<Object>>)
+  const onFiltroChange = useObjectAttributeChange(setNuevoFiltro as Dispatch<SetStateAction<object>>)
 
   return (
     <div className="cards-filtros py-4 container">

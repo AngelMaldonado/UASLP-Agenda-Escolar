@@ -1,21 +1,19 @@
 // TODO: evitar el clipping en el moreLink del calendario
-
-import {useContext, useEffect, useRef} from 'react';
+import {useContext, useRef} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Evento from "../../models/Evento.ts";
 import esLocale from "@fullcalendar/core/locales/es"
 import {Configuraciones} from "../../utils/Constantes.ts";
 import {CardsContenedor} from "./CardsContenedor.tsx";
-import {AgendaContext} from "../../providers/AgendaProvider.tsx";
+import {AgendaContext, AgendaContextDataEnum} from "../../providers/AgendaProvider.tsx";
 import {TipoEventoEnum} from "../../enums";
+import {useCambiaContexto} from "../../hooks/HookObjectChange.ts";
 
 function Calendario() {
-  const {data, setData} = useContext(AgendaContext)
+  const {eventos} = useContext(AgendaContext).data
+  const {cambiaContexto} = useCambiaContexto()
   const calendarioRef = useRef<FullCalendar>(null)
-
-  useEffect(() => {
-  }, [data.textoBusqueda])
 
   return (
     <div className="calendar-container">
@@ -25,16 +23,15 @@ function Calendario() {
                     firstDay={1}
                     datesSet={(info) => {
                       const date = info.view.calendar.getDate()
-                      setData(prevState =>
-                        ({...prevState, mes: date.getMonth(), año: date.getFullYear()})
-                      )
+                      cambiaContexto(AgendaContextDataEnum.Mes, date.getMonth())
+                      cambiaContexto(AgendaContextDataEnum.Año, date.getFullYear())
                     }}
                     dayMaxEvents={3}
                     dayPopoverFormat={{weekday: "long", day: "numeric"}}
                     titleFormat={{year: "numeric", month: "long"}}
                     headerToolbar={{start: "title", center: "", end: "prevYear,prev,today,next,nextYear"}}
                     dayHeaderFormat={{weekday: (window.innerWidth > 768 ? "long" : "short")}}
-                    events={Evento.ParseEventosCalendario(data.eventos?.filter(e =>
+                    events={Evento.ParseEventosCalendario(eventos?.filter(e =>
                       e.tipo !== TipoEventoEnum.ALUMNADO) ?? [])
                     }
                     eventDidMount={(_) =>
@@ -58,7 +55,7 @@ function Calendario() {
              backgroundImage: `url(${Configuraciones.publicURL + evento.simbolo})`,
              fontSize: "0.8rem"
            }}
-           onClick={() => setData(prevState => ({...prevState, eventoActual: evento}))}
+           onClick={() => cambiaContexto(AgendaContextDataEnum.EventoActual, evento)}
       >
         <div className="Filter position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-10"></div>
         <p

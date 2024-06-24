@@ -7,7 +7,7 @@ import {modalTimeout} from "../utils/Constantes.ts";
 export const useObtenEventos = () => {
   const {
     data: eventos,
-    isLoading,
+    isLoading
   } = useQuery({
     queryKey: ["eventos"],
     queryFn: () => ServicioEvento.obtenEventos()

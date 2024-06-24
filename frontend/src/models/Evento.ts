@@ -90,23 +90,23 @@ class Evento {
 
   static ParseEventosCalendario(eventos: Evento[]) {
     return eventos.map(evento => {
-      const {id, ...atributos} = evento
+      const {...atributos} = evento
       const fecha_inicio = new Date(evento.fecha_inicio!)
       const fecha_fin = new Date(evento.fecha_fin!)
       fecha_inicio?.setHours(0, 0, 0)
       fecha_fin?.setHours(0, 0, 0)
       fecha_fin?.setDate(fecha_fin?.getDate() + 1)
       return {
+        ...atributos,
         id: evento.id?.toString() ?? "",
         start: fecha_inicio?.toISOString(),
         end: fecha_fin?.toISOString(),
         title: evento.nombre,
-        ...atributos,
       }
     })
   }
 
-  static FiltraEventos(mes: number, año: number, filtros?: Filtro[], texto?: string, eventos?: Evento[]) {
+  static FiltraEventos(filtros?: Filtro[], texto?: string, eventos?: Evento[]) {
     eventos?.sort((a, b) => a.fecha_inicio!.getTime() - b.fecha_inicio!.getTime())
 
     return eventos?.filter(evento => {
@@ -117,9 +117,6 @@ class Evento {
 
       if (texto != "")
         incluir = evento.nombre?.toLowerCase().includes(texto!.toLowerCase()) ?? false
-
-      if (evento.fecha_inicio?.getMonth() != mes || evento.fecha_inicio?.getFullYear() != año)
-        incluir = false
 
       return incluir
     })

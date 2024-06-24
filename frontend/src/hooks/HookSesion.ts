@@ -22,14 +22,15 @@ export const useExtiendeSesion = () => {
     mutate: extiendeSesion,
     isSuccess,
     isLoading,
+    isError,
     reset
   } = useMutation({
     mutationFn: ServicioSesion.extiendeSesion,
     onSuccess: () => {
       queryClient.invalidateQueries("sesion")
-      setTimeout(() => reset(), modalTimeout)
+      setTimeout(() => reset(), modalTimeout * 1.1)
     },
     onError: (_) => localStorage.removeItem("token"),
   })
-  return {extiendeSesion, extensionExitosa: isSuccess, extendiendo: isLoading}
+  return {extiendeSesion, extensionExitosa: isSuccess, extendiendo: isLoading, isError}
 }

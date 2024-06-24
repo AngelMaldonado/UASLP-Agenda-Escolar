@@ -4,12 +4,20 @@
   .Busqueda {
     width: 50%;
   }
+
+  .ControlesAgenda {
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 1200px) {
   .NavbarAgenda {
     .Busqueda {
       width: 5%;
+    }
+
+    .ControlesAgenda {
+      width: 50%;
     }
   }
 }

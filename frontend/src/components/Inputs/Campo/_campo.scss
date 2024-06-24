@@ -3,12 +3,18 @@
 .form-control {
   border: 1px solid u.$negro-50;
 
+  &:has(.select__control) {
+    padding: 0;
+  }
+
   &:focus {
     border-color: u.$secondary;
     box-shadow: u.$input-focus-box-shadow;
   }
 
   > .select__control {
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
     min-height: initial;
 
     > .select__value-container {
@@ -39,6 +45,7 @@
 
     > .select__menu-list {
       > .select__option {
+        cursor: pointer;
         padding: 0.75rem 1rem;
 
         &:hover {
@@ -87,9 +94,17 @@ textarea {
 
 @media screen and (min-width: 992px) {
   .navbar {
-    .campo {
-      min-width: 14.74rem;
-      max-width: 14.74rem;
+    .desplegable-filtro {
+      min-width: 8rem;
+      .select__value-container {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .select__menu {
+        min-width: 15rem;
+      }
     }
   }
 }
