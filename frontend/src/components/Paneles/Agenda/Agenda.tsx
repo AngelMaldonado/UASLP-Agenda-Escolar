@@ -23,15 +23,15 @@ export function Agenda() {
     return incluir
   })
 
-
   const mes = new Date().getMonth()
+  const año = new Date().getFullYear()
 
   const cards = eventos?.map((evento, index) => (
     index == 0 ||
     evento.fecha_inicio!.getMonth() > eventos[index - 1].fecha_inicio!.getMonth() ||
     evento.fecha_inicio!.getFullYear() > eventos[index - 1].fecha_inicio!.getFullYear() ?
-      <div key={`card-agenda-container-${evento.nombre}`}
-           id={evento.fecha_inicio!.getMonth() == mes ? "scrollTo" : undefined}
+      <div key={`card-agenda-container-${evento.nombre}-${evento.id}`}
+           id={evento.fecha_inicio?.getMonth() == mes && evento.fecha_inicio?.getFullYear() == año ? "scrollTo" : undefined}
       >
         <Stack direction="horizontal" className="w-100 mb-4">
           <hr className="border border-primary border-2 opacity-100 w-100 rounded-5"/>
@@ -42,7 +42,7 @@ export function Agenda() {
         </Stack>
         <CardAgenda key={"card-agenda-" + evento.nombre} evento={evento}/>
       </div>
-      : <CardAgenda key={"card-agenda-" + evento.nombre} evento={evento}/>
+      : <CardAgenda key={`card-agenda-${evento.nombre}-${evento.id}`} evento={evento}/>
   ))
 
   useEffect(() => {}, [añosBusqueda, mesesBusqueda]);

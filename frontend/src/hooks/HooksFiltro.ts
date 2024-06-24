@@ -10,7 +10,8 @@ export const useObtenFiltros = () => {
     isLoading
   } = useQuery({
     queryKey: "filtros",
-    queryFn: ServicioFiltros.obten
+    queryFn: ServicioFiltros.obten,
+    refetchOnMount: false
   })
   return {filtros: filtros, isLoading}
 }

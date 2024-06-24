@@ -2,6 +2,7 @@ import {Form, Image} from "react-bootstrap";
 import Formal from "react-formal";
 import Evento from "../../../models/Evento.ts";
 import {Configuraciones} from "../../../utils/Constantes.ts";
+import img_placeholder from "../../../assets/img_placeholder.svg"
 
 export type CampoImagenProps = {
   evento: Evento,
@@ -37,7 +38,7 @@ export function CampoImagen(props: CampoImagenProps) {
     else if (props.evento.imagen && typeof props.evento.imagen == "string")
       url = Configuraciones.publicURL + props.evento.imagen
     else
-      url = "/img-placeholder.svg"
+      url = img_placeholder
 
     return <Image thumbnail width={40} src={url}/>
   }

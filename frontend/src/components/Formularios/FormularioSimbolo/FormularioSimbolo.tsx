@@ -3,11 +3,12 @@ import {Configuraciones} from "../../../utils/Constantes.ts";
 import {Form, Image} from "react-bootstrap";
 import {useState} from "react";
 import Formal from "react-formal";
+import img_placeholder from "../../../assets/img_placeholder.svg"
 
 type FormularioSimboloProps = {
   simbologia: Simbologia,
   setSimbolo: ((field: string, value: string | File) => void),
-  errores: {},
+  errores: object,
 }
 
 function FormularioSimbolo(props: FormularioSimboloProps) {
@@ -47,7 +48,7 @@ function FormularioSimbolo(props: FormularioSimboloProps) {
     else if (props.simbologia.simbolo && typeof props.simbologia.simbolo == "string")
       url = Configuraciones.publicURL + props.simbologia.simbolo
     else
-      url = "/img-placeholder.svg"
+      url = img_placeholder
 
     return <Image thumbnail width={40} src={url}/>
   }

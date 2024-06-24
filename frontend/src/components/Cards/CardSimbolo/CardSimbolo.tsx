@@ -100,7 +100,7 @@ function CardSimbolo(props: CardSimboloProps) {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_SIMBOLO);
 
     return [
-      tienePermisoEliminar && (
+      tienePermisoEliminar ? (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -112,7 +112,7 @@ function CardSimbolo(props: CardSimboloProps) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaSimbolo(simbologia) : setEliminandoSt(true)}
-      />),
+      />) : <></>,
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}

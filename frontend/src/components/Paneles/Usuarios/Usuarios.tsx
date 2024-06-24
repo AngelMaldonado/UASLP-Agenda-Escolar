@@ -84,7 +84,7 @@ function Usuarios() {
     // Valida el nuevoUsuario antes de enviar a back
     Usuario.schema.validate(nuevoUsuario)
       // Si se validó correctamente, enviar a back
-      .then(_ => agregaUsuario(nuevoUsuario))
+      .then(() => agregaUsuario(nuevoUsuario))
       // Si no coincide con el esquema, mostrar errores en formulario
       .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }

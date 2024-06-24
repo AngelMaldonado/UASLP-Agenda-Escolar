@@ -22,8 +22,8 @@ function CardUsuario(props: { usuario: Usuario }) {
   const usuario = useObtenSesion().sesion?.usuario;
   const {modificaUsuario, modificacionExitosa, modificando, reset} = useModificaUsuario(setErrores)
   const {eliminaUsuario, eliminacionExitosa, eliminando} = useEliminaUsuario(setErrores)
-  const onUsuarioChange = useObjectAttributeChange(setUsuarioActual as Dispatch<SetStateAction<Object>>)
-  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
+  const onUsuarioChange = useObjectAttributeChange(setUsuarioActual as Dispatch<SetStateAction<object>>)
+  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<object>>)
 
   const nombres = props.usuario.nombre?.split(" ")
   const siglas = nombres![0][0] + (nombres && nombres.length > 1 ? nombres[1][0] : "")
@@ -131,8 +131,8 @@ function CardUsuario(props: { usuario: Usuario }) {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
 
     return [
-      usuario?.id === props.usuario.id ? null : (
-        tienePermisoEliminar && (
+      usuario?.id === props.usuario.id ? <></> : (
+        tienePermisoEliminar ? (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -144,7 +144,7 @@ function CardUsuario(props: { usuario: Usuario }) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
-      />)),
+      />) : <></>),
       !eliminandoSt ?
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
@@ -165,7 +165,7 @@ function CardUsuario(props: { usuario: Usuario }) {
     // Valida el nuevoUsuario antes de enviar a back
     Usuario.schema.validate(usuarioActual)
       // Si se validó correctamente, enviar a back
-      .then(_ => modificaUsuario(usuarioActual))
+      .then(() => modificaUsuario(usuarioActual))
       // Si no coincide con el esquema, mostrar errores
       .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }

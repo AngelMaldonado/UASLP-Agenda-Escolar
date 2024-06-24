@@ -1,10 +1,10 @@
 import ModalCRUDEvento from "../Modales/ModalCRUDEvento"
 import TooltipFiltro from "./TooltipFiltros.tsx";
-import {useState, useContext} from "react";
+import {useState} from "react";
 import Evento from "../../models/Evento";
-import {AgendaContext} from "../../providers/AgendaProvider.tsx";
 import {FiltrosCategoriaEnum} from "../../enums/FiltrosEnum.ts";
 import {Configuraciones} from "../../utils/Constantes.ts";
+import {useObtenFiltros} from "../../hooks/HooksFiltro.ts";
 
 export type TablaFilaResponsivoProps = {
   evento: Evento,
@@ -12,10 +12,9 @@ export type TablaFilaResponsivoProps = {
   filtros_evento?: number[]
 }
 
-
 function TablaFilaResponsivo(props: TablaFilaResponsivoProps) {
   const [events] = useState(props.evento)
-  const filtros = useContext(AgendaContext).data.filtros
+  const {filtros} = useObtenFiltros()
 
   const areas = filtros?.filter(f =>
     props.filtros_evento?.includes(f.id!) && f.categoria == FiltrosCategoriaEnum.AREA

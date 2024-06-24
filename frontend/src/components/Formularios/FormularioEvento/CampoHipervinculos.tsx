@@ -8,7 +8,7 @@ import {string, ValidationError} from "yup";
 export type CampoHipervinculosProps = {
   evento: Evento,
   setEvento: ((field: string, value: any) => void)
-  setErrores: (({}) => void)
+  setErrores: ((obj: object) => void)
 }
 
 export function CampoHipervinculos(props: CampoHipervinculosProps) {
@@ -29,11 +29,11 @@ export function CampoHipervinculos(props: CampoHipervinculosProps) {
      <Boton
   icono={<FaPlus />}
   onClick={() => {
-    if (evento?.hipervinculos?.length < 6) {
+    if (evento.hipervinculos && evento.hipervinculos.length < 6) {
       string().url().validate(evento.hipervinculo)
-        .then(_ => {
+        .then(() => {
           Evento.schema.validateAt("hipervinculos", evento.hipervinculos)
-            .then(_ => {
+            .then(() => {
               setEvento("hipervinculos", evento.hipervinculos?.concat(evento.hipervinculo))
               setEvento("hipervinculo", "")
             })
@@ -44,7 +44,7 @@ export function CampoHipervinculos(props: CampoHipervinculosProps) {
       //"Se ha alcanzado el límite de hipervínculos";
     }
   }}
-  disabled={evento?.hipervinculos?.length >= 5}
+  disabled={evento.hipervinculos && evento.hipervinculos.length >= 5}
 />
 
       </div>
@@ -66,9 +66,9 @@ export function CampoHipervinculos(props: CampoHipervinculosProps) {
                     }}
             >
               <div className="d-flex align-items-center">
-                <div style={{ overflow: 'hidden', 
-                              textOverflow: 'ellipsis', 
-                              whiteSpace: 'nowrap', 
+                <div style={{ overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
                               maxWidth: '56vh'
                 }}>
                   {hipervinculo}

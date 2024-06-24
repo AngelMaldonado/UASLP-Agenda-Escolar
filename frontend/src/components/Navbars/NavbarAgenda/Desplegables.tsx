@@ -5,13 +5,15 @@ import {useContext} from "react";
 import {FiltrosCategoriaEnum} from "../../../enums/FiltrosEnum.ts";
 import {AgendaContext, AgendaContextDataEnum} from "../../../providers/AgendaProvider.tsx";
 import {useCambiaContexto} from "../../../hooks/HookObjectChange.ts";
+import {useObtenFiltros} from "../../../hooks/HooksFiltro.ts";
 
 function Desplegables(props: { agenda: boolean }) {
-  const {data} = useContext(AgendaContext)
+  const {filtros} = useObtenFiltros()
   const {cambiaContexto} = useCambiaContexto()
-  const comunidades = data.filtros?.filter(f => f.categoria == FiltrosCategoriaEnum.COMUNIDAD)
-  const areas = data.filtros?.filter(f => f.categoria == FiltrosCategoriaEnum.AREA)
-  const años = Array.from(new Set(data.eventos?.flatMap(e => [
+  const {eventos, filtrosUsuario} = useContext(AgendaContext).data
+  const comunidades = filtros?.filter(f => f.categoria == FiltrosCategoriaEnum.COMUNIDAD)
+  const areas = filtros?.filter(f => f.categoria == FiltrosCategoriaEnum.AREA)
+  const años = Array.from(new Set(eventos?.flatMap(e => [
     e.fecha_inicio!.getFullYear(),
     e.fecha_fin!.getFullYear()
   ])))
@@ -74,7 +76,7 @@ function Desplegables(props: { agenda: boolean }) {
                 const selecciones = value.map(v => (v.value as Filtro))
                 cambiaContexto(
                   AgendaContextDataEnum.FiltrosUsuario,
-                  data.filtrosUsuario?.filter(f => f.categoria !== categoria).concat(selecciones)
+                  filtrosUsuario?.filter(f => f.categoria !== categoria).concat(selecciones)
                 )
               }}
       />
@@ -94,7 +96,7 @@ function Desplegables(props: { agenda: boolean }) {
     }
 
     return (
-      <Select className="form-control"
+      <Select className="form-control desplegable-filtro"
               classNamePrefix="select"
               unstyled
               isMulti

@@ -28,7 +28,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
   const usuario = useObtenSesion().sesion?.usuario;
 
   const {agregaEvento, registroExitoso, agregando, reset} = useAgregaEvento(setErrores)
-  const onEventoChange = useObjectAttributeChange(setNuevoEvento as Dispatch<SetStateAction<Object>>)
+  const onEventoChange = useObjectAttributeChange(setNuevoEvento as Dispatch<SetStateAction<object>>)
   nuevoEvento.usuario_id = 1
 
   return (
@@ -116,7 +116,7 @@ function NavbarAdmin(props: NavbarAdminProps) {
     // Valida el nuevoUsuario antes de enviar a back
     Evento.schema.validate(nuevoEvento)
       // Si se validó correctamente, enviar a back
-      .then(_ => agregaEvento(nuevoEvento))
+      .then(() => agregaEvento(nuevoEvento))
       // Si no coincide con el esquema, mostrar errores en formulario
       .catch((r: ValidationError) => {
         setErrores({[r.path!]: r.errors})
@@ -125,9 +125,9 @@ function NavbarAdmin(props: NavbarAdminProps) {
   }
 
   function onClose() {
+    reset()
     setNuevoEvento(new Evento())
     setErrores({})
-    reset()
   }
 }
 

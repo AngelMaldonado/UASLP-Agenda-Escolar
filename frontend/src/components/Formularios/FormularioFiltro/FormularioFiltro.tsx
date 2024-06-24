@@ -6,6 +6,7 @@ import {useState} from "react";
 import Formal from "react-formal";
 import Select from "react-select";
 import {FiltrosCategoriaOptions, FiltrosCategoriaOptionsType} from "../../../enums/FiltrosEnum.ts";
+import img_placeholder from "../../../assets/img_placeholder.svg"
 
 type FormularioFiltroProps = {
   filtro: Filtro,
@@ -76,7 +77,7 @@ function FormularioFiltro(props: FormularioFiltroProps) {
     else if (props.filtro.icono && typeof props.filtro.icono == "string")
       url = Configuraciones.publicURL + props.filtro.icono
     else
-      url = "/img-placeholder.svg"
+      url = img_placeholder
 
     return <Image thumbnail width={40} src={url}/>
   }

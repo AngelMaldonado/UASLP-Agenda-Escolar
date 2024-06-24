@@ -4,7 +4,7 @@
 .tableHead{
   color:lightgrey;
   border-bottom: 5px solid;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   > tr th{
     color: u.$primary;
     // background-color: u.$blanco-80;
@@ -40,7 +40,7 @@
   overflow: auto;
 
   &::-webkit-scrollbar {
-    width: 0%;
+    width: 0;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -60,7 +60,7 @@
   .row {
     display: flex;
     justify-content: space-between;
-    padding: 0px;
+    padding: 0;
     // border: 1px solid black;
   }
 
@@ -88,7 +88,7 @@
   }
 }
 
-//.tablaSimbolo, .tablaHipervinculo 
+//.tablaSimbolo, .tablaHipervinculo
 .tablaContenido {
   display: block; // Asegúrate de que el elemento sea visible de forma predeterminada
 

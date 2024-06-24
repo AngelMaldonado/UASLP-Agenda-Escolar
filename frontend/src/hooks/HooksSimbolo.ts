@@ -10,7 +10,8 @@ export const useObtenSimbolos = () => {
     isLoading
   } = useQuery({
     queryKey: "simbolos",
-    queryFn: ServicioSimbolos.obten
+    queryFn: ServicioSimbolos.obten,
+    refetchOnMount: false
   })
   return {simbolos: simbolos, isLoading}
 }
