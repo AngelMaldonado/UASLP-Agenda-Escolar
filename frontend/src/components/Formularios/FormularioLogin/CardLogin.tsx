@@ -14,8 +14,8 @@ function CardLogin() {
   const [usuario, setUsuario] = useState(new Usuario())
   const [errores, setErrores] = useState({})
 
-  const onUsuarioChange = useObjectAttributeChange(setUsuario as Dispatch<SetStateAction<Object>>)
-  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<Object>>)
+  const onUsuarioChange = useObjectAttributeChange(setUsuario as Dispatch<SetStateAction<object>>)
+  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<object>>)
   const {login, isLoading} = useLogin(setErrores)
 
   return (
@@ -50,7 +50,7 @@ function CardLogin() {
 
   function iniciaSesion() {
     Usuario.login_schema.validate(usuario)
-      .then(_ => login(usuario))
+      .then(() => login(usuario))
       .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }
 }

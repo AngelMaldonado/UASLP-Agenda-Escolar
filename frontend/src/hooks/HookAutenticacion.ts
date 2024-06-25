@@ -8,8 +8,8 @@ import Usuario from "../models/Usuario.ts";
 import {useObjectChangeTimeout} from "./HookObjectChange.ts";
 import {useObtenSesion} from "./HookSesion.ts";
 
-export const useLogin = (setErrors: (field: string, value: string) => void) => {
-  const onBackendErrors = useObjectChangeTimeout(setErrors as Dispatch<SetStateAction<Object>>)
+export const useLogin = (setErrors: Dispatch<SetStateAction<object>>) => {
+  const onBackendErrors = useObjectChangeTimeout(setErrors as Dispatch<SetStateAction<object>>)
   const navigate = useNavigate()
   const {refetch} = useObtenSesion()
 

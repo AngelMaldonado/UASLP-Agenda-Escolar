@@ -98,22 +98,24 @@ function CardSimbolo(props: CardSimboloProps) {
 
   function botonesModal() {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_SIMBOLO);
-
-    return [
-      tienePermisoEliminar ? (
-      <Boton key={"boton-eliminar"}
-             variant={TemaComponente.PrimarioInverso}
-             icono={eliminando ?
-               <Spinner animation="border" role="status" size="sm">
-                 <span className="visually-hidden">Loading...</span>
-               </Spinner>
-               : <FaRegTrashAlt/>
-             }
-             disabled={modificando || eliminando}
-             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
-             onClick={() => eliminandoSt ? eliminaSimbolo(simbologia) : setEliminandoSt(true)}
-      />) : <></>,
-      !eliminandoSt ?
+    const botones = []
+    if (tienePermisoEliminar)
+      botones.push(
+        <Boton key={"boton-eliminar"}
+               variant={TemaComponente.PrimarioInverso}
+               icono={eliminando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegTrashAlt/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+               onClick={() => eliminandoSt ? eliminaSimbolo(simbologia) : setEliminandoSt(true)}
+        />
+      )
+    if (!eliminandoSt)
+      botones.push(
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
                icono={modificando ?
@@ -125,8 +127,10 @@ function CardSimbolo(props: CardSimboloProps) {
                disabled={modificando || eliminando}
                etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaSimboloExistente}
-        /> : <></>
-    ]
+        />
+      )
+
+    return botones
   }
 
   function modificaSimboloExistente() {

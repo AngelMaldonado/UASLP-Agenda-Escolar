@@ -10,9 +10,10 @@ import Filtro from "../../../models/Filtro.ts";
 import Card from "react-bootstrap/Card";
 import FormularioFiltro from "../../Formularios/FormularioFiltro/FormularioFiltro.tsx";
 import {useEliminaFiltro, useModificaFiltro} from "../../../hooks/HooksFiltro.ts";
-import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
+import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
+import {ValidationError} from "yup";
 
 type CardFiltroProps = {
   filtro: Filtro
@@ -27,6 +28,7 @@ function CardFiltro(props: CardFiltroProps) {
   const {modificaFiltro, modificacionExitosa, modificando, reset} = useModificaFiltro(setErrores)
   const {eliminaFiltro, eliminacionExitosa, eliminando} = useEliminaFiltro(setErrores)
   const cambiaFiltro = useObjectAttributeChange(setFiltro as Dispatch<SetStateAction<object>>)
+  const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<object>>)
 
   return (
     <Card text="primary" className="CardFiltro">
@@ -104,22 +106,24 @@ function CardFiltro(props: CardFiltroProps) {
 
   function botonesModal() {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_FILTRO);
-
-    return [
-      tienePermisoEliminar ? (
-      <Boton key={"boton-eliminar"}
-             variant={TemaComponente.PrimarioInverso}
-             icono={eliminando ?
-               <Spinner animation="border" role="status" size="sm">
-                 <span className="visually-hidden">Loading...</span>
-               </Spinner>
-               : <FaRegTrashAlt/>
-             }
-             disabled={modificando || eliminando}
-             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
-             onClick={() => eliminandoSt ? eliminaFiltro(filtro) : setEliminandoSt(true)}
-      />) : <></>,
-      !eliminandoSt ?
+    const botones = []
+    if (tienePermisoEliminar)
+      botones.push(
+        <Boton key={"boton-eliminar"}
+               variant={TemaComponente.PrimarioInverso}
+               icono={eliminando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegTrashAlt/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+               onClick={() => eliminandoSt ? eliminaFiltro(filtro) : setEliminandoSt(true)}
+        />
+      )
+    if (!eliminandoSt)
+      botones.push(
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
                icono={modificando ?
@@ -131,17 +135,19 @@ function CardFiltro(props: CardFiltroProps) {
                disabled={modificando || eliminando}
                etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaFiltroExistente}
-        /> : <></>
-    ]
+        />
+      )
+
+    return botones
   }
 
   function modificaFiltroExistente() {
     // Valida el nuevoUsuario antes de enviar a back
     Filtro.schema.validate(filtro)
       // Si se validó correctamente, enviar a back
-      .then(_ => modificaFiltro(filtro))
+      .then(() => modificaFiltro(filtro))
       // Si no coincide con el esquema, mostrar errores
-      .catch(r => console.log(r))
+      .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }
 
   function onClose() {

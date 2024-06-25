@@ -7,16 +7,18 @@ import {FaRegCalendarAlt, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt} from "react
 import {Button, Spinner} from "react-bootstrap";
 import {Dispatch, SetStateAction, useState} from "react";
 import {useEliminaEvento, useModificaEvento} from "../../../hooks/HooksEvento.ts";
-import useObjectAttributeChange from "../../../hooks/HookObjectChange.ts";
+import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
 import {PermisosEnum} from "../../../enums";
 import {useObtenSesion} from "../../../hooks/HookSesion.ts";
 import {modalTimeout} from "../../../utils/Constantes.ts";
+import {ValidationError} from "yup";
 
 export default function ModalCRUDEvento(props: { evento: Evento }) {
   const [evento, setEvento] = useState(props.evento)
   const [errores, setErrores] = useState({});
   const [eliminandoSt, setEliminandoSt] = useState(false);
   const usuario = useObtenSesion().sesion?.usuario;
+  const onValidationError = useObjectChangeTimeout(setErrores)
 
   const {modificaEvento, modificacionExitosa, modificando, reset} = useModificaEvento(setErrores);
   const {eliminaEvento, eliminacionExitosa, eliminando} = useEliminaEvento(setErrores);
@@ -70,22 +72,25 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
 
   function botonesModal() {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
+    const botones = []
+    if (tienePermisoEliminar)
+      botones.push(
+        <Boton key={"boton-eliminar"}
+               variant={TemaComponente.PrimarioInverso}
+               icono={eliminando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegTrashAlt/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+               onClick={() => eliminandoSt ? eliminaEvento(evento) : setEliminandoSt(true)}
+        />
+      )
 
-    return [
-      tienePermisoEliminar && (
-      <Boton key={"boton-eliminar"}
-             variant={TemaComponente.PrimarioInverso}
-             icono={eliminando ?
-               <Spinner animation="border" role="status" size="sm">
-                 <span className="visually-hidden">Loading...</span>
-               </Spinner>
-               : <FaRegTrashAlt/>
-             }
-             disabled={modificando || eliminando}
-             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
-             onClick={() => eliminandoSt ? eliminaEvento(evento) : setEliminandoSt(true)}
-      />),
-      !eliminandoSt &&
+    if (!eliminandoSt)
+      botones.push(
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
                icono={modificando ?
@@ -98,7 +103,9 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
                etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaEventoExistente}
         />
-    ]
+      )
+
+    return botones
   }
 
   function modificaEventoExistente() {
@@ -111,7 +118,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
         )
       })
       // Si no coincide con el esquema, mostrar errores
-      .catch(r => console.log(r))
+      .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
   }
 
   function onClose() {

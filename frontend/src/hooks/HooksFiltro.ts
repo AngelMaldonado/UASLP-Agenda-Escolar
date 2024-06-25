@@ -3,6 +3,7 @@ import ServicioFiltros from "../services/ServicioFiltros.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Tipos.ts";
 import {modalTimeout} from "../utils/Constantes.ts";
+import {useObjectChangeTimeout} from "./HookObjectChange.ts";
 
 export const useObtenFiltros = () => {
   const {
@@ -16,8 +17,10 @@ export const useObtenFiltros = () => {
   return {filtros: filtros, isLoading}
 }
 
-export const useAgregaFiltro = (onError: ({}) => void) => {
+export const useAgregaFiltro = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: agregaFiltro,
     isSuccess,
@@ -25,14 +28,20 @@ export const useAgregaFiltro = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioFiltros.nuevo,
-    onSuccess: () => queryClient.invalidateQueries("filtros"),
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        queryClient.invalidateQueries("filtros")
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
+    },
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data.errors)
   })
   return {agregaFiltro, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
-export const useModificaFiltro = (onError: ({}) => void) => {
+export const useModificaFiltro = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: modificaFiltro,
     isSuccess,
@@ -40,18 +49,22 @@ export const useModificaFiltro = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioFiltros.modifica,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("filtros")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("filtros")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {modificaFiltro, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
-export const useEliminaFiltro = (onError: ({}) => void) => {
+export const useEliminaFiltro = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: eliminaFiltro,
     isSuccess,
@@ -59,12 +72,14 @@ export const useEliminaFiltro = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioFiltros.elimina,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("filtros")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("filtros")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data.errors)
   })
   return {eliminaFiltro, eliminacionExitosa: isSuccess, eliminando: isLoading, reset}
 }

@@ -17,9 +17,9 @@ export const useObtenUsuarios = () => {
   return {usuarios, isLoading}
 }
 
-export const useAgregaUsuario = (setErrors: (field: string, value: string) => void) => {
+export const useAgregaUsuario = (setErrors: Dispatch<SetStateAction<object>>) => {
   const queryClient = useQueryClient()
-  const onBackendErrors = useObjectChangeTimeout(setErrors as Dispatch<SetStateAction<Object>>)
+  const onBackendErrors = useObjectChangeTimeout(setErrors)
 
   const {
     mutate: agregaUsuario,
@@ -31,14 +31,17 @@ export const useAgregaUsuario = (setErrors: (field: string, value: string) => vo
     onSuccess: (respuesta) => {
       if (respuesta.status == 200)
         queryClient.invalidateQueries("usuarios")
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors((error.response!.data.errors))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data.errors)
   })
   return {agregaUsuario, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
-export const useModificaUsuario = (onError: ({}) => void) => {
+export const useModificaUsuario = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: modificaUsuario,
     isSuccess,
@@ -46,18 +49,22 @@ export const useModificaUsuario = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.modifica,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("usuarios")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("usuarios")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data.errors)
   })
   return {modificaUsuario, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
-export const useEliminaUsuario = (onError: ({}) => void) => {
+export const useEliminaUsuario = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: eliminaUsuario,
     isSuccess,
@@ -65,12 +72,14 @@ export const useEliminaUsuario = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioUsuario.elimina,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("usuarios")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("usuarios")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onError(error.response!.data!.errors)
   })
   return {eliminaUsuario: eliminaUsuario, eliminacionExitosa: isSuccess, eliminando: isLoading, reset}
 }

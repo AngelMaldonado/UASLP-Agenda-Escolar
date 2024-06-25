@@ -11,7 +11,7 @@ import img_placeholder from "../../../assets/img_placeholder.svg"
 type FormularioFiltroProps = {
   filtro: Filtro,
   setFiltro: ((field: string, value: any) => void),
-  errores: {},
+  errores: object,
 }
 
 function FormularioFiltro(props: FormularioFiltroProps) {

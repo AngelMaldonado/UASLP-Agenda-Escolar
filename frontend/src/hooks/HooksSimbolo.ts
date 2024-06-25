@@ -3,6 +3,7 @@ import ServicioSimbolos from "../services/ServicioSimbolos.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Tipos.ts";
 import {modalTimeout} from "../utils/Constantes.ts";
+import {useObjectChangeTimeout} from "./HookObjectChange.ts";
 
 export const useObtenSimbolos = () => {
   const {
@@ -16,8 +17,10 @@ export const useObtenSimbolos = () => {
   return {simbolos: simbolos, isLoading}
 }
 
-export const useAgregaSimbolo = (onError: ({}) => void) => {
+export const useAgregaSimbolo = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: agregaSimbolo,
     isSuccess,
@@ -25,14 +28,20 @@ export const useAgregaSimbolo = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.nuevo,
-    onSuccess: () => queryClient.invalidateQueries("simbolos"),
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        queryClient.invalidateQueries("simbolos")
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
+    },
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {agregaSimbolo, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
-export const useModificaSimbolo = (onError: ({}) => void) => {
+export const useModificaSimbolo = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: modificaSimbolo,
     isSuccess,
@@ -40,18 +49,22 @@ export const useModificaSimbolo = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.modifica,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("simbolos")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("simbolos")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {modificaSimbolo, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
-export const useEliminaSimbolo = (onError: ({}) => void) => {
+export const useEliminaSimbolo = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: eliminaSimbolo,
     isSuccess,
@@ -59,12 +72,14 @@ export const useEliminaSimbolo = (onError: ({}) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioSimbolos.elimina,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("simbolos")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("simbolos")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {eliminaSimbolo, eliminacionExitosa: isSuccess, eliminando: isLoading, reset}
 }

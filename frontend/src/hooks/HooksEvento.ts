@@ -3,6 +3,7 @@ import ServicioEvento from "../services/ServicioEvento.ts";
 import {AxiosError} from "axios";
 import {ErrorsObject} from "../utils/Tipos.ts";
 import {modalTimeout} from "../utils/Constantes.ts";
+import {useObjectChangeTimeout} from "./HookObjectChange.ts";
 
 export const useObtenEventos = () => {
   const {
@@ -17,6 +18,8 @@ export const useObtenEventos = () => {
 
 export const useAgregaEvento = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: agregaEvento,
     isSuccess,
@@ -24,14 +27,20 @@ export const useAgregaEvento = (onError: (obj: object) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioEvento.nuevo,
-    onSuccess: () => queryClient.invalidateQueries("eventos"),
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        queryClient.invalidateQueries("eventos")
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
+    },
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {agregaEvento, registroExitoso: isSuccess, agregando: isLoading, reset}
 }
 
 export const useModificaEvento = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: modificaEvento,
     isSuccess,
@@ -39,30 +48,36 @@ export const useModificaEvento = (onError: (obj: object) => void) => {
     reset
   } = useMutation({
     mutationFn: ServicioEvento.modifica,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("eventos")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("eventos")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {modificaEvento, modificacionExitosa: isSuccess, modificando: isLoading, reset}
 }
 
 export const useEliminaEvento = (onError: (obj: object) => void) => {
   const queryClient = useQueryClient()
+  const onBackendErrors = useObjectChangeTimeout(onError)
+
   const {
     mutate: eliminaEvento,
     isSuccess,
     isLoading,
   } = useMutation({
     mutationFn: ServicioEvento.elimina,
-    onSuccess: () => {
-      setTimeout(() => {
-        queryClient.invalidateQueries("eventos")
-      }, modalTimeout)
+    onSuccess: (respuesta) => {
+      if (respuesta.status == 200)
+        setTimeout(() => {
+          queryClient.invalidateQueries("eventos")
+        }, modalTimeout)
+      else onBackendErrors(<ErrorsObject>respuesta!.data!.errors)
     },
-    onError: (error: AxiosError) => onError((<ErrorsObject>error.response!.data!))
+    onError: (error: AxiosError<ErrorsObject>) => onBackendErrors(error.response!.data!.errors)
   })
   return {eliminaEvento, eliminacionExitosa: isSuccess, eliminando: isLoading}
 }
