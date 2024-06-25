@@ -72,7 +72,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_EVENTO);
 
     return [
-      tienePermisoEliminar ? (
+      tienePermisoEliminar && (
       <Boton key={"boton-eliminar"}
              variant={TemaComponente.PrimarioInverso}
              icono={eliminando ?
@@ -84,8 +84,8 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
              disabled={modificando || eliminando}
              etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
              onClick={() => eliminandoSt ? eliminaEvento(evento) : setEliminandoSt(true)}
-      />) : <></>,
-      !eliminandoSt ?
+      />),
+      !eliminandoSt &&
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
                icono={modificando ?
@@ -97,7 +97,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
                disabled={modificando || eliminando}
                etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaEventoExistente}
-        /> : <></>
+        />
     ]
   }
 
@@ -105,7 +105,7 @@ export default function ModalCRUDEvento(props: { evento: Evento }) {
     // Valida el nuevoUsuario antes de enviar a back
     Evento.schema.validate(evento)
       // Si se validó correctamente, enviar a back
-      .then(_ => {
+      .then(() => {
         modificaEvento(
           Object.fromEntries(Object.entries(evento).filter(([_, v]) => v !== null)) as Evento
         )

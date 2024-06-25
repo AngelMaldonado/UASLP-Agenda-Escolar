@@ -27,7 +27,7 @@ function CardSimbolo(props: CardSimboloProps) {
   const {modificaSimbolo, modificacionExitosa, modificando, reset} = useModificaSimbolo(setErrores)
   const {eliminaSimbolo, eliminacionExitosa, eliminando} = useEliminaSimbolo(setErrores)
 
-  const cambiaSimbolo = useObjectAttributeChange(setSimbologia as Dispatch<SetStateAction<Object>>)
+  const cambiaSimbolo = useObjectAttributeChange(setSimbologia as Dispatch<SetStateAction<object>>)
 
   return (
     <Card className="CardSimbolo">
@@ -133,7 +133,7 @@ function CardSimbolo(props: CardSimboloProps) {
     // Valida el nuevoUsuario antes de enviar a back
     Simbologia.schema.validate(simbologia)
       // Si se validó correctamente, enviar a back
-      .then(_ => modificaSimbolo(simbologia))
+      .then(() => modificaSimbolo(simbologia))
       // Si no coincide con el esquema, mostrar errores
       .catch(r => console.log(r))
   }

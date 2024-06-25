@@ -51,7 +51,7 @@ function Dialog(props: ModalProps) {
         <Modal.Footer
           className={"py-2 " + (props.botones ? "visible" : "visually-hidden") + (props.sinFondo ? " bg-white border-0" : "")}>
           {props.cancelar === false ? null : botonCancelar()}
-          {props.botones ? props.botones.map((boton) => boton) : null}
+          {props.botones ? [...props.botones] : null}
         </Modal.Footer>
       </Modal>
     </>

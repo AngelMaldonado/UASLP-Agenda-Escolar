@@ -63,7 +63,7 @@ function CardUsuario(props: { usuario: Usuario }) {
         onClose={onClose}
         titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
         contenido={contenidoModal()}
-        botones={modificacionExitosa || eliminacionExitosa ? [] : botonesModal()}
+        botones={modificacionExitosa || eliminacionExitosa ? undefined : botonesModal()}
       />
     )
   }
@@ -88,19 +88,18 @@ function CardUsuario(props: { usuario: Usuario }) {
             /> : undefined
           :
           <Boton
-            key={"boton-modificar-usuario-" + props.usuario.id}
+            key={"boton-eliminar-usuario-" + props.usuario.id}
             rounded
             variant={TemaComponente.PrimarioInverso}
             icono={<FaRegEdit/>}
             onClick={() => setEliminandoSt(false)}
           />
-
       ),
       usuario?.id === props.usuario.id ? null : (
         tienePermisoEliminar && (
           !esAdministrador ?
             <Boton
-              key={"eliminar-usuario" + props.usuario.id}
+              key={"boton-eliminar-usuario-" + props.usuario.id}
               rounded
               variant={TemaComponente.DangerInverso}
               icono={<FaRegTrashAlt/>}
@@ -109,7 +108,6 @@ function CardUsuario(props: { usuario: Usuario }) {
             : undefined
         )
       )
-
     ] as React.ReactElement[]);
   }
 
@@ -129,23 +127,23 @@ function CardUsuario(props: { usuario: Usuario }) {
 
   function botonesModal() {
     const tienePermisoEliminar = usuario?.permisos?.includes(PermisosEnum.ELIMINAR_USUARIO);
-
-    return [
-      usuario?.id === props.usuario.id ? <></> : (
-        tienePermisoEliminar ? (
-      <Boton key={"boton-eliminar"}
-             variant={TemaComponente.PrimarioInverso}
-             icono={eliminando ?
-               <Spinner animation="border" role="status" size="sm">
-                 <span className="visually-hidden">Loading...</span>
-               </Spinner>
-               : <FaRegTrashAlt/>
-             }
-             disabled={modificando || eliminando}
-             etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
-             onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
-      />) : <></>),
-      !eliminandoSt ?
+    const botones = []
+    if (usuario?.id !== props.usuario.id && tienePermisoEliminar)
+      botones.push(
+        <Boton key={"boton-eliminar"}
+               variant={TemaComponente.PrimarioInverso}
+               icono={eliminando ?
+                 <Spinner animation="border" role="status" size="sm">
+                   <span className="visually-hidden">Loading...</span>
+                 </Spinner>
+                 : <FaRegTrashAlt/>
+               }
+               disabled={modificando || eliminando}
+               etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+               onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
+        />)
+    if (!eliminandoSt)
+      botones.push(
         <Boton key={"boton-guardar"}
                variant={TemaComponente.SuccessInverso}
                icono={modificando ?
@@ -157,8 +155,9 @@ function CardUsuario(props: { usuario: Usuario }) {
                disabled={modificando || eliminando}
                etiqueta={!modificando ? "Guardar" : "Guardando..."}
                onClick={modificaUsuarioExistente}
-        /> : <></>
-    ]
+        />
+      )
+    return botones
   }
 
   function modificaUsuarioExistente() {
