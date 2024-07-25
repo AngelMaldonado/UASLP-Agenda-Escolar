@@ -1,100 +1,112 @@
 <?php
-
-// Codigo para el UsuarioController
-//  Este código define los métodos para listar usuarios (index), crear un nuevo usuario (create y store), editar un usuario existente (edit y update), y eliminar un usuario (destroy).
-
+// TODO: cuando se tenga el servicio cambiar usuario_service_rpe en las funciones del controlador
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Casts\Json;
-use Illuminate\Http\RedirectResponse;
+use App\Enums\TipoUsuarioEnum;
+use App\Http\Requests\ActualizaUsuarioRequest;
+use App\Http\Requests\NuevoUsuarioRequest;
+use App\Traits\RespuestasHttp;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
-use Illuminate\Support\Facades\Http;
 
 class UsuarioController extends Controller
 {
-    public function index(): \Illuminate\Http\JsonResponse
+    use RespuestasHttp;
+
+    public function index(): \Illuminate\Database\Eloquent\Collection
     {
-        $usuarios = Usuario::all();
-        return response()->json($usuarios);
+        return Usuario::all();
     }
 
-    public function create()
+    public function store(NuevoUsuarioRequest $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
     {
-        // Puedes retornar un JSON vacío o un mensaje indicando que la creación se realiza en otro lugar si lo prefieres.
-        return response()->json([], 200);
-    }
+        $request->validated($request->all());
 
-    public function store(Request $request): Usuario
-    {
-        // Validación de datos aquí
-        // Crear un nuevo usuario
-        $usuario = new Usuario();
-        $usuario->nombre = $request->input('nombre');
-        $usuario->tipo = $request->input('tipo');
-        $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos se manejen adecuadamente como JSON.
-        $usuario->save();
+        // Inicializa un nuevo usuario con el tipo y los permisos
+        $usuario = new Usuario($request->only('tipo', 'permisos', 'contraseña'));
 
-        return $usuario;
-    }
+        // Si es becario
+        if ($usuario->tipo === TipoUsuarioEnum::BECARIO) {
+            $usuario->fill($request->only('nombre', 'apellido', 'email'));
+            $usuario->contraseña = Hash::make($request->input('contraseña'));
+            // Si es administrador secundario
+        } else if ($usuario->tipo === TipoUsuarioEnum::SECUNDARIO) {
+            // Busca al usuario en el servicio con el rpe PETICIÓN
+            $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'), $request->input('contraseña'));
 
-    public function edit($id)
-    {
-        $usuario = Usuario::findOrFail($id);
-        return response()->json($usuario);
-    }
-
-    use Illuminate\Http\Request;
-    use App\Models\Usuario;
-    
-    public function update(Request $request)
-    {
-        // Definición de reglas de validación para los campos del objeto JSON
-        $rules = [
-            'nombre' => 'required|string|max:50',  // El nombre es obligatorio y no debe exceder 50 caracteres.
-            'puesto' => 'required|string|max:30',  // El puesto es obligatorio y no debe exceder 30 caracteres.
-            'email' => 'required|string|email|unique:usuario,email,' . $request->input('id'), // El email es obligatorio, debe ser una dirección de correo electrónico válida y único en la tabla de usuarios, excepto para el usuario con el mismo ID.
-            'permisos' => 'required|json', // Asegúrate de que los datos del campo "permisos" se manejen adecuadamente como JSON.
-        ];
-    
-        // Definición de mensajes de error personalizados
-        $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
-            'max' => 'El campo :attribute no debe exceder los :max caracteres.',
-            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
-            'unique' => 'El campo :attribute ya está en uso.',
-            'json' => 'El campo :attribute debe ser un JSON válido.',
-        ];
-    
-        // Validación de la solicitud usando las reglas definidas
-        $validator = Validator::make($request->all(), $rules, $messages);
-    
-        // Comprobar si la validación falló
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400); // Respuesta de error con mensajes de validación y código de estado 400 (Bad Request).
+            // Si encontró un usuario en el servicio con el rpe y el email que tiene aún no está en el sistema de agenda
+            if ($usuario_servicio) {
+                $validator = Validator::make($usuario_servicio->only('email'), ['email' => 'email|unique:usuario,email']);
+                if ($validator->fails())
+                    return $this->error($validator->errors(), 400);
+                $usuario->fill($usuario_servicio->only('rpe', 'nombre', 'apellido', 'email'));
+            } else
+                return $this->error(['rpe' => 'el rpe no existe'], 400);
         }
-    
-        // Actualizar el usuario en la base de datos
-        $usuario = Usuario::findOrFail($request->input('id'));
-        $usuario->nombre = $request->input('nombre');
-        $usuario->puesto = $request->input('puesto');
-        $usuario->email = $request->input('email');
-        $usuario->permisos = $request->input('permisos'); // Asegúrate de que los datos del campo "permisos" se manejen adecuadamente como JSON.
-        $usuario->save();
-    
-        // Respuesta exitosa con el usuario actualizado en formato JSON y código de estado 200 (OK).
-        return response()->json($usuario, 200);
-    }
-    
 
-    public function destroy($id): \Illuminate\Http\JsonResponse
+        $usuario->save();
+        return $this->exito($usuario, 'Usuario guardado con éxito');
+    }
+
+    public function update(ActualizaUsuarioRequest $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        $usuario = Usuario::findOrFail($id);
+        $request->validated($request->all());
+
+        // Busca el usuario en la base de datos
+        $usuario_sistema = Usuario::find($request->input('id'));
+
+        // Si el USUARIO PETICIÓN es administrador secundario
+        if ($request->input('tipo') === TipoUsuarioEnum::SECUNDARIO->value) {
+            // Si el USUARIO SISTEMA antes era becario o el rpe PETICIÓN es distinto al que actualmente tiene
+            if ($usuario_sistema->tipo === TipoUsuarioEnum::BECARIO->value || (
+                    $usuario_sistema->tipo === TipoUsuarioEnum::SECUNDARIO->value &&
+                    $usuario_sistema->rpe !== $request->input('rpe')
+                ))
+                // Valida que el rpe PETICIÓN no esté en el sistema de agenda
+                Validator::validate($request->only('rpe'), ['rpe' => 'unique:usuario,rpe']);
+
+            // Busca al usuario en el servicio con el rpe PETICIÓN
+            $usuario_servicio = Usuario::UsuarioDesdeServicio($request->input('rpe'), $request->input('contraseña'));
+            if ($usuario_servicio) {
+                // Si el email cambió desde el servicio
+                if ($usuario_servicio->email !== $usuario_sistema->email)
+                    Validator::validate($usuario_servicio->email, ['email' => 'unique:usuario,email']);
+
+                $usuario_servicio->fill($usuario_servicio->only('rpe', 'nombre', 'apellido', 'email'));
+            } else return $this->error($request->input('rpe'), 'El rpe no existe', 400);
+
+        } else if ($request->input('tipo') === TipoUsuarioEnum::BECARIO->value) {
+            // Si el email es distinto
+            if ($request->input('email') !== $usuario_sistema->email)
+                Validator::validate($request->only('email'), ['email' => 'unique:usuario,email']);
+
+            $usuario_sistema->fill($request->only('nombre', 'apellido', 'email'));
+            $usuario_sistema->contraseña = Hash::make($request->input('contraseña'));
+            $usuario_sistema->rpe = null;
+        } else if ($request->input('tipo') === TipoUsuarioEnum::ADMINISTRADOR->value) {
+            $usuario_sistema->contraseña = Hash::make($request->input('contraseña'));
+            $usuario_sistema->email = $request->input('email');
+        }
+
+        $usuario_sistema->fill($request->only('tipo', 'permisos'));
+        $usuario_sistema->save();
+        return $this->exito($usuario_sistema, 'Usuario actualizado con éxito');
+    }
+
+
+    public function destroy(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
+    {
+        $request->validate(['id' => 'required|exists:usuario,id']);
+
+        // Buscar el usuario en la base de datos
+        $usuario = Usuario::find($request->input('id'));
+
+        // Eliminar el usuario de la base de datos
         $usuario->delete();
 
-        return response()->json(['message' => 'Usuario eliminado'], 200);
+        return $this->exito('Usuario eliminado con éxito');
     }
 }

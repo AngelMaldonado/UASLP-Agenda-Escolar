@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PermisosEnum;
+use App\Enums\TipoUsuarioEnum;
+use App\Models\Usuario;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Psy\Util\Json;
 
 class UsuarioSeeder extends Seeder
 {
@@ -14,11 +14,17 @@ class UsuarioSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('usuario')->insert([
-            'nombre' => Str::random(10),
-            'tipo' => Str::random(10),
-            'email' => Str::random(5).'@gmail.com',
-            'permisos' => Json::encode(['a', 'b', 'c']),
+        // Crea el usuario administrador principal
+        $admin = Usuario::create([
+            'nombre' => 'Administración',
+            'apellido' => 'UASLP Ingeniería',
+            'tipo' => TipoUsuarioEnum::ADMINISTRADOR,
+            'email' => 'secretaria.escolar@uaslp.mx',
+            'permisos' => PermisosEnum::values(),
+            'contraseña' => '@ingenieria2024AE'
         ]);
+
+        // Crea 5 usuarios tipo becario aleatorios
+        //$usuarios = Usuario::factory(5)->create();
     }
 }
