@@ -1,0 +1,78 @@
+@use "../../../utils/index" as u;
+
+.card-usuario, .card.card-nuevo-usuario {
+  width: 17rem;
+  min-height: 28rem;
+  box-shadow: u.$card-box-shadow;
+  border-width: u.$card-border-width;
+  border-radius: u.$card-border-radius;
+  transition: background-color 0.3s;
+
+  > .card-body {
+    display: flex;
+    flex-direction: column;
+
+    .ChipUsuario {
+      height: 6.5rem;
+      width: 6.5rem;
+      padding-top: u.$spacer * 1.5;
+
+      span {
+        padding: u.$spacer;
+      }
+    }
+
+    .card-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    > .badges {
+      > .badge {
+        color: u.$blanco;
+        background-color: u.$secondary;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: u.$blanco-80;
+  }
+}
+
+.card.card-nuevo-usuario {
+  color: u.$primary;
+  background-color: u.$secondary-50;
+  cursor: pointer;
+
+  > .card-body {
+    justify-content: center;
+    gap: 2rem;
+
+    > .new-icon {
+      width: 5rem;
+      height: 5rem;
+      margin: 0 auto;
+      padding: 0.8rem;
+      border-radius: 50%;
+      background-color: u.$primary;
+
+      > * {
+        width: 100%;
+        height: 100%;
+        color: u.$blanco;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: u.$secondary-80;
+
+    > .new-icon {
+      filter: brightness(100%);
+    }
+  }
+}
+
+

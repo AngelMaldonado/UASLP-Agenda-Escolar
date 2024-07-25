@@ -1,0 +1,110 @@
+@use "../../utils" as u;
+
+
+.tableHead{
+  color:lightgrey;
+  border-bottom: 5px solid;
+  margin-bottom: 0;
+  > tr th{
+    color: u.$primary;
+    // background-color: u.$blanco-80;
+  }
+
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px; /* Ancho del cuadro */
+  height: 100px; /* Alto del cuadro */
+  border-radius: 10px; /* Esquinas redondeadas */
+  overflow: hidden; /* Para ocultar cualquier parte de la imagen que se salga del cuadro */
+
+  >img{
+    max-width: 100%; /* Para asegurarse de que la imagen no se salga del contenedor */
+    max-height: 100%; /* Para asegurarse de que la imagen no se salga del contenedor */
+  }
+}
+
+.hipervinculos {
+  max-width: 200px; /* Ancho del cuadro */
+}
+
+.description-container {
+  max-width: 200px; /* Establece un ancho máximo para la descripción */
+}
+
+.tableDesplaz-y {
+  height: 72vh;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}
+
+
+.table {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+  border-bottom: 10px solid lightgrey;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    // border: 1px solid black;
+  }
+
+  .row div {
+    padding: 0;
+    margin: 0;
+  }
+
+  .row div:first-of-type p{
+    color: u.$primary;
+    font-weight: bold;
+  }
+
+  .row div p {
+    margin: 0;
+    padding-bottom: 3px;
+  }
+
+  .column1, .column2 {
+    flex-basis: 50%;
+  }
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
+}
+
+//.tablaSimbolo, .tablaHipervinculo
+.tablaContenido {
+  display: block; // Asegúrate de que el elemento sea visible de forma predeterminada
+
+  @media (max-width: 575px) {
+    display: none; // El contenido desaparecerá en pantallas con un ancho de 575px o menos
+  }
+
+  @media (max-width: 576px) {
+    display: none; // El contenido desaparecerá en pantallas con un ancho de 575px o menos
+  }
+
+  @media (max-width: 992px) {
+    display: none; // El contenido desaparecerá en pantallas con un ancho de 575px o menos
+  }
+
+  @media (min-width: 1200px) {
+    // Agrega estilos específicos para pantallas con un ancho mínimo de 1200px si es necesario
+  }
+}

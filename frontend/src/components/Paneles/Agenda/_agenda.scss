@@ -1,0 +1,26 @@
+@use '../../../utils/index' as u;
+
+.Agenda {
+  margin-top: u.$spacer;
+  margin-bottom: u.$spacer * 2.5;
+
+  .TituloMes {
+    cursor: text;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.ModalEvento {
+  > img {
+    width: 100%;
+    object-fit: cover;
+    height: 18rem;
+  }
+
+  > p {
+    text-align: justify;
+  }
+}

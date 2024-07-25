@@ -1,0 +1,26 @@
+@use "../../../utils/index" as u;
+
+.FormularioLogin {
+  height: fit-content;
+  max-width: 30rem;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+
+  .card-header {
+    &:first-child {
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    background-color: u.$primary;
+  }
+
+  .card-footer {
+    &:last-child {
+      border-radius: 0 0 0.5rem 0.5rem;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+}

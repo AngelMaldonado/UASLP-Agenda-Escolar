@@ -1,0 +1,24 @@
+@use "../../utils" as u;
+
+.calendar-container {
+  .vstack {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .calendar-container {
+    .vstack {
+      display: flex;
+      padding: u.$spacer * 1.5;
+      width: 35%;
+      background-color: u.$primary-80;
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

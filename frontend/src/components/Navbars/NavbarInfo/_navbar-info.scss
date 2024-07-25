@@ -1,0 +1,13 @@
+@use "../../../utils/constants" as c;
+
+.NavbarInfo {
+  background: rgb(39, 53, 96);
+  background: linear-gradient(45deg, rgba(39, 53, 96, 1) 0%, rgba(0, 119, 181, 1) 100%);
+}
+
+.AcercaDe {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}

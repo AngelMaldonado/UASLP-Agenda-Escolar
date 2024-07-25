@@ -1,0 +1,56 @@
+/* Estilos base para .formulario */
+.formulario {
+  width: 48.5rem; /* Cambia el ancho a 100% para que se adapte al ancho del contenedor padre */
+  text-align: center;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/** Desaparece los input[type="file"] **/
+input[type=file]::file-selector-button {
+  display: none;
+}
+
+/** Placeholder **/
+::placeholder {
+  color: var(--negro-50);
+}
+
+/* Estilos para header dentro de .formulario */
+.formulario > header {
+  padding: 2.4rem 1.8rem;
+  display: flex;
+  color: var(--blanco);
+  background-color: var(--prim);
+}
+
+/* Estilos para body dentro de .formulario */
+.formulario > body {
+  padding: 2rem;
+  border: 1px solid var(--negro-20);
+}
+
+/* Estilos para input y select dentro de .formulario */
+.formulario input[type="text"],
+.formulario input[type="password"],
+.formulario select {
+  width: 100%;
+  padding: 5px;
+  margin: 4px 0;
+  border: 1px solid var(--blanco);
+  border-radius: 3px;
+}
+
+/* Consulta de medios para hacerlo responsive cuando el ancho de pantalla sea menor o igual a 768px */
+@media (max-width: 768px) {
+  /* Redefine estilos para .formulario en pantallas más pequeñas */
+  .formulario {
+    width: 90%; /* Ajusta el ancho según tus necesidades en pantallas pequeñas */
+    margin: 0 auto; /* Centra horizontalmente */
+  }
+}
+
+/* Consulta de medios para hacerlo responsive cuando el ancho de pantalla sea menor o igual a 480px */
+@media (max-width: 480px) {
+  /* Redefine estilos adicionales para pantallas aún más pequeñas si es necesario */
+}

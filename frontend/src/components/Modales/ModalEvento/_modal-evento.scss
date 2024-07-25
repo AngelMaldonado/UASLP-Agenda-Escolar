@@ -1,0 +1,11 @@
+@use '../../../utils/index' as u;
+
+.ModalEvento {
+  .hstack:nth-child(2) {
+    span {
+      :first-child {
+        color: u.$primary;
+      }
+    }
+  }
+}

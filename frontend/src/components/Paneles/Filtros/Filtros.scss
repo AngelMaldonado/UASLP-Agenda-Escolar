@@ -1,0 +1,33 @@
+.cards-filtros {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-between;
+    grid-gap: 2rem;
+    
+  @media (min-width: 320px) {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: none;
+    justify-items: center;
+    justify-content: center;   
+  }
+  
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: none;
+    justify-items: center;
+    justify-content: center;   
+  }
+
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+  

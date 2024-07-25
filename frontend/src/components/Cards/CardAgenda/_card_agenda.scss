@@ -1,0 +1,272 @@
+@use '../../../utils/index' as u;
+
+.CardAgenda {
+  height: 10rem;
+  box-shadow: u.$card-sm-box-shadow;
+
+  .card-body {
+    .card-title {
+      .card-img {
+        width: 4.5rem;
+        height: 4.5rem;
+      }
+
+      h6 {
+        min-width: 0;
+      }
+    }
+
+    .card-text {
+      display: none;
+    }
+
+    > img {
+      display: none;
+    }
+
+    .Hipervinculos {
+      display: none;
+    }
+
+    .Botones {
+      transform: translateY(- u.$spacer * 2);
+    }
+  }
+
+  .hstack {
+    span {
+      :first-child {
+        color: u.$primary;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: u.$card-sm-box-shadow-hover;
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .CardAgenda {
+    .card-body {
+      display: flex;
+      gap: u.$spacer;
+      align-items: center;
+      padding-left: 22.5rem + u.$spacer * 0.5;
+
+      * {
+        margin: 0;
+      }
+
+      .card-title {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 22.5rem;
+
+        .card-img {
+          min-width: 44.4445%;
+          height: 100%;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      .hstack {
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .Botones {
+        transform: none;
+      }
+
+      .card-text {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .CardAgenda {
+    .card-body {
+      .Hipervinculos {
+        min-width: 30%;
+        max-width: 30%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .CardAgenda {
+    .card-body {
+      overflow: hidden;
+
+      img {
+        display: initial;
+        width: 20%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+/*
+
+  .card-body {
+    display: flex;
+    align-items: center;
+    gap: u.$spacer;
+    padding-left: 0;
+    overflow: hidden;
+
+    .card-title {
+      width: 23rem;
+      min-width: 23rem;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      gap: 1rem;
+
+      .card-img {
+        max-width: 10rem;
+        border-radius: u.$card-border-radius 0 0 u.$card-border-radius;
+      }
+    }
+
+    .vstack {
+      min-width: 6.8rem;
+      max-width: 6.8rem;
+      justify-content: space-between;
+
+      span {
+        :first-child {
+          color: u.$primary;
+        }
+      }
+    }
+
+    .card-text {
+      margin: 0;
+      max-height: 100%;
+      width: 14.25rem;
+      max-width: 100%;
+      white-space: pre-wrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    img {
+      height: 100%;
+    }
+
+    .Hipervinculos {
+      display: flex;
+      flex-direction: column;
+      max-width: 10rem;
+      justify-content: center;
+    }
+
+    .Modificacion {
+      max-width: 9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .btn-group {
+      height: 100%;
+      flex-direction: column;
+
+      .btn {
+        border-radius: 0.34rem;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: u.$card-sm-box-shadow-hover;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .CardAgenda {
+    .card-body {
+      > img {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .CardAgenda {
+    .card-body {
+      .Hipervinculos {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .CardAgenda {
+    .card-body {
+      justify-content: space-between;
+
+      .Modificacion {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .CardAgenda {
+    max-height: fit-content;
+
+    .card-body {
+      flex-direction: column;
+      gap: 1rem;
+      padding-left: 1rem;
+
+      .card-title {
+        .card-img {
+          width: 20%;
+        }
+      }
+
+      .card-text {
+        display: none;
+      }
+
+      .vstack {
+        min-width: 100%;
+        max-width: 100%;
+        flex-direction: row;
+        justify-content: start;
+        gap: u.$spacer * 3;
+      }
+
+      .btn-group {
+        width: 100%;
+        flex-direction: row;
+      }
+    }
+  }
+}
+ */

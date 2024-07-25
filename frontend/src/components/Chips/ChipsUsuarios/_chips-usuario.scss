@@ -1,0 +1,11 @@
+@use "../../../utils/constants" as c;
+
+.ChipUsuario {
+  height: 2.4rem;
+  width: 2.4rem;
+  padding-top: c.$spacer * 0.35;
+
+  span {
+    padding: c.$spacer * 0.5;
+  }
+}

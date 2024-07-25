@@ -1,0 +1,8 @@
+@use "../../../utils" as u;
+
+.FormularioSimbolo {
+  .img-thumbnail {
+    width: 11%;
+    border-color: u.$negro-50;
+  }
+}

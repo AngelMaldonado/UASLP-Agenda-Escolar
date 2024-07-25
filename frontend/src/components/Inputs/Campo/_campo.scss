@@ -1,0 +1,110 @@
+@use "../../../utils/index" as u;
+
+.form-control {
+  border: 1px solid u.$negro-50;
+
+  &:has(.select__control) {
+    padding: 0;
+  }
+
+  &:focus {
+    border-color: u.$secondary;
+    box-shadow: u.$input-focus-box-shadow;
+  }
+
+  > .select__control {
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
+    min-height: initial;
+
+    > .select__value-container {
+      gap: 0.5rem;
+
+      > .select__multi-value {
+        gap: 0.5rem;
+        padding: 0.15rem 0.5rem;
+        color: u.$blanco;
+        border-radius: u.$btn-border-radius;
+        background-color: u.$primary;
+
+        &:hover {
+          background-color: u.$primary-50;
+        }
+      }
+    }
+  }
+
+  > .select__menu {
+    left: 0;
+    margin-top: 0.5rem;
+    border-radius: var(--bs-border-radius);
+    border: 1px solid u.$secondary;
+    background-color: u.$blanco;
+    box-shadow: u.$input-focus-box-shadow;
+    overflow: hidden;
+
+    > .select__menu-list {
+      > .select__option {
+        cursor: pointer;
+        padding: 0.75rem 1rem;
+
+        &:hover {
+          color: u.$blanco;
+          background-color: u.$primary;
+
+          img {
+            filter: brightness(0) invert(1);
+
+            &.no-filter {
+              filter: initial;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.campo {
+  > span {
+    padding: 3px;
+    color: red;
+    display: none;
+  }
+}
+
+input:invalid[aria-selected="true"],
+textarea:invalid[aria-selected="true"] {
+  border: 1px solid u.$danger;
+
+  &:focus {
+    box-shadow: u.$input-focus-box-shadow-invalid;
+  }
+}
+
+.campo > div:has(input:invalid[aria-selected="true"]) ~ span,
+input:invalid[aria-selected="true"] ~ span,
+textarea:invalid[aria-selected="true"] ~ span {
+  display: block;
+}
+
+textarea {
+  resize: none;
+}
+
+@media screen and (min-width: 992px) {
+  .navbar {
+    .desplegable-filtro {
+      min-width: 8rem;
+      .select__value-container {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .select__menu {
+        min-width: 15rem;
+      }
+    }
+  }
+}

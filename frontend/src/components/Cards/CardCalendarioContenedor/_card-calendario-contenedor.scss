@@ -1,0 +1,54 @@
+@use "../../../utils/index" as u;
+
+.card-evento {
+  border-radius: 100px;
+  box-shadow: u.$card-sm-box-shadow;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: u.$spacer * 0.5;
+  padding: 0 0.5rem;
+  position: relative;
+  background-color: u.$blanco;
+
+  > .simbologia {
+    > .circle {
+      overflow: hidden;
+      width: 4.5rem;
+      height: 4.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  > .titulo-evento {
+    max-height: 80%;
+    font-size: 1rem * 0.95;
+    line-height: 1.28;
+    overflow: hidden;
+  }
+
+
+}
+
+@media screen and (max-width: 1200px) {
+  .card-evento {
+    > .pills {
+      display: none;
+    }
+  }
+}
+
+.card-evento:hover {
+  box-shadow: u.$card-sm-box-shadow-hover;
+  cursor: pointer;
+}
+
+
+.card-evento:hover .pills span {
+  box-shadow: u.$card-sm-box-shadow-hover;
+  cursor: pointer;
+}

@@ -1,0 +1,83 @@
+@use '../../utils' as u;
+
+.fc-daygrid-day {
+  cursor: pointer;
+
+  .fc-daygrid-day-top {
+    justify-content: center;
+
+    .fc-daygrid-day-number {
+      color: u.$negro;
+      text-decoration: none;
+    }
+  }
+
+  &:hover > :not(:has(.fc-daygrid-day-events:hover)) {
+    box-shadow: u.$calendar-event-box-inner-shadow;
+  }
+
+  .fc-daygrid-more-link {
+    width: 100%;
+    padding: u.$spacer * 0.5;
+    border-radius: u.$spacer * 1.5;
+    text-align: center;
+    background-color: u.$blanco-80;
+  }
+}
+
+.fc-more-popover {
+  width: auto;
+  border-radius: u.$card-border-radius;
+
+  .fc-popover-header {
+    background-color: transparent;
+    padding: u.$spacer * 0.5;
+
+    .fc-popover-title {
+      margin: 0 auto;
+
+      &:first-letter {
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .fc-popover-body {
+    .fc-event {
+      cursor: pointer;
+    }
+
+    .fc-event-past {
+      border-radius: u.$spacer * 0.5;
+    }
+
+    .fc-event-past.fc-event-start.fc-event-end {
+      border-radius: u.$spacer * 1.5;
+    }
+  }
+}
+
+.fc-daygrid-event {
+  padding: 0;
+  overflow: hidden;
+  border-radius: u.$spacer * 1.5;
+}
+
+.evento-calendario {
+  position: relative;
+  border: none;
+
+  &:hover {
+    background: initial;
+
+    .Filter {
+      display: none;
+    }
+  }
+}
+
+.titulo-evento-calendario {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

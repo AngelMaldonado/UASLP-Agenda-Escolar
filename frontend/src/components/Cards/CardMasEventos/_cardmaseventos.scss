@@ -1,0 +1,57 @@
+@use "../../../utils" as u;
+
+.cardMasEventos {
+  background-color: u.$blanco;
+  box-shadow: u.$card-box-shadow;
+  border-radius: u.$card-border-radius;
+  border-width: u.$card-border-width;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin: 25px 0;
+
+  .content {
+    display: grid;
+    grid-template-columns: 2fr 4fr 1fr 2fr 1fr; /* Define el tamaño de cada columna */
+    grid-gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    height: 150px;
+
+
+    img {
+      max-width: 100%;
+      object-fit:fill;
+      max-height: 100%;
+      border-radius: u.$card-border-radius;
+      overflow: hidden;
+    }
+
+    .title{
+      max-width: 100%;
+      max-height: fit-content;
+      overflow: hidden;
+
+    }
+
+    .bottons {
+      padding: 10px;
+    }
+  }
+}
+
+@media  screen and (max-width: 768px){
+  .cardMasEventos {
+    .content{
+      display: flex;
+      flex-direction: column;
+    }
+    .title{
+      text-align: center;
+    }
+    .bottons{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
