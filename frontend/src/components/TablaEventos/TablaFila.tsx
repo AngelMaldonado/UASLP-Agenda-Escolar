@@ -1,10 +1,10 @@
 import ModalCRUDEvento from "../Modales/ModalCRUDEvento"
-import {useState} from "react";
+import { useState } from "react";
 import Evento from "../../models/Evento";
-import {FiltrosCategoriaEnum} from "../../enums/FiltrosEnum.ts";
+import { FiltrosCategoriaEnum } from "../../enums/FiltrosEnum.ts";
 import TooltipFiltro from "./TooltipFiltros.tsx";
-import {Configuraciones} from "../../utils/Constantes.ts";
-import {useObtenFiltros} from "../../hooks/HooksFiltro.ts";
+import { Configuraciones } from "../../utils/Constantes.ts";
+import { useObtenFiltros } from "../../hooks/HooksFiltro.ts";
 
 export type TablaFilasProps = {
   evento: Evento,
@@ -15,7 +15,7 @@ export type TablaFilasProps = {
 function TablaFilas(props: TablaFilasProps) {
 
   const [evento] = useState(props.evento);
-  const {filtros} = useObtenFiltros()
+  const { filtros } = useObtenFiltros()
 
   const areas = filtros?.filter(f =>
     props.filtros_evento?.includes(f.id!) && f.categoria == FiltrosCategoriaEnum.AREA
@@ -32,9 +32,9 @@ function TablaFilas(props: TablaFilasProps) {
       </td>
       <td>
         <div className='image-container'>
-            <span className='w-75'>
-              <img src={Configuraciones.publicURL + props.evento?.simbolo} className='img-fluid'/>
-            </span>
+          <span className='w-75'>
+            <img src={Configuraciones.publicURL + props.evento?.simbolo} className='img-fluid' />
+          </span>
         </div>
       </td>
       <td>{Intl.DateTimeFormat('es-MX').format(evento?.fecha_inicio).toUpperCase()}</td>
@@ -58,9 +58,11 @@ function TablaFilas(props: TablaFilasProps) {
       </td>
       <td>
         <div className='image-container'>
-            <span className='w-75'>
-              <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid '/>
-            </span>
+          <span className={evento.imagen ? 'w-75' : 'd-block'}>
+            {evento.imagen ?
+              <img src={Configuraciones.publicURL + evento.imagen} alt={`imagen de ${evento.nombre}`} className='img-fluid ' />
+              : 'Sin imagen'}
+          </span>
         </div>
       </td>
       <td>
