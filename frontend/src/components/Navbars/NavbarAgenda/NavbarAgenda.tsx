@@ -1,21 +1,21 @@
 import "./_navbar-agenda.scss";
 import Boton from "../../Inputs/Boton";
 import ChipsUsuarios from "../../Chips/ChipsUsuarios";
-import {useLocation, useNavigate} from "react-router-dom";
-import {CgCalendarToday} from "react-icons/cg";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CgCalendarToday } from "react-icons/cg";
 import CardMasEventos from "../../Cards/CardMasEventos";
-import {TemaComponente} from "../../../utils/Tipos.ts";
+import { TemaComponente } from "../../../utils/Tipos.ts";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/esm/Navbar";
 import Container from "react-bootstrap/Container";
-import {Form, Modal} from "react-bootstrap";
+import { Form, Modal } from "react-bootstrap";
 import Desplegables from "./Desplegables.tsx";
-import {AgendaContext, AgendaContextDataEnum} from "../../../providers/AgendaProvider.tsx";
-import {useContext, useState} from "react";
-import {FaTimes} from "react-icons/fa";
-import {FaRegListAlt} from "react-icons/fa";
-import {useObtenSesion} from "../../../hooks/HookSesion.ts";
-import {useCambiaContexto} from "../../../hooks/HookObjectChange.ts";
+import { AgendaContext, AgendaContextDataEnum } from "../../../providers/AgendaProvider.tsx";
+import { useContext, useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import { FaRegListAlt } from "react-icons/fa";
+import { useObtenSesion } from "../../../hooks/HookSesion.ts";
+import { useCambiaContexto } from "../../../hooks/HookObjectChange.ts";
 
 type NavbarAgendaProps = {
   currentKey: string;
@@ -26,8 +26,8 @@ type NavbarAgendaProps = {
 function NavbarAgenda(props: NavbarAgendaProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const {sesion} = useObtenSesion();
-  const {cambiaContexto} = useCambiaContexto()
+  const { sesion } = useObtenSesion();
+  const { cambiaContexto } = useCambiaContexto()
   const [showModal, setShowModal] = useState(false);
   const ocultaControles = props.currentKey != "calendario" && props.currentKey != "agenda";
 
@@ -36,7 +36,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
       <Container>
         <Form.Control
           className={"flex-grow-1 me-2 me-xl-4 Busqueda"}
-          placeholder={ocultaControles ? "Buscar registro" : "Buscar evento"}
+          placeholder={ocultaControles ? "Filtrar registro" : "Filtrar por nombre"}
           onChange={(e) => cambiaContexto(AgendaContextDataEnum.TextoBusqueda, e.target.value)}
         />
         <Navbar.Toggle
@@ -45,12 +45,12 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="pt-2 gap-2 pt-xl-0 w-100 justify-content-xl-end overflow-y-visible" navbarScroll>
-            {!ocultaControles ? <Desplegables agenda={props.currentKey == "agenda"}/> : null}
+            {!ocultaControles ? <Desplegables agenda={props.currentKey == "agenda"} /> : null}
             {opciones().map((opcion, index) => (
               <Nav.Item key={`navbar-agenda-item-${index}`}>{opcion}</Nav.Item>
             ))}
             {location.pathname == "/administracion" && sesion?.usuario ? (
-              <ChipsUsuarios/>
+              <ChipsUsuarios />
             ) : (
               <Boton
                 eventKey={props.eventKeys[1]}
@@ -74,13 +74,13 @@ function NavbarAgenda(props: NavbarAgendaProps) {
       <Boton
         variant={TemaComponente.SecundarioInverso}
         etiqueta="Calendario"
-        icono={<CgCalendarToday/>}
+        icono={<CgCalendarToday />}
         onClick={() => props.setKey(props.eventKeys[0])}
       />,
       <Boton
         variant={TemaComponente.SecundarioInverso}
         etiqueta="Agenda"
-        icono={<FaRegListAlt/>}
+        icono={<FaRegListAlt />}
         href={"#scrollTo"}
         onClick={() => props.setKey(props.eventKeys[1])}
       />,
@@ -97,14 +97,14 @@ function NavbarAgenda(props: NavbarAgendaProps) {
 
     const eventosAlumnado = eventos
       ?.filter((e) => e.tipo === "alumnado")
-      .map((e) => <CardMasEventos key={e.nombre} evento={e}/>);
+      .map((e) => <CardMasEventos key={e.nombre} evento={e} />);
 
     return (
       <Modal size="lg" show={showModal} onHide={ocultaModal}>
         <Modal.Header>
           <Modal.Title className="fs-5">Eventos alumnado</Modal.Title>
           <div className="btn-cerrar" onClick={ocultaModal}>
-            <Boton icono={<FaTimes/>} variant={TemaComponente.Primario}/>
+            <Boton icono={<FaTimes />} variant={TemaComponente.Primario} />
           </div>
         </Modal.Header>
         <Modal.Body>{eventosAlumnado?.flat()}</Modal.Body>
