@@ -85,7 +85,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         onClick={() => props.setKey(props.eventKeys[1])}
       />,
       <Boton
-        etiqueta="Más Eventos"
+        etiqueta="Eventos Alumnos"
         variant={TemaComponente.SecundarioInverso}
         onClick={() => muestraModal()}
       />,
