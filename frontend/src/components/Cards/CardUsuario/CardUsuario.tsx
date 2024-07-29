@@ -1,18 +1,18 @@
 import "./_card-usuario.scss"
 import Usuario from "../../../models/Usuario.ts"
 import Boton from "../../Inputs/Boton"
-import {FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser} from "react-icons/fa"
-import {TemaComponente} from "../../../utils/Tipos.ts"
+import { FaPlus, FaRegEdit, FaRegPlusSquare, FaRegTrashAlt, FaRegUser } from "react-icons/fa"
+import { TemaComponente } from "../../../utils/Tipos.ts"
 import Modal from "../../Modales/Modal";
-import {Dispatch, SetStateAction, useState} from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import FormularioUsuario from "../../Formularios/FormularioUsuario";
-import {useModificaUsuario, useEliminaUsuario} from "../../../hooks/HooksUsuario.ts";
-import useObjectAttributeChange, {useObjectChangeTimeout} from "../../../hooks/HookObjectChange.ts";
-import {PermisosEnum, TipoUsuarioEnum} from "../../../enums";
-import {ValidationError} from "yup";
-import {useObtenSesion} from "../../../hooks/HookSesion.ts";
-import {modalTimeout} from "../../../utils/Constantes.ts";
-import {Spinner} from "react-bootstrap";
+import { useModificaUsuario, useEliminaUsuario } from "../../../hooks/HooksUsuario.ts";
+import useObjectAttributeChange, { useObjectChangeTimeout } from "../../../hooks/HookObjectChange.ts";
+import { PermisosEnum, TipoUsuarioEnum } from "../../../enums";
+import { ValidationError } from "yup";
+import { useObtenSesion } from "../../../hooks/HookSesion.ts";
+import { modalTimeout } from "../../../utils/Constantes.ts";
+import { Spinner } from "react-bootstrap";
 
 function CardUsuario(props: { usuario: Usuario }) {
   const [usuarioActual, setUsuarioActual] = useState(props.usuario)
@@ -20,8 +20,8 @@ function CardUsuario(props: { usuario: Usuario }) {
   const [eliminandoSt, setEliminandoSt] = useState(false)
 
   const usuario = useObtenSesion().sesion?.usuario;
-  const {modificaUsuario, modificacionExitosa, modificando, reset} = useModificaUsuario(setErrores)
-  const {eliminaUsuario, eliminacionExitosa, eliminando} = useEliminaUsuario(setErrores)
+  const { modificaUsuario, modificacionExitosa, modificando, reset } = useModificaUsuario(setErrores)
+  const { eliminaUsuario, eliminacionExitosa, eliminando } = useEliminaUsuario(setErrores)
   const onUsuarioChange = useObjectAttributeChange(setUsuarioActual as Dispatch<SetStateAction<object>>)
   const onValidationError = useObjectChangeTimeout(setErrores as Dispatch<SetStateAction<object>>)
 
@@ -43,9 +43,6 @@ function CardUsuario(props: { usuario: Usuario }) {
         <h3 className="card-title flex-fill">{props.usuario.nombre + " " + props.usuario.apellido}</h3>
         <p className="card-text">{props.usuario.email}</p>
         <div className="badges d-flex flex-column gap-2">
-            <span className="w-100 badge rounded-pill fs-6 fw-light">
-              {props.usuario.permisos?.length} Permisos
-            </span>
           <span
             className="w-100 badge rounded-pill fs-6 fw-light">{props.usuario.tipo![0].toUpperCase() + props.usuario.tipo?.substring(1)}</span>
         </div>
@@ -61,7 +58,7 @@ function CardUsuario(props: { usuario: Usuario }) {
         timeout={modificacionExitosa ? modalTimeout : undefined}
         triggers={triggers()}
         onClose={onClose}
-        titulo={<div><FaRegUser/> <p className="fs-5">Modificar Usuario</p></div>}
+        titulo={<div><FaRegUser /> <p className="fs-5">Modificar Usuario</p></div>}
         contenido={contenidoModal()}
         botones={modificacionExitosa || eliminacionExitosa ? undefined : botonesModal()}
       />
@@ -83,7 +80,7 @@ function CardUsuario(props: { usuario: Usuario }) {
               key={"boton-modificar-usuario-" + props.usuario.id}
               rounded
               variant={TemaComponente.PrimarioInverso}
-              icono={<FaRegEdit/>}
+              icono={<FaRegEdit />}
               onClick={() => setEliminandoSt(false)}
             /> : undefined
           :
@@ -91,7 +88,7 @@ function CardUsuario(props: { usuario: Usuario }) {
             key={"boton-eliminar-usuario-" + props.usuario.id}
             rounded
             variant={TemaComponente.PrimarioInverso}
-            icono={<FaRegEdit/>}
+            icono={<FaRegEdit />}
             onClick={() => setEliminandoSt(false)}
           />
       ),
@@ -102,7 +99,7 @@ function CardUsuario(props: { usuario: Usuario }) {
               key={"boton-eliminar-usuario-" + props.usuario.id}
               rounded
               variant={TemaComponente.DangerInverso}
-              icono={<FaRegTrashAlt/>}
+              icono={<FaRegTrashAlt />}
               onClick={() => setEliminandoSt(true)}
             />
             : undefined
@@ -122,7 +119,7 @@ function CardUsuario(props: { usuario: Usuario }) {
         ¿Esta seguro que desea eliminar el
         usuario <strong> [{props.usuario.nombre + " " + props.usuario.apellido}] </strong> ?
       </p>
-    } else return <FormularioUsuario usuario={usuarioActual} setUsuario={onUsuarioChange} errores={errores}/>
+    } else return <FormularioUsuario usuario={usuarioActual} setUsuario={onUsuarioChange} errores={errores} />
   }
 
   function botonesModal() {
@@ -131,30 +128,30 @@ function CardUsuario(props: { usuario: Usuario }) {
     if (usuario?.id !== props.usuario.id && tienePermisoEliminar)
       botones.push(
         <Boton key={"boton-eliminar"}
-               variant={TemaComponente.PrimarioInverso}
-               icono={eliminando ?
-                 <Spinner animation="border" role="status" size="sm">
-                   <span className="visually-hidden">Loading...</span>
-                 </Spinner>
-                 : <FaRegTrashAlt/>
-               }
-               disabled={modificando || eliminando}
-               etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
-               onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
+          variant={TemaComponente.PrimarioInverso}
+          icono={eliminando ?
+            <Spinner animation="border" role="status" size="sm">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            : <FaRegTrashAlt />
+          }
+          disabled={modificando || eliminando}
+          etiqueta={!eliminando ? "Eliminar" : "Eliminando..."}
+          onClick={() => eliminandoSt ? eliminaUsuario(usuarioActual) : setEliminandoSt(true)}
         />)
     if (!eliminandoSt)
       botones.push(
         <Boton key={"boton-guardar"}
-               variant={TemaComponente.SuccessInverso}
-               icono={modificando ?
-                 <Spinner animation="border" role="status" size="sm">
-                   <span className="visually-hidden">Loading...</span>
-                 </Spinner>
-                 : <FaRegPlusSquare/>
-               }
-               disabled={modificando || eliminando}
-               etiqueta={!modificando ? "Guardar" : "Guardando..."}
-               onClick={modificaUsuarioExistente}
+          variant={TemaComponente.SuccessInverso}
+          icono={modificando ?
+            <Spinner animation="border" role="status" size="sm">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            : <FaRegPlusSquare />
+          }
+          disabled={modificando || eliminando}
+          etiqueta={!modificando ? "Guardar" : "Guardando..."}
+          onClick={modificaUsuarioExistente}
         />
       )
     return botones
@@ -166,7 +163,7 @@ function CardUsuario(props: { usuario: Usuario }) {
       // Si se validó correctamente, enviar a back
       .then(() => modificaUsuario(usuarioActual))
       // Si no coincide con el esquema, mostrar errores
-      .catch((r: ValidationError) => onValidationError({[r.path!]: r.errors}))
+      .catch((r: ValidationError) => onValidationError({ [r.path!]: r.errors }))
   }
 
   function onClose() {
@@ -181,7 +178,7 @@ CardUsuario.CardNuevoUsuario = (
   <div className="card card-nuevo-usuario text-center">
     <div className="card-body">
       <div className="new-icon">
-        <FaPlus/>
+        <FaPlus />
       </div>
       <h3 className="card-title">Nuevo Usuario</h3>
     </div>
