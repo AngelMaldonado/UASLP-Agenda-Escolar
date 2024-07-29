@@ -83,7 +83,7 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
         <Form.Label>Permisos*</Form.Label>
         <Formal.Field name="permisos"
           as={Select}
-          className={"form-control" + (props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ? " visually-hidden" : "")}
+          className={"form-control" + (props.usuario.id ? " visually-hidden" : "")}
           classNamePrefix="select"
           unstyled
           isMulti
@@ -101,8 +101,10 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
           }}
         />
         <Formal.Message for="permisos" className="d-flex text-danger" />
-        {props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ?
-          <p className="fst-italic text-muted m-0">Este usuario ya tiene todos los permisos</p>
+        {props.usuario.id ?
+          <p className="fst-italic text-muted m-0">
+            Este usuario tiene {props.usuario.permisos?.length == Object.keys(PermisosEnum).length ? 'todos los' : props.usuario.permisos?.length} permisos
+          </p>
           : null}
       </Form.Group>
     </Formal>
