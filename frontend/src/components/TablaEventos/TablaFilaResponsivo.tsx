@@ -1,10 +1,10 @@
 import ModalCRUDEvento from "../Modales/ModalCRUDEvento"
 import TooltipFiltro from "./TooltipFiltros.tsx";
-import {useState} from "react";
+import { useState } from "react";
 import Evento from "../../models/Evento";
-import {FiltrosCategoriaEnum} from "../../enums/FiltrosEnum.ts";
-import {Configuraciones} from "../../utils/Constantes.ts";
-import {useObtenFiltros} from "../../hooks/HooksFiltro.ts";
+import { FiltrosCategoriaEnum } from "../../enums/FiltrosEnum.ts";
+import { Configuraciones } from "../../utils/Constantes.ts";
+import { useObtenFiltros } from "../../hooks/HooksFiltro.ts";
 
 export type TablaFilaResponsivoProps = {
   evento: Evento,
@@ -14,7 +14,7 @@ export type TablaFilaResponsivoProps = {
 
 function TablaFilaResponsivo(props: TablaFilaResponsivoProps) {
   const [events] = useState(props.evento)
-  const {filtros} = useObtenFiltros()
+  const { filtros } = useObtenFiltros()
 
   const areas = filtros?.filter(f =>
     props.filtros_evento?.includes(f.id!) && f.categoria == FiltrosCategoriaEnum.AREA
@@ -36,7 +36,7 @@ function TablaFilaResponsivo(props: TablaFilaResponsivoProps) {
         <div className="column2">
           <div className='image-container'>
             <span className='w-75'>
-             <img src={Configuraciones.publicURL + props.evento?.simbolo} className='img-fluid'/>
+              <img src={Configuraciones.publicURL + props.evento?.simbolo} className='img-fluid' />
             </span>
           </div>
         </div>
@@ -67,8 +67,10 @@ function TablaFilaResponsivo(props: TablaFilaResponsivoProps) {
         <div className="column1"><p>Imagen: </p></div>
         <div className="column2">
           <div className='image-container'>
-            <span className='w-75'>
-              <img src='https://picsum.photos/200/300'/*src={events.imagen}*/ alt="" className='img-fluid '/>
+            <span className={events.imagen ? 'w-75' : 'd-block'}>
+              {events.imagen ?
+                <img src={Configuraciones.publicURL + events.imagen} alt={`imagen de ${evento.nombre}`} className='img-fluid ' />
+                : 'Sin imagen'}
             </span>
           </div>
         </div>

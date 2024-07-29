@@ -85,7 +85,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
         onClick={() => props.setKey(props.eventKeys[1])}
       />,
       <Boton
-        etiqueta="Más Eventos"
+        etiqueta="Eventos Alumnos"
         variant={TemaComponente.SecundarioInverso}
         onClick={() => muestraModal()}
       />,
@@ -102,7 +102,7 @@ function NavbarAgenda(props: NavbarAgendaProps) {
     return (
       <Modal size="lg" show={showModal} onHide={ocultaModal}>
         <Modal.Header>
-          <Modal.Title className="fs-5">Eventos alumnado</Modal.Title>
+          <Modal.Title className="fs-5">Eventos generados por los alumnos</Modal.Title>
           <div className="btn-cerrar" onClick={ocultaModal}>
             <Boton icono={<FaTimes />} variant={TemaComponente.Primario} />
           </div>

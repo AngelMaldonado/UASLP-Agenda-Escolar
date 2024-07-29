@@ -1,6 +1,6 @@
 import "./_formulario-usuario.scss"
 import Usuario from "../../../models/Usuario.ts"
-import {Form} from "react-bootstrap"
+import { Form } from "react-bootstrap"
 import Formal from "react-formal"
 import Select, {
   components,
@@ -14,7 +14,7 @@ import {
   TipoUsuarioOptions,
   TipoUsuarioOptionsType,
 } from "../../../enums"
-import {useState} from "react";
+import { useState } from "react";
 
 type FormularioUsuarioProps = {
   usuario: Usuario,
@@ -25,7 +25,7 @@ type FormularioUsuarioProps = {
 function FormularioUsuario(props: FormularioUsuarioProps) {
   const [errores, setErrores] = useState({})
 
-  const Input = (inputProps: any) => <components.Input {...inputProps} autoComplete="off" aria-autocomplete="none"/>
+  const Input = (inputProps: any) => <components.Input {...inputProps} autoComplete="off" aria-autocomplete="none" />
   const MultiValueLabel = (props: MultiValueGenericProps) => {
     return (
       <components.MultiValueLabel {...props}>
@@ -36,71 +36,76 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
 
   return (
     <Formal schema={Usuario.schema}
-            value={props.usuario}
-            errors={{...errores, ...props.errores}}
-            onError={errors => setErrores(errors)}>
+      value={props.usuario}
+      errors={{ ...errores, ...props.errores }}
+      onError={errors => setErrores(errors)}>
       <span className="text-muted fst-italic">Campos requeridos *</span>
       <Form.Group>
         <Form.Label>Tipo de usuario*</Form.Label>
         <Formal.Field name="tipo"
-                      as={Select}
-                      className="form-control"
-                      classNamePrefix="select"
-                      unstyled
-                      components={{Input}}
-                      placeholder="Elija el tipo de usuario"
-                      noOptionsMessage={() => <>Sin opciones</>}
-                      isDisabled={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR}
-                      options={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ? TipoUsuarioOptions : TipoUsuarioOptions.slice(1)}
-                      mapToValue={props.usuario.tipo ?
-                        v =>
-                          TipoUsuarioOptions.find(o => o.value === v.tipo)
-                        : undefined
-                      }
-                      onChange={(o: TipoUsuarioOptionsType) => props.setUsuario("tipo", o.value)}
+          as={Select}
+          className="form-control"
+          classNamePrefix="select"
+          unstyled
+          components={{ Input }}
+          placeholder="Elija el tipo de usuario"
+          noOptionsMessage={() => <>Sin opciones</>}
+          isDisabled={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR}
+          options={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR ? TipoUsuarioOptions : TipoUsuarioOptions.slice(1)}
+          mapToValue={props.usuario.tipo ?
+            v =>
+              TipoUsuarioOptions.find(o => o.value === v.tipo)
+            : undefined
+          }
+          onChange={(o: TipoUsuarioOptionsType) => props.setUsuario("tipo", o.value)}
         />
-        <Formal.Message for="tipo" className="d-flex text-danger"/>
+        <Formal.Message for="tipo" className="d-flex text-danger" />
         {camposTipoUsuario()}
         <Form.Label
           htmlFor="contraseña">Contraseña* {props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ? "(servicio)" : ""}</Form.Label>
         <Formal.Field name="contraseña"
-                      type="password"
-                      className="form-control"
-                      placeholder={props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ?
-                        "Escriba la contraseña del servicio del usuario" : "Escriba una contraseña para el usuario"
-                      }
-                      onChange={e => props.setUsuario("contraseña", e.target.value)}
+          type="password"
+          className="form-control"
+          placeholder={props.usuario.tipo == TipoUsuarioEnum.SECUNDARIO ?
+            "Escriba la contraseña del servicio del usuario" : "Escriba una contraseña para el usuario"
+          }
+          onChange={e => props.setUsuario("contraseña", e.target.value)}
         />
-        <Formal.Message for="contraseña" className="d-flex text-danger"/>
+        <Formal.Message for="contraseña" className="d-flex text-danger" />
         <Form.Label htmlFor="contraseña_confirmation">Confirmar contraseña*</Form.Label>
         <Formal.Field name="contraseña_confirmation"
-                      type="password"
-                      className="form-control"
-                      placeholder="Confirme la contraseña del usuario"
-                      onChange={e => props.setUsuario("contraseña_confirmation", e.target.value)}
+          type="password"
+          className="form-control"
+          placeholder="Confirme la contraseña del usuario"
+          onChange={e => props.setUsuario("contraseña_confirmation", e.target.value)}
         />
-        <Formal.Message for="contraseña" className="d-flex text-danger"/>
+        <Formal.Message for="contraseña" className="d-flex text-danger" />
         <Form.Label>Permisos*</Form.Label>
         <Formal.Field name="permisos"
-                      as={Select}
-                      className="form-control"
-                      classNamePrefix="select"
-                      unstyled
-                      isMulti
-                      isDisabled={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR}
-                      components={{MultiValueLabel}}
-                      closeMenuOnSelect={false}
-                      placeholder="Elija los permisos que tendrá el usuario"
-                      noOptionsMessage={() => <>Sin opciones</>}
-                      options={PermisosOptions}
-                      mapToValue={props.usuario.permisos!.length > 0 ?
-                        v => PermisosOptions.filter(p => v.permisos?.includes(p.value))
-                        : undefined}
-                      onChange={(e: PermisosOptionsType[]) => {
-                        props.setUsuario("permisos", e.map(p => p.value))
-                      }}
+          as={Select}
+          className={"form-control" + (props.usuario.id ? " visually-hidden" : "")}
+          classNamePrefix="select"
+          unstyled
+          isMulti
+          isDisabled={props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR}
+          components={{ MultiValueLabel }}
+          closeMenuOnSelect={false}
+          placeholder="Elija los permisos que tendrá el usuario"
+          noOptionsMessage={() => <>Sin opciones</>}
+          options={PermisosOptions}
+          mapToValue={props.usuario.permisos!.length > 0 ?
+            v => PermisosOptions.filter(p => v.permisos?.includes(p.value))
+            : undefined}
+          onChange={(e: PermisosOptionsType[]) => {
+            props.setUsuario("permisos", e.map(p => p.value))
+          }}
         />
-        <Formal.Message for="permisos" className="d-flex text-danger"/>
+        <Formal.Message for="permisos" className="d-flex text-danger" />
+        {props.usuario.id ?
+          <p className="fst-italic text-muted m-0">
+            Este usuario tiene {props.usuario.permisos?.length == Object.keys(PermisosEnum).length ? 'todos los' : props.usuario.permisos?.length} permisos
+          </p>
+          : null}
       </Form.Group>
     </Formal>
   );
@@ -122,25 +127,25 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
       <>
         <Form.Label htmlFor="nombre">Nombre(s)*</Form.Label>
         <Formal.Field name="nombre"
-                      className="form-control"
-                      placeholder="Escriba el(los) nombre(s)"
-                      onChange={e => props.setUsuario("nombre", e.target.value)}
+          className="form-control"
+          placeholder="Escriba el(los) nombre(s)"
+          onChange={e => props.setUsuario("nombre", e.target.value)}
         />
-        <Formal.Message for="nombre" className="d-flex text-danger"/>
+        <Formal.Message for="nombre" className="d-flex text-danger" />
         <Form.Label htmlFor="apellido">Apellidos*</Form.Label>
         <Formal.Field name="apellido"
-                      className="form-control"
-                      placeholder="Escriba los apellidos"
-                      onChange={e => props.setUsuario("apellido", e.target.value)}
+          className="form-control"
+          placeholder="Escriba los apellidos"
+          onChange={e => props.setUsuario("apellido", e.target.value)}
         />
-        <Formal.Message for="apellido" className="d-flex text-danger"/>
+        <Formal.Message for="apellido" className="d-flex text-danger" />
         <Form.Label htmlFor="email">Correo*</Form.Label>
         <Formal.Field name="email"
-                      className="form-control"
-                      placeholder="Escriba el correo del usuario (ejemplo@dominio.com)"
-                      onChange={e => props.setUsuario("email", e.target.value)}
+          className="form-control"
+          placeholder="Escriba el correo del usuario (ejemplo@dominio.com)"
+          onChange={e => props.setUsuario("email", e.target.value)}
         />
-        <Formal.Message for="email" className="d-flex text-danger"/>
+        <Formal.Message for="email" className="d-flex text-danger" />
       </>
     )
   }
@@ -156,7 +161,7 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
             placeholder="RPE Ej. 123456"
             onChange={e => props.setUsuario("rpe", e.target.value)}
           />
-          <Formal.Message for="rpe" className="d-flex text-danger"/>
+          <Formal.Message for="rpe" className="d-flex text-danger" />
         </>
       )
     else if (props.usuario.tipo == TipoUsuarioEnum.ADMINISTRADOR)
@@ -164,11 +169,11 @@ function FormularioUsuario(props: FormularioUsuarioProps) {
         <>
           <Form.Label htmlFor="email">Correo*</Form.Label>
           <Formal.Field name="email"
-                        className="form-control"
-                        placeholder="Escriba el correo del usuario (ejemplo@dominio.com)"
-                        onChange={e => props.setUsuario("email", e.target.value)}
+            className="form-control"
+            placeholder="Escriba el correo del usuario (ejemplo@dominio.com)"
+            onChange={e => props.setUsuario("email", e.target.value)}
           />
-          <Formal.Message for="email" className="d-flex text-danger"/>
+          <Formal.Message for="email" className="d-flex text-danger" />
         </>
       )
   }

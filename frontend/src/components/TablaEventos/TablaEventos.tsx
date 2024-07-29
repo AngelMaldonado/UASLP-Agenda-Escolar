@@ -2,8 +2,8 @@ import "./TablaEventos.scss";
 import Table from "react-bootstrap/Table";
 import TablaFilaResponsivo from "./TablaFilaResponsivo.tsx";
 import TablaFilas from "./TablaFila.tsx";
-import {useContext} from "react";
-import {AgendaContext} from "../../providers/AgendaProvider.tsx";
+import { useContext } from "react";
+import { AgendaContext } from "../../providers/AgendaProvider.tsx";
 
 export type TablaEventosProps = {
   admin?: boolean;
@@ -30,7 +30,6 @@ function TablaEventos(props: TablaEventosProps) {
             <th>Descripción</th>
             <th>Imagen</th>
             <th>Hipervinculos</th>
-            <th></th>
           </tr>
         </thead>
         <tbody className=" tablaEvento text-center shadow">
